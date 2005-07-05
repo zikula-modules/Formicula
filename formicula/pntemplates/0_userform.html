@@ -1,0 +1,135 @@
+<!--[* Smartytemplate *]-->
+<!--[* $Id$ *]-->
+
+<!--[ include file=userheader.html ]-->
+
+<form action='<!--[ pnmodurl modname=formicula type=user func=send ]-->' method='post'>
+<input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
+<input type='hidden' name='form' value=0>
+<input type='hidden' name='adminformat' value='html'>
+
+<table width='100%'>
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_THEME' html=1 ]-->&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <!--[ if count($contacts)==1 ]-->
+                <input type='hidden' name='cid' value=0>
+                <!--[ $contacts.0.name ]-->
+            <!--[ else ]-->
+                <select name='cid'>
+                <!--[ foreach item=contact from=$contacts ]-->
+                <option value='<!--[ $contact.cid ]-->'><!--[ $contact.name ]--></option>
+                <!--[ /foreach ]-->
+                </select>
+            <!--[ /if ]-->
+        </td>
+    </tr>
+
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_NAME' html=1 ]-->&nbsp;<span style="color: red;">*</span>&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <input type='text' name='uname' size='40' maxlength='80' value='<!--[ $uname ]-->'>
+        </td>
+    </tr>
+
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_EMAIL' html=1 ]-->&nbsp;<span style="color: red;">*</span>&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <input type='text' name='uemail' size='40' maxlength='40' value='<!--[ $uemail ]-->'>
+        </td>
+    </tr>
+
+    <!--[ pnmodgetvar module=formicula name=show_url assign=show_url ]-->
+    <!--[ if $show_url==1 ]-->
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_URL' html=1 ]-->&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <input type='text' name='url' value='' size='40' maxlength='40'>
+        </td>
+    </tr>
+    <!--[ /if ]-->
+
+    <!--[ pnmodgetvar module=formicula name=show_phone assign=show_phone ]-->
+    <!--[ if $show_phone==1 ]-->
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_PHONE' html=1 ]-->&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <input type='text' name='phone' value='' size='40' maxlength='40'>
+        </td>
+    </tr>
+    <!--[ /if ]-->
+
+    <!--[ pnmodgetvar module=formicula name=show_company assign=show_company ]-->
+    <!--[ if $show_company==1 ]-->
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_COMPANY' html=1 ]-->&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <input type='text' name='company' value='' size='40' maxlength='40'>
+        </td>
+    </tr>
+    <!--[ /if ]-->
+
+    <!--[ pnmodgetvar module=formicula name=show_location assign=show_location ]-->
+    <!--[ if $show_location==1 ]-->
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_LOCATION' html=1 ]-->&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <input type='text' name='location' value='' size='40' maxlength='40'>
+        </td>
+    </tr>
+    <!--[ /if ]-->
+
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_COMMENT' html=1 ]-->&nbsp;<span style="color: red;">*</span>&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <textarea rows='6' cols='45' name='comment' wrap='soft'></textarea>
+        </td>
+    </tr>
+
+    <tr width='100%'>
+        <td width='25%' align='right'>
+            <!--[ pnml name='_FOR_USERMAILFORMAT' html=1 ]-->&nbsp;:&nbsp;
+        </td>
+        <td width='75%' align='left'>
+            <select name='userformat'>
+            <option value='html'><!--[ pnml name='_FOR_HTMLMAIL' ]--></option>
+            <option value='plain'><!--[ pnml name='_FOR_TEXTMAIL' ]--></option>
+            </select>
+        </td>
+    </tr>
+
+    <tr width='100%'>
+        <td width='25%'>&nbsp;
+            
+        </td>
+        <td align='left' width='75%'>
+            <input type='submit' name='submit' value='<!--[ pnml name='_FOR_SEND' ]-->'>
+        </td>
+    </tr>
+
+    <tr width='100%'>
+        <td width='25%'>&nbsp;
+            
+        </td>
+        <td align='left' width='75%'>
+            <span style="color: red;">*</span>&nbsp;<!--[ pnml name='_FOR_MUSTBE' html=1 ]-->
+        </td>
+    </tr>
+</table>
+</form>

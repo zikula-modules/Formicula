@@ -1,0 +1,22 @@
+//-----------------------------------------------------------------------
+// based on vpContact 0.711
+// created and released for rogue / postnuke .711
+//-----------------------------------------------------------------------
+//
+// formicula 0.1 (fs)
+// replaced pnHTML output methd with smarty / pnRender for use in Postnuke 0.726 or later
+// internal code changes and cleanups
+// **********************************************
+// * This version needs a working installation **
+// *              of pnRender !!               **
+// **********************************************
+//
+// formicula 0.2 (fs)
+// adjusted code to run in XTE RC3 and later
+//
+// formicula 0.3 (fs)
+// added file upload and sending as attachments
+// replaced PEAR mail class with Mailer module from Postnuke .8 / .750 Gold. Formicula needs
+// the pnuserapi.php v1.14 of the Mailer modules as minimum in order to be able to send
+// uploaded files as file attachment
+//  

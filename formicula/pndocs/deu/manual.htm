@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Formicula Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+
+<!-- $Id$ -->
+<center>
+<pre>
+<table width="650" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+	<font size="3" face="Arial, Helvetica, sans-serif">
+		Formicula v.2 == 21.06.2004<br>
+		Benutzerhandbuch<br>
+		Autoren:Frank Schummertz und Jim Hadfield<br>
+		<a href='http://www.snowbankih.tzo.com'>SnowbankIH Webseite</a><br>
+		<a href='http://www.snowbankih.tzo.com/modules.php?op=modload&name=phpBB_14&file=index&action=viewforum&forum=5'>Support Forum</a>
+	</font>
+	<hr>
+	<font size="3" face="Arial, Helvetica, sans-serif">
+	Formicula Anleitung<br>
+	-------------------------<br>
+	Mit Formicula kann man beliebig viele Kontaktformulare mit beliebig vielen Eingabefeldern
+	erzeugen (zumindest beliebig viele, solange der Speicher ausreicht).</font><br><br>
+	
+	<font size="3" face="Arial, Helvetica, sans-serif">
+	Installation<br>
+	---------------<br>
+	Falls noch nicht geschehen, erst einmal auf die aktuelle PostNuke Version updaten (0.726-3
+	im Augenblick, 21.06.04)<br><br>
+
+	XTE (Xanthia Theming Engine) inkl. pnRender installieren (Download von http://www.post-nuke.net oder anderen
+	PN Seiten)<br><br>
+    
+    Formicula benötigt das Mailer Modul (pnuserapi.php mind. v1.14). Diese Modul ist Teil von Postnuke .8 und Postnuke .750 Gold und läuft auch unter .726-3<br><br>
+     
+	Formicula auspacken und ins modules Verzeichnis kopieren.<br><br>
+
+	Im Adminbereich die Modulliste neu erstellen, Formicula initialisieren und aktivieren.<br><br>
+
+	Jetzt kann man die Kontaktinformationen (Name/Betreff und Emailadresse) in der Formicula
+	Administration eingeben.<br><br>
+
+	Link im Menü hinzufügen: {formicula}<br>
+
+   	([formicula] funktioniert nicht)<br>
+
+   	oder:  
+	<font size="2" face="Times New Roman, Times, serif">
+	index.php?module=formicula&func=main </font><br><br>
+
+	Falls notwendig, kann man auch noch die Sprachdateien anpassen.<br><br>
+
+	Falls Dir das Seitenlayout nicht gefällt: Alle Templates dazu liegen in /pntemplates und können angepasst
+	werden. Formicula benutzt schliesslich pnRender....<br><br>
+	
+	Templates<br>
+	--------------<br>
+	Die Templates haben folgende Namen:<br><br>
+    Das Formular mit den Eingabefeldern:&nbsp;&nbsp;#_userform.html<br>
+	Bestätigungsseite nach dem Verschicken:&nbsp;&nbsp;#_userconfirm.html<br>
+	Fehlerseite:&nbsp;&nbsp;#_usererror.html<br>
+	Bestätigungsmail an den User (Textformat):&nbsp;&nbsp;#_usermail.txt<br>
+	Bestätigungsmail an den User (HTML-Format):&nbsp;&nbsp;#_usermail.html<br>
+	Mail an den Kontakt (Textformat):&nbsp;&nbsp;#_adminmail.txt<br>
+	Mail an den Kontakt (HTML-Format):&nbsp;&nbsp;#_adminmail.html<br><br>
+	
+	Hinweis: Das Mailformat kann im Template vorgegeben werden oder man lässt den User
+	entscheiden. Im Beispiel 0_userform.html z.B. steht<br><br>
+				<font size="2" face="Times New Roman, Times, serif">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;select name='userformat'&gt;<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value='html'&gt;&lt;!--[ pnml name='_FOR_HTMLMAIL' ]--&gt;&lt;/option&gt;<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;option value='plain'&gt;&lt;!--[ pnml name='_FOR_TEXTMAIL' ]--&gt;&lt;/option&gt;<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;/select&gt;</font><br><br>
+	Will man das Format fest vorgeben, benutzt man ein verstecktes Feld:<br><br>
+				<font size="2" face="Times New Roman, Times, serif">
+				&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='hidden' name='userformat' value='html'&gt;</font><br><br>
+	Analog zu 'userformat' gibts auch 'adminformat'. Als Werte sind z.Zt. nur 'html' oder
+	'plain' zulässig, default ist 'plain', also reiner Text ohne Formatierungen.<br>
+	Das '#' gibt immer die Nummer des Formular an</font>
+
+	<p><font size="3" face="Arial, Helvetica, sans-serif">
+	Ein bestimmtes Formular wird mit dem Parameter form in der URL aufgerufen:<br>
+	<font size="2" face="Times New Roman, Times, serif"> &form=# </font><br>
+	Ein Link zu Formular 1 sieht dann folgendermassen aus:<br><br>
+	<font size="2" face="Times New Roman, Times, serif">
+				&nbsp;&nbsp;&nbsp;&nbsp;index.php?module=formicula&func=main&form=1 </font></p>
+
+	<p><font size="3" face="Arial, Helvetica, sans-serif">
+	Im Formicula Paket befinden sich zwei Beispiele 0 und 1. 0 ist ein normales Kontaktformular, 1 ist ein
+	Formular für eine Onlinebewerbung mit zusätzlichen Feldern.<br>
+	Wenn der Parameter form fehlt, ist der Defaultwert 0. Will man Formicula nur mit einem Formular benutzen,
+	würde also ein Link im Menü so aussehen können:{formicula}</font></p>
+
+	<p><font size="3" face="Arial, Helvetica, sans-serif">
+	Benutzerdefinierte Felder<br>
+	------------------------------------<br>
+	Es können so viele benutzerdefinierte Felder hinzugefügt werden, wie notwendig sind. Damit
+	kann man auch umfangreich Onlinebewerbungsformulare erstellen.<br>
+	</font></p>
+
+	<p><font size="3" face="Arial, Helvetica, sans-serif">
+    Dazu sind einige Angaben notwendig:</font><br>
+	<font size="3" face="Arial, Helvetica, sans-serif">
+	numFields (verstecktes Feld.) Anzahl der benutzerdefinierten Felder<br>
+	custom#name (verstecktes Feld) Name des Eingabefeldes<br>
+	custom#mandatory (verstecktes Feld) auf 1 setzen, wenn es sih um ein Mussfeld handelt. 
+	Formicula übrprüft dies dann und bringt eine Fehlermeldung, falls das Feld leer ist.<br>
+	custom#data (ein Eingabefeld) die Daten<br>
+	mit #=Nummer.</font></p>
+
+	<font size="3" face="Arial, Helvetica, sans-serif">Beispiel:</font><br><br>
+	<font size="2" face="Times New Roman, Times, serif">
+	&nbsp;&nbsp;&lt;tr width='100%'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;td width='50%' align='right'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--[ pnml name='_ONLINEAPPLYAS' html=1 ]--&gt;&amp;nbsp;&lt;span style=&quot;color: red;&quot;&gt;*&lt;/span&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;td width='50%' align='left'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='hidden' name='custom0name' value='&lt;!--[ pnml name='_ONLINEAPPLYAS' ]--&gt;'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='hidden' name='custom0mandatory' value=1&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='text' name='custom0data' size='40' maxlength='80' value=''&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br>
+	&nbsp;&nbsp;&lt;/tr&gt;<br><br>
+
+	&nbsp;&nbsp;&lt;tr width='100%'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;td width='50%' align='right'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--[ pnml name='_ONLINESTREET' html=1 ]--&gt;&amp;nbsp;&lt;span style=&quot;color: red;&quot;&gt;*&lt;/span&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;td width='50%' align='left'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='hidden' name='custom1name' value='&lt;!--[ pnml name='_ONLINESTREET' ]--&gt;'&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='hidden' name='custom1mandatory' value=1&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='text' name='custom1data' size='40' maxlength='40' value=''&gt;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br>
+	&nbsp;&nbsp;&lt;/tr&gt;<br><br>
+	
+	</font><font size="3" face="Arial, Helvetica, sans-serif">
+	Dies erstellt zwei benutzerdefinierte Felder 0 and 1, beides sind Mussfelder. 
+	Das heisst man braucht auch noch:<br><br>
+	<font size="2" face="Times New Roman, Times, serif">
+	&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='hidden' name='numFields' value=2&gt;</font><br><br>
+
+	Bitte beachten: Die Nummerierung der benutzerdefinerten Felder beginnt bei 0!</font>
+	</p>
+    <br>
+	<p><font size="3" face="Arial, Helvetica, sans-serif">
+	Zugriffsrechte<br>
+	-------------------<br>
+	Um auf ein Formular zugreifen zu können  braucht man das Recht zu kommentieren (COMMENT).<br>
+	<font size="2" face="Times New Roman, Times, serif">
+	<br>Unregistered&nbsp; &nbsp;|&nbsp;&nbsp;&nbsp;formicula:: &nbsp;&nbsp;| &nbsp;&nbsp;.*&nbsp;&nbsp;&nbsp;|&nbsp; &nbsp;kommentieren<br></font><br>
+	gibt z.B. allen unregistrierten Benutzer das Recht, alle vorhandenen Formulare zu
+	benutzen und alle vorhandenen Kontakte zu benutzen.<br>
+	<font size="2" face="Times New Roman, Times, serif">
+	<br>Unregistered &nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;formicula:: &nbsp;&nbsp;| &nbsp;&nbsp;0::&nbsp;&nbsp;&nbsp;|  &nbsp;kommentieren<br></font><br>
+	gibt allen unregistrierten User, das Formular 0 mit allen existierenden Kontakten zu benutzen.<br>
+	<br><font size="2" face="Times New Roman, Times, serif">
+ Users&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;formicula::&nbsp;&nbsp; |&nbsp;&nbsp; 1:(2|3):&nbsp;&nbsp;|  kommentieren<br></font><br>
+    Erlaubt allen Mitgliedern der Gruppe User, Formular 1 zu benutzen und die Kontakte 2 und 3 anzuschreiben.<br>
+    
+	
+	 
+	</font></p>
+	</td>
+  </tr>
+</table>
+
+</pre>
+</center>
+</body>
+</html>

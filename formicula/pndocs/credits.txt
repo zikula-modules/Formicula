@@ -1,0 +1,42 @@
+// ----------------------------------------------------------------------
+// POST-NUKE Content Management System
+// Copyright (C) 2001 by the Post-Nuke Development Team.
+// http://www.postnuke.com/
+// ----------------------------------------------------------------------
+// Based on:
+// PHP-NUKE Web Portal System - http://phpnuke.org/
+// Thatware - http://thatware.org/
+// ----------------------------------------------------------------------
+// LICENSE
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License (GPL)
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// To read the license please visit http://www.gnu.org/copyleft/gpl.html
+// ----------------------------------------------------------------------
+// Original author of file: Ingo van Peeren
+// Purpose of file: contact one of the site admins
+// ----------------------------------------------------------------------
+// vpContact module for Rogue 0.711
+// Copyright (c) 2002 by
+// http://www.beginner-ag.de/postnuke
+// ----------------------------------------------------------------------
+//
+// formicula 0.1 - 0.3
+// Smartyfied version for use with pnRender by Frank Schummertz, Jim Hadfield
+// (in fact this an 80% rewrite of the older vpContact code)
+// frank.schummertz@landseer-stuttgart.de
+// jim@snowbankih.com
+// http://snowbankih.tzo.com
+// ----------------------------------------------------------------------
+
+
+
+
