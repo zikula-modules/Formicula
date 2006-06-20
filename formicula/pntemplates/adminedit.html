@@ -6,12 +6,12 @@
 
 <!--[ if $mode==create ]-->
 <p align='center'><!--[ pnml name=_FOR_ADDCONTACT html=1 ]--></p>
-<form action='<!--[ pnmodurl modname=formicula type=admin func=create ]-->' method='post'>
+<form action='<!--[ pnmodurl modname=Formicula type=admin func=create ]-->' method='post'>
 <input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
 <input type='hidden' name='cid' value=-1>
 <!--[ else ]-->
 <p align='center'><!--[ pnml name=_FOR_EDITCONTACT html=1 ]--></p>
-<form action='<!--[ pnmodurl modname=formicula type=admin func=update ]-->' method='post'>
+<form action='<!--[ pnmodurl modname=Formicula type=admin func=update ]-->' method='post'>
 <input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
 <input type='hidden' name='cid' value=<!--[ $contact.cid ]-->>
 <!--[ /if ]-->
@@ -33,9 +33,21 @@
         </td>
     </tr>
     <tr>
+        <td>
+            <!--[ pnml name='_FOR_PUBLIC' html=1 ]-->
+        </td>
+        <td>
+            <!--[ if $contact.public==1 ]-->
+            <input type='checkbox' name='public' id='public' value=1 checked tabindex=3> 
+            <!--[ else ]-->
+            <input type='checkbox' name='public' id='public' value=1 tabindex=3> 
+            <!--[ /if ]-->
+        </td>
+    </tr>
+    <tr>
         <td colspan='2' align='center'>
             <br> <br>
-            <input type='submit' value='<!--[ pnml name='_SUBMIT' html=1 ]-->' tabindex=3>
+            <input type='submit' value='<!--[ pnml name='_SUBMIT' html=1 ]-->' tabindex=4>
         </td>
     </tr>
 </table>
