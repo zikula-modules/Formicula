@@ -24,6 +24,7 @@ define( '_FOR_EMAIL','Email' );
 define( '_FOR_FORMICULA','Formicula!' );
 define( '_FOR_NAME','Contact name or Topic' );
 define( '_FOR_OPTIONS','Options' );
+define( '_FOR_PUBLIC', 'Public' );
 define( '_FOR_SENDUSER','Send confirmation email to user?' );
 define( '_FOR_SHOWCOMMENT', 'Show comments textarea' );
 define( '_FOR_SHOWCOMPANY','Show company?' );

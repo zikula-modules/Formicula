@@ -23,6 +23,7 @@ define( '_FOR_EMAIL', 'Emailadresse' );
 define( '_FOR_FORMICULA', 'Formicula - Kontaktformulare' );
 define( '_FOR_NAME', 'Bezeichnung' );
 define( '_FOR_OPTIONS', 'Optionen' );
+define( '_FOR_PUBLIC', 'Öffentlich' );
 define( '_FOR_SENDUSER', 'Bestätigungsmail an User verschicken?' );
 define( '_FOR_SHOWCOMMENT', 'Kommentarfeld anzeigen?' );
 define( '_FOR_SHOWCOMPANY', 'Firma anzeigen?' );
