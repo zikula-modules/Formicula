@@ -1,7 +1,7 @@
 <?php
 // $Id$
 $modversion['name'] = 'Formicula';
-$modversion['version'] = '0.4';
+$modversion['version'] = '0.6';
 $modversion['description'] = 'Tool for creating contact forms of all kinds';
 $modversion['credits'] = 'pndocs/credits.txt';
 $modversion['help'] = 'pndocs/eng/manual.htm';
@@ -13,5 +13,5 @@ $modversion['author'] = 'Frank Schummertz';
 $modversion['contact'] = 'frank.schummertz@landseer-stuttgart.de';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
-$modversion['securityschema'] = array('formicula::' => 'FormID::$ContactID' );
+$modversion['securityschema'] = array('Formicula::' => 'FormID::ContactID' );
 ?>

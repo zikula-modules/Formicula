@@ -23,38 +23,34 @@
 //
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
+// Original Author of file: Jim McDonald
+// Localization and Adaption for PostNuke 0.750-Gold: Chris Hildebrandt
+// Purpose of file:  Table information for Formicula module
+// ----------------------------------------------------------------------
 
-/**
- * showErrorMessage
- * shows an error message to the user or the admin
- *
- *@param text string the error message to show
- *@returns pnRender output
- */
-function showErrorMessage($text)
-{
-    $pnr =& new pnRender( 'formicula' );
-    $pnr->caching = false;
-    $pnr->assign('errormsg', pnVarPrepForDisplay($text));
-    return $pnr->fetch('errormessage.html');
-}
 
-/**
- * removeUploadInformation
- * replaces the information about uploaded files with the filename so that we can use it in the
- * templates
- *
- *@param custom array of custom fields
- *@return cleaned custom array
- */
-function removeUploadInformation( $custom )
+function Formicula_pntables()
 {
-    for( $i=0;$i<count($custom);$i++ ) {
-        if( $custom[$i]['upload'] == true ) {
-            $custom[$i]['data'] = $custom[$i]['data']['name'];
-        }
-    }
-    return $custom;
+    // Initialise table array
+    $pntable = array();
+
+    // Get the name for the template item table.  This is not necessary
+    // but helps in the following statements and keeps them readable
+    $contacts = pnConfigGetVar('prefix') . '_formcontacts';
+
+    // Set the table name
+    $pntable['formcontacts'] = $contacts;
+
+    // Set the column names.  Note that the array has been formatted
+    // on-screen to be very easy to read by a user.
+    $pntable['formcontacts_column'] = 
+	array('cid'    => $contacts . '.pn_cid',
+              'name'   => $contacts . '.pn_name',
+              'email'  => $contacts . '.pn_email',
+              'public' => $contacts . '.pn_public');
+
+    // Return the table information
+    return $pntable;
 }
 
 ?>

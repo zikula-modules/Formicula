@@ -36,20 +36,37 @@ include_once( "modules/formicula/common.php" );
  *@param form int number of form to show
  *@returns pnRender output
  */
-function formicula_user_main()
+function formicula_user_main($args=array())
 {
-    $form = pnVarCleanFromInput( 'form' );
-    $form = (!empty($form)) ? $form : 0;
+    if(count($args)>0) {
+        extract($args);
+    } else {
+        $form = pnVarCleanFromInput( 'form' );
+        $cid  = pnVarCleanFromInput( 'cid' );
 
-    if (!pnModAPILoad('formicula', 'user')) {
-        return showErrorMessage( 'formicula: loading userapi failed' );
+        // get subitted information - will be passed to the template
+        // addinfo is an array:
+        // addinfo[name1] = value1
+        // addinfo[name2] = value2
+        $addinfo = pnVarCleanFromInput('addinfo');
     }
-    $contacts = pnModAPIFunc('formicula',
-                             'user',
-                             'readValidContacts',
-                             array( 'form' => $form ) );
+    $form = (!empty($form)) ? $form : 0;
+    $cid  = (!empty($cid)) ? $cid : -1;
 
-    if ( $contacts == false ) {
+    if ($cid == -1) {
+        $contacts = pnModAPIFunc('formicula',
+                                 'user',
+                                 'readValidContacts',
+                                 array( 'form' => $form ) );
+    } else {
+        $contacts[] = pnModAPIFunc('formicula',
+                                   'user',
+                                   'getContact',
+                                   array('cid'  => $cid,
+				         'form' => $form ));
+    }
+
+    if ( count($contacts) == 0 ) {
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
 
@@ -61,13 +78,13 @@ function formicula_user_main()
         $email = '';
     }
 
-    $pnr =& new pnRender( 'formicula' );
+    $pnr =& new pnRender('formicula');
     $pnr->caching = false;
-    $pnr->assign( 'uname', $uname );
-    $pnr->assign( 'uemail', $uemail );
-    $pnr->assign( 'contacts', $contacts );
-    return $pnr->fetch( $form.'_userform.html' );
-
+    $pnr->assign('uname', $uname);
+    $pnr->assign('uemail', $uemail);
+    $pnr->assign('contacts', $contacts);
+    $pnr->assign('addinfo', $addinfo);
+    return $pnr->fetch($form.'_userform.html');
 }
 
 /**
@@ -86,41 +103,52 @@ function formicula_user_main()
  *@param comment     string users comment
  *@returns pnRender output
  */
-function formicula_user_send()
+function formicula_user_send($args=array())
 {
     global $_FILES;
-    list($cid,
-       $form,
-       $userformat,
-       $adminformat,
-       $numfields,
-       $ud['uname'],
-       $ud['uemail'],
-       $ud['url'],
-       $ud['phone'],
-       $ud['company'],
-       $ud['location'],
-       $ud['comment']) = pnVarCleanFromInput('cid',
-                                             'form',
-                                             'userformat',
-                                             'adminformat',
-                                             'numFields',
-                                             'uname',
-                                             'uemail',
-                                             'url',
-                                             'phone',
-                                             'company',
-                                             'location',
-                                             'comment');
+
+    if(count($args)>0) {
+        extract($args);
+    } else {
+        list($cid,
+           $form,
+           $userformat,
+           $adminformat,
+           $numfields,
+           $ud['uname'],
+           $ud['uemail'],
+           $ud['url'],
+           $ud['phone'],
+           $ud['company'],
+           $ud['location'],
+           $ud['comment']) = pnVarCleanFromInput('cid',
+                                                 'form',
+                                                 'userformat',
+                                                 'adminformat',
+                                                 'numFields',
+                                                 'uname',
+                                                 'uemail',
+                                                 'url',
+                                                 'phone',
+                                                 'company',
+                                                 'location',
+                                                 'comment');
+    }
+
     $form = (!empty($form)) ? $form : 0;
-    if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html')) {
+    if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
         $userformat = 'plain';
     }
     if(empty($adminformat) || ($adminformat<>'plain' && $adminformat<>'html')) {
         $adminformat = 'plain';
     }
 
-    if( !pnSecAuthAction(0, 'formicula::', $form.':'.$cid.':', ACCESS_COMMENT) ) { // && !pnSecAuthAction(0, 'formicula::', $form.':'.$cid.':', ACCESS_COMMENT)) {
+    if($userformat == 'none') {
+        $ud['uemail'] = pnConfigGetVar('adminmail');
+        $ud['uname'] =  pnConfigGetVar('adminmail');
+    }
+    
+    if( !pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT) ) {
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
 
@@ -153,55 +181,50 @@ function formicula_user_send()
         }
     }
 
-    if (!pnModAPILoad('formicula', 'user')) {
-        return showErrorMessage( 'formicula: loading userapi failed' );
-    }
-
     $contact = pnModAPIFunc('formicula',
                             'user',
                             'getContact',
-                            array('cid' => $cid ));
-    if( $contact <> false ) {
-        $pnr =& new pnRender( 'formicula' );
-        $pnr->caching=false;
-        $pnr->assign( 'contact', $contact );
-        $pnr->assign( 'userdata', $ud );
+                            array('cid'  => $cid,
+				  'form' => $form ));
 
+    $pnr =& new pnRender('formicula');
+    $pnr->caching=false;
+    $pnr->assign( 'contact', $contact );
+    $pnr->assign( 'userdata', $ud );
+
+    if( pnModAPIFunc('formicula',
+                     'user',
+                     'checkArguments',
+                     array('userdata'   => $ud,
+                           'custom'     => $custom ) ) == true ) {
         if( pnModAPIFunc('formicula',
                          'user',
-                         'checkArguments',
-                         array('userdata'   => $ud,
-                               'custom'     => $custom ) ) == true ) {
-            if( pnModAPIFunc('formicula',
-                             'user',
-                             'sendtoContact',
-                             array('contact'  => $contact,
-                                   'userdata' => $ud,
-                                   'custom'   => $custom,
-                                   'form'     => $form,
-                                   'format'   => $adminformat ) ) == false ) {
-                return showErrorMessage( pnVarPrepForDisplay(_FOR_ERRORSENDINGMAIL) );
-            }
-
-            if (pnModGetVar('formicula', 'send_user') == 1) {
-                // we replace the array of data of uploaded files with the filename
-                $pnr->assign( 'sendtouser', pnModAPIFunc('formicula',
-                                                         'user',
-                                                         'sendtoUser',
-                                                         array('contact'  => $contact,
-                                                               'userdata' => $ud,
-                                                               'custom'   => $custom,
-                                                               'form'     => $form,
-                                                               'format'   => $userformat  ) ) );
-            }
-            $pnr->assign( 'custom', removeUploadInformation( $custom ) );
-            return $pnr->fetch( $form."_userconfirm.html" );
-        } else {
-            $pnr->assign( 'custom', removeUploadInformation( $custom ) );
-            return $pnr->fetch( $form."_usererror.html" );
+                         'sendtoContact',
+                         array('contact'  => $contact,
+                               'userdata' => $ud,
+                               'custom'   => $custom,
+                               'form'     => $form,
+                               'format'   => $adminformat ) ) == false ) {
+            return showErrorMessage( pnVarPrepForDisplay(_FOR_ERRORSENDINGMAIL) );
         }
+
+        if( (pnModGetVar('formicula', 'send_user') == 1) && ($userformat <> 'none') ) {
+            // we replace the array of data of uploaded files with the filename
+            $pnr->assign( 'sendtouser', pnModAPIFunc('formicula',
+                                                     'user',
+                                                     'sendtoUser',
+                                                     array('contact'  => $contact,
+                                                           'userdata' => $ud,
+                                                           'custom'   => $custom,
+                                                           'form'     => $form,
+                                                           'format'   => $userformat  ) ) );
+        }
+
+        $pnr->assign( 'custom', removeUploadInformation( $custom ) );
+        return $pnr->fetch( $form."_userconfirm.html" );
     } else {
-        // invalid cid specified
+        $pnr->assign( 'custom', removeUploadInformation( $custom ) );
+        return $pnr->fetch( $form."_usererror.html" );
     }
 }
 

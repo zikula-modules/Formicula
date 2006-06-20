@@ -39,49 +39,102 @@ include_once( "modules/formicula/common.php" );
  */
 function formicula_userapi_getContact($args)
 {
-    extract( $args );
-    if (!pnModAPILoad('formicula', 'admin')) {
-        return showErrorMessage( 'formicula: loading adminapi failed' );
+    extract($args);
+
+    if (!isset($cid) || empty($cid)) {
+        pnSessionSetVar('errormsg', _MODARGSERROR);
+        return false;
+    }
+    if (!isset($form) || empty($form)) {
+        $form = 0;
     }
 
-    $contacts = pnModAPIFunc( 'formicula', 'admin', 'readContacts' );
-    if( count( $contacts ) > 0 ) {
-        return $contacts[$cid];
+    if( !pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT) ) {
+        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
-    return false;
+
+    $dbconn  =& pnDBGetConn(true);
+    $pntable =& pnDBGetTables();
+
+    $contactstable  =  $pntable['formcontacts'];
+    $contactscolumn = &$pntable['formcontacts_column'];
+
+    $sql = "SELECT $contactscolumn[cid],
+                   $contactscolumn[name],
+                   $contactscolumn[email]
+            FROM $contactstable
+            WHERE $contactscolumn[cid] = '" . (int)pnVarPrepForStore($cid) . "'";
+    $result = $dbconn->Execute($sql);
+
+    if ($dbconn->ErrorNo() != 0) {
+        pnSessionSetVar('errormsg', _GETFAILED);
+        return false;
+    }
+
+    if ($result->EOF) {
+        return false;
+    }
+
+    list($cid, $name, $email) = $result->fields;
+
+    $result->Close();
+
+    $contact = array('cid'    => $cid,
+                     'name'   => $name,
+                     'email'  => $email);
+    return $contact;
 }
 
 /**
  * readValidContacts
- * reads the contact list and returns it as array. This function filters out the
- * entries set to false (deleted contacts) and the ones the user is not allowed to see
+ * reads the contact list and returns it as array.
+ * This function filters out the entries the user is not allowed to see
  *
  *@param form int form id
  *@returns array with contact information
  */
-function formicula_userapi_readValidContacts( $args)
+function formicula_userapi_readValidContacts($args)
 {
-        extract( $args );
-    if (!pnModAPILoad('formicula', 'admin')) {
-        return showErrorMessage( 'formicula: loading adminapi failed' );
+    extract($args);
+
+    $dbconn  =& pnDBGetConn(true);
+    $pntable =& pnDBGetTables();
+
+    $contactstable  =  $pntable['formcontacts'];
+    $contactscolumn = &$pntable['formcontacts_column'];
+
+    $sql = "SELECT $contactscolumn[cid],
+                   $contactscolumn[name]
+            FROM $contactstable
+            WHERE $contactscolumn[public] = 1
+            ORDER BY $contactscolumn[cid]";
+    $result = $dbconn->Execute($sql);
+
+    // Check for an error with the database code, and if so set an appropriate
+    // error message and return
+    if ($dbconn->ErrorNo() != 0) {
+        pnSessionSetVar('errormsg', _GETFAILED);
+        return false;
     }
-    $contacts = pnModAPIFunc( 'formicula', 'admin', 'readContacts' );
-    if( count( $contacts ) >0 ) {
-        $validcontacts = array();
-        foreach( $contacts as $cid => $contact ) {
-            if( $contact <> false ) {
-                if (pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
-                    $validcontact = array( 'name'  => $contact['name'],
-                                           'email' => $contact['email'],
-                                           'cid'   => $cid );
-                    array_push( $validcontacts, $validcontact );
-                }
-            }
+
+    // Put items into result array.  Note that each item is checked
+    // individually to ensure that the user is allowed access to it before it
+    // is added to the results array
+    $contacts = array();
+    for (; !$result->EOF; $result->MoveNext()) {
+        list($cid, $name) = $result->fields;
+        if (pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT)) {
+            $contacts[] = array('cid'    => $cid,
+                                'name'   => $name);
         }
-        return $validcontacts;
     }
-    // pnSessionSetVar( 'errormsg', pnVarPrepForDisplay(_FOR_NOCONTACTS) );
-    return false;
+
+    // All successful database queries produce a result set, and that result
+    // set should be closed when it has been finished with
+    $result->Close();
+
+    // Return the contacts
+    return $contacts;
 }
 
 /**
@@ -99,7 +152,7 @@ function formicula_userapi_sendtoContact($args)
 {
     extract( $args );
 
-    if( pnModAvailable( 'Mailer' ) && pnModAPILoad( 'Mailer', 'user' ) ) {
+    if(pnModAvailable('Mailer')) {
         $pnr =& new pnRender( 'formicula' );
         $pnr->caching = false;
         $ip = getenv('REMOTE_ADDR');
@@ -175,7 +228,7 @@ function formicula_userapi_sendtoUser($args)
 {
     extract( $args );
 
-    if( pnModAvailable( 'Mailer' ) && pnModAPILoad( 'Mailer', 'user' ) ) {
+    if(pnModAvailable('Mailer')) {
         $pnr =& new pnRender( 'formicula' );
         $pnr->caching = false;
         $ip = getenv('REMOTE_ADDR');
