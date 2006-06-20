@@ -203,9 +203,6 @@ function formicula_userapi_sendtoContact($args)
             }
         }
 
-        if( $res == false ) {
-            die("error!!");
-        }
         return $res;
 
     }

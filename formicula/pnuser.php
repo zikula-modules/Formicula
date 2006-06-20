@@ -147,7 +147,7 @@ function formicula_user_send($args=array())
         $ud['uemail'] = pnConfigGetVar('adminmail');
         $ud['uname'] =  pnConfigGetVar('adminmail');
     }
-    
+
     if( !pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT) ) {
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
@@ -185,7 +185,7 @@ function formicula_user_send($args=array())
                             'user',
                             'getContact',
                             array('cid'  => $cid,
-				  'form' => $form ));
+                                  'form' => $form ));
 
     $pnr =& new pnRender('formicula');
     $pnr->caching=false;
