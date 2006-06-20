@@ -278,19 +278,27 @@ function formicula_userapi_checkArguments($args)
     extract($args);
 
     if (!isset($userdata['uemail']) || ( pnVarValidate( $userdata['uemail'], 'email' ) == false ) ) {
-//die("no email");
+        //die("no email");
         return false;
     }
 
     if (!isset($userdata['uname']) || ($userdata['uname'] == '')) {
-//die("no name");
+        //die("no name");
+        return false;
+    }
+
+    if ($userdata['uname'] != pnVarCensor($userdata['uname'])) {
+        return false;
+    }
+
+    if ($userdata['comment'] != pnVarCensor($userdata['comment'])) {
         return false;
     }
 
     foreach( $custom as $field ) {
         if( $field['mandatory'] == true ) {
             if( !is_array( $field['data'] ) && ( empty( $field['data'] ) ) ) {
-//die("no " . $field['name']);
+                //die("no " . $field['name']);
                 return false;
             }
             if( ( $field['upload'] == true ) && ( $field['data']['size'] == 0 ) ) {

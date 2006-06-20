@@ -152,6 +152,9 @@ function formicula_user_send($args=array())
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
 
+    // very basic input validation against HTTP response splitting
+    $ud['uemail'] = str_replace(array('\r', '\n', '%0d', '%0a'), '', $ud['uemail']);
+
     // addon: custom fields
     $uploaddir = pnModGetVar( 'formicula', 'upload_dir' );
     // check if it ends with / or we add one
