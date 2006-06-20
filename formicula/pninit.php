@@ -24,7 +24,7 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 // Original Author of file: Jim McDonald
-// Purpose of file:  Initialisation functions for template
+// Purpose of file:  Initialisation functions for formicula
 // ----------------------------------------------------------------------
 
 
@@ -82,33 +82,33 @@ function Formicula_upgrade($oldversion)
         case '0.3':
                 // nothing to do
         case '0.4':
-		$sql = "CREATE TABLE $contactstable (
-	            $contactscolumn[cid]    int(10)     NOT NULL auto_increment,
-	            $contactscolumn[name]   varchar(40) NOT NULL default '',
-	            $contactscolumn[email]  varchar(80) NOT NULL default '',
-	            $contactscolumn[public] int(1)      NOT NULL default 0,
-	            PRIMARY KEY(pn_cid))";
-		$dbconn->Execute($sql);
-		if ($dbconn->ErrorNo() != 0) {
-		    pnSessionSetVar('errormsg', _CREATETABLEFAILED);
-		    return false;
-		}
-		// migrate contacts from config var to table
-		$contacts = pnModGetVar( 'Formicula', 'Contacts' );
-		if( @unserialize( $contacts ) != "" ) {
-		    $contacts_array = unserialize( $contacts );
-		} else {
-		    $contacts_array = array();
-		}
-		foreach ($contacts_array as $contact) {
-		    $name  = $contact['name'];
-		    $email = $contact['email'];
-		    $sql = "INSERT INTO $contactstable ($contactscolumn[name], $contactscolumn[email])
-			    VALUES ($name, $email)";
-		    $dbconn->Execute($sql);
-		}
-		pnModDelVar('Formicula', 'Contacts');
-		pnModDelVar('Formicula', 'version' );
+        $sql = "CREATE TABLE $contactstable (
+                $contactscolumn[cid]    int(10)     NOT NULL auto_increment,
+                $contactscolumn[name]   varchar(40) NOT NULL default '',
+                $contactscolumn[email]  varchar(80) NOT NULL default '',
+                $contactscolumn[public] int(1)      NOT NULL default 0,
+                PRIMARY KEY(pn_cid))";
+        $dbconn->Execute($sql);
+        if ($dbconn->ErrorNo() != 0) {
+            pnSessionSetVar('errormsg', _CREATETABLEFAILED);
+            return false;
+        }
+        // migrate contacts from config var to table
+        $contacts = pnModGetVar( 'Formicula', 'Contacts' );
+        if( @unserialize( $contacts ) != "" ) {
+            $contacts_array = unserialize( $contacts );
+        } else {
+            $contacts_array = array();
+        }
+        foreach ($contacts_array as $contact) {
+            $name  = pnVarPrepForStore($contact['name']);
+            $email = pnVarPrepForStore($contact['email']);
+            $sql = "INSERT INTO $contactstable ($contactscolumn[name], $contactscolumn[email])
+                VALUES ($name, $email)";
+            $dbconn->Execute($sql);
+        }
+        pnModDelVar('Formicula', 'Contacts');
+        pnModDelVar('Formicula', 'version' );
     }
 
     // Update successful
@@ -132,16 +132,7 @@ function Formicula_delete()
         return false;
     }
 
-    pnModDelVar('Formicula', 'show_phone');
-    pnModDelVar('Formicula', 'show_company');
-    pnModDelVar('Formicula', 'show_url');
-    pnModDelVar('Formicula', 'show_location');
-    pnModDelVar('Formicula', 'show_comment');
-    pnModDelVar('Formicula', 'send_user');
-    pnModDelVar('Formicula', 'Contacts');
-    pnModDelVar('Formicula', 'upload_dir' );
-    pnModDelVar('Formicula', 'delete_file' );
-    pnModDelVar('Formicula', 'version' );
+    pnModDelVar('Formicula');
     return true;
 }
 

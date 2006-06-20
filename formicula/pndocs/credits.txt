@@ -29,14 +29,18 @@
 // http://www.beginner-ag.de/postnuke
 // ----------------------------------------------------------------------
 //
-// formicula 0.1 - 0.3
+// Formicula 0.1 - 0.3
 // Smartyfied version for use with pnRender by Frank Schummertz, Jim Hadfield
 // (in fact this an 80% rewrite of the older vpContact code)
 // frank.schummertz@landseer-stuttgart.de
 // jim@snowbankih.com
 // http://snowbankih.tzo.com
 // ----------------------------------------------------------------------
-
-
-
-
+//
+// Formicula 0.5
+// store contacts in seperate contacts table (like vpContact)
+// reiner.maiwald@freenet.de
+//
+// Formicula 0.6
+// frank.schummertz@landseer-stuttgart.de
+//
