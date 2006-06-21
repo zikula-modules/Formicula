@@ -27,7 +27,7 @@
 // Purpose of file:  Template administration API
 // ----------------------------------------------------------------------
 
-include_once( "modules/Formicula/common.php" );
+include_once( "modules/formicula/common.php" );
 
 /**
  * getContact
@@ -45,7 +45,7 @@ function Formicula_adminapi_getContact($args)
         return false;
     }
 
-    // Security check - important to do this as early on as possible to 
+    // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!pnSecAuthAction(0, "Formicula::", "::$cid", ACCESS_EDIT)) {
         return false;
@@ -221,7 +221,7 @@ function Formicula_adminapi_deleteContact($args)
         return false;
     }
 
-    // Security check 
+    // Security check
     if (!pnSecAuthAction(0, 'Formicula::', "::$cid", ACCESS_DELETE)) {
         pnSessionSetVar('errormsg', _FOR_NOAUTH);
         return false;
@@ -272,7 +272,7 @@ function Formicula_adminapi_updateContact($args)
 	$public = 0;
     }
 
-    // Security check 
+    // Security check
     if (!pnSecAuthAction(0, 'Formicula::', "::$cid", ACCESS_EDIT)) {
         pnSessionSetVar('errormsg', _FOR_NOAUTH);
         return false;

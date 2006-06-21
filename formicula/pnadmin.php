@@ -24,7 +24,7 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 
-include_once( "modules/Formicula/common.php" );
+include_once( "modules/formicula/common.php" );
 
 /**
  * main
