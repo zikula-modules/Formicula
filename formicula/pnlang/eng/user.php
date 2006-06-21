@@ -28,8 +28,6 @@
 // Translation team: Read credits in /docs/CREDITS.txt
 // ----------------------------------------------------------------------
 
-include_once( "modules/formicula/pnlang/eng/forms.php" );
-
 //new
 define( '_FOR_UPLOADLIMIT', '(Upload, max. 2MB)');
 
