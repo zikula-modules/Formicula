@@ -49,7 +49,7 @@ function formicula_userapi_getContact($args)
         $form = 0;
     }
 
-    if( !pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT) ) {
+    if( !pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT) ) {
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
 
@@ -123,7 +123,7 @@ function formicula_userapi_readValidContacts($args)
     $contacts = array();
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid, $name) = $result->fields;
-        if (pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT)) {
+        if (pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
             $contacts[] = array('cid'    => $cid,
                                 'name'   => $name);
         }

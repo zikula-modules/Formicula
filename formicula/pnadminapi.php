@@ -47,7 +47,7 @@ function Formicula_adminapi_getContact($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!pnSecAuthAction(0, "Formicula::", "::$cid", ACCESS_EDIT)) {
+    if (!pnSecAuthAction(0, "formicula::", ":$cid:", ACCESS_EDIT)) {
         return false;
     }
 
@@ -122,7 +122,7 @@ function Formicula_adminapi_readContacts()
     // is added to the results array
     for (; !$result->EOF; $result->MoveNext()) {
         list($cid, $name, $email, $public) = $result->fields;
-        if (pnSecAuthAction(0, 'Formicula::', "::$cid", ACCESS_EDIT)) {
+        if (pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_EDIT)) {
             $contacts[] = array('cid'    => $cid,
                                 'name'   => $name,
                                 'email'  => $email,
@@ -156,7 +156,7 @@ function Formicula_adminapi_createContact($args)
 	$public = 0;
     }
 
-    if (!pnSecAuthAction(0, 'Formicula::', "::", ACCESS_ADD)) {
+    if (!pnSecAuthAction(0, 'formicula::', "::", ACCESS_ADD)) {
         pnSessionSetVar('errormsg', _FOR_NOAUTH);
         return false;
     }
@@ -222,7 +222,7 @@ function Formicula_adminapi_deleteContact($args)
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Formicula::', "::$cid", ACCESS_DELETE)) {
+    if (!pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_DELETE)) {
         pnSessionSetVar('errormsg', _FOR_NOAUTH);
         return false;
     }
@@ -273,7 +273,7 @@ function Formicula_adminapi_updateContact($args)
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'Formicula::', "::$cid", ACCESS_EDIT)) {
+    if (!pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_EDIT)) {
         pnSessionSetVar('errormsg', _FOR_NOAUTH);
         return false;
     }
