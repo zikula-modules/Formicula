@@ -148,7 +148,7 @@ function formicula_user_send($args=array())
         $ud['uname'] =  pnConfigGetVar('adminmail');
     }
 
-    if( !pnSecAuthAction(0, "formicula::", "$form::$cid", ACCESS_COMMENT) ) {
+    if( !pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT) ) {
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
 

@@ -41,17 +41,19 @@ function formicula_userapi_getContact($args)
 {
     extract($args);
 
-    if (!isset($cid) || empty($cid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
+    if (!isset($cid) || !is_numeric($cid)) {
+        pnSessionSetVar('errormsg', _MODARGSERROR . ' in formicula_userapi_getContact(cid)=' . $cid . ':');
         return false;
     }
-    if (!isset($form) || empty($form)) {
+    if (!isset($form) || is_numeric($form)) {
         $form = 0;
     }
 
     if( !pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT) ) {
         return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
     }
+
+    pnModDBInfoLoad('formicula');
 
     $dbconn  =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
@@ -96,6 +98,8 @@ function formicula_userapi_getContact($args)
 function formicula_userapi_readValidContacts($args)
 {
     extract($args);
+
+    pnModDBInfoLoad('formicula');
 
     $dbconn  =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
@@ -226,14 +230,14 @@ function formicula_userapi_sendtoUser($args)
     extract( $args );
 
     if(pnModAvailable('Mailer')) {
-        $pnr =& new pnRender( 'formicula' );
+        $pnr =& new pnRender('formicula');
         $pnr->caching = false;
         $ip = getenv('REMOTE_ADDR');
-        $pnr->assign( 'host', gethostbyaddr($ip) );
-        $pnr->assign( 'ip', $ip );
-        $pnr->assign( 'form', $form );
-        $pnr->assign( 'contact', $contact );
-        $pnr->assign( 'userdata', $userdata );
+        $pnr->assign('host', gethostbyaddr($ip));
+        $pnr->assign('ip', $ip);
+        $pnr->assign('form', $form);
+        $pnr->assign('contact', $contact);
+        $pnr->assign('userdata', $userdata);
 
         $adminmail = pnConfigGetVar('adminmail');
         $sitename = pnConfigGetVar('sitename');
