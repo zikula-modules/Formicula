@@ -1,12 +1,16 @@
 <?php
 
 // made with DefineMachine 0.4 (c) Frank Schummertz, frank.schummertz@landseer-stuttgart.de, 22.03.2003
-// sourcefile : /var/www/modules/formicula/pnadmin.php 
+// sourcefile : /var/www/modules/formicula/pnadmin.php
 // defines read from /var/www/modules/formicula/pnlang/deu
 // file created on Thursday 12th February 2004 20:14:21
 
 //neu
-
+define('_FOR_ILLEGALEMAIL', 'ungültige Emailadresse');
+define('_FOR_SENDERINFO', 'Verwende folgende Daten für die Bestätigungsemail an den Benutzer');
+define('_FOR_SENDERNAME', 'Absendername');
+define('_FOR_SENDEREMAIL', 'Absenderemail');
+define('_FOR_SENDERSUBJECT', 'Betreff');
 
 //original
 define( '_FOR_ADDCONTACT', 'Kontakt hinzufügen' );

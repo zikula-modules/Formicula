@@ -24,37 +24,10 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 
-/**
- * showErrorMessage
- * shows an error message to the user or the admin
- *
- *@param text string the error message to show
- *@returns pnRender output
- */
-function showErrorMessage($text)
-{
-    $pnr =& new pnRender('formicula');
-    $pnr->caching = false;
-    $pnr->assign('errormsg', pnVarPrepForDisplay($text));
-    return $pnr->fetch('errormessage.html');
-}
+//new
+define( '_FOR_CREATETABLEFAILED', 'could not create table');
+define( '_FOR_ALTERTABLEFAILED', 'could not alter table');
+define( '_FOR_DELETETABLEFAILED', 'could not delete table');
 
-/**
- * removeUploadInformation
- * replaces the information about uploaded files with the filename so that we can use it in the
- * templates
- *
- *@param custom array of custom fields
- *@return cleaned custom array
- */
-function removeUploadInformation($custom)
-{
-    for($i=0;$i<count($custom);$i++) {
-        if($custom[$i]['upload'] == true) {
-            $custom[$i]['data'] = $custom[$i]['data']['name'];
-        }
-    }
-    return $custom;
-}
 
 ?>

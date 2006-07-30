@@ -38,14 +38,17 @@ function Formicula_init()
     $contactscolumn = &$pntable['formcontacts_column'];
 
     $sql = "CREATE TABLE $contactstable (
-            $contactscolumn[cid]    int(10)     NOT NULL auto_increment,
-            $contactscolumn[name]   varchar(40) NOT NULL default '',
-            $contactscolumn[email]  varchar(80) NOT NULL default '',
-            $contactscolumn[public] int(1)      NOT NULL default 0,
+            $contactscolumn[cid]       int(10)     NOT NULL auto_increment,
+            $contactscolumn[name]      varchar(40) NOT NULL default '',
+            $contactscolumn[email]     varchar(80) NOT NULL default '',
+            $contactscolumn[public]    int(1)      NOT NULL default 0,
+            $contactscolumn[sname]     varchar(40) NOT NULL default '',
+            $contactscolumn[semail]    varchar(80) NOT NULL default '',
+            $contactscolumn[ssubject]  varchar(80) NOT NULL default '',
             PRIMARY KEY(pn_cid))";
     $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATETABLEFAILED);
+        pnSessionSetVar('errormsg', _FOR_CREATETABLEFAILED);
         return false;
     }
 
@@ -67,6 +70,7 @@ function Formicula_init()
 function Formicula_upgrade($oldversion)
 {
     // Get database information
+    pnModDBInfoLoad('formicula');
     $dbconn  =& pnDBGetConn(true);
     $pntable =& pnDBGetTables();
 
@@ -79,36 +83,49 @@ function Formicula_upgrade($oldversion)
                 pnModSetVar('Formicula', 'upload_dir', 'pnTemp');
                 pnModSetVar('Formicula', 'delete_file', 1);
         case '0.2':
+                // nothing to do
         case '0.3':
                 // nothing to do
         case '0.4':
-        $sql = "CREATE TABLE $contactstable (
-                $contactscolumn[cid]    int(10)     NOT NULL auto_increment,
-                $contactscolumn[name]   varchar(40) NOT NULL default '',
-                $contactscolumn[email]  varchar(80) NOT NULL default '',
-                $contactscolumn[public] int(1)      NOT NULL default 0,
-                PRIMARY KEY(pn_cid))";
-        $dbconn->Execute($sql);
-        if ($dbconn->ErrorNo() != 0) {
-            pnSessionSetVar('errormsg', _CREATETABLEFAILED);
-            return false;
-        }
-        // migrate contacts from config var to table
-        $contacts = pnModGetVar( 'Formicula', 'Contacts' );
-        if( @unserialize( $contacts ) != "" ) {
-            $contacts_array = unserialize( $contacts );
-        } else {
-            $contacts_array = array();
-        }
-        foreach ($contacts_array as $contact) {
-            $name  = pnVarPrepForStore($contact['name']);
-            $email = pnVarPrepForStore($contact['email']);
-            $sql = "INSERT INTO $contactstable ($contactscolumn[name], $contactscolumn[email])
-                VALUES ($name, $email)";
-            $dbconn->Execute($sql);
-        }
-        pnModDelVar('Formicula', 'Contacts');
-        pnModDelVar('Formicula', 'version' );
+                $sql = "CREATE TABLE $contactstable (
+                        $contactscolumn[cid]    int(10)     NOT NULL auto_increment,
+                        $contactscolumn[name]   varchar(40) NOT NULL default '',
+                        $contactscolumn[email]  varchar(80) NOT NULL default '',
+                        $contactscolumn[public] int(1)      NOT NULL default 0,
+                        PRIMARY KEY(pn_cid))";
+                $dbconn->Execute($sql);
+                if ($dbconn->ErrorNo() != 0) {
+                    pnSessionSetVar('errormsg', _FOR_CREATETABLEFAILED);
+                    return false;
+                }
+                // migrate contacts from config var to table
+                $contacts = pnModGetVar( 'Formicula', 'Contacts' );
+                if( @unserialize( $contacts ) != "" ) {
+                    $contacts_array = unserialize( $contacts );
+                } else {
+                    $contacts_array = array();
+                }
+                foreach ($contacts_array as $contact) {
+                    $name  = pnVarPrepForStore($contact['name']);
+                    $email = pnVarPrepForStore($contact['email']);
+                    $sql = "INSERT INTO $contactstable ($contactscolumn[name], $contactscolumn[email])
+                            VALUES ($name, $email)";
+                    $dbconn->Execute($sql);
+                }
+                pnModDelVar('Formicula', 'Contacts');
+                pnModDelVar('Formicula', 'version' );
+        case '0.5':
+                // nothing to do
+        case '0.6':
+                $sql = "ALTER TABLE $contactstable
+                        ADD $contactscolumn[sname]     varchar(40) NOT NULL default '',
+                        ADD $contactscolumn[semail]    varchar(80) NOT NULL default '',
+                        ADD $contactscolumn[ssubject]  varchar(80) NOT NULL default ''";
+                $dbconn->Execute($sql);
+                if ($dbconn->ErrorNo() != 0) {
+                    pnSessionSetVar('errormsg', _FOR_ALTERTABLEFAILED);
+                    return false;
+                }
     }
 
     // Update successful
@@ -127,7 +144,7 @@ function Formicula_delete()
     $sql = "DROP TABLE $contactstable";
     $dbconn->Execute($sql);
     if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _DELETETABLEFAILED.' ('.$contactstable.')');
+        pnSessionSetVar('errormsg', _FOR_DELETETABLEFAILED.' ('.$contactstable.')');
         // Report failed deletion attempt
         return false;
     }

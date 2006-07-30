@@ -27,7 +27,7 @@
 // Purpose of file:  contact user display functions
 // ----------------------------------------------------------------------
 
-include_once( "modules/formicula/common.php" );
+include_once( "modules/formicula/common.php");
 
 /**
  * main
@@ -41,8 +41,8 @@ function formicula_user_main($args=array())
     if(count($args)>0) {
         extract($args);
     } else {
-        $form = pnVarCleanFromInput( 'form' );
-        $cid  = pnVarCleanFromInput( 'cid' );
+        $form = pnVarCleanFromInput('form');
+        $cid  = pnVarCleanFromInput('cid');
 
         // get subitted information - will be passed to the template
         // addinfo is an array:
@@ -57,21 +57,21 @@ function formicula_user_main($args=array())
         $contacts = pnModAPIFunc('formicula',
                                  'user',
                                  'readValidContacts',
-                                 array( 'form' => $form ) );
+                                 array('form' => $form));
     } else {
         $contacts[] = pnModAPIFunc('formicula',
                                    'user',
                                    'getContact',
                                    array('cid'  => $cid,
-				         'form' => $form ));
+                            	         'form' => $form));
     }
 
-    if ( count($contacts) == 0 ) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
+    if (count($contacts) == 0) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTHFORFORM));
     }
 
     if (pnUserLoggedIn()) {
-        $uname = ( pnUserGetVar('name') == '' ) ? pnUserGetVar('uname') : pnUserGetVar('name');
+        $uname = (pnUserGetVar('name') == '') ? pnUserGetVar('uname') : pnUserGetVar('name');
         $uemail = pnUserGetVar('email');
     } else {
         $uname = '';
@@ -148,38 +148,38 @@ function formicula_user_send($args=array())
         $ud['uname'] =  pnConfigGetVar('adminmail');
     }
 
-    if( !pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT) ) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
+    if(!pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTHFORFORM));
     }
 
     // very basic input validation against HTTP response splitting
     $ud['uemail'] = str_replace(array('\r', '\n', '%0d', '%0a'), '', $ud['uemail']);
 
     // addon: custom fields
-    $uploaddir = pnModGetVar( 'formicula', 'upload_dir' );
+    $uploaddir = pnModGetVar('formicula', 'upload_dir');
     // check if it ends with / or we add one
-    if( substr( $uploaddir, strlen($uploaddir)-1, 1 ) <> "/" ) {
+    if(substr($uploaddir, strlen($uploaddir)-1, 1) <> "/") {
         $uploaddir .= "/";
     }
     $custom = array();
-    for( $i=0;$i<$numfields;$i++ ) {
-        $custom[$i]['name'] = pnVarCleanFromInput( 'custom'.$i.'name' );
-        $custom[$i]['mandatory'] = ( pnVarCleanFromInput( 'custom'.$i.'mandatory' ) == 1 ) ? true : false;
+    for($i=0;$i<$numfields;$i++) {
+        $custom[$i]['name'] = pnVarCleanFromInput('custom'.$i.'name');
+        $custom[$i]['mandatory'] = (pnVarCleanFromInput('custom'.$i.'mandatory') == 1) ? true : false;
 
-        if( isset( $_FILES['custom'.$i.'data']['tmp_name'] ) ) {
+        if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
             $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
-            if( $custom[$i]['data']['error'] == 0 ) {
+            if($custom[$i]['data']['error'] == 0) {
                 $custom[$i]['data']['size']     = $_FILES['custom'.$i.'data']['size'];
                 $custom[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
                 $custom[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
                 $custom[$i]['upload'] = true;
-                move_uploaded_file( $_FILES['custom'.$i.'data']['tmp_name'], $uploaddir.$custom[$i]['data']['name'] );
+                move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], $uploaddir.$custom[$i]['data']['name']);
             } else {
                 // error - replace the 'data' with an errormessage
-                $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error'] );
+                $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error']);
             }
         } else {
-            $custom[$i]['data'] = pnVarCleanFromInput( 'custom'.$i.'data' );
+            $custom[$i]['data'] = pnVarCleanFromInput('custom'.$i.'data');
             $custom[$i]['upload'] = false;
         }
     }
@@ -188,46 +188,46 @@ function formicula_user_send($args=array())
                             'user',
                             'getContact',
                             array('cid'  => $cid,
-                                  'form' => $form ));
+                                  'form' => $form));
 
     $pnr =& new pnRender('formicula');
     $pnr->caching=false;
-    $pnr->assign( 'contact', $contact );
-    $pnr->assign( 'userdata', $ud );
+    $pnr->assign('contact', $contact);
+    $pnr->assign('userdata', $ud);
 
-    if( pnModAPIFunc('formicula',
+    if(pnModAPIFunc('formicula',
                      'user',
                      'checkArguments',
                      array('userdata'   => $ud,
-                           'custom'     => $custom ) ) == true ) {
-        if( pnModAPIFunc('formicula',
+                           'custom'     => $custom)) == true) {
+        if(pnModAPIFunc('formicula',
                          'user',
                          'sendtoContact',
                          array('contact'  => $contact,
                                'userdata' => $ud,
                                'custom'   => $custom,
                                'form'     => $form,
-                               'format'   => $adminformat ) ) == false ) {
-            return showErrorMessage( pnVarPrepForDisplay(_FOR_ERRORSENDINGMAIL) );
+                               'format'   => $adminformat)) == false) {
+            return showErrorMessage(pnVarPrepForDisplay(_FOR_ERRORSENDINGMAIL));
         }
 
-        if( (pnModGetVar('formicula', 'send_user') == 1) && ($userformat <> 'none') ) {
+        if((pnModGetVar('formicula', 'send_user') == 1) && ($userformat <> 'none')) {
             // we replace the array of data of uploaded files with the filename
-            $pnr->assign( 'sendtouser', pnModAPIFunc('formicula',
+            $pnr->assign('sendtouser', pnModAPIFunc('formicula',
                                                      'user',
                                                      'sendtoUser',
                                                      array('contact'  => $contact,
                                                            'userdata' => $ud,
                                                            'custom'   => $custom,
                                                            'form'     => $form,
-                                                           'format'   => $userformat  ) ) );
+                                                           'format'   => $userformat )));
         }
 
-        $pnr->assign( 'custom', removeUploadInformation( $custom ) );
-        return $pnr->fetch( $form."_userconfirm.html" );
+        $pnr->assign('custom', removeUploadInformation($custom));
+        return $pnr->fetch($form."_userconfirm.html");
     } else {
-        $pnr->assign( 'custom', removeUploadInformation( $custom ) );
-        return $pnr->fetch( $form."_usererror.html" );
+        $pnr->assign('custom', removeUploadInformation($custom));
+        return $pnr->fetch($form."_usererror.html");
     }
 }
 

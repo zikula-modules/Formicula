@@ -43,11 +43,13 @@ function Formicula_pntables()
 
     // Set the column names.  Note that the array has been formatted
     // on-screen to be very easy to read by a user.
-    $pntable['formcontacts_column'] = 
-	array('cid'    => $contacts . '.pn_cid',
-              'name'   => $contacts . '.pn_name',
-              'email'  => $contacts . '.pn_email',
-              'public' => $contacts . '.pn_public');
+    $pntable['formcontacts_column'] = array('cid'      => $contacts . '.pn_cid',
+                                            'name'     => $contacts . '.pn_name',
+                                            'email'    => $contacts . '.pn_email',
+                                            'public'   => $contacts . '.pn_public',
+                                            'sname'    => $contacts . '.pn_sname',
+                                            'semail'   => $contacts . '.pn_semail',
+                                            'ssubject' => $contacts . '.pn_ssubject');
 
     // Return the table information
     return $pntable;

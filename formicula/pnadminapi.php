@@ -27,7 +27,7 @@
 // Purpose of file:  Template administration API
 // ----------------------------------------------------------------------
 
-include_once( "modules/formicula/common.php" );
+include_once("modules/formicula/common.php");
 
 /**
  * getContact
@@ -60,7 +60,10 @@ function Formicula_adminapi_getContact($args)
     $sql = "SELECT $contactscolumn[cid],
                    $contactscolumn[name],
                    $contactscolumn[email],
-                   $contactscolumn[public]
+                   $contactscolumn[public],
+                   $contactscolumn[sname],
+                   $contactscolumn[semail],
+                   $contactscolumn[ssubject]
             FROM $contactstable
             WHERE $contactscolumn[cid] = '" . (int)pnVarPrepForStore($cid) . "'";
     $result = $dbconn->Execute($sql);
@@ -74,14 +77,17 @@ function Formicula_adminapi_getContact($args)
         return false;
     }
 
-    list($cid, $name, $email, $public) = $result->fields;
+    list($cid, $name, $email, $public, $sname, $semail, $ssubject) = $result->fields;
 
     $result->Close();
 
-    $contact = array('cid'    => $cid,
-                     'name'   => $name,
-                     'email'  => $email,
-                     'public' => $public);
+    $contact = array('cid'      => $cid,
+                     'name'     => $name,
+                     'email'    => $email,
+                     'public'   => $public,
+                     'sname'    => $sname,
+                     'semail'   => $semail,
+                     'ssubject' => $ssubject);
     return $contact;
 }
 
@@ -105,7 +111,10 @@ function Formicula_adminapi_readContacts()
     $sql = "SELECT $contactscolumn[cid],
                    $contactscolumn[name],
                    $contactscolumn[email],
-                   $contactscolumn[public]
+                   $contactscolumn[public],
+                   $contactscolumn[sname],
+                   $contactscolumn[semail],
+                   $contactscolumn[ssubject]
             FROM $contactstable
             ORDER BY $contactscolumn[cid]";
     $result = $dbconn->Execute($sql);
@@ -121,12 +130,15 @@ function Formicula_adminapi_readContacts()
     // individually to ensure that the user is allowed access to it before it
     // is added to the results array
     for (; !$result->EOF; $result->MoveNext()) {
-        list($cid, $name, $email, $public) = $result->fields;
+        list($cid, $name, $email, $public, $sname, $semail, $ssubject) = $result->fields;
         if (pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_EDIT)) {
-            $contacts[] = array('cid'    => $cid,
-                                'name'   => $name,
-                                'email'  => $email,
-                                'public' => $public);
+            $contacts[] = array('cid'      => $cid,
+                                'name'     => $name,
+                                'email'    => $email,
+                                'public'   => $public,
+                                'sname'    => $sname,
+                                'semail'   => $semail,
+                                'ssubject' => $ssubject);
         }
     }
 
@@ -140,8 +152,12 @@ function Formicula_adminapi_readContacts()
  * createContact
  * creates a new contact
  *
- *@param name string name of the contact
- *@param email strng email address
+ *@param name  string name of the contact
+ *@param email string email address
+ *@param public int 0/1 to indicate if address is for public use
+ *@param sname string use this as senders name in confirmation mails
+ *@param semail string use this as senders email address in confirmation mails
+ *@param ssubject string use this as subject in confirmation mails
  *@returns boolean
  */
 function Formicula_adminapi_createContact($args)
@@ -176,12 +192,18 @@ function Formicula_adminapi_createContact($args)
               $contactscolumn[cid],
               $contactscolumn[name],
               $contactscolumn[email],
-              $contactscolumn[public])
+              $contactscolumn[public],
+              $contactscolumn[sname],
+              $contactscolumn[semail],
+              $contactscolumn[ssubject])
             VALUES (
               $nextId,
               '" . pnVarPrepForStore($name) . "',
               '" . pnVarPrepForStore($email) . "',
-              '" . (int)pnVarPrepForStore($public) . "')";
+              '" . (int)pnVarPrepForStore($public) . "',
+              '" . pnVarPrepForStore($sname) . "',
+              '" . pnVarPrepForStore($semail) . "',
+              '" . pnVarPrepForStore($ssubject) . "')";
     $dbconn->Execute($sql);
 
     // Check for an error with the database code, and if so set an
@@ -264,7 +286,7 @@ function Formicula_adminapi_updateContact($args)
 {
     extract($args);
 
-    if ( (!isset($cid)) || (!isset($name)) || (!isset($email))) {
+    if ((!isset($cid)) || (!isset($name)) || (!isset($email))) {
         pnSessionSetVar('errormsg', _MODARGSERROR);
         return false;
     }
@@ -285,9 +307,12 @@ function Formicula_adminapi_updateContact($args)
     $contactscolumn = &$pntable['formcontacts_column'];
 
     $sql = "UPDATE $contactstable
-            SET $contactscolumn[name]   = '".pnVarPrepForStore($name)."',
-                $contactscolumn[email]  = '".pnVarPrepForStore($email)."',
-		$contactscolumn[public] = '".(int)pnVarPrepForStore($public)."'
+            SET $contactscolumn[name]     = '".pnVarPrepForStore($name)."',
+                $contactscolumn[email]    = '".pnVarPrepForStore($email)."',
+                $contactscolumn[public]   = '".(int)pnVarPrepForStore($public)."',
+                $contactscolumn[sname]    = '".pnVarPrepForStore($sname)."',
+                $contactscolumn[semail]   = '".pnVarPrepForStore($semail)."',
+                $contactscolumn[ssubject] = '".pnVarPrepForStore($ssubject)."'
             WHERE $contactscolumn[cid]  = '".(int)$cid."'";
     $dbconn->Execute($sql);
 

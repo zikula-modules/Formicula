@@ -16,18 +16,12 @@
 
         </td>
         <td align="left">
-            <!--[ if count($contacts)==1 ]-->
-                <input type="hidden" name="cid" value="0" />
-                <!--[ $contacts.0.name ]-->
-            <!--[ else ]-->
-                <select name="cid">
-                <!--[ foreach item=contact from=$contacts ]-->
+            <select name="cid">
+            <!--[ foreach item=contact from=$contacts ]-->
                 <option value="<!--[ $contact.cid ]-->"><!--[ $contact.name ]--></option>
+            <!--[ /foreach ]-->
 
-                <!--[ /foreach ]-->
-
-                </select>
-            <!--[ /if ]-->
+            </select>
         </td>
     </tr>
 

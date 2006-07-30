@@ -24,7 +24,7 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 
-include_once( "modules/formicula/common.php" );
+include_once("modules/formicula/common.php");
 
 /**
  * main
@@ -35,13 +35,13 @@ include_once( "modules/formicula/common.php" );
  */
 function Formicula_admin_main()
 {
-    $pnr =& new pnRender( 'Formicula' );
+    $pnr =& new pnRender('Formicula');
     $pnr->caching = false;
 
-    if (!pnSecAuthAction(0, 'Formicula::', '::', ACCESS_EDIT)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_EDIT)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
-    return $pnr->fetch( 'admin.html' );
+    return $pnr->fetch('admin.html');
 }
 
 /**
@@ -53,18 +53,18 @@ function Formicula_admin_main()
  */
 function Formicula_admin_edit()
 {
-    $cid = pnVarCleanFromInput( 'cid' );
+    $cid = pnVarCleanFromInput('cid');
 
-    if (!pnSecAuthAction(0, 'Formicula::', '::', ACCESS_ADD)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADD)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    $pnr =& new pnRender( 'Formicula' );
+    $pnr =& new pnRender('Formicula');
     $pnr->caching = false;
 
-    if( (isset($cid)) && ($cid<>-1) ) {
-        if (!pnSecAuthAction(0, 'Formicula::', "::", ACCESS_EDIT)) {
-            return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if((isset($cid)) && ($cid<>-1)) {
+        if (!pnSecAuthAction(0, 'formicula::', "::", ACCESS_EDIT)) {
+            return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
         }
 
         $contact = pnModAPIFunc('Formicula',
@@ -72,15 +72,15 @@ function Formicula_admin_edit()
                              'getContact',
                              array('cid' => $cid));
         if ($contact == false) {
-            return showErrorMessage( pnVarPrepForDisplay(_FOR_NOSUCHCONTACT) );
+            return showErrorMessage(pnVarPrepForDisplay(_FOR_NOSUCHCONTACT));
         }
 
-        $pnr->assign( 'contact', $contact );
-        $pnr->assign( 'mode', 'update' );
+        $pnr->assign('contact', $contact);
+        $pnr->assign('mode', 'update');
     } else  {
-        $pnr->assign( 'mode', 'create' );
+        $pnr->assign('mode', 'create');
     }
-    return $pnr->fetch( 'adminedit.html' );
+    return $pnr->fetch('adminedit.html');
 }
 
 /**
@@ -96,26 +96,42 @@ function Formicula_admin_create($args)
 
     list($name,
          $email,
-	 $public) = pnVarCleanFromInput('cname',
-                                        'email',
-					'public');
+         $public,
+         $sname,
+         $semail,
+         $ssubject) = pnVarCleanFromInput('cname',
+                                          'email',
+                                          'public',
+                                          'sname',
+                                          'semail',
+                                          'ssubject');
 
     extract($args);
 
     if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_BADAUTHKEY) );
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
     }
 
-    if (!pnSecAuthAction(0, 'Formicula::', '::', ACCESS_ADD)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADD)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+    }
+
+    if(!pnVarValidate($email, 'email')) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($email));
+    }
+    if(!pnVarValidate($semail, 'email')) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($semail));
     }
 
     $res = pnModAPIFunc('Formicula',
                         'admin',
                         'createContact',
-                        array('name'   => $name,
-                              'email'  => $email,
-			      'public' => $public));
+                        array('name'     => $name,
+                              'email'    => $email,
+                              'public'   => $public,
+                              'sname'    => $sname,
+                              'semail'   => $semail,
+                              'ssubject' => $ssubject));
 
     if ($res != false) {
         pnSessionSetVar('statusmsg', _FOR_CONTACTCREATED);
@@ -141,28 +157,44 @@ function Formicula_admin_update($args)
     list($cid,
          $name,
          $email,
-	 $public) = pnVarCleanFromInput('cid',
-                                        'cname',
-                                        'email',
-					'public');
+         $public,
+         $sname,
+         $semail,
+         $ssubject) = pnVarCleanFromInput('cid',
+                                          'cname',
+                                          'email',
+                                          'public',
+                                          'sname',
+                                          'semail',
+                                          'ssubject');
 
     extract($args);
 
     if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_BADAUTHKEY) );
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
     }
 
-    if (!pnSecAuthAction(0, 'Formicula::', '::', ACCESS_EDIT)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_EDIT)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    if( pnModAPIFunc('Formicula',
+    if(!pnVarValidate($email, 'email')) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($email));
+    }
+    if(!pnVarValidate($semail, 'email')) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($semail));
+    }
+
+    if(pnModAPIFunc('Formicula',
                      'admin',
                      'updateContact',
-                     array('cid'    => $cid,
-                           'name'   => $name,
-                           'email'  => $email,
-			   'public' => $public) ) ) {
+                     array('cid'      => $cid,
+                           'name'     => $name,
+                           'email'    => $email,
+                           'public'   => $public,
+                           'sname'    => $sname,
+                           'semail'   => $semail,
+                           'ssubject' => $ssubject))) {
         // Success
         pnSessionSetVar('statusmsg', _FOR_CONTACTUPDATED);
     }
@@ -198,8 +230,8 @@ function Formicula_admin_delete($args)
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOSUCHCONTACT));
     }
 
-    if (!pnSecAuthAction(0, 'Formicula::', "::", ACCESS_DELETE)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', "::", ACCESS_DELETE)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
     // Check for confirmation.
@@ -207,12 +239,12 @@ function Formicula_admin_delete($args)
         $pnr =& new pnRender('Formicula');
         $pnr->caching = false;
         $contact['cid'] = $cid;
-        $pnr->assign( 'contact', $contact );
-        return $pnr->fetch( 'admindelete.html' );
+        $pnr->assign('contact', $contact);
+        return $pnr->fetch('admindelete.html');
     }
 
-    if (!pnSecConfirmAuthKey() ) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_BADAUTHKEY) );
+    if (!pnSecConfirmAuthKey()) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
     }
 
     if (pnModAPIFunc('Formicula',
@@ -248,22 +280,25 @@ function Formicula_admin_view()
     $allowedcontacts = array();
     foreach ($allcontacts as $contact) {
         $cid = $contact['cid'];
-        if (pnSecAuthAction(0, 'Formicula::', "::$cid", ACCESS_EDIT)) {
-            $allowedcontact = array( 'cid'        => $contact['cid'],
-                                     'name'       => $contact['name'],
-                                     'email'      => $contact['email'],
-                                     'public'     => $contact['public'],
-                                     'acc_edit'   => true,
-                                     'acc_delete' => false );
+        if (pnSecAuthAction(0, 'formicula::', "::$cid", ACCESS_EDIT)) {
+            $allowedcontact = array('cid'        => $contact['cid'],
+                                    'name'       => $contact['name'],
+                                    'email'      => $contact['email'],
+                                    'public'     => $contact['public'],
+                                    'sname'      => $contact['sname'],
+                                    'semail'     => $contact['semail'],
+                                    'ssubject'   => $contact['ssubject'],
+                                    'acc_edit'   => true,
+                                    'acc_delete' => false);
 
-            if (pnSecAuthAction(0, 'Formicula::Contact', "$cid::", ACCESS_DELETE)) {
+            if (pnSecAuthAction(0, 'formicula::Contact', "$cid::", ACCESS_DELETE)) {
                 $allowedcontact['acc_delete'] = true;
             }
-            array_push( $allowedcontacts, $allowedcontact );
+            array_push($allowedcontacts, $allowedcontact);
         }
     }
-    $pnr->assign( 'contacts', $allowedcontacts );
-    return $pnr->fetch( 'adminview.html' );
+    $pnr->assign('contacts', $allowedcontacts);
+    return $pnr->fetch('adminview.html');
 }
 
 /**
@@ -277,8 +312,8 @@ function Formicula_admin_modifyconfig()
 {
     $pnr =& new pnRender('Formicula');
     $pnr->caching = false;
-    if (!pnSecAuthAction(0, 'Formicula::', '::', ACCESS_ADMIN)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADMIN)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
     $pnr->assign('show_phone' ,    ((pnModGetVar('Formicula', 'show_phone')==1) ? "checked" : ""));
     $pnr->assign('show_company' ,  ((pnModGetVar('Formicula', 'show_company')==1) ? "checked" : ""));
@@ -287,8 +322,8 @@ function Formicula_admin_modifyconfig()
     $pnr->assign('show_comment',   ((pnModGetVar('Formicula', 'show_comment')==1) ? "checked" : ""));
     $pnr->assign('send_user' ,     ((pnModGetVar('Formicula', 'send_user')==1) ? "checked" : ""));
     $pnr->assign('delete_file' ,   ((pnModGetVar('Formicula', 'delete_file')==1) ? "checked" : ""));
-    $uploaddir = pnModGetVar( 'Formicula', 'upload_dir');
-    $pnr->assign('upload_dir',     $uploaddir );
+    $uploaddir = pnModGetVar('Formicula', 'upload_dir');
+    $pnr->assign('upload_dir',     $uploaddir);
     $pnr->assign('upload_dir_writable', is_writable($uploaddir));
     return $pnr->fetch('adminconfig.html');
 }
@@ -309,8 +344,8 @@ function Formicula_admin_modifyconfig()
  */
 function Formicula_admin_updateconfig($args)
 {
-    if (!pnSecAuthAction(0, 'Formicula::', '::', ACCESS_ADMIN)) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTH) );
+    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADMIN)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
     $show_phone =    pnVarCleanFromInput('show_phone');
@@ -323,7 +358,7 @@ function Formicula_admin_updateconfig($args)
     $upload_dir =    pnVarCleanFromInput('upload_dir');
 
     if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_BADAUTHKEY) );
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
     }
 
     if (empty($show_phone)){
@@ -359,8 +394,8 @@ function Formicula_admin_updateconfig($args)
     if (empty($delete_file)) {
         $delete_file = 0;
     }
-    pnModSetVar('Formicula', 'delete_file', $delete_file );
-    pnModSetVar('Formicula', 'upload_dir',   $upload_dir );
+    pnModSetVar('Formicula', 'delete_file', $delete_file);
+    pnModSetVar('Formicula', 'upload_dir',   $upload_dir);
 
     pnRedirect(pnModURL('Formicula', 'admin', 'modifyconfig'));
     return true;

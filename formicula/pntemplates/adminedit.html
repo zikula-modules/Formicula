@@ -21,7 +21,7 @@
             <!--[ pnml name='_FOR_NAME' html=1 ]-->
         </td>
         <td>
-            <input type='text' name='cname' id='cname' value='<!--[ $contact.name ]-->' size='40' maxlength='40' tabindex=1> 
+            <input type='text' name='cname' id='cname' value='<!--[ $contact.name ]-->' size='40' maxlength='40' tabindex=1>
         </td>
     </tr>
     <tr>
@@ -29,7 +29,7 @@
             <!--[ pnml name='_FOR_EMAIL' html=1 ]-->
         </td>
         <td>
-            <input type='text' name='email' id='email' value='<!--[ $contact.email ]-->' size='80' maxlength='80' tabindex=2> 
+            <input type='text' name='email' id='email' value='<!--[ $contact.email ]-->' size='80' maxlength='80' tabindex=2>
         </td>
     </tr>
     <tr>
@@ -38,12 +38,42 @@
         </td>
         <td>
             <!--[ if $contact.public==1 ]-->
-            <input type='checkbox' name='public' id='public' value=1 checked tabindex=3> 
+            <input type='checkbox' name='public' id='public' value=1 checked tabindex=3>
             <!--[ else ]-->
-            <input type='checkbox' name='public' id='public' value=1 tabindex=3> 
+            <input type='checkbox' name='public' id='public' value=1 tabindex=3>
             <!--[ /if ]-->
         </td>
     </tr>
+    <tr>
+        <td colspan="2">
+            <!--[ pnml name='_FOR_SENDERINFO' html=1 ]-->
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!--[ pnml name='_FOR_SENDERNAME' html=1 ]-->
+        </td>
+        <td>
+            <input type='text' name='sname' id='sname' value='<!--[ $contact.sname ]-->' size='40' maxlength='40' tabindex=2>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!--[ pnml name='_FOR_SENDEREMAIL' html=1 ]-->
+        </td>
+        <td>
+            <input type='text' name='semail' id='semail' value='<!--[ $contact.semail ]-->' size='80' maxlength='80' tabindex=2>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!--[ pnml name='_FOR_SENDERSUBJECT' html=1 ]-->
+        </td>
+        <td>
+            <input type='text' name='ssubject' id='ssubject' value='<!--[ $contact.ssubject ]-->' size='80' maxlength='80' tabindex=2>
+        </td>
+    </tr>
+
     <tr>
         <td colspan='2' align='center'>
             <br> <br>

@@ -27,7 +27,7 @@
 // Purpose of file:  Template user API
 // ----------------------------------------------------------------------
 
-include_once( "modules/formicula/common.php" );
+include_once("modules/formicula/common.php");
 
 /**
  * getContact
@@ -49,8 +49,8 @@ function formicula_userapi_getContact($args)
         $form = 0;
     }
 
-    if( !pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT) ) {
-        return showErrorMessage( pnVarPrepForDisplay(_FOR_NOAUTHFORFORM) );
+    if(!pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTHFORFORM));
     }
 
     pnModDBInfoLoad('formicula');
@@ -63,7 +63,11 @@ function formicula_userapi_getContact($args)
 
     $sql = "SELECT $contactscolumn[cid],
                    $contactscolumn[name],
-                   $contactscolumn[email]
+                   $contactscolumn[email],
+                   $contactscolumn[public],
+                   $contactscolumn[sname],
+                   $contactscolumn[semail],
+                   $contactscolumn[ssubject]
             FROM $contactstable
             WHERE $contactscolumn[cid] = '" . (int)pnVarPrepForStore($cid) . "'";
     $result = $dbconn->Execute($sql);
@@ -77,13 +81,17 @@ function formicula_userapi_getContact($args)
         return false;
     }
 
-    list($cid, $name, $email) = $result->fields;
+    list($cid, $name, $email, $public, $sname, $semail, $ssubject) = $result->fields;
 
     $result->Close();
 
-    $contact = array('cid'    => $cid,
-                     'name'   => $name,
-                     'email'  => $email);
+    $contact = array('cid'      => $cid,
+                     'name'     => $name,
+                     'email'    => $email,
+                     'public'   => $public,
+                     'sname'    => $sname,
+                     'semail'   => $semail,
+                     'ssubject' => $ssubject);
     return $contact;
 }
 
@@ -154,56 +162,56 @@ function formicula_userapi_readValidContacts($args)
  */
 function formicula_userapi_sendtoContact($args)
 {
-    extract( $args );
+    extract($args);
 
     if(pnModAvailable('Mailer')) {
-        $pnr =& new pnRender( 'formicula' );
+        $pnr =& new pnRender('formicula');
         $pnr->caching = false;
         $ip = getenv('REMOTE_ADDR');
-        $pnr->assign( 'host', gethostbyaddr($ip) );
-        $pnr->assign( 'ip', $ip );
-        $pnr->assign( 'form', $form );
-        $pnr->assign( 'contact', $contact );
-        $pnr->assign( 'userdata', $userdata );
+        $pnr->assign('host', gethostbyaddr($ip));
+        $pnr->assign('ip', $ip);
+        $pnr->assign('form', $form);
+        $pnr->assign('contact', $contact);
+        $pnr->assign('userdata', $userdata);
 
         $adminmail = pnConfigGetVar('adminmail');
         $sitename = pnConfigGetVar('sitename');
-        $pnr->assign( 'sitename', $sitename );
+        $pnr->assign('sitename', $sitename);
 
         // attach all files we have got
         $attachments = array();
-        $uploaddir = pnModGetVar( 'formicula', 'upload_dir' );
-        for( $i=0;$i<count($custom);$i++ ) {
-            if( is_array( $custom[$i]['data'] ))  {
+        $uploaddir = pnModGetVar('formicula', 'upload_dir');
+        for($i=0;$i<count($custom);$i++) {
+            if(is_array($custom[$i]['data']))  {
                 $attachments[] = $uploaddir."/".$custom[$i]['data']['name'];
                 $custom[$i]['data'] = $custom[$i]['data']['name'];
             }
         }
-        $pnr->assign( 'custom', $custom );
+        $pnr->assign('custom', $custom);
 
         switch($format) {
             case 'html' :
-                    $body = $pnr->fetch( $form."_adminmail.html" );
+                    $body = $pnr->fetch($form."_adminmail.html");
                     $html = true;
                     break;
             default:
-                    $body = $pnr->fetch( $form."_adminmail.txt" );
+                    $body = $pnr->fetch($form."_adminmail.txt");
                     $html = false;
         }
 
-        $res = pnModAPIFunc( 'Mailer', 'user', 'sendmessage',
-                             array( 'fromname'    => $userdata['uname'],
+        $res = pnModAPIFunc('Mailer', 'user', 'sendmessage',
+                             array('fromname'    => $userdata['uname'],
                                     'fromaddress' => $userdata['uemail'],
                                     'toname'      => $contact['mail'],
                                     'toaddress'   => $contact['email'],
                                     'subject'     => $sitename." - ".$contact['name'],
                                     'body'        => $body,
                                     'attachments' => $attachments,
-                                    'html'        => $html ) );
+                                    'html'        => $html));
 
-        if( pnModGetVar( 'formicula', 'delete_file') == 1 ) {
-            foreach( $attachments as $attachment ) {
-                unlink( $attachment );
+        if(pnModGetVar('formicula', 'delete_file') == 1) {
+            foreach($attachments as $attachment) {
+                unlink($attachment);
             }
         }
 
@@ -227,7 +235,7 @@ function formicula_userapi_sendtoContact($args)
  */
 function formicula_userapi_sendtoUser($args)
 {
-    extract( $args );
+    extract($args);
 
     if(pnModAvailable('Mailer')) {
         $pnr =& new pnRender('formicula');
@@ -241,28 +249,68 @@ function formicula_userapi_sendtoUser($args)
 
         $adminmail = pnConfigGetVar('adminmail');
         $sitename = pnConfigGetVar('sitename');
-        $pnr->assign( 'sitename', $sitename );
+        $pnr->assign('sitename', $sitename);
 
-        $pnr->assign( 'custom', removeUploadInformation( $custom ) );
+        $pnr->assign('custom', removeUploadInformation($custom));
 
         switch($format) {
             case 'html' :
-                    $body = $pnr->fetch( $form."_usermail.html" );
+                    $body = $pnr->fetch($form."_usermail.html");
                     $html = true;
                     break;
             default:
-                    $body = $pnr->fetch( $form."_usermail.txt" );
+                    $body = $pnr->fetch($form."_usermail.txt");
                     $html = false;
         }
-
-        return pnModAPIFunc( 'Mailer', 'user', 'sendmessage',
-                             array( 'fromname'    => sprintf( '%s - %s', $sitename, pnVarPrepForDisplay(_FOR_CONTACTFORM) ),
-                                    'fromaddress' => $contact['email'],
-                                    'toname'      => $userdata['uname'],
-                                    'toaddress'   => $userdata['uemail'],
-                                    'subject'     => $sitename." - ".$contact['name'],
-                                    'body'        => $body,
-                                    'html'        => $html ) );
+echo ":::<pre>";
+print_r($contact);
+echo "</pre>:::<br />";
+        // check for sender name
+        if(!empty($contact['sname'])) {
+            $fromname = $contact['sname'];
+        } else {
+            $fromname = $sitename . ' - ' . pnVarPrepForDisplay(_FOR_CONTACTFORM);
+        }
+        // check for sender email
+        if(!empty($contact['semail'])) {
+            $frommail = $contact['semail'];
+        } else {
+            $frommail = $contact['email'];
+        }
+        // check for subject
+        if(!empty($contact['ssubject'])) {
+            $subject = $contact['ssubject'];
+echo "subject:$subject:<br />";
+            // replace some placeholders
+            // %s = sitename
+            // %l = slogan
+            // %u = site url
+            // %c = contact name
+            // %n<num> = user defined field name <num>
+            // %d<num> = user defined field data <num>
+            $subject = str_replace('%s', pnVarPrepHTMLDisplay($sitename), $subject);
+echo "subject:$subject:<br />";
+            $subject = str_replace('%l', pnVarPrepHTMLDisplay(pnConfigGetVar('slogan')), $subject);
+echo "subject:$subject:<br />";
+            $subject = str_replace('%u', pnGetBaseURL(), $subject);
+echo "subject:$subject:<br />";
+            foreach($custom as $num => $customdata) {
+                $subject = str_replace('%n' . $num, $customdata['name'], $subject);
+                $subject = str_replace('%d' . $num, $customdata['data'], $subject);
+echo "subject:$subject:<br />";
+            }
+        } else {
+            $subject = $sitename." - ".$contact['name'];
+        }
+die($subject);
+        return pnModAPIFunc('Mailer', 'user', 'sendmessage',
+                            array('fromname'    => $fromname,
+                                  'fromaddress' => $frommail,
+                                  'toname'      => $userdata['uname'],
+                                  'toaddress'   => $userdata['uemail'],
+                                  'subject'     => $subject,
+                                  'body'        => $body,
+                                  'html'        => $html));
 
 
     }
@@ -281,7 +329,7 @@ function formicula_userapi_checkArguments($args)
 {
     extract($args);
 
-    if (!isset($userdata['uemail']) || ( pnVarValidate( $userdata['uemail'], 'email' ) == false ) ) {
+    if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
         //die("no email");
         return false;
     }
@@ -299,13 +347,13 @@ function formicula_userapi_checkArguments($args)
         return false;
     }
 
-    foreach( $custom as $field ) {
-        if( $field['mandatory'] == true ) {
-            if( !is_array( $field['data'] ) && ( empty( $field['data'] ) ) ) {
+    foreach($custom as $field) {
+        if($field['mandatory'] == true) {
+            if(!is_array($field['data']) && (empty($field['data']))) {
                 //die("no " . $field['name']);
                 return false;
             }
-            if( ( $field['upload'] == true ) && ( $field['data']['size'] == 0 ) ) {
+            if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
                 return false;
             }
         }

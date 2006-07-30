@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id$
 // ----------------------------------------------------------------------
 // Original Author of file: Sebastian Fränk
@@ -7,7 +7,11 @@
 //
 
 //new
-
+define('_FOR_ILLEGALEMAIL', 'invalid email address detected');
+define('_FOR_SENDERINFO', 'Use this information in the users confirmation mail');
+define('_FOR_SENDERNAME', 'Sender name');
+define('_FOR_SENDEREMAIL', 'Sender email');
+define('_FOR_SENDERSUBJECT', 'Subject');
 
 //original
 define( '_FOR_ADDCONTACT','Add contact or Topic' );
