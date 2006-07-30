@@ -21,7 +21,7 @@
 // uploaded files as file attachment
 //
 // Formicula 0.5 (rm)
-// store contacts in seperate database table
+// store contacts in separate database table
 // optionally call a form with a contact id (cid) to select only this contact
 // define public / private contacts, only public contacts will be listed in the form,
 // but the form can also be used with a private contact id
@@ -31,3 +31,11 @@
 // tested with .762 only - not sure if it still works with older versions of PostNuke (and I must admit that
 // I don't care)
 //
+// Formicula 1.0 (fs)
+// added option to define special name, email and subject to be used in users confirmation email
+// In the subject you can user optional placeholders:
+// %s = sitename
+// %l = slogan
+// %u = the sites url
+// %n<num> = name of custom field #<num>
+// %d<num> = data of custom field #<num>
