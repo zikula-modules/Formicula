@@ -3,61 +3,61 @@
 
 <!--[ include file=1_userheader.html ]-->
 
-<div align='center'>
+<div style="text-align: center;">
     <!--[ pnml name='_FOR_SENDTOADMIN' html=1 ]-->
     <br /><br />
     <!--[ pnml name='_FOR_ONLINEPRIVACY' html=1 ]-->
     <br /><br />
 </div>
 
-<table width='80%'>
+<table width="80%">
 
-    <tr width='100%'> 
+    <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
             <!--[ pnml name='_FOR_NAME' ]-->&nbsp;:
         </td>
         <td style="width: 50%; text-align:left; padding-left: 50px;">
             <!--[ $userdata.uname|pnvarprephtmldisplay ]-->
-        </td>        
-    </tr>        
+        </td>
+    </tr>
 
     <!--[ foreach item=field from=$custom ]-->
-    <tr width='100%'> 
+    <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
             <!--[ $field.name ]-->&nbsp;:
         </td>
         <td style="width: 50%; text-align:left; padding-left: 50px;">
             <!--[ $field.data ]-->
-        </td>        
+        </td>
     </tr>
-    <!--[ /foreach ]-->     
-    
-    <tr width='100%'> 
+    <!--[ /foreach ]-->
+
+    <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
             <!--[ pnml name='_FOR_EMAIL' ]-->&nbsp;:
         </td>
         <td style="width: 50%; text-align:left; padding-left: 50px;">
             <!--[ $userdata.uemail|pnvarprephtmldisplay ]-->
-        </td>        
-    </tr>        
+        </td>
+    </tr>
 
-    <tr width='100%'> 
+    <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
             <!--[ pnml name='_FOR_URL' ]-->&nbsp;:
         </td>
         <td style="width: 50%; text-align:left; padding-left: 50px;">
             <!--[ $userdata.url|pnvarprephtmldisplay ]-->
-        </td>        
-    </tr>  
-   
-    <tr width='100%'> 
+        </td>
+    </tr>
+
+    <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
             <!--[ pnml name='_FOR_COMMENT' ]-->&nbsp;:
         </td>
         <td style="width: 50%; text-align:left; padding-left: 50px;">
             <!--[ $userdata.comment|nl2br|pnvarprephtmldisplay ]-->
-        </td>        
-    </tr>        
+        </td>
+    </tr>
 
 </table>
 
@@ -67,4 +67,4 @@
 <!--[ else ]-->
 <!--[ pnml name='_FOR_ERRORSENDINGUSERMAIL' ]-->
 <!--[ /if ]-->
-        
+
