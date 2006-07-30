@@ -80,6 +80,7 @@ function formicula_user_main($args=array())
 
     $pnr =& new pnRender('formicula');
     $pnr->caching = false;
+    $pnr->add_core_data();
     $pnr->assign('uname', $uname);
     $pnr->assign('uemail', $uemail);
     $pnr->assign('contacts', $contacts);
@@ -135,7 +136,7 @@ function formicula_user_send($args=array())
                                                  'comment');
     }
 
-    $form = (!empty($form)) ? $form : 0;
+    $form = (!empty($form)) ? (int)$form : 0;
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
         $userformat = 'plain';
     }
