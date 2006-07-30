@@ -262,9 +262,7 @@ function formicula_userapi_sendtoUser($args)
                     $body = $pnr->fetch($form."_usermail.txt");
                     $html = false;
         }
-echo ":::<pre>";
-print_r($contact);
-echo "</pre>:::<br />";
+
         // check for sender name
         if(!empty($contact['sname'])) {
             $fromname = $contact['sname'];
@@ -280,7 +278,6 @@ echo "</pre>:::<br />";
         // check for subject
         if(!empty($contact['ssubject'])) {
             $subject = $contact['ssubject'];
-echo "subject:$subject:<br />";
             // replace some placeholders
             // %s = sitename
             // %l = slogan
@@ -289,20 +286,16 @@ echo "subject:$subject:<br />";
             // %n<num> = user defined field name <num>
             // %d<num> = user defined field data <num>
             $subject = str_replace('%s', pnVarPrepHTMLDisplay($sitename), $subject);
-echo "subject:$subject:<br />";
             $subject = str_replace('%l', pnVarPrepHTMLDisplay(pnConfigGetVar('slogan')), $subject);
-echo "subject:$subject:<br />";
             $subject = str_replace('%u', pnGetBaseURL(), $subject);
-echo "subject:$subject:<br />";
             foreach($custom as $num => $customdata) {
                 $subject = str_replace('%n' . $num, $customdata['name'], $subject);
                 $subject = str_replace('%d' . $num, $customdata['data'], $subject);
-echo "subject:$subject:<br />";
             }
         } else {
             $subject = $sitename." - ".$contact['name'];
         }
-die($subject);
+
         return pnModAPIFunc('Mailer', 'user', 'sendmessage',
                             array('fromname'    => $fromname,
                                   'fromaddress' => $frommail,
