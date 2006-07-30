@@ -10,12 +10,12 @@ label {
     margin: 2px 0;
 }
 
-label:before {
+#contactform label:before {
     content: url("../pnimages/bullet.gif");
     margin-right: 0.5em;
 }
 
-.mandatory:after {
+#contactform .mandatory:after {
     content: "*";
     color: red;
     margin-left: 0.5em;
