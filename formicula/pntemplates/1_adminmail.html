@@ -1,27 +1,27 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
- 
+
 <html>
 <head>
 <title>formicula_admin_html_email</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=<!--[ pnml name='_CHARSET' ]-->">
 <body>
- <br>
-<!--[ pnml name='_FOR_HELLO' ]--> <br> <br> 
- 
-<!--[ pnml name='_FOR_ADMINMAIL1' ]--> <br> <br> 
- 
-<!--[ pnml name='_FOR_FORMNUMBER' ]--> : <!--[ $form ]--> <br>
-<!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]-->  <br>
-<!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]-->  <br>
-<!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]--> <br> 
-<!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]--><br><br> 
- 
-<!--[ foreach item=field from=$custom ]--> 
-<!--[ $field.name ]--> : <!--[ $field.data ]--><br>
+ <p>
+<!--[ pnml name='_FOR_HELLO' ]--> <br /> <br />
+
+<!--[ pnml name='_FOR_ADMINMAIL1' ]--> <br /> <br />
+
+<!--[ pnml name='_FOR_FORMNUMBER' ]--> : <!--[ $form ]--> <br />
+<!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]-->  <br />
+<!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]-->  <br />
+<!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]--> <br />
+<!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]--><br /><br />
+
+<!--[ foreach item=field from=$custom ]-->
+<!--[ $field.name ]--> : <!--[ $field.data ]--><br />
 <!--[ /foreach ]-->
 
-<!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> <br>
- 
+<!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> <br />
+</p>
 </body>
 </html>
