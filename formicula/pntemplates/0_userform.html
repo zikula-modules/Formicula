@@ -3,8 +3,12 @@
 
 <!--[ include file=0_userheader.html ]-->
 
-<form action="<!--[ pnmodurl modname=formicula type=user func=send ]-->" method="post">
-<div id="contactform">
+<script type="text/javascript" src="javascript/ajax/prototype.js"></script>
+<script type="text/javascript" src="javascript/ajax/validation.js"></script>
+<script type="text/javascript" src="javascript/ajax/effects.js"></script>
+
+<form id="contactform" action="<!--[ pnmodurl modname=formicula type=user func=send ]-->" method="post">
+<div>
 <input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module="formicula" ]-->" />
 <input type="hidden" name="form" value="0" />
 <input type="hidden" name="adminformat" value="html" />
@@ -24,25 +28,29 @@
 
 <p>
     <label class="mandatory" for="uname"><!--[ pnml name="_FOR_NAME" html=1 ]-->&nbsp;:</label><br />
-    <input type="text" class="formborder" id="uname" name="uname" size="40" maxlength="80" value="<!--[ $uname ]-->" />
+    <input type="text" class="formborder required" id="uname" name="uname" size="40" maxlength="80" value="<!--[ $uname ]-->" />
 </p>
+<p id="advice-required-uname" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
 <p>
     <label class="mandatory" for="uemail"><!--[ pnml name="_FOR_EMAIL" html=1 ]-->&nbsp;:</label><br />
-    <input type="text" class="formborder" id="uemail" name="uemail" size="40" maxlength="40" value="<!--[ $uemail ]-->" />
+    <input type="text" class="formborder required validate-email" id="uemail" name="uemail" size="40" maxlength="40" value="<!--[ $uemail ]-->" />
 </p>
+<p id="advice-validate-email-uemail" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_EMAIL' ]--></p>
+<p id="advice-required-uemail" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
 <!--[ if $pncore.formicula.show_url==1 ]-->
 <p>
     <label for="url"><!--[ pnml name="_FOR_URL" html=1 ]-->&nbsp;:</label><br />
-    <input type="text" class="formborder" id="url" name="url" size="40" maxlength="40" />
+    <input type="text" class="formborder validate-url" id="url" name="url" size="40" maxlength="40" />
 </p>
+<p id="advice-validate-url-url" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_URL' ]--></p>
 <!--[ /if ]-->
 
 <!--[ if $pncore.formicula.show_phone==1 ]-->
 <p>
     <label for="phone"><!--[ pnml name="_FOR_PHONE" html=1 ]-->&nbsp;:</label><br />
-    <input type="text" class="formborder" id="phone" name="phone" size="40" maxlength="40" />
+    <input type="text" class="formborder validate-digits" id="phone" name="phone" size="40" maxlength="40" />
 </p>
 <!--[ /if ]-->
 
@@ -62,8 +70,9 @@
 
 <p>
     <label class="mandatory" for="comment"><!--[ pnml name="_FOR_COMMENT" html=1 ]-->&nbsp;:</label><br />
-    <textarea class="formborder" rows="6" cols="45" id="comment" name="comment"></textarea>
+    <textarea class="formborder required" rows="6" cols="45" id="comment" name="comment"></textarea>
 </p>
+<p id="advice-required-comment" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
 <p>
     <label for="userformat"><!--[ pnml name="_FOR_USERMAILFORMAT" html=1 ]-->&nbsp;:</label><br />
@@ -76,6 +85,10 @@
 <p>
     <input type="submit" name="submit" value="<!--[ pnml name="_FOR_SEND" ]-->" />
 </p>
+
+<script type="text/javascript">
+   var valid = new Validation('contactform');
+</script>
 
 </div>
 </form>
