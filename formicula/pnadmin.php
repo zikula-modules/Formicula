@@ -116,10 +116,10 @@ function Formicula_admin_create($args)
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    if(!pnVarValidate($email, 'email')) {
+    if(!empty($email) && !pnVarValidate($email, 'email')) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($email));
     }
-    if(!pnVarValidate($semail, 'email')) {
+    if(!empty($semail) && !pnVarValidate($semail, 'email')) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($semail));
     }
 
@@ -178,10 +178,10 @@ function Formicula_admin_update($args)
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    if(!pnVarValidate($email, 'email')) {
+    if(!empty($email) && !pnVarValidate($email, 'email')) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($email));
     }
-    if(!pnVarValidate($semail, 'email')) {
+    if(!empty($semail) && !pnVarValidate($semail, 'email')) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($semail));
     }
 
