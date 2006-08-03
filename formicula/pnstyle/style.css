@@ -3,7 +3,7 @@
 #contactform {
 }
 
-label {
+#contactform label {
     display: inline;
     font-size: 1em;
     font-weight: bold;
@@ -44,3 +44,8 @@ label {
 #contactform textarea {
     width: 99%;
 }
+
+#contactform .custom-advice {
+    color: red;
+}
+
