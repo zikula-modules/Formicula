@@ -29,7 +29,10 @@
 // ----------------------------------------------------------------------
 
 //new
-define( '_FOR_UPLOADLIMIT', '(Upload, max. 2MB)');
+define('_FOR_ADVICE_EMAIL', 'Please enter a valid emailaddress like user@example.com.');
+define('_FOR_ADVICE_URL', 'Please enter a valid internet address like http://www.example.com.');
+define('_FOR_ADVICE_MANDATORY', 'This is a mandatory field.');
+define('_FOR_UPLOADLIMIT', '(Upload, max. 2MB)');
 
 //existing
 define( '_FOR_BACK', 'Back to Contact Form' );

@@ -6,7 +6,10 @@
 // file created on Thursday 12th February 2004 20:11:02
 
 //new
-define( '_FOR_UPLOADLIMIT', '(Upload, max. 2MB)');
+define('_FOR_ADVICE_EMAIL', 'Bitte eine gültige Emailadresse in der Form name@domain.de eingeben.');
+define('_FOR_ADVICE_URL', 'Bitte eine gültige Internetadresse in der Form http://www.domain.de eingeben.');
+define('_FOR_ADVICE_MANDATORY', 'Dies ist ein Pflichtfeld, bitte ausfüllen.');
+define('_FOR_UPLOADLIMIT', '(Upload, max. 2MB)');
 
 //original
 define( '_FOR_BACK', 'Zurück zum Kontaktformular' );
