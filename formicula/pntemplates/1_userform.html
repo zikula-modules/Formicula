@@ -1,163 +1,122 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
 
-<style>
-.mand
-{
-    color: red;
-}
-</style>
+<!--[ include file=1_userheader.html ]-->
 
-<div style="text-align: left; font-weight: bold"><!--[ pngetstatusmsg ]--></div>
-<br /><br />
-<fieldset>
-<legend>
-<span style="font-size:15px; font-weight: bold; text-align: center"><!--[ pnml name='_FOR_ONLINEJOBAPPLY' html=1 ]--></span>
-</legend>
-<br /><br />
+<script type="text/javascript" src="javascript/ajax/prototype.js"></script>
+<script type="text/javascript" src="javascript/ajax/validation.js"></script>
+<script type="text/javascript" src="javascript/ajax/effects.js"></script>
 
-<form action='<!--[ pnmodurl modname=formicula type=user func=send ]-->' method='post' enctype="multipart/form-data">
-<input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
-<input type='hidden' name='form' value=1>
-<input type='hidden' name='numFields' value=8>
-<input type='hidden' name='adminformat' value='html'>
-<input type='hidden' name='userformat' value='html'>
-<input type='hidden' name='cid' value="1">
-
-<table width='100%'>
-
-    <tr width='100%'>
-        <td style="padding-bottom: 15px;" colspan='2' width='50%' align='right'>
-            <!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td style="padding-bottom: 15px;" colspan='2' width='50%' align='left'>
-            <input type='hidden' name='custom0name' value='<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->'>
-            <input type='hidden' name='custom0mandatory' value=1>
-            <input type='text' name='custom0data' size='35' maxlength='80' value=''>
-        </td>
-    </tr>
+<form id="contactform" action="<!--[ pnmodurl modname=formicula type=user func=send ]-->" method="post" enctype="multipart/form-data">
+<div>
+<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module="formicula" ]-->" />
+<input type="hidden" name="form" value="1" />
+<input type="hidden" name="adminformat" value="html" />
+<input type="hidden" name="userformat" value="html" />
+<input type="hidden" name="numFields" value="7" />
+<input type="hidden" name="cid" value="1" />
 
 
+<p>
+    <span class="mandatory"><!--[ pnml name="_FOR_MUSTBE" html=1 ]--></span>
+</p>
 
-    <tr width='100%'>
-        <td width='25%' align='right' nowrap>
-            <!--[ pnml name='_FOR_NAME' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='text' name='uname' size='35' maxlength='80' value='<!--[ $uname ]-->'>
-        </td>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_ONLINEBIRTHDATE' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom4name' value='<!--[ pnml name='_FOR_ONLINEBIRTHDATE' ]-->'>
-            <input type='hidden' name='custom4mandatory' value=1>
-            <input type='text' name='custom4data' size='35' maxlength='40' value=''>
-        </td>
-    </tr>
+<p>
+    <label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--></label><br />
+    <input type="hidden" name="custom0name" value="<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->" />
+    <input type="hidden" name="custom0mandatory" value="1" />
+    <input type="text" class="formborder required" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
+</p>
+<p id="advice-required-custom0data" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
-    <tr width='100%'>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_ONLINESTREET' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom1name' value='<!--[ pnml name='_FOR_ONLINESTREET' ]-->'>
-            <input type='hidden' name='custom1mandatory' value=1>
-            <input type='text' name='custom1data' size='35' maxlength='40' value=''>
-        </td>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_ONLINESALARY' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom5name' value='<!--[ pnml name='_FOR_ONLINESALARY' ]-->'>
-            <input type='hidden' name='custom5mandatory' value=1>
-            <input type='text' name='custom5data' size='35' maxlength='40' value=''>&euro;
-        </td>
-    </tr>
+<p style="clear: left;">
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="uname"><!--[ pnml name='_FOR_NAME' html=1 ]--></label><br />
+        <input type="text" class="formborder required" name="uname" id="uname" size="35" maxlength="80" value="<!--[ $uname ]-->" />
+        <span id="advice-required-uname" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+    </span>
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="custom4data"><!--[ pnml name='_FOR_ONLINEBIRTHDATE' html=1 ]--></label><br />
+        <input type="hidden" name="custom4name" value="<!--[ pnml name='_FOR_ONLINEBIRTHDATE' ]-->" />
+        <input type="hidden" name="custom4mandatory" value="1" />
+        <input type="text" class="formborder required validate-date" name="custom4data" id="custom4data" size="35" maxlength="40" value="" />
+        <span id="advice-required-custom4data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+        <span id="advice-validate-date-custom4data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_DATE' ]--></span>
+    </span>
+</p>
 
+<p style="clear: left;">
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="custom1data"><!--[ pnml name='_FOR_ONLINESTREET' html=1 ]--></label><br />
+        <input type="hidden" name="custom1name" value="<!--[ pnml name='_FOR_ONLINESTREET' ]-->" />
+        <input type="hidden" name="custom1mandatory" value="1" />
+        <input type="text" class="formborder required" name="custom1data" id="custom1data" size="35" maxlength="40" value="" />
+        <span id="advice-required-custom1data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+    </span>
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="custom5data"><!--[ pnml name='_FOR_ONLINESALARY' html=1 ]--></label><br />
+        <input type="hidden" name="custom5name" value="<!--[ pnml name='_FOR_ONLINESALARY' ]-->" />
+        <input type="hidden" name="custom5mandatory" value="1" />
+        <input type="text" class="formborder required validate-number" name="custom5data" id="custom5data" size="35" maxlength="40" value="" />
+        <span id="advice-required-custom5data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+        <span id="advice-validate-number-custom5data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_NUMBER' ]--></span>
+    </span>
+</p>
 
-    <tr width='100%'>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_ONLINEZIPCITY' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom2name' value='<!--[ pnml name='_FOR_ONLINEZIPCITY' ]-->'>
-            <input type='hidden' name='custom2mandatory' value=1>
-            <input type='text' name='custom2data' size='35' maxlength='40' value=''>
-        </td>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_ONLINEDATE' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom6name' value='<!--[ pnml name='_FOR_ONLINEDATE' ]-->'>
-            <input type='hidden' name='custom6mandatory' value=1>
-            <input type='text' name='custom6data' size='35' maxlength='40' value=''>
-        </td>
-    </tr>
+<p style="clear: left;">
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="custom2data"><!--[ pnml name='_FOR_ONLINEZIPCITY' html=1 ]--></label><br />
+        <input type="hidden" name="custom2name" value="<!--[ pnml name='_FOR_ONLINEZIPCITY' ]-->" />
+        <input type="hidden" name="custom2mandatory" value="1" />
+        <input type="text" class="formborder required" name="custom2data" id="custom2data" size="35" maxlength="40" value="" />
+        <span id="advice-required-custom2data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+    </span>
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="custom6data"><!--[ pnml name='_FOR_ONLINEDATE' html=1 ]--></label><br />
+        <input type="hidden" name="custom6name" value="<!--[ pnml name='_FOR_ONLINEDATE' ]-->" />
+        <input type="hidden" name="custom6mandatory" value="1" />
+        <input type="text" class="formborder required validate-date" name="custom6data" id="custom6data" size="35" maxlength="40" value="" />
+        <span id="advice-required-custom6data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+        <span id="advice-validate-date-custom6data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_DATE' ]--></span>
+    </span>
+</p>
 
+<p style="clear: left;">
+    <span style="float:left; width: 49%;">
+        <label class="mandatory" for="custom3data"><!--[ pnml name='_FOR_PHONE' html=1 ]--></label><br />
+        <input type="hidden" name="custom3name" value="<!--[ pnml name='_FOR_PHONE' ]-->" />
+        <input type="hidden" name="custom3mandatory" value="1" />
+        <input type="text" class="formborder required" name="custom3data" id="custom3data" size="35" maxlength="40" value="" />
+        <span id="advice-required-custom3data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+    </span>
+    <span style="float:left; width: 49%;">
+        <label for="url"><!--[ pnml name='_FOR_URL' html=1 ]--></label><br />
+        <input type='text' class="formborder validate-url" name="url" id="url" value="" size="35" maxlength="40" />
+        <span id="advice-validate-url-url" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_URL' ]--></span>
+    </span>
+</p>
 
-    <tr width='100%'>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_PHONE' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom3name' value='<!--[ pnml name='_FOR_PHONE' ]-->'>
-            <input type='hidden' name='custom3mandatory' value=1>
-            <input type='text' name='custom3data' size='35' maxlength='40' value=''>
-        </td>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_URL' html=1 ]-->&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='text' name='url' value='' size='35' maxlength='40'>
-        </td>
-    </tr>
+<p style="clear: left; width: 49%;">
+    <label class="mandatory" for="uemail"><!--[ pnml name='_FOR_EMAIL' html=1 ]--></label><br />
+    <input type="text" class="formborder required validate-email" name="uemail" id="uemail" value="" size="35" maxlength="40" />
+    <span id="advice-required-uemail" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
+    <span id="advice-validate-email-uemail" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_EMAIL' ]--></span>
+</p>
 
-    <tr width='100%'>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_EMAIL' html=1 ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-        </td>
-        <td width='25%' align='left'>
-            <input type='text' name='uemail' size='35' maxlength='40' value='<!--[ $uemail ]-->'>
-        </td>
-        <td width='25%' align='right'>
-            <!--[ pnml name='_FOR_RESUME' ]-->&nbsp;<span class="mand">*</span>&nbsp;:&nbsp;
-            <!--[ pnml name='_FOR_UPLOADLIMIT' ]-->
-        </td>
-        <td width='25%' align='left'>
-            <input type='hidden' name='custom7name' value='<!--[ pnml name='_FOR_RESUME' ]-->'>
-            <input type='hidden' name='custom7mandatory' value=1>
-            <input type='file' name='custom7data' size='20' maxlength='2100000' value=''>
-        </td>
-    </tr>
+<p style="clear: left;">
+    <label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_COMMENT' html=1 ]--></label><br />
+    <textarea class="formborder required" rows="10" cols="45" name="comment" id="comment"></textarea>
+</p>
+<p id="advice-required-comment" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
-    <tr width='100%'>
-        <td colspan='2' width='50%' align='right'>
-            <!--[ pnml name='_FOR_COMMENT' html=1 ]-->&nbsp;:&nbsp;
-        </td>
-        <td colspan='2' width='50%' align='left'>
-            <textarea rows='6' cols='45' name='comment' wrap='soft'></textarea>
-        </td>
-    </tr>
+<p>
+    <input type="submit" name="submit" value="<!--[ pnml name="_FOR_SEND" ]-->" />
+</p>
 
-    <tr width='100%'>
-        <td colspan='2' width='50%'>
-            &nbsp;
-        </td>
-        <td colspan='2' align='left' width='50%'>
-            <input type='submit' name='submit' value='<!--[ pnml name='_SUBMIT' ]-->'>
-        </td>
-    </tr>
+<script type="text/javascript">
+   var valid = new Validation('contactform');
+</script>
 
-    <tr width='100%'>
-        <td colspan='2' width='50%'>&nbsp;
-
-        </td>
-        <td colspan='2' align='left' width='50%'>
-            <span class="mand">*</span>&nbsp;<!--[ pnml name='_FOR_MUSTBE' html=1 ]-->
-        </td>
-    </tr>
-</table>
+</div>
 </form>
 
-</fieldset>
