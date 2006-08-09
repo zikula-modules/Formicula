@@ -1,0 +1,181 @@
+$Id$
+
+Formicula user manual
+---------------------
+manual for Formicula v.2 by Jim Hadfield and Frank Schummertz
+manual for Formicula >v.2: Frank Schummertz
+     
+Formicula supports an infinite number of contact forms with an infinite number 
+of custom fields (ok, infinite as long as you have enough server memory).
+
+Requirements
+------------
+Formicula requires PostNuke .760 or later, although .762 is recommended. It *might* run
+wit earlier versions, but I did not test this and if it does not work, I don't care - sorry.
+For client side input validation you need the AjaxSupportPackage which is available from
+http://noc.postnuke.com/frs/?group_id=8. Install this as mentioned in the docs.
+
+Installation
+-----------------
+1. Extract the files to your Postnuke directory.
+2. Load, initialize and activate the module in the admin section.
+3. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
+4. Add a basic permission rule, e.g.
+   unreg. users (group)  |  formicula::  |  .*  |  comment
+   This enables unregistered users to use all existing forms. In a default PN installation
+   the users group has a generic comment permission to do the same.
+5. Add a link to your main menu with: {formicula} (using [formicula] will not work!)
+   This uses form 0. To call a specific form id use
+   index.php?name=formicula&form=<formid>
+   e.g. index.php?name=formicula&form=5 to use for #5
+In the distribution package you will find 2 sample forms 0 and 1, 
+0 is a normal contact form and form #1 is for filing an online job application.
+
+Configuration
+-------------
+Show xxx: quick configuration enable/disable some fields in the userform. THese fields may be
+(read: surely will be) removed in future versions.
+Send confirmation email to user: Tick this to send an confirmation mail to the user  	
+Folder for uploaded files: Uploaded files get stored here. Make sure this folder is secured with a
+.htacess file otherwise someone can upload malicious files and execute them!
+Delete file after sending: does what it says when ticked.
+
+Contacts
+--------
+Each contact consists of several information:
+
+Contact name or Topic: The name that is shown to the user in the form, e.g. Webmaster 	
+Email: The email to send the data to	
+Public: tick this to make the contact available	for use.
+Sender name: senders name as used in the users confirmation mail	
+Sender email: senders email address as used in the users confirmation mail, e.g noreply@example.com	
+Subject: enter a static subject or use these placeholders:
+    * %s = sitename
+    * %l = slogan
+    * %u = site url
+    * %c = contact name
+    * %n<num> = user defined field name <num>
+    * %d<num> = user defined field data <num>
+ 
+Templates
+---------
+Everything you want to do with the form is handled in the templates.
+
+The templates for the forms are named as follows:
+
+The form with the input fields:  #_userform.html
+The page with the confirmation after submitting the data:  #_userconfirm.html
+The page with error messages after submitting data:  #_usererror.html
+The user's confirmation mail in text format:  #_usermail.txt
+The user's confirmation mail in html format:  #_usermail.html
+The admin mail in text format:  #_adminmail.txt
+The admin mail in html format:  #_adminmail.html
+This is the email that the admin gets after the user sends submits the userform.
+
+Note: the email format can be chosen by using a dropdown like
+			
+<select name="userformat">
+<option value="html"><!--[ pnml name='_FOR_HTMLMAIL' ]--></option>
+<option value="plain"><!--[ pnml name='_FOR_TEXTMAIL' ]--></option>
+</select>
+
+or if you want to force the type of email, you can use a hidden field in the form
+			
+<input type="hidden" name="userformat" value="html" /> 
+
+The '#' at the beginning of the template designates the number of form.
+
+Standard Fields
+---------------
+The standard fields to be used in forma are
+
+uname: the users name (mandatory)
+uemail: the users name (mandatory)
+url: the users homepage (optional)
+location, phone, company: these are obvious... (optional)
+comment: normally a textarea for entering free text. Since 0.6 this is not longer 
+a mandatory field!
+
+Custom Fields
+----------------------
+You can add as many custom fields to your form as you want. 
+This makes it easy to create e.g. an online job application form if needed.
+
+This makes it necessary to send certain information from the form page to the module.
+
+These are:
+
+* numFields (hidden field) number of custom fields used
+  This is mandatory!
+  
+* custom#name (hidden field) name of the custom field
+  can be used in the confirmation email
+  
+* custom#mandatory (hidden field) set to 1 if this is a mandatory field.
+  Formicula checks this and shows an errormessage when this field is not filled
+
+* custom#data (any kind of input field) the data with #=number.
+  the payload
+
+Example:
+
+<label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--></label><br />
+<input type="hidden" name="custom0name" value="<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->" />
+<input type="hidden" name="custom0mandatory" value="1" />
+<input type="text" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
+
+This will create a custom fields 0 which is both mandatory. 
+In this case you also need:
+
+<input type="hidden" name="numFields" value="1" />
+
+Please note that the customfield numbers have to start at 0!
+
+Permissions
+------------------
+To use a form you need the right to COMMENT.
+
+Unregistered   |   formicula::  |  .*   |  comment
+all unregistered users are allowed to use all forms and write to all contacts
+
+Unregistered   |   formicula::  |  0::  |  comment
+all unregistered users are allowed to use form 0 with all existing contacts.
+	
+Users   |   formicula::   |  1:(2|3):  |  comment
+all members of the group users are allowed to use form 1 and write to contact 2 and 3.
+    
+Use external information in the forms
+-------------------------------------
+You can use external information in the form by sending them in the url used to call
+the form.
+
+These data are send in an associative array addinfo where the key is the name.
+
+With
+
+index.php?name=formicula&form=2&addinfo[tid]=4&addinfo[pid]=17
+
+you send two different information to the form which can used in the userform template (in
+this example 2_userform.html) with
+
+<!--[ $addinfo.tid ]-->   => 4
+<!--[ $addinfo.pid ]-->   => 17
+
+As you can see you can use this to e.g. load data from Pagesetter in the userform template.
+I created a webpage for a dance school in Germany where this is used for booking all 
+kind of courses with a single template by passing these values to Formicula. The 
+template loads the data from Pagesetter and shows it to the user.
+
+Client side input validation
+----------------------------
+The supplied templates use a prototype.js-based input validation. If you do not want 
+to use this, simply remove the javascript from templates.
+
+A detailed explanation how to use this feature can be found at
+http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/
+
+
+
+
+ 	
+	 
