@@ -6,14 +6,15 @@
 <!--[ if $mode==create ]-->
 <h2><!--[ pnml name=_FOR_ADDCONTACT html=1 ]--></h2>
 <form action="<!--[ pnmodurl modname=Formicula type=admin func=create ]-->" method="post">
-<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey ]-->" />
+<div>
 <input type="hidden" name="cid" value="-1" />
 <!--[ else ]-->
 <h2><!--[ pnml name=_FOR_EDITCONTACT html=1 ]--></h2>
 <form action="<!--[ pnmodurl modname=Formicula type=admin func=update ]-->" method="post">
-<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey ]-->" />
+<div>
 <input type="hidden" name="cid" value="<!--[ $contact.cid ]-->" />
 <!--[ /if ]-->
+<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module=formicula ]-->" />
 <table>
     <tr>
         <td>
@@ -77,6 +78,7 @@
         </td>
     </tr>
 </table>
+</div>
 </form>
 
 <!--[ include file=adminfooter.html ]-->
