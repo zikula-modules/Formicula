@@ -137,6 +137,9 @@ function formicula_user_send($args=array())
     }
 
     $form = (!empty($form)) ? (int)$form : 0;
+    $cid  = (int)$cid;
+    $comments = strip_tags($comments);
+    
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
         $userformat = 'plain';
     }
@@ -145,6 +148,7 @@ function formicula_user_send($args=array())
     }
 
     if($userformat == 'none') {
+        // fake values for checkargument function
         $ud['uemail'] = pnConfigGetVar('adminmail');
         $ud['uname'] =  pnConfigGetVar('adminmail');
     }
@@ -174,7 +178,7 @@ function formicula_user_send($args=array())
                 $custom[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
                 $custom[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
                 $custom[$i]['upload'] = true;
-                move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], $uploaddir.$custom[$i]['data']['name']);
+                move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], pnVarPrepForOS($uploaddir.$custom[$i]['data']['name']));
             } else {
                 // error - replace the 'data' with an errormessage
                 $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error']);
