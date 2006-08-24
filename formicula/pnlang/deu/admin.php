@@ -6,11 +6,22 @@
 // file created on Thursday 12th February 2004 20:14:21
 
 //neu
+define('_FOR_VISITHOMEPAGE', 'Formicula im NOC besuchen');
 define('_FOR_ILLEGALEMAIL', 'ungültige Emailadresse');
 define('_FOR_SENDERINFO', 'Verwende folgende Daten für die Bestätigungsemail an den Benutzer');
 define('_FOR_SENDERNAME', 'Absendername');
 define('_FOR_SENDEREMAIL', 'Absenderemail');
 define('_FOR_SENDERSUBJECT', 'Betreff');
+define('_FOR_SENDERSUBJECTHINT', '
+mit <ul>
+    <li>%s = Seitenname</li>
+    <li>%l = Slogan</li>
+    <li>%u = URL der Seite</li>
+    <li>%c = Name des Kontakts</li>
+    <li>%n&lt;num&gt; = Name des userdefinerten Feldes &lt;num&gt;</li>
+    <li>%d&lt;num&gt; = Inhalt des userdefinierten Feldes &lt;num&gt;</li>
+</ul>
+');
 
 //original
 define( '_FOR_ADDCONTACT', 'Kontakt hinzufügen' );

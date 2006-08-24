@@ -35,13 +35,7 @@ include_once("modules/formicula/common.php");
  */
 function Formicula_admin_main()
 {
-    $pnr =& new pnRender('Formicula');
-    $pnr->caching = false;
-
-    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_EDIT)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
-    }
-    return $pnr->fetch('admin.html');
+    return pnModFunc('formicula', 'admin', 'view');
 }
 
 /**
@@ -310,21 +304,14 @@ function Formicula_admin_view()
  */
 function Formicula_admin_modifyconfig()
 {
-    $pnr =& new pnRender('Formicula');
-    $pnr->caching = false;
     if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADMIN)) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
-    $pnr->assign('show_phone' ,    ((pnModGetVar('Formicula', 'show_phone')==1) ? "checked" : ""));
-    $pnr->assign('show_company' ,  ((pnModGetVar('Formicula', 'show_company')==1) ? "checked" : ""));
-    $pnr->assign('show_url' ,      ((pnModGetVar('Formicula', 'show_url')==1) ? "checked" : ""));
-    $pnr->assign('show_location' , ((pnModGetVar('Formicula', 'show_location')==1) ? "checked" : ""));
-    $pnr->assign('show_comment',   ((pnModGetVar('Formicula', 'show_comment')==1) ? "checked" : ""));
-    $pnr->assign('send_user' ,     ((pnModGetVar('Formicula', 'send_user')==1) ? "checked" : ""));
-    $pnr->assign('delete_file' ,   ((pnModGetVar('Formicula', 'delete_file')==1) ? "checked" : ""));
-    $uploaddir = pnModGetVar('Formicula', 'upload_dir');
-    $pnr->assign('upload_dir',     $uploaddir);
-    $pnr->assign('upload_dir_writable', is_writable($uploaddir));
+
+    $pnr =& new pnRender('Formicula');
+    $pnr->caching = false;
+    $pnr->add_core_data();
+    $pnr->assign('upload_dir_writable', is_writable(pnModGetVar('Formicula', 'upload_dir')));
     return $pnr->fetch('adminconfig.html');
 }
 
@@ -361,40 +348,13 @@ function Formicula_admin_updateconfig($args)
         return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
     }
 
-    if (empty($show_phone)){
-        $show_phone = 0;
-    }
-    pnModSetVar('Formicula', 'show_phone', $show_phone);
-
-    if (empty($show_company)) {
-        $show_company = 0;
-    }
-    pnModSetVar('Formicula', 'show_company', $show_company);
-
-    if (empty($show_url)) {
-        $show_url = 0;
-    }
-    pnModSetVar('Formicula', 'show_url', $show_url);
-
-    if (empty($show_location)) {
-        $show_location = 0;
-    }
-    pnModSetVar('Formicula', 'show_location', $show_location);
-
-    if (empty($show_comment)) {
-        $show_comment = 0;
-    }
-    pnModSetVar('Formicula', 'show_comment', $show_comment);
-
-    if (empty($send_user)) {
-        $send_user = 0;
-    }
-    pnModSetVar('Formicula', 'send_user', $send_user);
-
-    if (empty($delete_file)) {
-        $delete_file = 0;
-    }
-    pnModSetVar('Formicula', 'delete_file', $delete_file);
+    pnModSetVar('Formicula', 'show_phone', (empty($show_phone)) ? 0 : (int)$show_phone );
+    pnModSetVar('Formicula', 'show_company', (empty($show_company)) ? 0 : (int)$show_company);
+    pnModSetVar('Formicula', 'show_url', (empty($show_url)) ? 0 : (int)$show_url);
+    pnModSetVar('Formicula', 'show_location', (empty($show_location)) ? 0 : (int)$show_location);
+    pnModSetVar('Formicula', 'show_comment', (empty($show_comment)) ? 0 : (int)$show_comment);
+    pnModSetVar('Formicula', 'send_user', (empty($send_user)) ? 0 : (int)$send_user);
+    pnModSetVar('Formicula', 'delete_file', (empty($delete_file)) ? 0 : (int)$delete_file);
     pnModSetVar('Formicula', 'upload_dir',   $upload_dir);
 
     pnRedirect(pnModURL('Formicula', 'admin', 'modifyconfig'));

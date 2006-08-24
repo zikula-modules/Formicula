@@ -2,96 +2,92 @@
 <!--[* $Id$ *]-->
 
 <!--[ include file=adminheader.html ]-->
-<p align='center'><!--[ pnml name=_FOR_EDITCONFIG html=1 ]--></p>
+<h2><!--[ pnml name=_FOR_EDITCONFIG html=1 ]--></h2>
 
-<form action='<!--[ pnmodurl modname=Formicula type=admin func=updateconfig ]-->' method='post'>
-<input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
-<table width='100%' border=0 cellspacing=0 cellpadding=0>
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_SHOWPHONE' html=1 ]-->
-        </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='show_phone' value=1 <!--[ $show_phone ]-->> 
-        </td>
-    </tr>
-    
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_SHOWCOMPANY' html=1 ]-->
-        </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='show_company' value=1 <!--[ $show_company ]-->>
-        </td>
-    </tr>
-
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_SHOWURL' html=1 ]-->
-        </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='show_url' value=1 <!--[ $show_url ]-->>
-        </td>
-    </tr>
-
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_SHOWLOCATION' html=1 ]-->
-        </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='show_location' value=1 <!--[ $show_location ]-->>
-        </td>
-    </tr>
-
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_SHOWCOMMENT' html=1 ]-->
-        </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='show_comment' value=1 <!--[ $show_comment ]-->>
-        </td>
-    </tr>
-
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_SENDUSER' html=1 ]-->
-        </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='send_user' value=1 <!--[ $send_user ]-->>
-        </td>
-    </tr>
-
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_UPLOADFILEDIR' html=1 ]-->&nbsp;
-        </td>
-        <td width='50%' align='left'>
-            <input type='text' name='upload_dir' value='<!--[ $upload_dir ]-->' size=40 maxlength=80 >
-        </td>
-    </tr>
-    <!--[ if $upload_dir_writable==false ]-->
+<form action="<!--[ pnmodurl modname=Formicula type=admin func=updateconfig ]-->" method="post">
+<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey ]-->" />
+<table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr>
-        <td width='50%'>&nbsp;</td>
-        <td width='50%' align='left' style='color:red;'>
-            <!--[ pnml name='_FOR_UPLOADDIRNOTWRITABLE' ]-->
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_SHOWPHONE" html=1 ]-->
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="show_phone" value="1" <!--[ if $pncore.Formicula.show_phone eq 1 ]-->checked="checked"<!--[ /if ]--> /> 
         </td>
     </tr>
-    <!--[ /if ]-->
     
-    <tr width='100%'>
-        <td width='50%' align='right'>
-            <!--[ pnml name='_FOR_DELETEUPLOADEDFILE' html=1 ]-->
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_SHOWCOMPANY" html=1 ]-->
         </td>
-        <td width='50%' align='left'>
-            <input type='checkbox' name='delete_file' value=1 <!--[ $delete_file ]-->>
+        <td width="50%" align="left">
+            <input type="checkbox" name="show_company" value="1" <!--[ if $pncore.Formicula.show_company eq 1 ]-->checked="checked"<!--[ /if ]--> />
         </td>
     </tr>
 
-    <tr width='100%'>
-        <td align='center' colspan='2'>
-            <br>
-            <input type='submit' name='submit' value='<!--[ pnml name='_SUBMIT' ]-->'>
-            <br>
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_SHOWURL" html=1 ]-->
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="show_url" value="1" <!--[ if $pncore.Formicula.show_url eq 1 ]-->checked="checked"<!--[ /if ]--> />
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_SHOWLOCATION" html=1 ]-->
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="show_location" value="1" <!--[ if $pncore.Formicula.show_location eq 1 ]-->checked="checked"<!--[ /if ]--> />
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_SHOWCOMMENT" html=1 ]-->
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="show_comment" value="1" <!--[ if $pncore.Formicula.show_comment eq 1 ]-->checked="checked"<!--[ /if ]--> />
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_SENDUSER" html=1 ]-->
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="send_user" value="1" <!--[ if $pncore.Formicula.send_user eq 1 ]-->checked="checked"<!--[ /if ]--> />
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_UPLOADFILEDIR" html=1 ]-->&nbsp;
+        </td>
+        <td width="50%" align="left">
+            <input type="text" name="upload_dir" value="<!--[ $pncore.Formicula.upload_dir|pnvarprepfordisplay ]-->" size="40" maxlength="80" />
+            <!--[ if $upload_dir_writable==false ]-->
+            <p class="error"><!--[ pnml name="_FOR_UPLOADDIRNOTWRITABLE" ]--></p>
+            <!--[ /if ]-->
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_DELETEUPLOADEDFILE" html=1 ]-->
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="delete_file" value="1" <!--[ if $pncore.Formicula.send_user eq 1 ]-->checked="checked"<!--[ /if ]--> />
+        </td>
+    </tr>
+
+    <tr>
+        <td align="center" colspan="2">
+            <input type="submit" name="submit" value="<!--[ pnml name="_SUBMIT" ]-->" />
         </td>
     </tr>
 </table>
+</form>
+
+<!--[ include file=adminfooter.html ]-->

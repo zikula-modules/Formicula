@@ -3,82 +3,80 @@
 
 <!--[ include file=adminheader.html ]-->
 
-
 <!--[ if $mode==create ]-->
-<p align='center'><!--[ pnml name=_FOR_ADDCONTACT html=1 ]--></p>
-<form action='<!--[ pnmodurl modname=Formicula type=admin func=create ]-->' method='post'>
-<input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
-<input type='hidden' name='cid' value=-1>
+<h2><!--[ pnml name=_FOR_ADDCONTACT html=1 ]--></h2>
+<form action="<!--[ pnmodurl modname=Formicula type=admin func=create ]-->" method="post">
+<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey ]-->" />
+<input type="hidden" name="cid" value="-1" />
 <!--[ else ]-->
-<p align='center'><!--[ pnml name=_FOR_EDITCONTACT html=1 ]--></p>
-<form action='<!--[ pnmodurl modname=Formicula type=admin func=update ]-->' method='post'>
-<input type='hidden' name='authid' value='<!--[ pnsecgenauthkey ]-->'>
-<input type='hidden' name='cid' value=<!--[ $contact.cid ]-->>
+<h2><!--[ pnml name=_FOR_EDITCONTACT html=1 ]--></h2>
+<form action="<!--[ pnmodurl modname=Formicula type=admin func=update ]-->" method="post">
+<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey ]-->" />
+<input type="hidden" name="cid" value="<!--[ $contact.cid ]-->" />
 <!--[ /if ]-->
 <table>
     <tr>
         <td>
-            <!--[ pnml name='_FOR_NAME' html=1 ]-->
+            <!--[ pnml name="_FOR_NAME" html=1 ]-->
         </td>
         <td>
-            <input type='text' name='cname' id='cname' value='<!--[ $contact.name ]-->' size='40' maxlength='40' tabindex=1>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name='_FOR_EMAIL' html=1 ]-->
-        </td>
-        <td>
-            <input type='text' name='email' id='email' value='<!--[ $contact.email ]-->' size='80' maxlength='80' tabindex=2>
+            <input type="text" name="cname" id="cname" value="<!--[ $contact.name|pnvarprepfordisplay ]-->" size="40" maxlength="40" tabindex="1" />
         </td>
     </tr>
     <tr>
         <td>
-            <!--[ pnml name='_FOR_PUBLIC' html=1 ]-->
+            <!--[ pnml name="_FOR_EMAIL" html=1 ]-->
         </td>
         <td>
-            <!--[ if $contact.public==1 ]-->
-            <input type='checkbox' name='public' id='public' value=1 checked tabindex=3>
-            <!--[ else ]-->
-            <input type='checkbox' name='public' id='public' value=1 tabindex=3>
-            <!--[ /if ]-->
+            <input type="text" name="email" id="email" value="<!--[ $contact.email|pnvarprepfordisplay ]-->" size="80" maxlength="80" tabindex="2" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!--[ pnml name="_FOR_PUBLIC" html=1 ]-->
+        </td>
+        <td>
+            <input type="checkbox" name="public" id="public" value=1 <!--[ if $contact.public==1 ]-->checked="checked"<!--[ /if ]--> tabindex="3" />
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <!--[ pnml name='_FOR_SENDERINFO' html=1 ]-->
+            <!--[ pnml name="_FOR_SENDERINFO" html=1 ]-->
         </td>
     </tr>
     <tr>
         <td>
-            <!--[ pnml name='_FOR_SENDERNAME' html=1 ]-->
+            <!--[ pnml name="_FOR_SENDERNAME" html=1 ]-->
         </td>
         <td>
-            <input type='text' name='sname' id='sname' value='<!--[ $contact.sname ]-->' size='40' maxlength='40' tabindex=2>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name='_FOR_SENDEREMAIL' html=1 ]-->
-        </td>
-        <td>
-            <input type='text' name='semail' id='semail' value='<!--[ $contact.semail ]-->' size='80' maxlength='80' tabindex=2>
+            <input type="text" name="sname" id="sname" value="<!--[ $contact.sname|pnvarprepfordisplay ]-->" size="40" maxlength="40" tabindex="2" />
         </td>
     </tr>
     <tr>
         <td>
-            <!--[ pnml name='_FOR_SENDERSUBJECT' html=1 ]-->
+            <!--[ pnml name="_FOR_SENDEREMAIL" html=1 ]-->
         </td>
         <td>
-            <input type='text' name='ssubject' id='ssubject' value='<!--[ $contact.ssubject ]-->' size='80' maxlength='80' tabindex=2>
+            <input type="text" name="semail" id="semail" value="<!--[ $contact.semail|pnvarprepfordisplay ]-->" size="80" maxlength="80" tabindex="2" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <!--[ pnml name="_FOR_SENDERSUBJECT" html=1 ]-->
+        </td>
+        <td>
+            <input type="text" name="ssubject" id="ssubject" value="<!--[ $contact.ssubject|pnvarprepfordisplay ]-->" size="80" maxlength="80" tabindex="2" /><br />
+            <!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1 ]-->
         </td>
     </tr>
 
     <tr>
-        <td colspan='2' align='center'>
-            <br> <br>
-            <input type='submit' value='<!--[ pnml name='_SUBMIT' html=1 ]-->' tabindex=4>
+        <td colspan="2" align="left">
+
+            <input type="submit" value="<!--[ pnml name="_SUBMIT" html=1 ]-->" tabindex="4" />
         </td>
     </tr>
 </table>
 </form>
+
+<!--[ include file=adminfooter.html ]-->

@@ -7,11 +7,22 @@
 //
 
 //new
+define('_FOR_VISITHOMEPAGE', 'Visit Formicula on NOC');
 define('_FOR_ILLEGALEMAIL', 'invalid email address detected');
 define('_FOR_SENDERINFO', 'Use this information in the users confirmation mail');
 define('_FOR_SENDERNAME', 'Sender name');
 define('_FOR_SENDEREMAIL', 'Sender email');
 define('_FOR_SENDERSUBJECT', 'Subject');
+define('_FOR_SENDERSUBJECTHINT', '
+with <ul>
+    <li>%s = sitename</li>
+    <li>%l = slogan</li>
+    <li>%u = site url</li>
+    <li>%c = contact name</li>
+    <li>%n&lt;num&gt; = user defined field name &lt;num&gt;</li>
+    <li>%d&lt;num&gt; = user defined field data &lt;num&gt;</li>
+</ul>
+');
 
 //original
 define( '_FOR_ADDCONTACT','Add contact or Topic' );
