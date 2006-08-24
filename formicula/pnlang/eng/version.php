@@ -24,6 +24,6 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 
-define('_FOR_DESC', 'Tool for creating contact forms of all kinds';
+define('_FOR_DESC', 'Tool for creating contact forms of all kinds');
 
 ?>
