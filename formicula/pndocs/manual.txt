@@ -11,7 +11,7 @@ of custom fields (ok, infinite as long as you have enough server memory).
 Requirements
 ------------
 Formicula requires PostNuke .760 or later, although .762 is recommended. It *might* run
-wit earlier versions, but I did not test this and if it does not work, I don't care - sorry.
+with earlier versions, but I did not test this and if it does not work, I don't care - sorry.
 For client side input validation you need the AjaxSupportPackage which is available from
 http://noc.postnuke.com/frs/?group_id=8. Install this as mentioned in the docs.
 
@@ -60,6 +60,7 @@ Subject: enter a static subject or use these placeholders:
 Templates
 ---------
 Everything you want to do with the form is handled in the templates.
+The '#' at the beginning of the template designates the number of form.
 
 The templates for the forms are named as follows:
 
@@ -83,7 +84,12 @@ or if you want to force the type of email, you can use a hidden field in the for
 			
 <input type="hidden" name="userformat" value="html" /> 
 
-The '#' at the beginning of the template designates the number of form.
+If you do not want to send a confirmation email to the user for a certain form, set
+userformat to none:
+ 
+<input type="hidden" name="userformat" value="none" /> 
+
+This overrides the setting in the configuration.
 
 Standard Fields
 ---------------
@@ -94,7 +100,10 @@ uemail: the users name (mandatory)
 url: the users homepage (optional)
 location, phone, company: these are obvious... (optional)
 comment: normally a textarea for entering free text. Since 0.6 this is not longer 
-a mandatory field!
+a mandatory field! HTML is stripped from the comments to avoid spam. In addition, the
+comment is send to PostNuke's internal censor function. If the result differs from the 
+original comment, the submission si also treated as spam and not sent. This results
+in an error message. 
 
 Custom Fields
 ----------------------
@@ -102,6 +111,7 @@ You can add as many custom fields to your form as you want.
 This makes it easy to create e.g. an online job application form if needed.
 
 This makes it necessary to send certain information from the form page to the module.
+The custom fields are numbered (# in the following examples), starting at 0.
 
 These are:
 
@@ -128,8 +138,6 @@ This will create a custom fields 0 which is both mandatory.
 In this case you also need:
 
 <input type="hidden" name="numFields" value="1" />
-
-Please note that the customfield numbers have to start at 0!
 
 Permissions
 ------------------
@@ -174,8 +182,3 @@ to use this, simply remove the javascript from templates.
 A detailed explanation how to use this feature can be found at
 http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/
 
-
-
-
- 	
-	 
