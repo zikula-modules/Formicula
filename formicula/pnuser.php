@@ -53,6 +53,9 @@ function formicula_user_main($args=array())
     $form = (!empty($form)) ? $form : 0;
     $cid  = (!empty($cid)) ? $cid : -1;
 
+    // reset captcha
+    pnSessionDelVar('formicula_captcha');
+
     if ($cid == -1) {
         $contacts = pnModAPIFunc('formicula',
                                  'user',
@@ -113,6 +116,7 @@ function formicula_user_send($args=array())
     } else {
         list($cid,
            $form,
+           $captcha,
            $userformat,
            $adminformat,
            $numfields,
@@ -124,6 +128,7 @@ function formicula_user_send($args=array())
            $ud['location'],
            $ud['comment']) = pnVarCleanFromInput('cid',
                                                  'form',
+                                                 'captcha',
                                                  'userformat',
                                                  'adminformat',
                                                  'numFields',
@@ -139,6 +144,38 @@ function formicula_user_send($args=array())
     $form = (!empty($form)) ? (int)$form : 0;
     $cid  = (int)$cid;
     $comments = strip_tags($comments);
+
+    // check captcha
+    if(pnModGetVar('Formicula', 'spamcheck')<>0) {
+        $captcha_ok = false;
+        $cdata = @unserialize(pnSessionGetVar('formicula_captcha'));
+        $captcha = (int)$captcha;
+        if(is_array($cdata)) {
+            switch($cdata['z']) {
+                case '+':
+                    $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'])== $captcha);
+                    break;
+                case '-':
+                    $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'])== $captcha);
+                    break;
+                case '*':
+                    $captcha_ok = (((int)$cdata['x'] * (int)$cdata['y'])== $captcha);
+                    break;
+                default:
+                    // $captcha_ok is false
+            }
+        }
+
+        if($captcha_ok==false) {
+            pnSessionSetVar('errormsg', _FOR_WRONGCAPTCHA);
+            $params = array('form' => $form);
+            if(is_array($addinfo) && count($addinfo)>0) {
+                $params['addinfo'] = $addinfo;
+            }
+            return pnRedirect(pnModURL('formicula', 'user', 'main', $params));
+        }
+    }
+    pnSessionDelVar('formicula_captcha');
     
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
         $userformat = 'plain';

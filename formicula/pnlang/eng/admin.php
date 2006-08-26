@@ -7,6 +7,7 @@
 //
 
 //new
+define('_FOR_ACTIVATESPAMCHECK', 'Activate spamcheck<br />(make sure you the necessary form fields<br />are available, see the docs for more information');
 define('_FOR_VISITHOMEPAGE', 'Visit Formicula on NOC');
 define('_FOR_ILLEGALEMAIL', 'invalid email address detected');
 define('_FOR_SENDERINFO', 'Use this information in the users confirmation mail');

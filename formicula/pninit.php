@@ -58,6 +58,7 @@ function Formicula_init()
     pnModSetVar('Formicula', 'show_location', 1);
     pnModSetVar('Formicula', 'show_comment', 1);
     pnModSetVar('Formicula', 'send_user', 1);
+    pnModSetVar('Formicula', 'spamcheck', 1);
 
     pnModSetVar('Formicula', 'upload_dir', 'pnTemp');
     pnModSetVar('Formicula', 'delete_file', 1);
@@ -126,6 +127,7 @@ function Formicula_upgrade($oldversion)
                     pnSessionSetVar('errormsg', _FOR_ALTERTABLEFAILED);
                     return false;
                 }
+                pnModSetVar('Formicula', 'spamcheck', 1);
     }
 
     // Update successful

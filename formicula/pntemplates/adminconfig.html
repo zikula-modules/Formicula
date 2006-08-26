@@ -4,7 +4,7 @@
 <!--[ include file=adminheader.html ]-->
 <h2><!--[ pnml name=_FOR_EDITCONFIG html=1 ]--></h2>
 
-<form action="<!--[ pnmodurl modname=Formicula type=admin func=updateconfig ]-->" method="post">
+<form action="<!--[ pnmodurl modname=formicula type=admin func=updateconfig ]-->" method="post">
 <input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module=formicula ]-->" />
 <table width="100%" border=0 cellspacing=0 cellpadding=0>
     <tr>
@@ -12,7 +12,7 @@
             <!--[ pnml name="_FOR_SHOWPHONE" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="show_phone" value="1" <!--[ if $pncore.Formicula.show_phone eq 1 ]-->checked="checked"<!--[ /if ]--> /> 
+            <input type="checkbox" name="show_phone" value="1" <!--[ if $pncore.formicula.show_phone eq 1 ]-->checked="checked"<!--[ /if ]--> /> 
         </td>
     </tr>
     
@@ -21,7 +21,7 @@
             <!--[ pnml name="_FOR_SHOWCOMPANY" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="show_company" value="1" <!--[ if $pncore.Formicula.show_company eq 1 ]-->checked="checked"<!--[ /if ]--> />
+            <input type="checkbox" name="show_company" value="1" <!--[ if $pncore.formicula.show_company eq 1 ]-->checked="checked"<!--[ /if ]--> />
         </td>
     </tr>
 
@@ -30,7 +30,7 @@
             <!--[ pnml name="_FOR_SHOWURL" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="show_url" value="1" <!--[ if $pncore.Formicula.show_url eq 1 ]-->checked="checked"<!--[ /if ]--> />
+            <input type="checkbox" name="show_url" value="1" <!--[ if $pncore.formicula.show_url eq 1 ]-->checked="checked"<!--[ /if ]--> />
         </td>
     </tr>
 
@@ -39,7 +39,7 @@
             <!--[ pnml name="_FOR_SHOWLOCATION" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="show_location" value="1" <!--[ if $pncore.Formicula.show_location eq 1 ]-->checked="checked"<!--[ /if ]--> />
+            <input type="checkbox" name="show_location" value="1" <!--[ if $pncore.formicula.show_location eq 1 ]-->checked="checked"<!--[ /if ]--> />
         </td>
     </tr>
 
@@ -48,7 +48,7 @@
             <!--[ pnml name="_FOR_SHOWCOMMENT" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="show_comment" value="1" <!--[ if $pncore.Formicula.show_comment eq 1 ]-->checked="checked"<!--[ /if ]--> />
+            <input type="checkbox" name="show_comment" value="1" <!--[ if $pncore.formicula.show_comment eq 1 ]-->checked="checked"<!--[ /if ]--> />
         </td>
     </tr>
 
@@ -57,7 +57,7 @@
             <!--[ pnml name="_FOR_SENDUSER" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="send_user" value="1" <!--[ if $pncore.Formicula.send_user eq 1 ]-->checked="checked"<!--[ /if ]--> />
+            <input type="checkbox" name="send_user" value="1" <!--[ if $pncore.formicula.send_user eq 1 ]-->checked="checked"<!--[ /if ]--> />
         </td>
     </tr>
 
@@ -66,7 +66,7 @@
             <!--[ pnml name="_FOR_UPLOADFILEDIR" html=1 ]-->&nbsp;
         </td>
         <td width="50%" align="left">
-            <input type="text" name="upload_dir" value="<!--[ $pncore.Formicula.upload_dir|pnvarprepfordisplay ]-->" size="40" maxlength="80" />
+            <input type="text" name="upload_dir" value="<!--[ $pncore.formicula.upload_dir|pnvarprepfordisplay ]-->" size="40" maxlength="80" />
             <!--[ if $upload_dir_writable==false ]-->
             <p class="error"><!--[ pnml name="_FOR_UPLOADDIRNOTWRITABLE" ]--></p>
             <!--[ /if ]-->
@@ -78,7 +78,16 @@
             <!--[ pnml name="_FOR_DELETEUPLOADEDFILE" html=1 ]-->
         </td>
         <td width="50%" align="left">
-            <input type="checkbox" name="delete_file" value="1" <!--[ if $pncore.Formicula.send_user eq 1 ]-->checked="checked"<!--[ /if ]--> />
+            <input type="checkbox" name="delete_file" value="1" <!--[ if $pncore.formicula.send_user eq 1 ]-->checked="checked"<!--[ /if ]--> />
+        </td>
+    </tr>
+
+    <tr>
+        <td width="50%" align="right">
+            <!--[ pnml name="_FOR_ACTIVATESPAMCHECK" html=1 ]-->&nbsp;
+        </td>
+        <td width="50%" align="left">
+            <input type="checkbox" name="spamcheck" value="1" <!--[ if $pncore.formicula.spamcheck eq 1 ]-->checked="checked"<!--[ /if ]--> /> 
         </td>
     </tr>
 

@@ -6,6 +6,7 @@
 // file created on Thursday 12th February 2004 20:14:21
 
 //neu
+define('_FOR_ACTIVATESPAMCHECK', 'Spamcheck aktivieren<br />(dies erfordert u.U. Anpassungen an den Templates, weitere Informationen dazu finden sich in der Dokumentation');
 define('_FOR_VISITHOMEPAGE', 'Formicula im NOC besuchen');
 define('_FOR_ILLEGALEMAIL', 'ungültige Emailadresse');
 define('_FOR_SENDERINFO', 'Verwende folgende Daten für die Bestätigungsemail an den Benutzer');

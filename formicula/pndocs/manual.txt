@@ -19,12 +19,25 @@ Installation
 -----------------
 1. Extract the files to your Postnuke directory.
 2. Load, initialize and activate the module in the admin section.
-3. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
-4. Add a basic permission rule, e.g.
+3. If you want to use the build-in captcha, you need to create folder pnTemp/formicula_cache 
+   which nees to be writable for the webserver. when restricting acces via a .htaccess file
+   to pnTemp, you have to open this subfolder for images:
+   <.htaccess>
+   SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+   SetEnvIf Request_URI "\.png$" object_is_png=png
+   SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+   Order deny,allow
+   Deny from all
+   Allow from env=object_is_gif
+   Allow from env=object_is_png
+   Allow from env=object_is_jpg
+   </.htaccess>
+4. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
+5. Add a basic permission rule, e.g.
    unreg. users (group)  |  formicula::  |  .*  |  comment
    This enables unregistered users to use all existing forms. In a default PN installation
    the users group has a generic comment permission to do the same.
-5. Add a link to your main menu with: {formicula} (using [formicula] will not work!)
+6. Add a link to your main menu with: {formicula} (using [formicula] will not work!)
    This uses form 0. To call a specific form id use
    index.php?name=formicula&form=<formid>
    e.g. index.php?name=formicula&form=5 to use for #5
@@ -39,6 +52,7 @@ Send confirmation email to user: Tick this to send an confirmation mail to the u
 Folder for uploaded files: Uploaded files get stored here. Make sure this folder is secured with a
 .htacess file otherwise someone can upload malicious files and execute them!
 Delete file after sending: does what it says when ticked.
+Activate spamcheck: shows a little captcha in the form
 
 Contacts
 --------
@@ -102,8 +116,9 @@ location, phone, company: these are obvious... (optional)
 comment: normally a textarea for entering free text. Since 0.6 this is not longer 
 a mandatory field! HTML is stripped from the comments to avoid spam. In addition, the
 comment is send to PostNuke's internal censor function. If the result differs from the 
-original comment, the submission si also treated as spam and not sent. This results
+original comment, the submission is also treated as spam and not sent. This results
 in an error message. 
+captcha: mandatory if spamcheck feature is enabled,see 0_userform.html for an example
 
 Custom Fields
 ----------------------

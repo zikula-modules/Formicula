@@ -53,7 +53,7 @@ function Formicula_admin_edit()
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    $pnr =& new pnRender('Formicula');
+    $pnr =& new pnRender('formicula');
     $pnr->caching = false;
 
     if((isset($cid)) && ($cid<>-1)) {
@@ -230,7 +230,7 @@ function Formicula_admin_delete($args)
 
     // Check for confirmation.
     if (empty($confirmation)) {
-        $pnr =& new pnRender('Formicula');
+        $pnr =& new pnRender('formicula');
         $pnr->caching = false;
         $contact['cid'] = $cid;
         $pnr->assign('contact', $contact);
@@ -308,7 +308,7 @@ function Formicula_admin_modifyconfig()
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    $pnr =& new pnRender('Formicula');
+    $pnr =& new pnRender('formicula');
     $pnr->caching = false;
     $pnr->add_core_data();
     $pnr->assign('upload_dir_writable', is_writable(pnModGetVar('Formicula', 'upload_dir')));
@@ -327,6 +327,7 @@ function Formicula_admin_modifyconfig()
  *@param send_user      int 1=send cofirmation mail to user, 0=do not send cofirmation mail
  *@param delete_file    int 1=delete attachments after sending, 0=do not delete
  *@param upload_dir     string folder to store uploaded files
+ *@param show_comment   int 1=activate simple captcha
  *@returns nothing, but forwards to view()
  */
 function Formicula_admin_updateconfig($args)
@@ -343,6 +344,7 @@ function Formicula_admin_updateconfig($args)
     $send_user =     pnVarCleanFromInput('send_user');
     $delete_file =   pnVarCleanFromInput('delete_file');
     $upload_dir =    pnVarCleanFromInput('upload_dir');
+    $spamcheck =     pnVarCleanFromInput('spamcheck');
 
     if (!pnSecConfirmAuthKey()) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
@@ -356,6 +358,7 @@ function Formicula_admin_updateconfig($args)
     pnModSetVar('Formicula', 'send_user', (empty($send_user)) ? 0 : (int)$send_user);
     pnModSetVar('Formicula', 'delete_file', (empty($delete_file)) ? 0 : (int)$delete_file);
     pnModSetVar('Formicula', 'upload_dir',   $upload_dir);
+    pnModSetVar('Formicula', 'spamcheck', (empty($spamcheck)) ? 0 : (int)$spamcheck);
 
     pnRedirect(pnModURL('Formicula', 'admin', 'modifyconfig'));
     return true;

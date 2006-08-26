@@ -29,6 +29,8 @@
 // ----------------------------------------------------------------------
 
 //new
+define('_FOR_WRONGCAPTCHA', 'Bad in mathematics? You can do better, try again.');
+define('_FOR_SIMPLEMATHEQUATION', 'Please solve this simple math test');
 define('_FOR_ADVICE_EMAIL', 'Please enter a valid emailaddress like user@example.com.');
 define('_FOR_ADVICE_URL', 'Please enter a valid internet address like http://www.example.com.');
 define('_FOR_ADVICE_MANDATORY', 'This is a mandatory field.');
