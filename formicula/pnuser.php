@@ -152,13 +152,13 @@ function formicula_user_send($args=array())
         $captcha = (int)$captcha;
         if(is_array($cdata)) {
             switch($cdata['z']) {
-                case '+':
+                case '0':
                     $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'])== $captcha);
                     break;
-                case '-':
+                case '1':
                     $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'])== $captcha);
                     break;
-                case '*':
+                case '2':
                     $captcha_ok = (((int)$cdata['x'] * (int)$cdata['y'])== $captcha);
                     break;
                 default:
@@ -167,15 +167,20 @@ function formicula_user_send($args=array())
         }
 
         if($captcha_ok==false) {
+            pnSessionDelVar('formicula_captcha');
             pnSessionSetVar('errormsg', _FOR_WRONGCAPTCHA);
             $params = array('form' => $form);
             if(is_array($addinfo) && count($addinfo)>0) {
                 $params['addinfo'] = $addinfo;
             }
-            return pnRedirect(pnModURL('formicula', 'user', 'main', $params));
+            return pnRedirect(pnServerGetVar('HTTP_REFERER'));
         }
     }
     pnSessionDelVar('formicula_captcha');
+
+    if(!pnSecConfirmAuthKey()) {
+        return _BADAUTHID;
+    }
     
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
         $userformat = 'plain';
