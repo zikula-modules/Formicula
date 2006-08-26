@@ -195,7 +195,7 @@ function formicula_user_send($args=array())
     pnSessionDelVar('formicula_captcha');
 
     if(!pnSecConfirmAuthKey()) {
-        return _BADAUTHID;
+        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
     }
     
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
