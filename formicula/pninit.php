@@ -51,6 +51,17 @@ function formicula_init()
         pnSessionSetVar('errormsg', _FOR_CREATETABLEFAILED);
         return false;
     }
+    
+    pnModAPILoad('formicula', 'admin', true);
+    pnModAPIFunc('formicula',
+                 'admin',
+                 'createContact',
+                 array('name'     => 'Webmaster',
+                       'email'    => pnConfigGetVar('adminmail'),
+                       'public'   => 1,
+                       'sname'    => 'Webmaster',
+                       'semail'   => pnConfigGetVar('adminmail'),
+                       'ssubject' => _FOR_EMAILFROM . ' %s'));
 
     pnModSetVar('formicula', 'show_phone', 1);
     pnModSetVar('formicula', 'show_company', 1);

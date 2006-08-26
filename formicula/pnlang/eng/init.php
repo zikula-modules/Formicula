@@ -25,9 +25,10 @@
 // ----------------------------------------------------------------------
 
 //new
-define( '_FOR_CREATETABLEFAILED', 'could not create table');
-define( '_FOR_ALTERTABLEFAILED', 'could not alter table');
-define( '_FOR_DELETETABLEFAILED', 'could not delete table');
+define('_FOR_EMAILFROM', 'Email from');
+define('_FOR_CREATETABLEFAILED', 'could not create table');
+define('_FOR_ALTERTABLEFAILED', 'could not alter table');
+define('_FOR_DELETETABLEFAILED', 'could not delete table');
 
 
 ?>
