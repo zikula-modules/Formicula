@@ -319,15 +319,16 @@ function Formicula_admin_modifyconfig()
  * updateconfig
  * saves the updated module configuration
  *
- *@param show_phone     int 1=show phone entry field, 0=do not show
- *@param show_company   int 1=show company entry field, 0=do not show
- *@param show_url       int 1=show url entry field, 0=do not show
- *@param show_location  int 1=show location entry field, 0=do not show
- *@param show_comment   int 1=show comment textarea, 0=do not show
- *@param send_user      int 1=send cofirmation mail to user, 0=do not send cofirmation mail
- *@param delete_file    int 1=delete attachments after sending, 0=do not delete
- *@param upload_dir     string folder to store uploaded files
- *@param show_comment   int 1=activate simple captcha
+ *@param show_phone        int 1=show phone entry field, 0=do not show
+ *@param show_company      int 1=show company entry field, 0=do not show
+ *@param show_url          int 1=show url entry field, 0=do not show
+ *@param show_location     int 1=show location entry field, 0=do not show
+ *@param show_comment      int 1=show comment textarea, 0=do not show
+ *@param send_user         int 1=send cofirmation mail to user, 0=do not send cofirmation mail
+ *@param delete_file       int 1=delete attachments after sending, 0=do not delete
+ *@param upload_dir        string folder to store uploaded files
+ *@param spamcheck         int 1=activate simple captcha
+ *@param excludespamcheck  string comma separated list of ids where spam check is not used
  *@returns nothing, but forwards to view()
  */
 function Formicula_admin_updateconfig($args)
@@ -336,15 +337,16 @@ function Formicula_admin_updateconfig($args)
         return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
     }
 
-    $show_phone =    pnVarCleanFromInput('show_phone');
-    $show_company =  pnVarCleanFromInput('show_company');
-    $show_url =      pnVarCleanFromInput('show_url');
-    $show_location = pnVarCleanFromInput('show_location');
-    $show_comment =  pnVarCleanFromInput('show_comment');
-    $send_user =     pnVarCleanFromInput('send_user');
-    $delete_file =   pnVarCleanFromInput('delete_file');
-    $upload_dir =    pnVarCleanFromInput('upload_dir');
-    $spamcheck =     pnVarCleanFromInput('spamcheck');
+    $show_phone =        pnVarCleanFromInput('show_phone');
+    $show_company =      pnVarCleanFromInput('show_company');
+    $show_url =          pnVarCleanFromInput('show_url');
+    $show_location =     pnVarCleanFromInput('show_location');
+    $show_comment =      pnVarCleanFromInput('show_comment');
+    $send_user =         pnVarCleanFromInput('send_user');
+    $delete_file =       pnVarCleanFromInput('delete_file');
+    $upload_dir =        pnVarCleanFromInput('upload_dir');
+    $spamcheck =         pnVarCleanFromInput('spamcheck');
+    $excludespamcheck =  pnVarCleanFromInput('excludespamcheck');
 
     if (!pnSecConfirmAuthKey()) {
         return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
@@ -359,6 +361,7 @@ function Formicula_admin_updateconfig($args)
     pnModSetVar('Formicula', 'delete_file', (empty($delete_file)) ? 0 : (int)$delete_file);
     pnModSetVar('Formicula', 'upload_dir',   $upload_dir);
     pnModSetVar('Formicula', 'spamcheck', (empty($spamcheck)) ? 0 : (int)$spamcheck);
+    pnModSetVar('Formicula', 'excludespamcheck', $excludespamcheck);
 
     pnRedirect(pnModURL('Formicula', 'admin', 'modifyconfig'));
     return true;

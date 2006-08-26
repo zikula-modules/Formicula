@@ -197,3 +197,9 @@ to use this, simply remove the javascript from templates.
 A detailed explanation how to use this feature can be found at
 http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/
 
+Captcha
+-------
+The simplecaptcha plugins adds an image with a very basic math equation (2 number from 1 to 2 
+and either +, - or *) to the form if the spam check is enabled. If the user enters a wrong
+value, formicula redirects back to the page where it came from.
+

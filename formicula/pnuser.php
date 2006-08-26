@@ -81,6 +81,14 @@ function formicula_user_main($args=array())
         $email = '';
     }
 
+    $spamcheck = pnModGetVar('Formicula', 'spamcheck');
+    if($spamcheck == 1) {
+        $excludespamcheck = explode(',', pnModGetVar('Formicula', 'excludespamcheck'));
+        if(is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
+            $spamcheck = 0;
+        }
+    }
+
     $pnr =& new pnRender('formicula');
     $pnr->caching = false;
     $pnr->add_core_data();
@@ -88,6 +96,7 @@ function formicula_user_main($args=array())
     $pnr->assign('uemail', $uemail);
     $pnr->assign('contacts', $contacts);
     $pnr->assign('addinfo', $addinfo);
+    $pnr->assign('spamcheck', $spamcheck);
     return $pnr->fetch($form.'_userform.html');
 }
 
@@ -146,7 +155,14 @@ function formicula_user_send($args=array())
     $comments = strip_tags($comments);
 
     // check captcha
-    if(pnModGetVar('Formicula', 'spamcheck')<>0) {
+    $spamcheck = pnModGetVar('Formicula', 'spamcheck');
+    if($spamcheck == 1) {
+        $excludespamcheck = explode(',', pnModGetVar('Formicula', 'excludespamcheck'));
+        if(is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
+            $spamcheck = 0;
+        }
+    }
+    if($spamcheck==1) {
         $captcha_ok = false;
         $cdata = @unserialize(pnSessionGetVar('formicula_captcha'));
         $captcha = (int)$captcha;
