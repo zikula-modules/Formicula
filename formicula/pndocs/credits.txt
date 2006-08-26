@@ -19,5 +19,5 @@
 // Formicula 0.6 - 1.0
 // frank.schummertz@landseer-stuttgart.de
 //
-// Thanks to Carsten Vollmer for extensive testing.
+// Thanks to Carsten Volmer for extensive testing.
 //
