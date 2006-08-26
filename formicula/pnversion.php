@@ -1,6 +1,6 @@
 <?php
 // $Id$
-$modversion['name'] = 'Formicula';
+$modversion['name'] = 'formicula';
 $modversion['version'] = '1.0';
 $modversion['description'] = _FOR_DESC;
 $modversion['credits'] = 'pndocs/credits.txt';

@@ -29,7 +29,7 @@
 // ----------------------------------------------------------------------
 
 
-function Formicula_pntables()
+function formicula_pntables()
 {
     // Initialise table array
     $pntable = array();

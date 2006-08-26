@@ -81,9 +81,9 @@ function formicula_user_main($args=array())
         $email = '';
     }
 
-    $spamcheck = pnModGetVar('Formicula', 'spamcheck');
+    $spamcheck = pnModGetVar('formicula', 'spamcheck');
     if($spamcheck == 1) {
-        $excludespamcheck = explode(',', pnModGetVar('Formicula', 'excludespamcheck'));
+        $excludespamcheck = explode(',', pnModGetVar('formicula', 'excludespamcheck'));
         if(is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
             $spamcheck = 0;
         }
@@ -150,14 +150,18 @@ function formicula_user_send($args=array())
                                                  'comment');
     }
 
+    if(empty($cid) && empty($form)) {
+        return pnRedirect('index.php');
+    }
+
     $form = (!empty($form)) ? (int)$form : 0;
     $cid  = (int)$cid;
     $comments = strip_tags($comments);
 
     // check captcha
-    $spamcheck = pnModGetVar('Formicula', 'spamcheck');
+    $spamcheck = pnModGetVar('formicula', 'spamcheck');
     if($spamcheck == 1) {
-        $excludespamcheck = explode(',', pnModGetVar('Formicula', 'excludespamcheck'));
+        $excludespamcheck = explode(',', pnModGetVar('formicula', 'excludespamcheck'));
         if(is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
             $spamcheck = 0;
         }

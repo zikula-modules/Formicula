@@ -28,7 +28,7 @@
 // ----------------------------------------------------------------------
 
 
-function Formicula_init()
+function formicula_init()
 {
     // Get database information
     $dbconn  =& pnDBGetConn(true);
@@ -52,23 +52,23 @@ function Formicula_init()
         return false;
     }
 
-    pnModSetVar('Formicula', 'show_phone', 1);
-    pnModSetVar('Formicula', 'show_company', 1);
-    pnModSetVar('Formicula', 'show_url', 1);
-    pnModSetVar('Formicula', 'show_location', 1);
-    pnModSetVar('Formicula', 'show_comment', 1);
-    pnModSetVar('Formicula', 'send_user', 1);
-    pnModSetVar('Formicula', 'spamcheck', 1);
+    pnModSetVar('formicula', 'show_phone', 1);
+    pnModSetVar('formicula', 'show_company', 1);
+    pnModSetVar('formicula', 'show_url', 1);
+    pnModSetVar('formicula', 'show_location', 1);
+    pnModSetVar('formicula', 'show_comment', 1);
+    pnModSetVar('formicula', 'send_user', 1);
+    pnModSetVar('formicula', 'spamcheck', 1);
 
-    pnModSetVar('Formicula', 'upload_dir', 'pnTemp');
-    pnModSetVar('Formicula', 'delete_file', 1);
+    pnModSetVar('formicula', 'upload_dir', 'pnTemp');
+    pnModSetVar('formicula', 'delete_file', 1);
 
     // Initialisation successful
     return true;
 }
 
 
-function Formicula_upgrade($oldversion)
+function formicula_upgrade($oldversion)
 {
     // Get database information
     pnModDBInfoLoad('formicula');
@@ -81,8 +81,8 @@ function Formicula_upgrade($oldversion)
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.1':
-                pnModSetVar('Formicula', 'upload_dir', 'pnTemp');
-                pnModSetVar('Formicula', 'delete_file', 1);
+                pnModSetVar('formicula', 'upload_dir', 'pnTemp');
+                pnModSetVar('formicula', 'delete_file', 1);
         case '0.2':
                 // nothing to do
         case '0.3':
@@ -100,7 +100,7 @@ function Formicula_upgrade($oldversion)
                     return false;
                 }
                 // migrate contacts from config var to table
-                $contacts = pnModGetVar( 'Formicula', 'Contacts' );
+                $contacts = pnModGetVar('Formicula', 'Contacts'); // not lowercased
                 if( @unserialize( $contacts ) != "" ) {
                     $contacts_array = unserialize( $contacts );
                 } else {
@@ -113,8 +113,8 @@ function Formicula_upgrade($oldversion)
                             VALUES ($name, $email)";
                     $dbconn->Execute($sql);
                 }
-                pnModDelVar('Formicula', 'Contacts');
-                pnModDelVar('Formicula', 'version' );
+                pnModDelVar('Formicula', 'Contacts'); // not lowercased
+                pnModDelVar('Formicula', 'version' ); // not lowercased
         case '0.5':
                 // nothing to do
         case '0.6':
@@ -127,7 +127,8 @@ function Formicula_upgrade($oldversion)
                     pnSessionSetVar('errormsg', _FOR_ALTERTABLEFAILED);
                     return false;
                 }
-                pnModSetVar('Formicula', 'spamcheck', 1);
+                pnModSetVar('formicula', 'spamcheck', 1);
+                pnModSetVar('formicula', 'excludespamcheck', '');
     }
 
     // Update successful
@@ -135,7 +136,7 @@ function Formicula_upgrade($oldversion)
 }
 
 
-function Formicula_delete()
+function formicula_delete()
 {
     // Get database information
     $dbconn  =& pnDBGetConn(true);
@@ -151,7 +152,7 @@ function Formicula_delete()
         return false;
     }
 
-    pnModDelVar('Formicula');
+    pnModDelVar('formicula');
     return true;
 }
 

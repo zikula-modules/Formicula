@@ -36,7 +36,7 @@ include_once("modules/formicula/common.php");
  *@param cid int contact id
  *@returns array with contact information
  */
-function Formicula_adminapi_getContact($args)
+function formicula_adminapi_getContact($args)
 {
     extract($args);
 
@@ -98,7 +98,7 @@ function Formicula_adminapi_getContact($args)
  *@param none
  *@returns array with contact information
  */
-function Formicula_adminapi_readContacts()
+function formicula_adminapi_readContacts()
 {
     $contacts = array();
 
@@ -160,7 +160,7 @@ function Formicula_adminapi_readContacts()
  *@param ssubject string use this as subject in confirmation mails
  *@returns boolean
  */
-function Formicula_adminapi_createContact($args)
+function formicula_adminapi_createContact($args)
 {
     extract($args);
 
@@ -222,7 +222,7 @@ function Formicula_adminapi_createContact($args)
     // create hook we're passing 'cid' as the extra info, which is the
     // argument that all of the other functions use to reference this
     // item
-    pnModCallHooks('item', 'create', $cid, array('module' => 'Formicula'));
+    pnModCallHooks('item', 'create', $cid, array('module' => 'formicula'));
 
     return true;
 }
@@ -234,7 +234,7 @@ function Formicula_adminapi_createContact($args)
  *@param cid int contact id
  *@returns boolean
  */
-function Formicula_adminapi_deleteContact($args)
+function formicula_adminapi_deleteContact($args)
 {
     extract($args);
 
@@ -267,7 +267,7 @@ function Formicula_adminapi_deleteContact($args)
     }
 
     // Let any hooks know that we have deleted an item.
-    pnModCallHooks('item', 'delete', $cid, array('module' => 'Formicula'));
+    pnModCallHooks('item', 'delete', $cid, array('module' => 'formicula'));
 
     return false;
 }
@@ -282,7 +282,7 @@ function Formicula_adminapi_deleteContact($args)
  *@param email strng email address
  *@returns boolean
  */
-function Formicula_adminapi_updateContact($args)
+function formicula_adminapi_updateContact($args)
 {
     extract($args);
 
@@ -324,7 +324,7 @@ function Formicula_adminapi_updateContact($args)
     }
 
     // Let any hooks know that we have updated an item.
-    pnModCallHooks('item', 'update', $cid, array('module' => 'Formicula'));
+    pnModCallHooks('item', 'update', $cid, array('module' => 'formicula'));
 
     return false;
 }
