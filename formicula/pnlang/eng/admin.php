@@ -20,7 +20,7 @@ with <ul>
     <li>%s = sitename</li>
     <li>%l = slogan</li>
     <li>%u = site url</li>
-    <li>%c = contact name</li>
+    <li>%c = contacts sender name</li>
     <li>%n&lt;num&gt; = user defined field name &lt;num&gt;</li>
     <li>%d&lt;num&gt; = user defined field data &lt;num&gt;</li>
 </ul>

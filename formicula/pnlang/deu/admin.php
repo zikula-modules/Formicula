@@ -19,7 +19,7 @@ mit <ul>
     <li>%s = Seitenname</li>
     <li>%l = Slogan</li>
     <li>%u = URL der Seite</li>
-    <li>%c = Name des Kontakts</li>
+    <li>%c = Absendername des Kontakts</li>
     <li>%n&lt;num&gt; = Name des userdefinerten Feldes &lt;num&gt;</li>
     <li>%d&lt;num&gt; = Inhalt des userdefinierten Feldes &lt;num&gt;</li>
 </ul>
