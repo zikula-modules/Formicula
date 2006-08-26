@@ -174,7 +174,6 @@ function formicula_userapi_sendtoContact($args)
         $pnr->assign('contact', $contact);
         $pnr->assign('userdata', $userdata);
 
-        $adminmail = pnConfigGetVar('adminmail');
         $sitename = pnConfigGetVar('sitename');
         $pnr->assign('sitename', $sitename);
 
@@ -247,7 +246,6 @@ function formicula_userapi_sendtoUser($args)
         $pnr->assign('contact', $contact);
         $pnr->assign('userdata', $userdata);
 
-        $adminmail = pnConfigGetVar('adminmail');
         $sitename = pnConfigGetVar('sitename');
         $pnr->assign('sitename', $sitename);
 
