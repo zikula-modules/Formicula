@@ -288,6 +288,7 @@ function formicula_userapi_sendtoUser($args)
             $subject = str_replace('%s', pnVarPrepHTMLDisplay($sitename), $subject);
             $subject = str_replace('%l', pnVarPrepHTMLDisplay(pnConfigGetVar('slogan')), $subject);
             $subject = str_replace('%u', pnGetBaseURL(), $subject);
+            $subject = str_replace('%c', pnVarPrepHTMLDisplay($contact['sname']), $subject);
             foreach($custom as $num => $customdata) {
                 $subject = str_replace('%n' . $num, $customdata['name'], $subject);
                 $subject = str_replace('%d' . $num, $customdata['data'], $subject);
