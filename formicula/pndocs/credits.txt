@@ -20,4 +20,5 @@
 // frank.schummertz@landseer-stuttgart.de
 //
 // Thanks to Carsten Volmer for extensive testing.
+// French translation by Christophe Beaujean (yokav) 
 //
