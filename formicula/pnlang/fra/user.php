@@ -1,5 +1,5 @@
 <?php
-// $Id: user.php 41 2006-08-26 10:22:30Z landseer $
+// $Id$
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2001 by the Post-Nuke Development Team.

@@ -1,3 +1,4 @@
+// $Id$
 //-----------------------------------------------------------------------
 // based on vpContact 0.711
 // created and released for rogue / postnuke .711

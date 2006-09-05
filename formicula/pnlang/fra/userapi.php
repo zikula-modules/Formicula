@@ -1,5 +1,5 @@
 <?php 
-// $Id: userapi.php 3 2005-07-05 05:42:53Z landseer $
+// $Id$
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2001 by the PostNuke Development Team.

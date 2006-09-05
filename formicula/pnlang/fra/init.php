@@ -1,5 +1,5 @@
 <?php
-// $Id: init.php 52 2006-08-26 16:07:13Z landseer $
+// $Id$
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2002 by the PostNuke Development Team.
