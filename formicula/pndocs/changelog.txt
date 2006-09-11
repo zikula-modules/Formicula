@@ -42,3 +42,6 @@
 // %d<num> = data of custom field #<num>
 // added form optional validation in form 0 (needs the AjaxSupportPackage from
 // http://noc.postnuke.com/frs/?group_id=8)
+//
+// Formicula x.y (fs)
+// fixed [#3263] Rechenaufgabe wird nicht immer angezeigt

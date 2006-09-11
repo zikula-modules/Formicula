@@ -117,6 +117,11 @@ function smarty_function_simplecaptcha($params, &$smarty)
 	    ImageGIF ($ds, $imgurl);
 	    ImageDestroy ($im);
 	    ImageDestroy ($ds);
+    } else {
+        // file already exists, calculate image size
+        $imgdata = getimagesize($imgurl);
+        $finalwidth  = $imgdata[0];
+        $finalheight = $imgdata[1];
     }
 
     return '<img src="' . $imgurl . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
