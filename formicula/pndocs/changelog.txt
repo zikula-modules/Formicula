@@ -45,3 +45,4 @@
 //
 // Formicula x.y (fs)
 // fixed [#3263] Rechenaufgabe wird nicht immer angezeigt
+// fixed [#3311] wrong field type
