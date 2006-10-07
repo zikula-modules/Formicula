@@ -26,7 +26,7 @@
 
 //new
 define('_FOR_EXCLUDEFROMSPAMCHECK', 'Do not use spam check in these forms<br />(comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly');
-define('_FOR_ACTIVATESPAMCHECK', 'Activate spamcheck<br />(make sure you the necessary form fields<br />are available, see the docs for more information');
+define('_FOR_ACTIVATESPAMCHECK', 'Activate spamcheck<br />(make sure you the necessary form fields<br />are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available)');
 define('_FOR_VISITHOMEPAGE', 'Visit Formicula on NOC');
 define('_FOR_ILLEGALEMAIL', 'invalid email address detected');
 define('_FOR_SENDERINFO', 'Use this information in the users confirmation mail');
