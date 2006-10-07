@@ -25,6 +25,7 @@
 // ----------------------------------------------------------------------
 
 //new
+define('_FOR_NOIMAGEFUNCTION', 'Keine Funktion zur Bilderzeugung verfügbar - Captcha deaktiviert');
 define('_FOR_WRONGCAPTCHA', 'Schlecht im Kopfrechnen? Bitte erneut versuchen!');
 define('_FOR_SIMPLEMATHEQUATION', 'Bitte diese einfache Rechenaufgabe lösen');
 define('_FOR_ADVICE_EMAIL', 'Bitte eine gültige Emailadresse in der Form name@domain.de eingeben.');

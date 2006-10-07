@@ -29,6 +29,7 @@
 // ----------------------------------------------------------------------
 
 //new
+define('_FOR_NOIMAGEFUNCTION', 'no image function available - captcha deactivated');
 define('_FOR_WRONGCAPTCHA', 'Bad in mathematics? You can do better, try again.');
 define('_FOR_SIMPLEMATHEQUATION', 'Please solve this simple math test');
 define('_FOR_ADVICE_EMAIL', 'Please enter a valid emailaddress like user@example.com.');
