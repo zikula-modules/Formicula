@@ -121,7 +121,7 @@ function formicula_upgrade($oldversion)
                     $name  = pnVarPrepForStore($contact['name']);
                     $email = pnVarPrepForStore($contact['email']);
                     $sql = "INSERT INTO $contactstable ($contactscolumn[name], $contactscolumn[email])
-                            VALUES ($name, $email)";
+                            VALUES ('" . $name . "', '" . $email. "')";
                     $dbconn->Execute($sql);
                 }
                 pnModDelVar('formicula', 'contacts'); 
