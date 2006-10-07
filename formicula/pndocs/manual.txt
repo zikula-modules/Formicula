@@ -209,6 +209,7 @@ Formicula tries to create images in this order:
 gif
 jpg
 png
-If all these image types are not supported by your server, captchas are deactivated.
+If all these image types are not supported by your server, captchas are deactivated, in this
+case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
 
