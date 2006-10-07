@@ -33,6 +33,28 @@ if (!isset($smarty->imagetextcount)) $smarty->imagetextcount = 0;
 
 function smarty_function_simplecaptcha($params, &$smarty)
 {
+    // check which image types are supported
+    if(imagetypes() && IMG_GIF) {
+        $imagetype = '.gif';
+        $createimagefunction = 'imagegif';
+    } elseif(imagetypes() && IMG_JPG) {
+        $imagetype = '.jpg';
+        $createimagefunction = 'imagejpeg';
+    } elseif(imagetypes() && IMG_PNG) {
+        $imagetype = '.png';
+        $createimagefunction = 'imagepng';
+    } else {
+        // no image functions available
+        pnModSetVar('formicula', 'spamcheck', 0);
+        if(pnSecAuthAction(0, 'formicula::', '.*', ACCESS_ADMIN)) {
+            // admin permission, show error messages
+            return  pnVarPrepFordisplay(_FOR_NOIMAGEFUNCTION);
+        } else {
+            // return silently
+            return;
+        }
+    }
+
 	// Fehlerhafte Eingaben abfangen
 	if (empty($params['font'])) { 
 	    $smarty->trigger_error("pnimagetext: missing 'font' parameter"); 
@@ -65,6 +87,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
         // make sure that x>y if z=1 (minus)
         $a=$x; $x=$y; $y=$a;
     }
+        
     $m = array('+', '-', '*');
     pnSessionSetVar('formicula_captcha', serialize(compact('x', 'y', 'z')));
 
@@ -78,7 +101,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
 	if($temp[strlen($temp)-1] <> '/') {
 	    $temp .= '/';
 	}
-	$imgurl	= pnVarPrepForOS($temp . 'formicula_cache/' . $hash . '.gif');
+	$imgurl	= pnVarPrepForOS($temp . 'formicula_cache/' . $hash . $imagetype);
 	if(!file_exists($imgurl)) {
         // we create a larger picture than needed, this makes it looking better at the end
 	    $multi = 4;
@@ -114,7 +137,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
 	    ImageColorTransparent($ds, $bgcolor);
         
    	    // write the file
-	    ImageGIF ($ds, $imgurl);
+	    $createimagefunction($ds, $imgurl);
 	    ImageDestroy ($im);
 	    ImageDestroy ($ds);
     } else {
