@@ -111,7 +111,7 @@ function formicula_upgrade($oldversion)
                     return false;
                 }
                 // migrate contacts from config var to table
-                $contacts = pnModGetVar('Formicula', 'Contacts'); // not lowercased
+                $contacts = pnModGetVar('formicula', 'contacts');
                 if( @unserialize( $contacts ) != "" ) {
                     $contacts_array = unserialize( $contacts );
                 } else {
@@ -124,8 +124,8 @@ function formicula_upgrade($oldversion)
                             VALUES ($name, $email)";
                     $dbconn->Execute($sql);
                 }
-                pnModDelVar('Formicula', 'Contacts'); // not lowercased
-                pnModDelVar('Formicula', 'version' ); // not lowercased
+                pnModDelVar('formicula', 'contacts'); 
+                pnModDelVar('formicula', 'version' );
         case '0.5':
                 // nothing to do
         case '0.6':
@@ -140,6 +140,8 @@ function formicula_upgrade($oldversion)
                 }
                 pnModSetVar('formicula', 'spamcheck', 1);
                 pnModSetVar('formicula', 'excludespamcheck', '');
+        case '1.0':
+            // nothing to do
     }
 
     // Update successful
