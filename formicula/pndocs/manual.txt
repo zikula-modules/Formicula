@@ -14,6 +14,7 @@ Formicula requires PostNuke .760 or later, although .762 is recommended. It *mig
 with earlier versions, but I did not test this and if it does not work, I don't care - sorry.
 For client side input validation you need the AjaxSupportPackage which is available from
 http://noc.postnuke.com/frs/?group_id=8. Install this as mentioned in the docs.
+For creating captchas you need PHP compiled with the GD graphics library.
 
 Installation
 -----------------
@@ -33,6 +34,7 @@ Installation
    Allow from env=object_is_jpg
    </.htaccess>
 4. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
+   Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.
    unreg. users (group)  |  formicula::  |  .*  |  comment
    This enables unregistered users to use all existing forms. In a default PN installation
@@ -202,4 +204,11 @@ Captcha
 The simplecaptcha plugins adds an image with a very basic math equation (2 number from 1 to 2 
 and either +, - or *) to the form if the spam check is enabled. If the user enters a wrong
 value, formicula redirects back to the page where it came from.
+
+Formicula tries to create images in this order:
+gif
+jpg
+png
+If all these image types are not supported by your server, captchas are deactivated.
+Please refer to http://php.net/manual/en/ref.image.php for more information.
 
