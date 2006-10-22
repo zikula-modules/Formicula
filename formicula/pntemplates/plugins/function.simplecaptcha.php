@@ -34,15 +34,16 @@ if (!isset($smarty->imagetextcount)) $smarty->imagetextcount = 0;
 function smarty_function_simplecaptcha($params, &$smarty)
 {
     // check which image types are supported
-    if(imagetypes() && IMG_GIF) {
-        $imagetype = '.gif';
-        $createimagefunction = 'imagegif';
-    } elseif(imagetypes() && IMG_JPG) {
-        $imagetype = '.jpg';
-        $createimagefunction = 'imagejpeg';
-    } elseif(imagetypes() && IMG_PNG) {
+    $freetype = function_exists('imagettfbbox');
+    if($freetype && (imagetypes() && IMG_PNG)) {
         $imagetype = '.png';
         $createimagefunction = 'imagepng';
+    } elseif($freetype && (imagetypes() && IMG_JPG)) {
+        $imagetype = '.jpg';
+        $createimagefunction = 'imagejpeg';
+    } elseif($freetype && (imagetypes() && IMG_GIF)) {
+        $imagetype = '.gif';
+        $createimagefunction = 'imagegif';
     } else {
         // no image functions available
         pnModSetVar('formicula', 'spamcheck', 0);
@@ -80,9 +81,9 @@ function smarty_function_simplecaptcha($params, &$smarty)
 
 
     srand ((double)microtime()*1000000);
-    $x = rand(1,10);
-    $y = rand(1,10);
-    $z = rand(0,2);
+    $x = rand(1,10); /* 1 to 10 */
+    $y = rand(1,10); /* 1 to 10 */
+    $z = rand(0,2);  /* 0=+, 1=-, 2=* */
     if(($z==1) && ($y>$x)) {
         // make sure that x>y if z=1 (minus)
         $a=$x; $x=$y; $y=$a;
