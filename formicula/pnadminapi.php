@@ -1,14 +1,6 @@
 <?php
 // $Id$
 // ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2002 by the PostNuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
 // LICENSE
 //
 // This program is free software; you can redistribute it and/or
@@ -17,14 +9,14 @@
 // of the License, or (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
-// but WIthOUT ANY WARRANTY; without even the implied warranty of
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file:  Template administration API
+// Original Author of file: Frank Schummertz
+// Purpose of file:  formicula administration API
 // ----------------------------------------------------------------------
 
 include_once("modules/formicula/common.php");
@@ -38,11 +30,8 @@ include_once("modules/formicula/common.php");
  */
 function formicula_adminapi_getContact($args)
 {
-    extract($args);
-
-    if (!isset($cid) || empty($cid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    if (!isset($args['cid']) || empty($args['cid'])) {
+        return LogUtil::registerError(_MODARGSERROR);
     }
 
     // Security check - important to do this as early on as possible to
@@ -51,43 +40,7 @@ function formicula_adminapi_getContact($args)
         return false;
     }
 
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "SELECT $contactscolumn[cid],
-                   $contactscolumn[name],
-                   $contactscolumn[email],
-                   $contactscolumn[public],
-                   $contactscolumn[sname],
-                   $contactscolumn[semail],
-                   $contactscolumn[ssubject]
-            FROM $contactstable
-            WHERE $contactscolumn[cid] = '" . (int)pnVarPrepForStore($cid) . "'";
-    $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _GETFAILED);
-        return false;
-    }
-
-    if ($result->EOF) {
-        return false;
-    }
-
-    list($cid, $name, $email, $public, $sname, $semail, $ssubject) = $result->fields;
-
-    $result->Close();
-
-    $contact = array('cid'      => $cid,
-                     'name'     => $name,
-                     'email'    => $email,
-                     'public'   => $public,
-                     'sname'    => $sname,
-                     'semail'   => $semail,
-                     'ssubject' => $ssubject);
+    $contact = DBUtil::selectObjectByID('formcontacts', $args['cid'], 'cid');
     return $contact;
 }
 
@@ -100,49 +53,18 @@ function formicula_adminapi_getContact($args)
  */
 function formicula_adminapi_readContacts()
 {
-    $contacts = array();
-
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "SELECT $contactscolumn[cid],
-                   $contactscolumn[name],
-                   $contactscolumn[email],
-                   $contactscolumn[public],
-                   $contactscolumn[sname],
-                   $contactscolumn[semail],
-                   $contactscolumn[ssubject]
-            FROM $contactstable
-            ORDER BY $contactscolumn[cid]";
-    $result = $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so set an appropriate
-    // error message and return
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _GETFAILED);
+    // Security check - important to do this as early on as possible to
+    // avoid potential security holes or just too much wasted processing
+    if (!SecurityUtil::checkPermission("formicula::", "::", ACCESS_READ)) {
         return false;
     }
-
-    // Put items into result array.  Note that each item is checked
-    // individually to ensure that the user is allowed access to it before it
-    // is added to the results array
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($cid, $name, $email, $public, $sname, $semail, $ssubject) = $result->fields;
-        if (pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_EDIT)) {
-            $contacts[] = array('cid'      => $cid,
-                                'name'     => $name,
-                                'email'    => $email,
-                                'public'   => $public,
-                                'sname'    => $sname,
-                                'semail'   => $semail,
-                                'ssubject' => $ssubject);
-        }
-    }
-
-    $result->Close();
+    
+    $contacts = array();
+    $pntable =&pnDBGetTables();
+    $contactscolumn = &$pntable['formcontacts_column'];
+    $orderby = "ORDER BY $contactscolumn[cid]";
+    
+    $contacts = DBUtil::selectObjectArray('formcontacts', '', $orderby);
 
     // Return the contacts
     return $contacts;
@@ -162,69 +84,23 @@ function formicula_adminapi_readContacts()
  */
 function formicula_adminapi_createContact($args)
 {
-    extract($args);
-
-    if ((!isset($name)) || (!isset($email))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
-    }
-    if ((!isset($public)) || empty($public)) {
-	$public = 0;
+    if (!SecurityUtil::checkPermission('formicula::', "::", ACCESS_ADD)) {
+        return LogUtil::registerError(_FOR_NOAUTH);
     }
 
-    if (!pnSecAuthAction(0, 'formicula::', "::", ACCESS_ADD)) {
-        pnSessionSetVar('errormsg', _FOR_NOAUTH);
-        return false;
+    if ((!isset($args['name'])) || (!isset($args['email']))) {
+        return LogUtil::registerError(_MODARGSERROR);
+    }
+    if ((!isset($args['public'])) || empty($args['public'])) {
+	    $args['public'] = 0;
     }
 
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    // Get next ID in table - this is required prior to any insert that
-    // uses a unique ID, and ensures that the ID generation is carried
-    // out in a database-portable fashion
-    $nextId = $dbconn->GenId($contactstable);
-
-    $sql = "INSERT INTO $contactstable (
-              $contactscolumn[cid],
-              $contactscolumn[name],
-              $contactscolumn[email],
-              $contactscolumn[public],
-              $contactscolumn[sname],
-              $contactscolumn[semail],
-              $contactscolumn[ssubject])
-            VALUES (
-              $nextId,
-              '" . pnVarPrepForStore($name) . "',
-              '" . pnVarPrepForStore($email) . "',
-              '" . (int)pnVarPrepForStore($public) . "',
-              '" . pnVarPrepForStore($sname) . "',
-              '" . pnVarPrepForStore($semail) . "',
-              '" . pnVarPrepForStore($ssubject) . "')";
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so set an
-    // appropriate error message and return
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _CREATEFAILED);
-        return false;
+    $obj = DBUtil::insertObject($args, 'formcontacts', 'cid');
+    if($obj == false) {
+        return LogUtil::registerError(_CREATEFAILED);
     }
-
-    // Get the ID of the item that we inserted.  It is possible, although
-    // very unlikely, that this is different from $nextId as obtained
-    // above, but it is better to be safe than sorry in this situation
-    $cid = $dbconn->PO_Insert_ID($contactstable, $contactscolumn['cid']);
-
-    // Let any hooks know that we have created a new item.  As this is a
-    // create hook we're passing 'cid' as the extra info, which is the
-    // argument that all of the other functions use to reference this
-    // item
-    pnModCallHooks('item', 'create', $cid, array('module' => 'formicula'));
-
-    return true;
+    pnModCallHooks('item', 'create', $obj['cid'], 'cid');
+    return $obj['cid'];
 }
 
 /**
@@ -238,38 +114,25 @@ function formicula_adminapi_deleteContact($args)
 {
     extract($args);
 
-    if ((!isset($cid)) || empty($cid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    if ((!isset($args['cid'])) || empty($args['cid'])) {
+        return LogUtil::registerError(_MODARGSERROR);
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_DELETE)) {
-        pnSessionSetVar('errormsg', _FOR_NOAUTH);
-        return false;
+    if (!SecurityUtil::checkPermission('formicula::', ':' . (int)$args['cid'] . ':', ACCESS_DELETE)) {
+        return LogUtil::registerError(_FOR_NOAUTH);
     }
 
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "DELETE FROM $contactstable
-            WHERE $contactscolumn[cid] = '" . (int)pnVarPrepForStore($cid) ."'";
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so set an
-    // appropriate error message and return
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _DELETEFAILED);
-        return false;
+    $res = DBUtil::deleteObjectByID ('formcontacts', (int)$args['cid'], 'cid');
+    if($res==false) {
+        return LogUtil::registerError(_DELETEFAILED);
     }
 
-    // Let any hooks know that we have deleted an item.
-    pnModCallHooks('item', 'delete', $cid, array('module' => 'formicula'));
+    // Let any hooks know that we have deleted a contact
+    pnModCallHooks('item', 'delete', $args['cid'], '');
 
-    return false;
+    // Let the calling process know that we have finished successfully
+    return true;
 }
 
 
@@ -279,54 +142,52 @@ function formicula_adminapi_deleteContact($args)
  *
  *@param cid int contact id
  *@param name string name of the contact
- *@param email strng email address
+ *@param email string email address
  *@returns boolean
  */
 function formicula_adminapi_updateContact($args)
 {
     extract($args);
 
-    if ((!isset($cid)) || (!isset($name)) || (!isset($email))) {
-        pnSessionSetVar('errormsg', _MODARGSERROR);
-        return false;
+    if ((!isset($args['cid'])) || 
+        (!isset($args['name'])) || 
+        (!isset($args['email']) ||
+        (empty($args['name'])) ||
+        (empty($args['email'])) )) {
+        return LogUtil::registerError(_MODARGSERROR);
     }
-    if ((!isset($public)) || empty($public)) {
-	$public = 0;
+    if ((!isset($args['public'])) || empty($args['public'])) {
+	    $args['public'] = 0;
     }
 
     // Security check
-    if (!pnSecAuthAction(0, 'formicula::', ":$cid:", ACCESS_EDIT)) {
-        pnSessionSetVar('errormsg', _FOR_NOAUTH);
-        return false;
+    if (!SecurityUtil::checkPermission('formicula::', ':' . $args['cid'] . ':', ACCESS_EDIT)) {
+        return LogUtil::registerError(_FOR_NOAUTH);
     }
 
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "UPDATE $contactstable
-            SET $contactscolumn[name]     = '".pnVarPrepForStore($name)."',
-                $contactscolumn[email]    = '".pnVarPrepForStore($email)."',
-                $contactscolumn[public]   = '".(int)pnVarPrepForStore($public)."',
-                $contactscolumn[sname]    = '".pnVarPrepForStore($sname)."',
-                $contactscolumn[semail]   = '".pnVarPrepForStore($semail)."',
-                $contactscolumn[ssubject] = '".pnVarPrepForStore($ssubject)."'
-            WHERE $contactscolumn[cid]  = '".(int)$cid."'";
-    $dbconn->Execute($sql);
-
-    // Check for an error with the database code, and if so set an
-    // appropriate error message and return
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _UPDATEFAILED);
-        return false;
+    $res = DBUtil::updateObject($args, 'formcontacts', '', 'cid');
+    if($res == false) {
+        return LogUtil::registerError(_MH_UPDATEFAILED);
     }
+    pnModCallHooks('item', 'update', $args['cid'], array('module' => 'formicula'));
+    return $args['cid'];
+}
 
-    // Let any hooks know that we have updated an item.
-    pnModCallHooks('item', 'update', $cid, array('module' => 'formicula'));
-
-    return false;
+/**
+ * get available admin panel links
+ *
+ * @author Mark West
+ * @return array array of admin links
+ */
+function formicula_adminapi_getlinks()
+{
+    $links = array();
+    if (SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'view'), 'text' => _FOR_VIEWCONTACT);
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'edit', array('cid' => -1)), 'text' => _FOR_ADDCONTACT);
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'modifyconfig'), 'text' => _FOR_EDITCONFIG);
+    }
+    return $links;
 }
 
 ?>

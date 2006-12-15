@@ -41,57 +41,18 @@ function formicula_userapi_getContact($args)
 {
     extract($args);
 
-    if (!isset($cid) || !is_numeric($cid)) {
-        pnSessionSetVar('errormsg', _MODARGSERROR . ' in formicula_userapi_getContact(cid)=' . $cid . ':');
-        return false;
+    if (!isset($args['cid']) || !is_numeric($args['cid'])) {
+        return LogUtil::registerError(_MODARGSERROR . ' in formicula_userapi_getContact(cid=' . DataUtil::formatForDisplay($cid) . ')');
     }
-    if (!isset($form) || is_numeric($form)) {
+    if (!isset($args['form']) || !is_numeric($args['form'])) {
         $form = 0;
     }
 
-    if(!pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTHFORFORM));
+    if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
+        return LogUtil::registerError(_FOR_NOAUTHFORFORM);
     }
 
-    pnModDBInfoLoad('formicula');
-
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "SELECT $contactscolumn[cid],
-                   $contactscolumn[name],
-                   $contactscolumn[email],
-                   $contactscolumn[public],
-                   $contactscolumn[sname],
-                   $contactscolumn[semail],
-                   $contactscolumn[ssubject]
-            FROM $contactstable
-            WHERE $contactscolumn[cid] = '" . (int)pnVarPrepForStore($cid) . "'";
-    $result = $dbconn->Execute($sql);
-
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _GETFAILED);
-        return false;
-    }
-
-    if ($result->EOF) {
-        return false;
-    }
-
-    list($cid, $name, $email, $public, $sname, $semail, $ssubject) = $result->fields;
-
-    $result->Close();
-
-    $contact = array('cid'      => $cid,
-                     'name'     => $name,
-                     'email'    => $email,
-                     'public'   => $public,
-                     'sname'    => $sname,
-                     'semail'   => $semail,
-                     'ssubject' => $ssubject);
+    $contact = DBUtil::selectObjectByID('formcontacts', $args['cid'], 'cid');
     return $contact;
 }
 
@@ -107,46 +68,25 @@ function formicula_userapi_readValidContacts($args)
 {
     extract($args);
 
-    pnModDBInfoLoad('formicula');
-
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "SELECT $contactscolumn[cid],
-                   $contactscolumn[name]
-            FROM $contactstable
-            WHERE $contactscolumn[public] = 1
-            ORDER BY $contactscolumn[cid]";
-    $result = $dbconn->Execute($sql);
-
+    $allcontacts = pnModAPIFunc('formicula', 'admin', 'readContacts');
     // Check for an error with the database code, and if so set an appropriate
     // error message and return
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _GETFAILED);
-        return false;
+    if ($allcontacts == false) {
+        return LogUtil::registerError(_GETFAILED);
     }
 
     // Put items into result array.  Note that each item is checked
     // individually to ensure that the user is allowed access to it before it
     // is added to the results array
-    $contacts = array();
-    for (; !$result->EOF; $result->MoveNext()) {
-        list($cid, $name) = $result->fields;
-        if (pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
-            $contacts[] = array('cid'    => $cid,
-                                'name'   => $name);
+    $validcontacts = array();
+    foreach($allcontacts as $contact) {
+        if (SecurityUtil::checkPermission('formicula::', $args['form'] . ':' . $cid . ':', ACCESS_COMMENT)) {
+            $validcontacts[] = $contact;
         }
     }
 
-    // All successful database queries produce a result set, and that result
-    // set should be closed when it has been finished with
-    $result->Close();
-
     // Return the contacts
-    return $contacts;
+    return $validcontacts;
 }
 
 /**
@@ -162,11 +102,14 @@ function formicula_userapi_readValidContacts($args)
  */
 function formicula_userapi_sendtoContact($args)
 {
-    extract($args);
+    $userdata = $args['userdata'];
+    $contact  = $args['contact'];
+    $custom   = $args['custom'];
+    $form     = DataUtil::formatForOS($args['form']);
+    $format   = $args['format'];
 
     if(pnModAvailable('Mailer')) {
-        $pnr =& new pnRender('formicula');
-        $pnr->caching = false;
+        $pnr = new pnRender('formicula', false);
         $ip = getenv('REMOTE_ADDR');
         $pnr->assign('host', gethostbyaddr($ip));
         $pnr->assign('ip', $ip);
@@ -234,11 +177,14 @@ function formicula_userapi_sendtoContact($args)
  */
 function formicula_userapi_sendtoUser($args)
 {
-    extract($args);
+    $userdata = $args['userdata'];
+    $contact  = $args['contact'];
+    $custom   = $args['custom'];
+    $form     = DataUtil::formatForOS($args['form']);
+    $format   = $args['format'];
 
     if(pnModAvailable('Mailer')) {
-        $pnr =& new pnRender('formicula');
-        $pnr->caching = false;
+        $pnr = new pnRender('formicula', false);
         $ip = getenv('REMOTE_ADDR');
         $pnr->assign('host', gethostbyaddr($ip));
         $pnr->assign('ip', $ip);
@@ -265,7 +211,7 @@ function formicula_userapi_sendtoUser($args)
         if(!empty($contact['sname'])) {
             $fromname = $contact['sname'];
         } else {
-            $fromname = $sitename . ' - ' . pnVarPrepForDisplay(_FOR_CONTACTFORM);
+            $fromname = $sitename . ' - ' . DataUtil::formatForDisplay(_FOR_CONTACTFORM);
         }
         // check for sender email
         if(!empty($contact['semail'])) {
@@ -283,10 +229,10 @@ function formicula_userapi_sendtoUser($args)
             // %c = contact name
             // %n<num> = user defined field name <num>
             // %d<num> = user defined field data <num>
-            $subject = str_replace('%s', pnVarPrepHTMLDisplay($sitename), $subject);
-            $subject = str_replace('%l', pnVarPrepHTMLDisplay(pnConfigGetVar('slogan')), $subject);
+            $subject = str_replace('%s', DataUtil::formatForDisplay($sitename), $subject);
+            $subject = str_replace('%l', DataUtil::formatForDisplay(pnConfigGetVar('slogan')), $subject);
             $subject = str_replace('%u', pnGetBaseURL(), $subject);
-            $subject = str_replace('%c', pnVarPrepHTMLDisplay($contact['sname']), $subject);
+            $subject = str_replace('%c', DataUtil::formatForDisplay($contact['sname']), $subject);
             foreach($custom as $num => $customdata) {
                 $subject = str_replace('%n' . $num, $customdata['name'], $subject);
                 $subject = str_replace('%d' . $num, $customdata['data'], $subject);
@@ -319,34 +265,32 @@ function formicula_userapi_sendtoUser($args)
  */
 function formicula_userapi_checkArguments($args)
 {
-    extract($args);
+    $userdata = $args['userdata'];
+    $custom   = $args['custom'];
 
     if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
-        //die("no email");
-        return false;
+        return LogUtil::registerError(_FOR_ERROREMAIL);
     }
 
     if (!isset($userdata['uname']) || ($userdata['uname'] == '')) {
-        //die("no name");
-        return false;
+        return LogUtil::registerError(_FOR_ERRORUERNAME);
     }
 
     if ($userdata['uname'] != pnVarCensor($userdata['uname'])) {
-        return false;
+        return LogUtil::registerError(_FOR_ERRORUSERNAME);
     }
 
     if ($userdata['comment'] != pnVarCensor($userdata['comment'])) {
-        return false;
+        return LogUtil::registerError(_FOR_ERRORCOMMENT);
     }
 
     foreach($custom as $field) {
         if($field['mandatory'] == true) {
             if(!is_array($field['data']) && (empty($field['data']))) {
-                //die("no " . $field['name']);
-                return false;
+                return LogUtil::registerError(_FOR_ERRORNOMANDATORFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
             }
             if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
-                return false;
+                return LogUtil::registerError(_FOR_ERRORUPLOADERROR);
             }
         }
     }

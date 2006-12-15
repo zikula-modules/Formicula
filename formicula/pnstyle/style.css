@@ -50,12 +50,13 @@
 }
 
 #formicula-admin {
-    /* do not delete this */
+    padding-top: 2em;
 }
 
 #formicula-admin .footer {
     font-size: 0.8em;
     text-align: center;
+    margin-top: 1em;
 }
 
 #formicula-admin .headerlink {

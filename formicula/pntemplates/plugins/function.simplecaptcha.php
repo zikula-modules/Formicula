@@ -47,9 +47,9 @@ function smarty_function_simplecaptcha($params, &$smarty)
     } else {
         // no image functions available
         pnModSetVar('formicula', 'spamcheck', 0);
-        if(pnSecAuthAction(0, 'formicula::', '.*', ACCESS_ADMIN)) {
+        if(SecurityUtil::checkPermission('formicula::', '.*', ACCESS_ADMIN)) {
             // admin permission, show error messages
-            return  pnVarPrepFordisplay(_FOR_NOIMAGEFUNCTION);
+            return  DataUtil::formatForDisplay(_FOR_NOIMAGEFUNCTION);
         } else {
             // return silently
             return;
@@ -61,9 +61,9 @@ function smarty_function_simplecaptcha($params, &$smarty)
 	    $smarty->trigger_error("pnimagetext: missing 'font' parameter"); 
 	    return;
 	}
-    $params['font'] = pnVarPrepForOS('modules/formicula/pnimages/' . $params['font'] . '.ttf');
+    $params['font'] = DataUtil::formatForOS('modules/formicula/pnimages/' . $params['font'] . '.ttf');
     if(!file_exists($params['font']) || !is_readable($params['font'])) {
-        $smarty->trigger_error('pnimagetext: missing font ' . pnVarPrepForDisplay($params['font'])); 
+        $smarty->trigger_error('pnimagetext: missing font ' . DataUtil::formatForDisplay($params['font'])); 
         return;
     }
 	if (empty($params['size'])) { 
@@ -90,7 +90,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
     }
         
     $m = array('+', '-', '*');
-    pnSessionSetVar('formicula_captcha', serialize(compact('x', 'y', 'z')));
+    SessionUtil::setVar('formicula_captcha', serialize(compact('x', 'y', 'z')));
 
     // create the text for the image
     $params['text'] = $x . ' ' . $m[$z] . ' ' . $y . ' =';
@@ -102,7 +102,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
 	if($temp[strlen($temp)-1] <> '/') {
 	    $temp .= '/';
 	}
-	$imgurl	= pnVarPrepForOS($temp . 'formicula_cache/' . $hash . $imagetype);
+	$imgurl	= DataUtil::formatForOS($temp . 'formicula_cache/' . $hash . $imagetype);
 	if(!file_exists($imgurl)) {
         // we create a larger picture than needed, this makes it looking better at the end
 	    $multi = 4;

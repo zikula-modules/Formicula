@@ -38,23 +38,17 @@ include_once( "modules/formicula/common.php");
  */
 function formicula_user_main($args=array())
 {
-    if(count($args)>0) {
-        extract($args);
-    } else {
-        $form = pnVarCleanFromInput('form');
-        $cid  = pnVarCleanFromInput('cid');
+    $form = FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
+    $cid  = FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
-        // get subitted information - will be passed to the template
-        // addinfo is an array:
-        // addinfo[name1] = value1
-        // addinfo[name2] = value2
-        $addinfo = pnVarCleanFromInput('addinfo');
-    }
-    $form = (!empty($form)) ? $form : 0;
-    $cid  = (!empty($cid)) ? $cid : -1;
+    // get subitted information - will be passed to the template
+    // addinfo is an array:
+    // addinfo[name1] = value1
+    // addinfo[name2] = value2
+    $addinfo  = FormUtil::getPassedValue('addinfo',  (isset($args['addinfo'])) ? $args['addinfo'] : array(),  'GETPOST');
 
     // reset captcha
-    pnSessionDelVar('formicula_captcha');
+    SessionUtil::delVar('formicula_captcha');
 
     if ($cid == -1) {
         $contacts = pnModAPIFunc('formicula',
@@ -70,7 +64,7 @@ function formicula_user_main($args=array())
     }
 
     if (count($contacts) == 0) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTHFORFORM));
+        return LogUtil::registerError(_FOR_NOAUTHFORFORM, null, 'index.php');
     }
 
     if (pnUserLoggedIn()) {
@@ -89,8 +83,7 @@ function formicula_user_main($args=array())
         }
     }
 
-    $pnr =& new pnRender('formicula');
-    $pnr->caching = false;
+    $pnr = new pnRender('formicula', false);
     $pnr->add_core_data();
     $pnr->assign('uname', $uname);
     $pnr->assign('uemail', $uemail);
@@ -120,42 +113,26 @@ function formicula_user_send($args=array())
 {
     global $_FILES;
 
-    if(count($args)>0) {
-        extract($args);
-    } else {
-        list($cid,
-           $form,
-           $captcha,
-           $userformat,
-           $adminformat,
-           $numfields,
-           $ud['uname'],
-           $ud['uemail'],
-           $ud['url'],
-           $ud['phone'],
-           $ud['company'],
-           $ud['location'],
-           $ud['comment']) = pnVarCleanFromInput('cid',
-                                                 'form',
-                                                 'captcha',
-                                                 'userformat',
-                                                 'adminformat',
-                                                 'numFields',
-                                                 'uname',
-                                                 'uemail',
-                                                 'url',
-                                                 'phone',
-                                                 'company',
-                                                 'location',
-                                                 'comment');
-    }
+    $form           = (int)FormUtil::getPassedValue('form',        (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
+    $cid            = (int)FormUtil::getPassedValue('cid',         (isset($args['cid'])) ? $args['cid'] : 0,  'GETPOST');
+    $captcha        = (int)FormUtil::getPassedValue('captcha',     (isset($args['captcha'])) ? $args['captcha'] : 0, 'GETPOST');
+    $userformat     =      FormUtil::getPassedValue('userformat',  (isset($args['userformat'])) ? $args['userformat'] : 'plain',  'GETPOST');
+    $adminformat    =      FormUtil::getPassedValue('adminformat', (isset($args['adminformat'])) ? $args['adminformat'] : 'plain', 'GETPOST');
+    $numfields      = (int)FormUtil::getPassedValue('numfields',   (isset($args['numfields'])) ? $args['numfields'] : 0,  'GETPOST');
+    $returntourl    =      FormUtil::getPassedValue('returntourl', (isset($args['returntourl'])) ? $args['returntourl'] : '',  'GETPOST');
+    $ud['uname']    =      FormUtil::getPassedValue('uname',       (isset($args['uname'])) ? $args['uname'] : '', 'GETPOST');
+    $ud['uemail']   =      FormUtil::getPassedValue('uemail',      (isset($args['uemail'])) ? $args['uemail'] : '',  'GETPOST');
+    $ud['url']      =      FormUtil::getPassedValue('url',         (isset($args['url'])) ? $args['url'] : '', 'GETPOST');
+    $ud['phone']    =      FormUtil::getPassedValue('phone',       (isset($args['phone'])) ? $args['phone'] : '',  'GETPOST');
+    $ud['company']  =      FormUtil::getPassedValue('company',     (isset($args['company'])) ? $args['company'] : '', 'GETPOST');
+    $ud['location'] =      FormUtil::getPassedValue('location',    (isset($args['location'])) ? $args['location'] : '',  'GETPOST');
+    $ud['comment']  =      FormUtil::getPassedValue('comment',     (isset($args['comment'])) ? $args['comment'] : '', 'GETPOST');
 
     if(empty($cid) && empty($form)) {
         return pnRedirect('index.php');
     }
 
-    $form = (!empty($form)) ? (int)$form : 0;
-    $cid  = (int)$cid;
+    // remove tags from comment to avoid spam
     $comments = strip_tags($comments);
 
     // check captcha
@@ -168,8 +145,7 @@ function formicula_user_send($args=array())
     }
     if($spamcheck==1) {
         $captcha_ok = false;
-        $cdata = @unserialize(pnSessionGetVar('formicula_captcha'));
-        $captcha = (int)$captcha;
+        $cdata = @unserialize(SessionUtil::getVar('formicula_captcha'));
         if(is_array($cdata)) {
             switch($cdata['z']) {
                 case '0':
@@ -187,19 +163,19 @@ function formicula_user_send($args=array())
         }
 
         if($captcha_ok==false) {
-            pnSessionDelVar('formicula_captcha');
-            pnSessionSetVar('errormsg', _FOR_WRONGCAPTCHA);
+            SessionUtil::delVar('formicula_captcha');
+            // todo: append params to $returntourl and redirect
             $params = array('form' => $form);
             if(is_array($addinfo) && count($addinfo)>0) {
                 $params['addinfo'] = $addinfo;
             }
-            return pnRedirect(pnServerGetVar('HTTP_REFERER'));
+            return LogUtil::registerError(_FOR_WRONGCAPTCHA, null, pnServerGetVar('HTTP_REFERER'));
         }
     }
-    pnSessionDelVar('formicula_captcha');
+    SessionUtil::delVar('formicula_captcha');
 
-    if(!pnSecConfirmAuthKey()) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
+    if(!SecurityUtil::confirmAuthKey()) {
+        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
     }
     
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
@@ -215,8 +191,8 @@ function formicula_user_send($args=array())
         $ud['uname'] =  pnConfigGetVar('adminmail');
     }
 
-    if(!pnSecAuthAction(0, "formicula::", "$form:$cid:", ACCESS_COMMENT)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTHFORFORM));
+    if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
+        return LogUtil::registerError(_FOR_NOAUTHFORFORM, null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
     }
 
     // very basic input validation against HTTP response splitting
@@ -230,8 +206,8 @@ function formicula_user_send($args=array())
     }
     $custom = array();
     for($i=0;$i<$numfields;$i++) {
-        $custom[$i]['name'] = pnVarCleanFromInput('custom'.$i.'name');
-        $custom[$i]['mandatory'] = (pnVarCleanFromInput('custom'.$i.'mandatory') == 1) ? true : false;
+        $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name');
+        $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
 
         if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
             $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
@@ -240,25 +216,22 @@ function formicula_user_send($args=array())
                 $custom[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
                 $custom[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
                 $custom[$i]['upload'] = true;
-                move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], pnVarPrepForOS($uploaddir.$custom[$i]['data']['name']));
+                move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], DataUtil::formatForOS($uploaddir.$custom[$i]['data']['name']));
             } else {
                 // error - replace the 'data' with an errormessage
                 $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error']);
             }
         } else {
-            $custom[$i]['data'] = pnVarCleanFromInput('custom'.$i.'data');
+            $custom[$i]['data'] = FormUtil::getPassedValue('custom'.$i.'data');
             $custom[$i]['upload'] = false;
         }
     }
 
-    $contact = pnModAPIFunc('formicula',
-                            'user',
-                            'getContact',
+    $contact = pnModAPIFunc('formicula', 'user', 'getContact',
                             array('cid'  => $cid,
                                   'form' => $form));
 
-    $pnr =& new pnRender('formicula');
-    $pnr->caching=false;
+    $pnr = new pnRender('formicula', false);
     $pnr->assign('contact', $contact);
     $pnr->assign('userdata', $ud);
 
@@ -275,7 +248,7 @@ function formicula_user_send($args=array())
                                'custom'   => $custom,
                                'form'     => $form,
                                'format'   => $adminformat)) == false) {
-            return showErrorMessage(pnVarPrepForDisplay(_FOR_ERRORSENDINGMAIL));
+            return LogUtil::registerError(_FOR_ERRORSENDINGMAIL, null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
         }
 
         if((pnModGetVar('formicula', 'send_user') == 1) && ($userformat <> 'none')) {

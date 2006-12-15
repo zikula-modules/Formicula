@@ -30,28 +30,11 @@
 
 function formicula_init()
 {
-    // Get database information
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
-
-    $sql = "CREATE TABLE $contactstable (
-            $contactscolumn[cid]       int(10)     NOT NULL auto_increment,
-            $contactscolumn[name]      varchar(40) NOT NULL default '',
-            $contactscolumn[email]     varchar(80) NOT NULL default '',
-            $contactscolumn[public]    int(1)      NOT NULL default 0,
-            $contactscolumn[sname]     varchar(40) NOT NULL default '',
-            $contactscolumn[semail]    varchar(80) NOT NULL default '',
-            $contactscolumn[ssubject]  varchar(80) NOT NULL default '',
-            PRIMARY KEY(pn_cid))";
-    $dbconn->Execute($sql);
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _FOR_CREATETABLEFAILED);
+    // create the formicula table
+    if (!DBUtil::createTable('formcontacts')) {
         return false;
     }
-    
+
     pnModAPILoad('formicula', 'admin', true);
     pnModAPIFunc('formicula',
                  'admin',
@@ -83,11 +66,6 @@ function formicula_upgrade($oldversion)
 {
     // Get database information
     pnModDBInfoLoad('formicula');
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable  =  $pntable['formcontacts'];
-    $contactscolumn = &$pntable['formcontacts_column'];
 
     // Upgrade dependent on old version number
     switch($oldversion) {
@@ -99,17 +77,11 @@ function formicula_upgrade($oldversion)
         case '0.3':
                 // nothing to do
         case '0.4':
-                $sql = "CREATE TABLE $contactstable (
-                        $contactscolumn[cid]    int(10)     NOT NULL auto_increment,
-                        $contactscolumn[name]   varchar(40) NOT NULL default '',
-                        $contactscolumn[email]  varchar(80) NOT NULL default '',
-                        $contactscolumn[public] int(1)      NOT NULL default 0,
-                        PRIMARY KEY(pn_cid))";
-                $dbconn->Execute($sql);
-                if ($dbconn->ErrorNo() != 0) {
-                    pnSessionSetVar('errormsg', _FOR_CREATETABLEFAILED);
+                // create the formicula table
+                if (!DBUtil::createTable('formcontacts')) {
                     return false;
                 }
+
                 // migrate contacts from config var to table
                 $contacts = pnModGetVar('formicula', 'contacts');
                 if( @unserialize( $contacts ) != "" ) {
@@ -120,9 +92,15 @@ function formicula_upgrade($oldversion)
                 foreach ($contacts_array as $contact) {
                     $name  = pnVarPrepForStore($contact['name']);
                     $email = pnVarPrepForStore($contact['email']);
-                    $sql = "INSERT INTO $contactstable ($contactscolumn[name], $contactscolumn[email])
-                            VALUES ('" . $name . "', '" . $email. "')";
-                    $dbconn->Execute($sql);
+                    pnModAPIFunc('formicula',
+                                 'admin',
+                                 'createContact',
+                                 array('name'     => $name,
+                                       'email'    => $email,
+                                       'public'   => 1,
+                                       'sname'    => '',   
+                                       'semail'   => '',
+                                       'ssubject' => ''));
                 }
                 pnModDelVar('formicula', 'contacts'); 
                 pnModDelVar('formicula', 'version' );
@@ -142,7 +120,14 @@ function formicula_upgrade($oldversion)
                 pnModSetVar('formicula', 'excludespamcheck', '');
         case '1.0':
             // nothing to do
+        case '1.1':
+            if (!DBUtil::changeTable('groups')) {
+                return LogUtil::registerError(_MH_UPGRADETO50FAILED);
+            }
     }
+
+    // clear compiled templates
+    pnModAPIFunc('pnRender', 'user', 'clear_compiled');
 
     // Update successful
     return true;
@@ -151,21 +136,14 @@ function formicula_upgrade($oldversion)
 
 function formicula_delete()
 {
-    // Get database information
-    $dbconn  =& pnDBGetConn(true);
-    $pntable =& pnDBGetTables();
-
-    $contactstable = $pntable['formcontacts'];
-
-    $sql = "DROP TABLE $contactstable";
-    $dbconn->Execute($sql);
-    if ($dbconn->ErrorNo() != 0) {
-        pnSessionSetVar('errormsg', _FOR_DELETETABLEFAILED.' ('.$contactstable.')');
-        // Report failed deletion attempt
+    // drop the table
+    if (!DBUtil::dropTable('formcontacts')) {
         return false;
     }
 
+    // Remove module variables
     pnModDelVar('formicula');
+
     return true;
 }
 

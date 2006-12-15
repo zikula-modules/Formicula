@@ -36,20 +36,25 @@ function formicula_pntables()
 
     // Get the name for the template item table.  This is not necessary
     // but helps in the following statements and keeps them readable
-    $contacts = pnConfigGetVar('prefix') . '_formcontacts';
-
-    // Set the table name
-    $pntable['formcontacts'] = $contacts;
+    $pntable['formcontacts'] = DBUtil::getLimitedTablename('formcontacts');
 
     // Set the column names.  Note that the array has been formatted
     // on-screen to be very easy to read by a user.
-    $pntable['formcontacts_column'] = array('cid'      => $contacts . '.pn_cid',
-                                            'name'     => $contacts . '.pn_name',
-                                            'email'    => $contacts . '.pn_email',
-                                            'public'   => $contacts . '.pn_public',
-                                            'sname'    => $contacts . '.pn_sname',
-                                            'semail'   => $contacts . '.pn_semail',
-                                            'ssubject' => $contacts . '.pn_ssubject');
+    $pntable['formcontacts_column'] = array('cid'      => 'pn_cid',
+                                            'name'     => 'pn_name',
+                                            'email'    => 'pn_email',
+                                            'public'   => 'pn_public',
+                                            'sname'    => 'pn_sname',
+                                            'semail'   => 'pn_semail',
+                                            'ssubject' => 'pn_ssubject');
+
+    $pntable['formcontacts_column_def'] = array('cid'      => "I AUTO PRIMARY",
+                                                'name'     => "C(40) NOTNULL DEFAULT ''",
+                                                'email'    => "C(80) NOTNULL DEFAULT ''",
+                                                'public'   => "I1 NOTNULL DEFAULT  0",
+                                                'sname'    => "C(40) NOTNULL DEFAULT ''",
+                                                'semail'   => "C(80) NOTNULL DEFAULT ''",
+                                                'ssubject' => "C(80) NOTNULL DEFAULT ''");
 
     // Return the table information
     return $pntable;

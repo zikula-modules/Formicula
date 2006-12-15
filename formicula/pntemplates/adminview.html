@@ -5,25 +5,17 @@
 
 <h2><!--[ pnml name=_FOR_VIEWCONTACT html=1 ]--></h2>
 
-<table border="1" cellspacing="0" cellpadding="0" width="100%">
-    <tr>
-        <td style="text-align:center; font-size: 12px;">
-            <!--[ pnml name="_FOR_CONTACTID" html=1 ]-->
-        </td>
-        <td style="text-align:center; font-size: 12px;">
-            <!--[ pnml name="_FOR_NAME" html=1 ]-->
-        </td>
-        <td style="text-align:center; font-size: 12px;">
-            <!--[ pnml name="_FOR_EMAIL" html=1 ]-->
-        </td>
-        <td style="text-align:center; font-size: 12px;">
-            <!--[ pnml name="_FOR_PUBLIC" html=1 ]-->
-        </td>
-        <td style="text-align:center; font-size: 12px;">
-            <!--[ pnml name="_FOR_OPTIONS" html=1 ]-->
-        </td>
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+    <thead>
+    <tr style="width: 100%;">
+        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_CONTACTID' ]--></th>
+        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_NAME' ]--></th>
+        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_EMAIL' ]--></th>
+        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_PUBLIC' ]--></th>
+        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_OPTIONS' ]--></th>
     </tr>
-    
+    </thead>
+    <tbody>
     <!--[ foreach item=contact from=$contacts ]-->
     <tr>
         <td style="text-align:center;">
@@ -43,15 +35,16 @@
             <!--[ /if ]-->
         </td>
         <td style="text-align:center;">
-            <!--[ if $contact.acc_edit==true ]-->
+            [<!--[ if $contact.acc_edit==true ]-->
                 <a href="<!--[ pnmodurl modname=Formicula type=admin func=edit cid=$contact.cid ]-->"><!--[ pnml name="_FOR_EDIT" html=1 ]--></a>
             <!--[ /if ]-->
             <!--[ if $contact.acc_delete==true ]-->
                 &nbsp;|&nbsp;<a href="<!--[ pnmodurl modname=Formicula type=admin func=delete cid=$contact.cid ]-->"><!--[ pnml name="_FOR_DELETE" html=1 ]--></a>
-            <!--[ /if ]-->
+            <!--[ /if ]-->]
         </td>
     </tr>
     <!--[ /foreach ]-->
+    </tbody>
 </table>
 
 <!--[ include file=adminfooter.html ]-->

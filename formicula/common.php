@@ -25,21 +25,6 @@
 // ----------------------------------------------------------------------
 
 /**
- * showErrorMessage
- * shows an error message to the user or the admin
- *
- *@param text string the error message to show
- *@returns pnRender output
- */
-function showErrorMessage($text)
-{
-    $pnr =& new pnRender('formicula');
-    $pnr->caching = false;
-    $pnr->assign('errormsg', pnVarPrepForDisplay($text));
-    return $pnr->fetch('errormessage.html');
-}
-
-/**
  * removeUploadInformation
  * replaces the information about uploaded files with the filename so that we can use it in the
  * templates

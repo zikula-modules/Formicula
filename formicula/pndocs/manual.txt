@@ -23,7 +23,7 @@ Installation
 3. If you want to use the build-in captcha, you need to create folder pnTemp/formicula_cache 
    which nees to be writable for the webserver. when restricting acces via a .htaccess file
    to pnTemp, you have to open this subfolder for images:
-   <.htaccess>
+
    SetEnvIf Request_URI "\.gif$" object_is_gif=gif
    SetEnvIf Request_URI "\.png$" object_is_png=png
    SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
@@ -32,7 +32,7 @@ Installation
    Allow from env=object_is_gif
    Allow from env=object_is_png
    Allow from env=object_is_jpg
-   </.htaccess>
+
 4. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
    Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.

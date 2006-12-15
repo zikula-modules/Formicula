@@ -1,14 +1,6 @@
 <?php
 // $Id$
 // ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2002 by the PostNuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
 // LICENSE
 //
 // This program is free software; you can redistribute it and/or
@@ -17,7 +9,7 @@
 // of the License, or (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
-// but WIthOUT ANY WARRANTY; without even the implied warranty of
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
@@ -47,18 +39,21 @@ function Formicula_admin_main()
  */
 function Formicula_admin_edit()
 {
-    $cid = pnVarCleanFromInput('cid');
-
-    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADD)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADD)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
     }
 
-    $pnr =& new pnRender('formicula');
+    // check necessary environment
+    formicula_envcheck();
+
+    $cid = FormUtil::getPassedValue('cid', -1, 'GET');
+
+    $pnr = new pnRender('formicula');
     $pnr->caching = false;
 
     if((isset($cid)) && ($cid<>-1)) {
-        if (!pnSecAuthAction(0, 'formicula::', "::", ACCESS_EDIT)) {
-            return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+        if (!SecurityUtil::checkPermission('formicula::', "::", ACCESS_EDIT)) {
+            return LogUtil::registerError(_FOR_NOAUTH, null, pnModURL('formicula', 'admin', 'main'));
         }
 
         $contact = pnModAPIFunc('formicula',
@@ -66,7 +61,7 @@ function Formicula_admin_edit()
                              'getContact',
                              array('cid' => $cid));
         if ($contact == false) {
-            return showErrorMessage(pnVarPrepForDisplay(_FOR_NOSUCHCONTACT));
+            return LogUtil::registerError(_FOR_NOSUCHCONTACT, null, pnModURL('formicula', 'admin', 'main'));
         }
 
         $pnr->assign('contact', $contact);
@@ -85,36 +80,35 @@ function Formicula_admin_edit()
  *@param email string contact email
  *@returns pnRender output on error or forwards to view()
  */
-function formicula_admin_create($args)
+function formicula_admin_create()
 {
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADD)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+    }
 
-    list($name,
-         $email,
-         $public,
-         $sname,
-         $semail,
-         $ssubject) = pnVarCleanFromInput('cname',
-                                          'email',
-                                          'public',
-                                          'sname',
-                                          'semail',
-                                          'ssubject');
+    // check necessary environment
+    formicula_envcheck();
 
-    extract($args);
+    $name     =      FormUtil::getPassedValue('cname', '', 'POST');
+    $email    =      FormUtil::getPassedValue('email', '', 'POST');
+    $public   = (int)FormUtil::getPassedValue('public', 0, 'POST');
+    $sname    =      FormUtil::getPassedValue('sname', '', 'POST');
+    $semail   =      FormUtil::getPassedValue('semail', '', 'POST');
+    $ssubject =      FormUtil::getPassedValue('ssubject', '', 'POST');
 
-    if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
+    if (!SecurityUtil::confirmAuthKey()) {
+        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
     }
 
     if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADD)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+        return LogUtil::registerError(_FOR_NOAUTH, null, pnModURL('formicula', 'admin', 'main'));
     }
 
-    if(!empty($email) && !pnVarValidate($email, 'email')) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($email));
+    if(empty($email) || !pnVarValidate($email, 'email')) {
+        return LogUtil::registerError(_FOR_ILLEGALEMAIL . ': ' . $email, null, pnModURL('formicula', 'admin', 'main'));
     }
     if(!empty($semail) && !pnVarValidate($semail, 'email')) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($semail));
+        return LogUtil::registerError(_FOR_ILLEGALEMAIL . ': ' . $semail, null, pnModURL('formicula', 'admin', 'main'));
     }
 
     $res = pnModAPIFunc('formicula',
@@ -128,13 +122,12 @@ function formicula_admin_create($args)
                               'ssubject' => $ssubject));
 
     if ($res != false) {
-        pnSessionSetVar('statusmsg', _FOR_CONTACTCREATED);
+        LogUtil::registerStatus(_FOR_CONTACTCREATED);
     } else {
-        pnSessionSetVar('statusmsg', _FOR_ERRORCREATINGCONTACT);
+        LogUtil::registerStatus(_FOR_ERRORCREATINGCONTACT);
     }
 
-    pnRedirect(pnModURL('formicula', 'admin', 'view'));
-    return true;
+    return pnRedirect(pnModURL('formicula', 'admin', 'view'));
 }
 
 /**
@@ -146,37 +139,29 @@ function formicula_admin_create($args)
  *@param email string contact email
  *@returns pnRender output on error or forwards to view()
  */
-function formicula_admin_update($args)
+function formicula_admin_update()
 {
-    list($cid,
-         $name,
-         $email,
-         $public,
-         $sname,
-         $semail,
-         $ssubject) = pnVarCleanFromInput('cid',
-                                          'cname',
-                                          'email',
-                                          'public',
-                                          'sname',
-                                          'semail',
-                                          'ssubject');
-
-    extract($args);
-
-    if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_EDIT)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
     }
 
-    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_EDIT)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+    $cid      = (int)FormUtil::getPassedValue('cid', -1, 'POST');
+    $name     =      FormUtil::getPassedValue('cname', '', 'POST');
+    $email    =      FormUtil::getPassedValue('email', '', 'POST');
+    $public   = (int)FormUtil::getPassedValue('public', 0, 'POST');
+    $sname    =      FormUtil::getPassedValue('sname', '', 'POST');
+    $semail   =      FormUtil::getPassedValue('semail', '', 'POST');
+    $ssubject =      FormUtil::getPassedValue('ssubject', '', 'POST');
+
+    if (!SecurityUtil::confirmAuthKey()) {
+        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
     }
 
-    if(!empty($email) && !pnVarValidate($email, 'email')) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($email));
+    if(empty($email) || !pnVarValidate($email, 'email')) {
+        return LogUtil::registerError(_FOR_ILLEGALEMAIL . ': ' . $email, null, pnModURL('formicula', 'admin', 'main'));
     }
     if(!empty($semail) && !pnVarValidate($semail, 'email')) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_ILLEGALEMAIL) . ': ' . pnVarPrepHTMLDisplay($semail));
+        return LogUtil::registerError(_FOR_ILLEGALEMAIL . ': ' . $semail, null, pnModURL('formicula', 'admin', 'main'));
     }
 
     if(pnModAPIFunc('formicula',
@@ -190,10 +175,9 @@ function formicula_admin_update($args)
                            'semail'   => $semail,
                            'ssubject' => $ssubject))) {
         // Success
-        pnSessionSetVar('statusmsg', _FOR_CONTACTUPDATED);
+        LogUtil::registerStatus(_FOR_CONTACTUPDATED);
     }
-    pnRedirect(pnModURL('formicula', 'admin', 'view'));
-    return true;
+    return pnRedirect(pnModURL('formicula', 'admin', 'view'));
 }
 
 /**
@@ -206,14 +190,17 @@ function formicula_admin_update($args)
  *@param confirmation string any value
  *@returns pnRender output on error or forwards to view()
  */
-function formicula_admin_delete($args)
+function formicula_admin_delete()
 {
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_DELETE)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+    }
 
-    list($cid,
-         $confirmation) = pnVarCleanFromInput('cid',
-                                              'confirmation');
+    // check necessary environment
+    formicula_envcheck();
 
-    extract($args);
+    $cid          = (int)FormUtil::getPassedValue('cid', -1, 'POST');
+    $confirmation =      FormUtil::getPassedValue('confirmation', '', 'POST');
 
     $contact = pnModAPIFunc('formicula',
                             'admin',
@@ -221,24 +208,20 @@ function formicula_admin_delete($args)
                             array('cid' => $cid));
 
     if ($contact == false) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOSUCHCONTACT));
-    }
-
-    if (!pnSecAuthAction(0, 'formicula::', "::", ACCESS_DELETE)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+        return LogUtil::registerError(_FOR_NOSUCHCONTACT, null, pnModURL('formicula', 'admin', 'main'));
     }
 
     // Check for confirmation.
     if (empty($confirmation)) {
-        $pnr =& new pnRender('formicula');
+        $pnr = new pnRender('formicula');
         $pnr->caching = false;
         $contact['cid'] = $cid;
         $pnr->assign('contact', $contact);
         return $pnr->fetch('admindelete.html');
     }
 
-    if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
+    if (!SecurityUtil::confirmAuthKey()) {
+        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
     }
 
     if (pnModAPIFunc('formicula',
@@ -246,12 +229,10 @@ function formicula_admin_delete($args)
                      'deleteContact',
                      array('cid' => $cid))) {
         // Success
-        pnSessionSetVar('statusmsg', _FOR_CONTACTDELETED);
+        LogUtil::registerStatus(_FOR_CONTACTDELETED);
     }
 
-    pnRedirect(pnModURL('formicula', 'admin', 'view'));
-
-    return true;
+    return pnRedirect(pnModURL('formicula', 'admin', 'view'));
 }
 
 /**
@@ -263,8 +244,14 @@ function formicula_admin_delete($args)
  */
 function formicula_admin_view()
 {
-    $pnr =& new pnRender('formicula');
-    $pnr->caching = false;
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+    }
+
+    // check necessary environment
+    formicula_envcheck();
+    
+    $pnr = new pnRender('formicula', false);
 
     // read all items
     $allcontacts = pnModAPIFunc('formicula',
@@ -274,7 +261,7 @@ function formicula_admin_view()
     $allowedcontacts = array();
     foreach ($allcontacts as $contact) {
         $cid = $contact['cid'];
-        if (pnSecAuthAction(0, 'formicula::', "::$cid", ACCESS_EDIT)) {
+        if (SecurityUtil::checkPermission('formicula::', ":$cid:", ACCESS_EDIT)) {
             $allowedcontact = array('cid'        => $contact['cid'],
                                     'name'       => $contact['name'],
                                     'email'      => $contact['email'],
@@ -285,7 +272,7 @@ function formicula_admin_view()
                                     'acc_edit'   => true,
                                     'acc_delete' => false);
 
-            if (pnSecAuthAction(0, 'formicula::Contact', "$cid::", ACCESS_DELETE)) {
+            if (SecurityUtil::checkPermission('formicula::', ":$cid:", ACCESS_DELETE)) {
                 $allowedcontact['acc_delete'] = true;
             }
             array_push($allowedcontacts, $allowedcontact);
@@ -304,12 +291,14 @@ function formicula_admin_view()
  */
 function formicula_admin_modifyconfig()
 {
-    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADMIN)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
     }
 
-    $pnr =& new pnRender('formicula');
-    $pnr->caching = false;
+    // check necessary environment
+    formicula_envcheck();
+
+    $pnr = new pnRender('formicula', false);
     $pnr->add_core_data();
     $pnr->assign('upload_dir_writable', is_writable(pnModGetVar('formicula', 'upload_dir')));
     return $pnr->fetch('adminconfig.html');
@@ -333,23 +322,23 @@ function formicula_admin_modifyconfig()
  */
 function formicula_admin_updateconfig($args)
 {
-    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADMIN)) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_NOAUTH));
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
     }
 
-    $show_phone =        pnVarCleanFromInput('show_phone');
-    $show_company =      pnVarCleanFromInput('show_company');
-    $show_url =          pnVarCleanFromInput('show_url');
-    $show_location =     pnVarCleanFromInput('show_location');
-    $show_comment =      pnVarCleanFromInput('show_comment');
-    $send_user =         pnVarCleanFromInput('send_user');
-    $delete_file =       pnVarCleanFromInput('delete_file');
-    $upload_dir =        pnVarCleanFromInput('upload_dir');
-    $spamcheck =         pnVarCleanFromInput('spamcheck');
-    $excludespamcheck =  pnVarCleanFromInput('excludespamcheck');
+    $show_phone =        FormUtil::getPassedValue('show_phone', '', 'POST');
+    $show_company =      FormUtil::getPassedValue('show_company', '', 'POST');
+    $show_url =          FormUtil::getPassedValue('show_url', '', 'POST');
+    $show_location =     FormUtil::getPassedValue('show_location', '', 'POST');
+    $show_comment =      FormUtil::getPassedValue('show_comment', '', 'POST');
+    $send_user =         FormUtil::getPassedValue('send_user', '', 'POST');
+    $delete_file =       FormUtil::getPassedValue('delete_file', '', 'POST');
+    $upload_dir =        FormUtil::getPassedValue('upload_dir', '', 'POST');
+    $spamcheck =         FormUtil::getPassedValue('spamcheck', '', 'POST');
+    $excludespamcheck =  FormUtil::getPassedValue('excludespamcheck', '', 'POST');
 
-    if (!pnSecConfirmAuthKey()) {
-        return showErrorMessage(pnVarPrepForDisplay(_FOR_BADAUTHKEY));
+    if (!SecurityUtil::confirmAuthKey()) {
+        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
     }
 
     pnModSetVar('formicula', 'show_phone', (empty($show_phone)) ? 0 : (int)$show_phone );
@@ -363,7 +352,34 @@ function formicula_admin_updateconfig($args)
     pnModSetVar('formicula', 'spamcheck', (empty($spamcheck)) ? 0 : (int)$spamcheck);
     pnModSetVar('formicula', 'excludespamcheck', $excludespamcheck);
 
-    pnRedirect(pnModURL('formicula', 'admin', 'modifyconfig'));
+    return pnRedirect(pnModURL('formicula', 'admin', 'modifyconfig'));
+}
+
+function formicula_envcheck()
+{
+    if(!pnModAvailable('Mailer')) {
+        LogUtil::registerError(_FOR_NOMAILERMODULE);
+    }
+
+    if(pnModGetVar('formicula', 'spamcheck') <> 0) {
+        $freetype = function_exists('imagettfbbox');
+        if(!$freetype || ( !(imagetypes() && IMG_PNG)
+                      && !(imagetypes() && IMG_JPG)
+                      && !(imagetypes() && IMG_GIF)) ) {
+            LogUtil::registerStatus(_FOR_NOIMAGEFUNCTION);
+            pnModSetVar('formicula', 'spamcheck', 0);
+        }
+        
+        $cachedir = pnConfigGetVar('temp') . '/formicula_cache';
+        if(!file_exists($cachedir) || !is_writable($cachedir)) {
+            LogUtil::registerStatus(_FOR_CACHEDIRPROBLEM);
+            pnModSetVar('formicula', 'spamcheck', 0);
+        }
+        if(!file_exists($cachedir.'/.htaccess')) {
+            LogUtil::registerStatus(_FOR_HTACCESSPROBLEM);
+            pnModSetVar('formicula', 'spamcheck', 0);
+        }
+    }
     return true;
 }
 
