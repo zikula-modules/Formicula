@@ -107,6 +107,12 @@ function formicula_upgrade($oldversion)
         case '0.5':
                 // nothing to do
         case '0.6':
+                $dbconn  =& pnDBGetConn(true);
+                $pntable =& pnDBGetTables();
+            
+                $contactstable  =  $pntable['formcontacts'];
+                $contactscolumn = &$pntable['formcontacts_column'];
+                
                 $sql = "ALTER TABLE $contactstable
                         ADD $contactscolumn[sname]     varchar(40) NOT NULL default '',
                         ADD $contactscolumn[semail]    varchar(80) NOT NULL default '',
