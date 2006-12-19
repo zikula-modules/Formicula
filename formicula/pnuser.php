@@ -27,8 +27,6 @@
 // Purpose of file:  contact user display functions
 // ----------------------------------------------------------------------
 
-include_once( "modules/formicula/common.php");
-
 /**
  * main
  * main entry point for the user

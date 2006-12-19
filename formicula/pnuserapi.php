@@ -27,8 +27,6 @@
 // Purpose of file:  Template user API
 // ----------------------------------------------------------------------
 
-include_once("modules/formicula/common.php");
-
 /**
  * getContact
  * reads a single contact by id
