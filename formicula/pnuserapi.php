@@ -49,7 +49,7 @@ function formicula_userapi_getContact($args)
     }
 
     if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
-        return LogUtil::registerError(_FOR_NOAUTHFORFORM);
+        return LogUtil::registerPermissionError();
     }
 
     $contact = DBUtil::selectObjectByID('formcontacts', $args['cid'], 'cid');
@@ -194,8 +194,8 @@ function formicula_userapi_sendtoUser($args)
 
         $sitename = pnConfigGetVar('sitename');
         $pnr->assign('sitename', $sitename);
-
-        $pnr->assign('custom', removeUploadInformation($custom));
+         
+        $pnr->assign('custom', pnModAPIFunc('formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
 
         switch($format) {
             case 'html' :
@@ -295,6 +295,29 @@ function formicula_userapi_checkArguments($args)
         }
     }
     return true;
+}
+
+/**
+ * removeUploadInformation
+ * replaces the information about uploaded files with the filename so that we can use it in the
+ * templates
+ *
+ *@param custom array of custom fields
+ *@return cleaned custom array
+ */
+function formicula_userapi_removeUploadInformation($args)
+{
+    if(isset($args['custom']) && is_array($args['custom'])) {
+        $custom = $args['custom'];
+        for($i=0;$i<count($custom);$i++) {
+            if($custom[$i]['upload'] == true) {
+                $custom[$i]['data'] = $custom[$i]['data']['name'];
+            }
+        }
+    } else {
+        $custom = array();
+    } 
+    return $custom;
 }
 
 ?>

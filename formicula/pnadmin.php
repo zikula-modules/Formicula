@@ -40,7 +40,7 @@ function Formicula_admin_main()
 function Formicula_admin_edit()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADD)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     // check necessary environment
@@ -53,7 +53,7 @@ function Formicula_admin_edit()
 
     if((isset($cid)) && ($cid<>-1)) {
         if (!SecurityUtil::checkPermission('formicula::', "::", ACCESS_EDIT)) {
-            return LogUtil::registerError(_FOR_NOAUTH, null, pnModURL('formicula', 'admin', 'main'));
+            return LogUtil::registerPermissionError(pnModURL('formicula', 'admin', 'main'));
         }
 
         $contact = pnModAPIFunc('formicula',
@@ -83,7 +83,7 @@ function Formicula_admin_edit()
 function formicula_admin_create()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADD)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     // check necessary environment
@@ -97,11 +97,11 @@ function formicula_admin_create()
     $ssubject =      FormUtil::getPassedValue('ssubject', '', 'POST');
 
     if (!SecurityUtil::confirmAuthKey()) {
-        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
+        return LogUtil::registerAuthidError(pnModURL('formicula', 'admin', 'main'));
     }
 
-    if (!pnSecAuthAction(0, 'formicula::', '::', ACCESS_ADD)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, pnModURL('formicula', 'admin', 'main'));
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADD)) {
+        return LogUtil::registerPermissionError(pnModURL('formicula', 'admin', 'main'));
     }
 
     if(empty($email) || !pnVarValidate($email, 'email')) {
@@ -142,7 +142,7 @@ function formicula_admin_create()
 function formicula_admin_update()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_EDIT)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     $cid      = (int)FormUtil::getPassedValue('cid', -1, 'POST');
@@ -154,7 +154,7 @@ function formicula_admin_update()
     $ssubject =      FormUtil::getPassedValue('ssubject', '', 'POST');
 
     if (!SecurityUtil::confirmAuthKey()) {
-        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
+        return LogUtil::registerAuthidError(pnModURL('formicula', 'admin', 'main'));
     }
 
     if(empty($email) || !pnVarValidate($email, 'email')) {
@@ -193,7 +193,7 @@ function formicula_admin_update()
 function formicula_admin_delete()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_DELETE)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     // check necessary environment
@@ -221,7 +221,7 @@ function formicula_admin_delete()
     }
 
     if (!SecurityUtil::confirmAuthKey()) {
-        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
+        return LogUtil::registerAuthidError(pnModURL('formicula', 'admin', 'main'));
     }
 
     if (pnModAPIFunc('formicula',
@@ -245,7 +245,7 @@ function formicula_admin_delete()
 function formicula_admin_view()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     // check necessary environment
@@ -292,7 +292,7 @@ function formicula_admin_view()
 function formicula_admin_modifyconfig()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     // check necessary environment
@@ -323,7 +323,7 @@ function formicula_admin_modifyconfig()
 function formicula_admin_updateconfig($args)
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerError(_FOR_NOAUTH, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     $show_phone =        FormUtil::getPassedValue('show_phone', '', 'POST');
@@ -338,7 +338,7 @@ function formicula_admin_updateconfig($args)
     $excludespamcheck =  FormUtil::getPassedValue('excludespamcheck', '', 'POST');
 
     if (!SecurityUtil::confirmAuthKey()) {
-        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'admin', 'main'));
+        return LogUtil::registerAuthidError(pnModURL('formicula', 'admin', 'main'));
     }
 
     pnModSetVar('formicula', 'show_phone', (empty($show_phone)) ? 0 : (int)$show_phone );

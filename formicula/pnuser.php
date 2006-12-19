@@ -64,7 +64,7 @@ function formicula_user_main($args=array())
     }
 
     if (count($contacts) == 0) {
-        return LogUtil::registerError(_FOR_NOAUTHFORFORM, null, 'index.php');
+        return LogUtil::registerPermissionError('index.php');
     }
 
     if (pnUserLoggedIn()) {
@@ -175,7 +175,7 @@ function formicula_user_send($args=array())
     SessionUtil::delVar('formicula_captcha');
 
     if(!SecurityUtil::confirmAuthKey()) {
-        return LogUtil::registerError(_FOR_BADAUTHKEY, null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
+        return LogUtil::registerAuthidError(pnModURL('formicula', 'user', 'main', array('form' => $form)));
     }
     
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
@@ -192,7 +192,7 @@ function formicula_user_send($args=array())
     }
 
     if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
-        return LogUtil::registerError(_FOR_NOAUTHFORFORM, null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
+        return LogUtil::registerPermissionError(pnModURL('formicula', 'user', 'main', array('form' => $form)));
     }
 
     // very basic input validation against HTTP response splitting
@@ -263,10 +263,10 @@ function formicula_user_send($args=array())
                                                            'format'   => $userformat )));
         }
 
-        $pnr->assign('custom', removeUploadInformation($custom));
+        $pnr->assign('custom', pnModAPIFunc('formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
         return $pnr->fetch($form."_userconfirm.html");
     } else {
-        $pnr->assign('custom', removeUploadInformation($custom));
+        $pnr->assign('custom', pnModAPIFunc('formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
         return $pnr->fetch($form."_usererror.html");
     }
 }

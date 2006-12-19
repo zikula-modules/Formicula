@@ -36,8 +36,8 @@ function formicula_adminapi_getContact($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!pnSecAuthAction(0, "formicula::", ":$cid:", ACCESS_EDIT)) {
-        return false;
+    if (!Security::checkPermission('formicula::', ":$cid:", ACCESS_EDIT)) {
+        return LogUtil::registerPermissionError();
     }
 
     $contact = DBUtil::selectObjectByID('formcontacts', $args['cid'], 'cid');
@@ -56,7 +56,7 @@ function formicula_adminapi_readContacts()
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
     if (!SecurityUtil::checkPermission("formicula::", "::", ACCESS_READ)) {
-        return false;
+        return LogUtil::registerPermissionError();
     }
     
     $contacts = array();
@@ -85,7 +85,7 @@ function formicula_adminapi_readContacts()
 function formicula_adminapi_createContact($args)
 {
     if (!SecurityUtil::checkPermission('formicula::', "::", ACCESS_ADD)) {
-        return LogUtil::registerError(_FOR_NOAUTH);
+        return LogUtil::registerPermissionError();
     }
 
     if ((!isset($args['name'])) || (!isset($args['email']))) {
@@ -112,15 +112,13 @@ function formicula_adminapi_createContact($args)
  */
 function formicula_adminapi_deleteContact($args)
 {
-    extract($args);
-
     if ((!isset($args['cid'])) || empty($args['cid'])) {
         return LogUtil::registerError(_MODARGSERROR);
     }
 
     // Security check
     if (!SecurityUtil::checkPermission('formicula::', ':' . (int)$args['cid'] . ':', ACCESS_DELETE)) {
-        return LogUtil::registerError(_FOR_NOAUTH);
+        return LogUtil::registerPermissionError();
     }
 
     $res = DBUtil::deleteObjectByID ('formcontacts', (int)$args['cid'], 'cid');
@@ -147,8 +145,6 @@ function formicula_adminapi_deleteContact($args)
  */
 function formicula_adminapi_updateContact($args)
 {
-    extract($args);
-
     if ((!isset($args['cid'])) || 
         (!isset($args['name'])) || 
         (!isset($args['email']) ||
@@ -162,7 +158,7 @@ function formicula_adminapi_updateContact($args)
 
     // Security check
     if (!SecurityUtil::checkPermission('formicula::', ':' . $args['cid'] . ':', ACCESS_EDIT)) {
-        return LogUtil::registerError(_FOR_NOAUTH);
+        return LogUtil::registerPermissionError();
     }
 
     $res = DBUtil::updateObject($args, 'formcontacts', '', 'cid');
