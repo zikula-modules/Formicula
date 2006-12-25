@@ -19,18 +19,6 @@
 // Purpose of file:  language file
 // ----------------------------------------------------------------------
 
-define('_FOR_SENDERSUBJECTHINT', '
-with <ul>
-    <li>%s = sitename</li>
-    <li>%l = slogan</li>
-    <li>%u = site url</li>
-    <li>%c = contacts sender name</li>
-    <li>%n&lt;num&gt; = user defined field name &lt;num&gt;</li>
-    <li>%d&lt;num&gt; = user defined field data &lt;num&gt;</li>
-</ul>
-');
-
-
 //
 // A
 //
@@ -77,7 +65,7 @@ define('_FOR_DELETEUPLOADEDFILE','Delete file after sending' );
 // E
 //
 define('_FOR_EDIT','Edit contact' );
-define('_FOR_EDITCONFIG','Change configuration' );
+define('_FOR_EDITCONFIG','Modify configuration' );
 define('_FOR_EDITCONTACT','Edit contact' );
 define('_FOR_EMAIL','Email' );
 define('_FOR_EMAILFROM', 'Email from');
@@ -165,6 +153,16 @@ define('_FOR_SENDEREMAIL', 'Sender email');
 define('_FOR_SENDERINFO', 'Use this information in the users confirmation mail');
 define('_FOR_SENDERNAME', 'Sender name');
 define('_FOR_SENDERSUBJECT', 'Subject');
+define('_FOR_SENDERSUBJECTHINT', '
+with <ul>
+    <li>%s = sitename</li>
+    <li>%l = slogan</li>
+    <li>%u = site url</li>
+    <li>%c = contacts sender name</li>
+    <li>%n&lt;num&gt; = user defined field name &lt;num&gt;</li>
+    <li>%d&lt;num&gt; = user defined field data &lt;num&gt;</li>
+</ul>
+');
 define('_FOR_SENDTOADMIN', 'This data was sent to us:');
 define('_FOR_SENDTOUSER', 'Confirmation of your submission will be emailed to you in a few minutes.' );
 define('_FOR_SENDUSER','Send confirmation email to user?' );
