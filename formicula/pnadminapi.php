@@ -34,7 +34,7 @@ function formicula_adminapi_getContact($args)
 
     // Security check - important to do this as early on as possible to
     // avoid potential security holes or just too much wasted processing
-    if (!Security::checkPermission('formicula::', ":$cid:", ACCESS_EDIT)) {
+    if (!SecurityUtil::checkPermission('formicula::', ":$cid:", ACCESS_EDIT)) {
         return LogUtil::registerPermissionError();
     }
 
