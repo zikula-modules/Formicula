@@ -46,8 +46,7 @@ function Formicula_admin_edit()
 
     $cid = FormUtil::getPassedValue('cid', -1, 'GET');
 
-    $pnr = new pnRender('formicula');
-    $pnr->caching = false;
+    $pnr = new pnRender('formicula', false);
 
     if((isset($cid)) && ($cid<>-1)) {
         if (!SecurityUtil::checkPermission('formicula::', "::", ACCESS_EDIT)) {
@@ -55,9 +54,9 @@ function Formicula_admin_edit()
         }
 
         $contact = pnModAPIFunc('formicula',
-                             'admin',
-                             'getContact',
-                             array('cid' => $cid));
+                                'admin',
+                                'getContact',
+                                array('cid' => $cid));
         if ($contact == false) {
             return LogUtil::registerError(_FOR_NOSUCHCONTACT, null, pnModURL('formicula', 'admin', 'main'));
         }
@@ -211,9 +210,7 @@ function formicula_admin_delete()
 
     // Check for confirmation.
     if (empty($confirmation)) {
-        $pnr = new pnRender('formicula');
-        $pnr->caching = false;
-        $contact['cid'] = $cid;
+        $pnr = new pnRender('formicula', false);
         $pnr->assign('contact', $contact);
         return $pnr->fetch('admindelete.html');
     }

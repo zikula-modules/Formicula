@@ -270,11 +270,7 @@ function formicula_userapi_checkArguments($args)
         return LogUtil::registerError(_FOR_ERROREMAIL);
     }
 
-    if (!isset($userdata['uname']) || ($userdata['uname'] == '')) {
-        return LogUtil::registerError(_FOR_ERRORUERNAME);
-    }
-
-    if ($userdata['uname'] != pnVarCensor($userdata['uname'])) {
+    if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnVarCensor($userdata['uname']))) {
         return LogUtil::registerError(_FOR_ERRORUSERNAME);
     }
 

@@ -97,7 +97,7 @@ function formicula_adminapi_createContact($args)
     if($obj == false) {
         return LogUtil::registerError(_CREATEFAILED);
     }
-    pnModCallHooks('item', 'create', $obj['cid'], 'cid');
+    pnModCallHooks('item', 'create', $obj['cid']);
     return $obj['cid'];
 }
 
@@ -125,7 +125,7 @@ function formicula_adminapi_deleteContact($args)
     }
 
     // Let any hooks know that we have deleted a contact
-    pnModCallHooks('item', 'delete', $args['cid'], '');
+    pnModCallHooks('item', 'delete', $args['cid']);
 
     // Let the calling process know that we have finished successfully
     return true;
@@ -163,7 +163,7 @@ function formicula_adminapi_updateContact($args)
     if($res == false) {
         return LogUtil::registerError(_MH_UPDATEFAILED);
     }
-    pnModCallHooks('item', 'update', $args['cid'], array('module' => 'formicula'));
+    pnModCallHooks('item', 'update', $args['cid']);
     return $args['cid'];
 }
 
