@@ -48,3 +48,6 @@
 // fixed [#3311] wrong field type
 // fixed [#3430] Contacts not transferred on upgrade
 // fixed [#3429] Captcha function not working
+//
+// Formicula 2.0 (fs)
+// PostNuke .8 only version

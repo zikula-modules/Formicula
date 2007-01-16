@@ -23,3 +23,5 @@
 // Thanks to Carsten Volmer for extensive testing.
 // French translation by Christophe Beaujean (yokav) 
 //
+// Formicula 2.0
+// frank.schummertz@landseer-stuttgart.de

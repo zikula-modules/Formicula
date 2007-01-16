@@ -1,7 +1,7 @@
 $Id$
 
-Formicula user manual
----------------------
+Formicula 2.0 user manual
+-------------------------
 manual for Formicula v.2 by Jim Hadfield and Frank Schummertz
 manual for Formicula >v.2: Frank Schummertz
      
@@ -10,8 +10,8 @@ of custom fields (ok, infinite as long as you have enough server memory).
 
 Requirements
 ------------
-Formicula requires PostNuke .760 or later, although .762 is recommended. It *might* run
-with earlier versions, but I did not test this and if it does not work, I don't care - sorry.
+Formicula 2.0 requires PostNuke .8 or laterd. It *will not* run
+with earlier versions - sorry. Use Formicula < 2.0 instead.
 For client side input validation you need the AjaxSupportPackage which is available from
 http://noc.postnuke.com/frs/?group_id=8. Install this as mentioned in the docs.
 For creating captchas you need PHP compiled with the GD graphics library.
