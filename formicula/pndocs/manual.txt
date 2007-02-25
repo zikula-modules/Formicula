@@ -20,19 +20,26 @@ Installation
 -----------------
 1. Extract the files to your Postnuke directory.
 2. Load, initialize and activate the module in the admin section.
-3. If you want to use the build-in captcha, you need to create folder pnTemp/formicula_cache 
-   which nees to be writable for the webserver. when restricting acces via a .htaccess file
-   to pnTemp, you have to open this subfolder for images:
-
-   SetEnvIf Request_URI "\.gif$" object_is_gif=gif
-   SetEnvIf Request_URI "\.png$" object_is_png=png
-   SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
-   Order deny,allow
-   Deny from all
-   Allow from env=object_is_gif
-   Allow from env=object_is_png
-   Allow from env=object_is_jpg
-
+3. During installation, Formicula tries to create a folder formicula_cache containing an
+   index.html and a .htaccess file.
+   If this fails (most probably when safemode is set to 'on' in your PHP environment), you
+   will be notified and have to create them on your own:
+   a) Create a folder formicula_cache in your temporary folder (most likely pnTemp) and make it 
+      writable for the web server (chmod 777)
+   b) Add an empty index.html file (you can copy the one from modules/formicula if you want).
+      although this is not really needed for Apache-based webservers where we use the .htaccess
+      in the pnTemp to avoid access to the subfolders, it is needed on webserver who do not
+      support .htaccess.
+   c) Create a .htacess in formicula_cache containing the following lines to allow access to the
+      images created for the captcha:
+      SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+      SetEnvIf Request_URI "\.png$" object_is_png=png
+      SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+      Order deny,allow
+      Deny from all
+      Allow from env=object_is_gif
+      Allow from env=object_is_png
+      Allow from env=object_is_jpg
 4. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
    Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.

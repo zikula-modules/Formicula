@@ -51,7 +51,9 @@ define('_FOR_CONTACTFORM', 'Contact Form');
 define('_FOR_CONTACTID','ID' );
 define('_FOR_CONTACTTITLE', 'Contact our team' );
 define('_FOR_CONTACTUPDATED', 'Contact info has been updated');
-define('_FOR_CREATETABLEFAILED', 'could not create table');
+define('_FOR_CREATEFILESFAILED', 'The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!');
+define('_FOR_CREATEFOLDERFAILED', 'The installer could not create the formicula_cache folder, please refer to the manual before using the module!');
+define('_FOR_CREATETABLEFAILED', 'The installer could not create the formcontacts table');
 
 //
 // D
@@ -60,6 +62,8 @@ define('_FOR_DELETE','Delete contact' );
 define('_FOR_DELETECONTACT','Delete contact' );
 define('_FOR_DELETETABLEFAILED', 'could not delete table');
 define('_FOR_DELETEUPLOADEDFILE','Delete file after sending' );
+define('_FOR_DESC', 'Tools for creation of all kinds contact forms');
+define('_FOR_CREATETABLEFAILED', 'The installer could not delete the formcontacts table');
 
 //
 // E

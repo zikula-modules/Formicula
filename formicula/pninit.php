@@ -19,12 +19,36 @@
 // Purpose of file:  Initialisation functions for formicula
 // ----------------------------------------------------------------------
 
+Loader::requireOnce('includes/pnobjlib/FileUtil.class.php');
+Loader::requireOnce('includes/pnobjlib/StringUtil.class.php');
 
 function formicula_init()
 {
+    $tempdir = pnConfigGetVar('temp');
+    if(StringUtil::right($tempdir, 1) <> '/') {
+        $tempdir .= '/';
+    }
+    if(FileUtil::mkdirs($tempdir . 'formicula_cache')) {
+        $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
+        $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+SetEnvIf Request_URI "\.png$" object_is_png=png
+SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+Order deny,allow
+Deny from all
+Allow from env=object_is_gif
+Allow from env=object_is_png
+Allow from env=object_is_jpg
+');
+        if($res1===false || $res2===false){
+            LogUtil::registerStatus(_FOR_CREATEFILESFAILED);
+        }
+    } else {
+        LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
+    }
+
     // create the formicula table
     if (!DBUtil::createTable('formcontacts')) {
-        return false;
+        return LogUtil::registerError(_FOR_CREATETABLEFAILED);
     }
 
     pnModAPILoad('formicula', 'admin', true);
@@ -71,7 +95,7 @@ function formicula_upgrade($oldversion)
         case '0.4':
                 // create the formicula table
                 if (!DBUtil::createTable('formcontacts')) {
-                    return false;
+                    return LogUtil::registerError(_FOR_CREATETABLEFAILED);
                 }
 
                 // migrate contacts from config var to table
@@ -111,16 +135,39 @@ function formicula_upgrade($oldversion)
                         ADD $contactscolumn[ssubject]  varchar(80) NOT NULL default ''";
                 $dbconn->Execute($sql);
                 if ($dbconn->ErrorNo() != 0) {
-                    pnSessionSetVar('errormsg', _FOR_ALTERTABLEFAILED);
-                    return false;
+                    return LogUtil::registerError(_FOR_ALTERTABLEFAILED);
                 }
                 pnModSetVar('formicula', 'spamcheck', 1);
                 pnModSetVar('formicula', 'excludespamcheck', '');
         case '1.0':
             // nothing to do
         case '1.1':
-            if (!DBUtil::changeTable('groups')) {
+            if (!DBUtil::changeTable('formicula')) {
                 return LogUtil::registerError(_MH_UPGRADETO50FAILED);
+            }
+
+            $tempdir = pnConfigGetVar('temp');
+            if(StringUtil::right($tempdir, 1) <> '/') {
+                $tempdir .= '/';
+            }
+            if(!is_dir($tempdir . 'formicula_cache')) {
+                if(FileUtil::mkdirs($tempdir . 'formicula_cache')) {
+                    $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
+                    $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+SetEnvIf Request_URI "\.png$" object_is_png=png
+SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+Order deny,allow
+Deny from all
+Allow from env=object_is_gif
+Allow from env=object_is_png
+Allow from env=object_is_jpg
+');
+                    if($res1===false || $res2===false){
+                        LogUtil::registerStatus(_FOR_CREATEFILESFAILED);
+                    }
+                } else {
+                    LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
+                }
             }
     }
 
@@ -136,9 +183,20 @@ function formicula_delete()
 {
     // drop the table
     if (!DBUtil::dropTable('formcontacts')) {
-        return false;
+        return LogUtil::registerError(_FOR_DROPTABLEFAILED);
     }
 
+    Loader::requireOnce('includes/pnobjlib/FileUtil.class.php');
+    Loader::requireOnce('includes/pnobjlib/StringUtil.class.php');
+
+    $tempdir = pnConfigGetVar('temp');
+    if(StringUtil::right($tempdir, 1) <> '/') {
+        $tempdir .= '/';
+    }
+    if(is_dir($tempdir . 'formicula_cache')) {
+        FileUtil::deldir($tempdir . 'formicula_cache');
+    }
+    
     // Remove module variables
     pnModDelVar('formicula');
 
