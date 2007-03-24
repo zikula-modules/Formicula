@@ -16,16 +16,13 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 // Original Author of file: Frank Schummertz
-// Purpose of file:  MultiHook administration display functions
+// Purpose of file:  formicula configuration pnForm handler class
 // ----------------------------------------------------------------------
 
 class Formicula_admin_modifyconfighandler
 {
-    var $id;
-
     function initialize(&$pnRender)
     {
-        $this->id = (int)FormUtil::getPassedValue('id', 0, 'GETPOST');
         $pnRender->caching = false;
         $pnRender->add_core_data();
         return true;
