@@ -49,6 +49,7 @@ define('_FOR_CONTACTCREATED', 'Contact created');
 define('_FOR_CONTACTDELETED', 'Contact has been Delete');
 define('_FOR_CONTACTFORM', 'Contact Form');
 define('_FOR_CONTACTID','ID' );
+define('_FOR_CONTACTNAME','Name');
 define('_FOR_CONTACTTITLE', 'Contact our team' );
 define('_FOR_CONTACTUPDATED', 'Contact info has been updated');
 define('_FOR_CREATEFILESFAILED', 'The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!');

@@ -10,10 +10,8 @@ of custom fields (ok, infinite as long as you have enough server memory).
 
 Requirements
 ------------
-Formicula 2.0 requires PostNuke .8 or laterd. It *will not* run
+Formicula 2.0 requires PostNuke .8 or later. It *will not* run
 with earlier versions - sorry. Use Formicula < 2.0 instead.
-For client side input validation you need the AjaxSupportPackage which is available from
-http://noc.postnuke.com/frs/?group_id=8. Install this as mentioned in the docs.
 For creating captchas you need PHP compiled with the GD graphics library.
 
 Installation
@@ -158,7 +156,7 @@ Example:
 <input type="hidden" name="custom0mandatory" value="1" />
 <input type="text" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
 
-This will create a custom fields 0 which is both mandatory. 
+This will create a mandatory custom field 0. 
 In this case you also need:
 
 <input type="hidden" name="numFields" value="1" />
@@ -174,7 +172,7 @@ Unregistered   |   formicula::  |  0::  |  comment
 all unregistered users are allowed to use form 0 with all existing contacts.
 	
 Users   |   formicula::   |  1:(2|3):  |  comment
-all members of the group users are allowed to use form 1 and write to contact 2 and 3.
+all members of the group Users are allowed to use form 1 and write to contact 2 and 3.
     
 Use external information in the forms
 -------------------------------------
@@ -187,16 +185,13 @@ With
 
 index.php?name=formicula&form=2&addinfo[tid]=4&addinfo[pid]=17
 
-you send two different information to the form which can used in the userform template (in
+you send two different information to the form 2 which can used in the userform template (in
 this example 2_userform.html) with
 
 <!--[ $addinfo.tid ]-->   => 4
 <!--[ $addinfo.pid ]-->   => 17
 
 As you can see you can use this to e.g. load data from Pagesetter in the userform template.
-I created a webpage for a dance school in Germany where this is used for booking all 
-kind of courses with a single template by passing these values to Formicula. The 
-template loads the data from Pagesetter and shows it to the user.
 
 Client side input validation
 ----------------------------
@@ -219,4 +214,3 @@ png
 If all these image types are not supported by your server, captchas are deactivated, in this
 case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
-

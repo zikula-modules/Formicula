@@ -16,7 +16,7 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 // Original Author of file: Frank Schummertz
-// Purpose of file:  formicula administration API
+// Purpose of file:  language file
 // ----------------------------------------------------------------------
 
 //
@@ -49,6 +49,7 @@ define('_FOR_CONTACTCREATED', 'Kontakt angelegt');
 define('_FOR_CONTACTDELETED', 'Kontakt gelöscht'); 
 define('_FOR_CONTACTFORM', 'Kontakt');
 define('_FOR_CONTACTID','ID');
+define('_FOR_CONTACTNAME','Name');
 define('_FOR_CONTACTTITLE', 'Kontaktformular' );
 define('_FOR_CONTACTUPDATED', 'Kontakt gepeichert');
 define('_FOR_CREATEFILESFAILED', 'Während der Installation konnten formicula_cache/index.html und/oder formicula_cache/.htaccess nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
