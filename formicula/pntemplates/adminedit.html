@@ -1,84 +1,48 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
 
-<!--[ include file=adminheader.html ]-->
+<!--[ include file=formicula_admin_header.html ]-->
 
 <!--[ if $mode==create ]-->
 <h2><!--[ pnml name=_FOR_ADDCONTACT html=1 ]--></h2>
-<form action="<!--[ pnmodurl modname=Formicula type=admin func=create ]-->" method="post">
-<div>
-<input type="hidden" name="cid" value="-1" />
 <!--[ else ]-->
 <h2><!--[ pnml name=_FOR_EDITCONTACT html=1 ]--></h2>
-<form action="<!--[ pnmodurl modname=Formicula type=admin func=update ]-->" method="post">
-<div>
-<input type="hidden" name="cid" value="<!--[ $contact.cid ]-->" />
 <!--[ /if ]-->
-<input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module=formicula ]-->" />
-<table>
-    <tr>
-        <td>
-            <!--[ pnml name="_FOR_NAMEOFCONTACT" html=1 ]-->
-        </td>
-        <td>
-            <input type="text" name="cname" id="cname" value="<!--[ $contact.name|pnvarprepfordisplay ]-->" size="40" maxlength="40" tabindex="1" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name="_FOR_EMAIL" html=1 ]-->
-        </td>
-        <td>
-            <input type="text" name="email" id="email" value="<!--[ $contact.email|pnvarprepfordisplay ]-->" size="80" maxlength="80" tabindex="2" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name="_FOR_PUBLIC" html=1 ]-->
-        </td>
-        <td>
-            <input type="checkbox" name="public" id="public" value=1 <!--[ if $contact.public==1 ]-->checked="checked"<!--[ /if ]--> tabindex="3" />
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            <strong><!--[ pnml name="_FOR_SENDERINFO" html=1 ]-->:</strong>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name="_FOR_SENDERNAME" html=1 ]-->
-        </td>
-        <td>
-            <input type="text" name="sname" id="sname" value="<!--[ $contact.sname|pnvarprepfordisplay ]-->" size="40" maxlength="40" tabindex="2" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name="_FOR_SENDEREMAIL" html=1 ]-->
-        </td>
-        <td>
-            <input type="text" name="semail" id="semail" value="<!--[ $contact.semail|pnvarprepfordisplay ]-->" size="80" maxlength="80" tabindex="2" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!--[ pnml name="_FOR_SENDERSUBJECT" html=1 ]-->
-        </td>
-        <td>
-            <input type="text" name="ssubject" id="ssubject" value="<!--[ $contact.ssubject|pnvarprepfordisplay ]-->" size="80" maxlength="80" tabindex="2" /><br />
-            <!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1 ]-->
-        </td>
-    </tr>
 
-    <tr>
-        <td colspan="2" align="left">
+<!--[ pnform ]-->
+<div>
+    <div class="forfloatbox">
+        <!--[ pnformvalidationsummary ]-->
+        <dl class="forclearfix">
+            <dt><!--[ pnformlabel for="cname" text='_FOR_NAMEOFCONTACT' ]--></dt>
+            <dd><!--[ pnformtextinput size="40" maxLength="40" id="cname" text=$contact.name ]--></dd>
 
-            <input type="submit" value="<!--[ pnml name="_SUBMIT" html=1 ]-->" tabindex="4" />
-        </td>
-    </tr>
-</table>
+            <dt><!--[ pnformlabel for="email" text='_FOR_EMAIL' ]--></dt>
+            <dd><!--[ pnformtextinput size="40" maxLength="40" id="email" text=$contact.email ]--></dd>
+
+            <dt><!--[ pnformlabel for="public" text='_FOR_PUBLIC' ]--></dt>
+            <dd><!--[ pnformcheckbox id="public" checked=$contact.public ]--></dd>
+
+            <dt><strong><!--[ pnml name="_FOR_SENDERINFO" ]--></strong></dt>
+            <dd>&nbsp;</dd>
+
+            <dt><!--[ pnformlabel for="semail" text='_FOR_SENDEREMAIL' ]--></dt>
+            <dd><!--[ pnformtextinput size="40" maxLength="40" id="semail" text=$contact.semail ]--></dd>
+            
+            <dt><!--[ pnformlabel for="sname" text='_FOR_SENDERNAME' ]--></dt>
+            <dd><!--[ pnformtextinput size="40" maxLength="480" id="sname" text=$contact.sname ]--></dd>
+
+            <dt><!--[ pnformlabel for="ssubject" text='_FOR_SENDERSUBJECT' ]--></dt>
+            <dd><!--[ pnformtextinput size="40" maxLength="40" id="ssubject" text=$contact.ssubject ]--></dd>
+            
+            <dt>&nbsp;</dt>
+            <dd><!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1]--></dd>
+        </dl>
+    </div>
+    <p>
+      <!--[pnformbutton id="submit" commandName="submit" text="_SUBMIT"]-->
+    </p>
 </div>
-</form>
+<!--[ /pnform ]-->
 
-<!--[ include file=adminfooter.html ]-->
+<!--[ include file=formicula_admin_footer.html ]-->

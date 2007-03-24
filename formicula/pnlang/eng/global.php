@@ -52,6 +52,7 @@ define('_FOR_CONTACTID','ID' );
 define('_FOR_CONTACTNAME','Name');
 define('_FOR_CONTACTTITLE', 'Contact our team' );
 define('_FOR_CONTACTUPDATED', 'Contact info has been updated');
+define('_FOR_CREATECONTACTFAILED', 'Error creating contact!');
 define('_FOR_CREATEFILESFAILED', 'The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!');
 define('_FOR_CREATEFOLDERFAILED', 'The installer could not create the formicula_cache folder, please refer to the manual before using the module!');
 define('_FOR_CREATETABLEFAILED', 'The installer could not create the formcontacts table');
@@ -64,7 +65,6 @@ define('_FOR_DELETECONTACT','Delete contact' );
 define('_FOR_DELETETABLEFAILED', 'could not delete table');
 define('_FOR_DELETEUPLOADEDFILE','Delete file after sending' );
 define('_FOR_DESC', 'Tools for creation of all kinds contact forms');
-define('_FOR_CREATETABLEFAILED', 'The installer could not delete the formcontacts table');
 
 //
 // E
@@ -76,8 +76,10 @@ define('_FOR_EMAIL','Email' );
 define('_FOR_EMAILFROM', 'Email from');
 define('_FOR_ERROR', 'There is an error in your form' );
 define('_FOR_ERRORCOMMENT', 'Error: no or invalid comment supplied (no HTML!)');
+define('_FOR_ERRORCONTACT', 'Error: no contact name');
 define('_FOR_ERRORCREATINGCONTACT', 'Unable to create contact!');
 define('_FOR_ERROREMAIL', 'Error: no or incorrect email address supplied');
+define('_FOR_ERRORINVALIDEMAIL', 'Error: incorrect email address supplied');
 define('_FOR_ERRORNOMANDATORYFIELD', 'Error: missing mandatory field');
 define('_FOR_ERRORSENDINGMAIL', 'There was an error sending the email.');
 define('_FOR_ERRORSENDINGUSERMAIL', 'There was an internal error when sending confirmation mail' );
@@ -191,6 +193,7 @@ define('_FOR_THEME', 'Contact or Theme' );
 //
 // U
 //
+define('_FOR_UPDATECONTACTFAILED', 'Error updating contact!');
 define('_FOR_UPLOADDIRNOTWRITABLE','The webserver cannot write into this folder!' );
 define('_FOR_UPLOADERROR1', 'upload-error: file too big (php.ini)' );
 define('_FOR_UPLOADERROR2', 'upload-error: file too big (form)' );

@@ -52,6 +52,7 @@ define('_FOR_CONTACTID','ID');
 define('_FOR_CONTACTNAME','Name');
 define('_FOR_CONTACTTITLE', 'Kontaktformular' );
 define('_FOR_CONTACTUPDATED', 'Kontakt gepeichert');
+define('_FOR_CREATECONTACTFAILED', 'Fehler: Konnte Kontakt nicht anlegen');
 define('_FOR_CREATEFILESFAILED', 'Während der Installation konnten formicula_cache/index.html und/oder formicula_cache/.htaccess nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
 define('_FOR_CREATEFOLDERFAILED', 'Während der Installation konnte das formicula_cache-Verzeichnis nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
 define('_FOR_CREATETABLEFAILED', 'Während der Installation konnte die formcontacts-Tabelle nicht angelegt werden');
@@ -64,7 +65,6 @@ define('_FOR_DELETECONTACT', 'Kontakt löschen' );
 define('_FOR_DELETETABLEFAILED', 'konnte Tabelle nicht löschen');
 define('_FOR_DELETEUPLOADEDFILE','Datei nach dem Senden löschen');
 define('_FOR_DESC', 'Werkzeug für Kontaktformulare aller Art');
-define('_FOR_CREATETABLEFAILED', 'Während der Deinstallation konnte die formcontacts-Tabelle nicht entfernt werden!');
 
 //
 // E
@@ -76,8 +76,10 @@ define('_FOR_EMAIL', 'Email' );
 define('_FOR_EMAILFROM', 'Email von');
 define('_FOR_ERROR', 'Ein oder mehrere notwendige Felder wurden nicht ausgefüllt oder enthalten fehlerhafte Daten' );
 define('_FOR_ERRORCOMMENT', 'Fehler: Keinen oder ungültigen Kommentar abgegeben (kein HTML!)');
+define('_FOR_ERRORCONTACT', 'Fehler: Name des Kontakts fehlt');
 define('_FOR_ERRORCREATINGCONTACT', 'Fehler beim Erstellen des Kontaktes');
 define('_FOR_ERROREMAIL', 'Fehler: keine oder feherhafte Emailadresse angegeben');
+define('_FOR_ERRORINVALIDEMAIL', 'Fehler: feherhafte Emailadresse angegeben');
 define('_FOR_ERRORNOMANDATORYFIELD', 'Fehler: folgendes Pflichtfeld fehlt');
 define('_FOR_ERRORSENDINGMAIL', 'Fehler beim Senden der Mail');
 define('_FOR_ERRORSENDINGUSERMAIL', 'interner Fehler: konnte Bestätigungsmail nicht versenden' );
@@ -190,6 +192,7 @@ define('_FOR_THEME', 'Thema' );
 //
 // U
 //
+define('_FOR_UPDATECONTACTFAILED', 'Fehler: Konnte Kontakt nicht aktualisieren!');
 define('_FOR_UPLOADDIRNOTWRITABLE','Dieses Verzeichnis ist vom Webserver nicht beschreibbar' );
 define('_FOR_UPLOADERROR1', 'Upload-Fehler: Datei zu gross (php.ini)' );
 define('_FOR_UPLOADERROR2', 'Upload-Fehler: Datei zu gross (form)' );

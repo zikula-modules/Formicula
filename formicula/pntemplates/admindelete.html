@@ -1,15 +1,15 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
 
-<!--[ include file=adminheader.html ]-->
+<!--[ include file=formicula_admin_header.html ]-->
 
 
 <h2><!--[ pnml name=_FOR_DELETECONTACT html=1 ]--></h2>
 
 <form action="<!--[ pnmodurl modname=Formicula type=admin func=delete ]-->" method="post">
 <div class="delete">
-    <p><strong><!--[ pnml name="_FOR_NAME" ]--> :</strong> <!--[ $contact.name|pnvarprepfordisplay ]--></p>
-    <p><strong><!--[ pnml name="_FOR_EMAIL" ]--> :</strong> <!--[ $contact.email ]--></p>
+    <p><strong><!--[ pnml name="_FOR_NAMEOFCONTACT" ]--> :</strong> <!--[ $contact.name|pnvarprepfordisplay ]--></p>
+    <p><strong><!--[ pnml name="_FOR_EMAIL" ]--> :</strong> <!--[ $contact.email|pnvarprepfordisplay ]--></p>
     <p>
         <input type="hidden" name="cid" value="<!--[ $contact.cid ]-->" />
         <input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module=formicula ]-->" />
@@ -18,4 +18,4 @@
 </div>
 </form>
 
-<!--[ include file=adminfooter.html ]-->
+<!--[ include file=formicula_admin_footer.html ]-->
