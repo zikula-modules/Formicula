@@ -9,7 +9,7 @@
     <thead>
     <tr style="width: 100%;">
         <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_CONTACTID' ]--></th>
-        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_NAME' ]--></th>
+        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_CONTACTNAME' ]--></th>
         <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_EMAIL' ]--></th>
         <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_PUBLIC' ]--></th>
         <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_OPTIONS' ]--></th>
@@ -35,12 +35,12 @@
             <!--[ /if ]-->
         </td>
         <td style="text-align:center;">
-            [<!--[ if $contact.acc_edit==true ]-->
-                <a href="<!--[ pnmodurl modname=Formicula type=admin func=edit cid=$contact.cid ]-->"><!--[ pnml name="_FOR_EDIT" html=1 ]--></a>
+            <!--[ if $contact.acc_edit==true ]-->
+                <a href="<!--[ pnmodurl modname=Formicula type=admin func=edit cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_EDIT" ]-->"><!--[ pnimg src="xedit.gif" modname="core" set="icons/extrasmall" alt="_FOR_EDIT" altml=true ]--></a>
             <!--[ /if ]-->
             <!--[ if $contact.acc_delete==true ]-->
-                &nbsp;|&nbsp;<a href="<!--[ pnmodurl modname=Formicula type=admin func=delete cid=$contact.cid ]-->"><!--[ pnml name="_FOR_DELETE" html=1 ]--></a>
-            <!--[ /if ]-->]
+                &nbsp;&nbsp;<a href="<!--[ pnmodurl modname=Formicula type=admin func=delete cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_DELETE" ]-->"><!--[ pnimg src="14_layer_deletelayer.gif" modname="core" set="icons/extrasmall" alt="_FOR_DELETE" altml=true ]--></a>
+            <!--[ /if ]-->
         </td>
     </tr>
     <!--[ /foreach ]-->
