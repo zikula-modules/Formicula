@@ -28,8 +28,8 @@
  */
 function formicula_user_main($args=array())
 {
-    $form = FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
-    $cid  = FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
+    $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
+    $cid  = (int)FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
     // get subitted information - will be passed to the template
     // addinfo is an array:
