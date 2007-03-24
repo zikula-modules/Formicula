@@ -77,3 +77,45 @@
     padding: 0.3em 0 0.3em 0.5em;
     vertical-align: top;
 }
+
+#formicula-admin dl {
+    float: left;
+}
+    
+#formicula-admin dl dt {
+    clear: both;
+    margin: 3px;
+    float: left; 
+    font-weight: normal;
+    width: 300px;
+}
+
+#formicula-admin dl dd {
+    margin: 3px 0;
+    float: left;
+}
+
+/*
+ * clearfix solution
+ *
+ */
+
+.forclearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.forclearfix {display: inline-table;}
+
+/* Hides from IE-mac \*/
+* html .forclearfix {height: 1%;}
+.forclearfix {display: block;}
+/* End hide from IE-mac */
+
+/* Overflow-Methode zum Clearen der Float-Umgebungen */
+.forfloatbox { 
+    overflow:hidden; 
+}

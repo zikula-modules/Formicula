@@ -177,6 +177,7 @@ define('_FOR_SHOWLOCATION','Show location?' );
 define('_FOR_SHOWPHONE','Show phone number?' );
 define('_FOR_SHOWURL','Show URL?' );
 define('_FOR_SIMPLEMATHEQUATION', 'Please solve this simple math test');
+define('_FOR_SUBMIT', 'Update configuration' );
 
 //
 // T

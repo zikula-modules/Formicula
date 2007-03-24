@@ -176,6 +176,7 @@ define('_FOR_SHOWLOCATION', 'Standort anzeigen?' );
 define('_FOR_SHOWPHONE', 'Telefonnummer anzeigen?' );
 define('_FOR_SHOWURL', 'Homepage anzeigen?' );
 define('_FOR_SIMPLEMATHEQUATION', 'Bitte diese einfache Rechenaufgabe lösen');
+define('_FOR_SUBMIT', 'Absenden' );
 
 //
 // T
