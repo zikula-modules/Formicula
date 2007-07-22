@@ -67,20 +67,6 @@ class Formicula_admin_edithandler
             // copy cname to name for updating the db
             $data['name'] = $data['cname'];
 
-            if(isset($data['mh_delete']) && ($data['mh_delete']==true) ) {
-                // The API function is called
-                if (pnModAPIFunc('MultiHook',
-                                 'admin',
-                                 'delete',
-                                 array('aid' => $data['aid']))) {
-                    // Success
-                    LogUtil::registerStatus(_MH_DELETED);
-                } else {
-                    LogUtil::registerError(_MH_DELETEFAILED);
-                }
-                return pnRedirect(pnModURL('MultiHook', 'admin', 'view', array('filter' => $data['type'])));
-            }
-
             // no deletion, further checks needed
             if(empty($data['cname'])) {
                 $ifield = & $pnRender->pnFormGetPluginById('cname');

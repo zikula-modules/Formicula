@@ -75,8 +75,8 @@ function formicula_admin_delete()
     // check necessary environment
     formicula_envcheck();
 
-    $cid          = (int)FormUtil::getPassedValue('cid', -1, 'POST');
-    $confirmation =      FormUtil::getPassedValue('confirmation', '', 'POST');
+    $cid          = (int)FormUtil::getPassedValue('cid', -1, 'GETPOST');
+    $confirmation =      FormUtil::getPassedValue('confirmation', '', 'GETPOST');
 
     $contact = pnModAPIFunc('formicula',
                             'admin',
