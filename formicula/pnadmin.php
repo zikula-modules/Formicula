@@ -89,7 +89,7 @@ function formicula_admin_delete()
 
     // Check for confirmation.
     if (empty($confirmation)) {
-        $pnr = new pnRender('formicula', false);
+        $pnr = pnRender::getInstance('formicula', false);
         $pnr->assign('contact', $contact);
         return $pnr->fetch('formicula_admin_delete.html');
     }
@@ -125,7 +125,7 @@ function formicula_admin_view()
     // check necessary environment
     formicula_envcheck();
     
-    $pnr = new pnRender('formicula', false);
+    $pnr = pnRender::getInstance('formicula', false);
 
     // read all items
     $allcontacts = pnModAPIFunc('formicula',

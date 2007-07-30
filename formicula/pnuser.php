@@ -73,7 +73,7 @@ function formicula_user_main($args=array())
         }
     }
 
-    $pnr = new pnRender('formicula', false);
+    $pnr = pnRender::getInstance('formicula', false);
     $pnr->add_core_data();
     $pnr->assign('uname', $uname);
     $pnr->assign('uemail', $uemail);
@@ -221,7 +221,7 @@ function formicula_user_send($args=array())
                             array('cid'  => $cid,
                                   'form' => $form));
 
-    $pnr = new pnRender('formicula', false);
+    $pnr = pnRender::getInstance('formicula', false);
     $pnr->assign('contact', $contact);
     $pnr->assign('userdata', $ud);
 

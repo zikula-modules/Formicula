@@ -97,7 +97,7 @@ define('_FOR_FORMNUMBER', 'Formular #' );
 // H
 //
 define('_FOR_HELLO', 'Hallo' );
-define('_FOR_HTACCESSPROBLEM', 'Notwendige .htaccess Datei in formicula_cache nicht gefunden, Captcha eaktiviert');
+define('_FOR_HTACCESSPROBLEM', 'Notwendige .htaccess Datei in formicula_cache nicht gefunden, Captcha deaktiviert');
 define('_FOR_HTMLMAIL', 'HTML-Format' );
 
 //
