@@ -183,5 +183,3 @@ function formicula_adminapi_getlinks()
     }
     return $links;
 }
-
-?>

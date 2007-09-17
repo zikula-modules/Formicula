@@ -158,5 +158,3 @@ if (!function_exists('fromhex')) {
         return ImageColorAllocate($image, $red, $green, $blue);
     }
 }
-
-?>

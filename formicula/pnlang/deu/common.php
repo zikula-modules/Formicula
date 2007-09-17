@@ -64,7 +64,6 @@ define('_FOR_DELETE', 'löschen' );
 define('_FOR_DELETECONTACT', 'Kontakt löschen' );
 define('_FOR_DELETETABLEFAILED', 'konnte Tabelle nicht löschen');
 define('_FOR_DELETEUPLOADEDFILE','Datei nach dem Senden löschen');
-define('_FOR_DESC', 'Werkzeug für Kontaktformulare aller Art');
 
 //
 // E
@@ -215,6 +214,3 @@ define('_FOR_VISITHOMEPAGE', 'Formicula im NOC besuchen');
 // W
 //
 define('_FOR_WRONGCAPTCHA', 'Schlecht im Kopfrechnen? Bitte erneut versuchen!');
-
-
-?>

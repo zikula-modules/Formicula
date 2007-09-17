@@ -19,6 +19,4 @@
 // Purpose of file:  language file
 // ----------------------------------------------------------------------
 
-Loader::includeOnce('modules/formicula/pnlang/fra/global.php');
-
-?>
+define('_FOR_DESC', 'Module permettant de créer des formulaires de contact de toute sorte'); 

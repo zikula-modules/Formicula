@@ -50,5 +50,3 @@ function formicula_pntables()
     // Return the table information
     return $pntable;
 }
-
-?>

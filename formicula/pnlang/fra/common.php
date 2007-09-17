@@ -63,7 +63,6 @@ define('_FOR_DELETE','Supprimer le contact' );
 define('_FOR_DELETECONTACT','Supprimer le contact' ); 
 define('_FOR_DELETETABLEFAILED', 'impossible de supprimer la table'); 
 define('_FOR_DELETEUPLOADEDFILE','Supprimer le fichier après l\'envoi' ); 
-define('_FOR_DESC', 'Module permettant de créer des formulaires de contact de toute sorte'); 
 
 //
 // E
@@ -207,5 +206,3 @@ define('_FOR_VISITHOMEPAGE', 'Se rendre sur le NOC de Formicula');
 // W
 //
 define('_FOR_WRONGCAPTCHA', 'Mauvais en mathématiques ? Vous pouvez faire mieux, réessayez.'); 
-
-?>

@@ -32,5 +32,3 @@ $modversion['contact'] = 'frank.schummertz@landseer-stuttgart.de';
 $modversion['admin'] = 1;
 $modversion['user'] = 1;
 $modversion['securityschema'] = array('formicula::' => 'form_id:contact_id:' );
-
-?>

@@ -260,5 +260,3 @@ function formicula_user_send($args=array())
         return $pnr->fetch($form."_usererror.html");
     }
 }
-
-?>

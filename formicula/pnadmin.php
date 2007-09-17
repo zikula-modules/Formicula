@@ -209,5 +209,3 @@ function formicula_envcheck()
     }
     return true;
 }
-
-?>

@@ -25,5 +25,3 @@
 // ----------------------------------------------------------------------
 
 define('_FOR_DESC', 'Tool for creating contact forms of all kinds');
-
-?>

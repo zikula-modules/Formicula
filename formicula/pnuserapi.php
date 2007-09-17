@@ -305,5 +305,3 @@ function formicula_userapi_removeUploadInformation($args)
     } 
     return $custom;
 }
-
-?>

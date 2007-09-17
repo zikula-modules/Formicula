@@ -61,5 +61,3 @@ class Formicula_admin_modifyconfighandler
     }
 
 }
-
-?>

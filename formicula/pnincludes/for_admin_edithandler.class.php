@@ -110,5 +110,3 @@ class Formicula_admin_edithandler
     }
 
 }
-
-?>

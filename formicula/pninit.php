@@ -202,5 +202,3 @@ function formicula_delete()
 
     return true;
 }
-
-?>
