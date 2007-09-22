@@ -216,5 +216,3 @@ define('_FOR_VISITHOMEPAGE', 'Visit Formicula on NOC');
 // W
 //
 define('_FOR_WRONGCAPTCHA', 'Bad in mathematics? You can do better, try again.');
-
-?>
