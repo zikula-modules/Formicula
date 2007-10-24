@@ -257,30 +257,32 @@ function formicula_userapi_checkArguments($args)
 {
     $userdata = $args['userdata'];
     $custom   = $args['custom'];
+    
+    $ok = true;
 
     if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
-        return LogUtil::registerError(_FOR_ERROREMAIL);
+        $ok = LogUtil::registerError(_FOR_ERROREMAIL);
     }
 
     if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnVarCensor($userdata['uname']))) {
-        return LogUtil::registerError(_FOR_ERRORUSERNAME);
+        $ok = LogUtil::registerError(_FOR_ERRORUSERNAME);
     }
 
     if ($userdata['comment'] != pnVarCensor($userdata['comment'])) {
-        return LogUtil::registerError(_FOR_ERRORCOMMENT);
+        $ok = LogUtil::registerError(_FOR_ERRORCOMMENT);
     }
 
     foreach($custom as $field) {
         if($field['mandatory'] == true) {
             if(!is_array($field['data']) && (empty($field['data']))) {
-                return LogUtil::registerError(_FOR_ERRORNOMANDATORFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
+                $ok = LogUtil::registerError(_FOR_ERRORNOMANDATORFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
             }
             if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
-                return LogUtil::registerError(_FOR_ERRORUPLOADERROR);
+                $ok = LogUtil::registerError(_FOR_ERRORUPLOADERROR);
             }
         }
     }
-    return true;
+    return $ok;
 }
 
 /**
