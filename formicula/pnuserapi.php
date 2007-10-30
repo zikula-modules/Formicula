@@ -29,16 +29,14 @@
  */
 function formicula_userapi_getContact($args)
 {
-    extract($args);
-
     if (!isset($args['cid']) || !is_numeric($args['cid'])) {
         return LogUtil::registerError(_MODARGSERROR . ' in formicula_userapi_getContact(cid=' . DataUtil::formatForDisplay($cid) . ')');
     }
     if (!isset($args['form']) || !is_numeric($args['form'])) {
-        $form = 0;
+        $args['form'] = 0;
     }
 
-    if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
+    if(!SecurityUtil::checkPermission('formicula::', $args['form'} . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
         return LogUtil::registerPermissionError();
     }
 
@@ -70,7 +68,7 @@ function formicula_userapi_readValidContacts($args)
     // is added to the results array
     $validcontacts = array();
     foreach($allcontacts as $contact) {
-        if (SecurityUtil::checkPermission('formicula::', $args['form'] . ':' . $cid . ':', ACCESS_COMMENT)) {
+        if (SecurityUtil::checkPermission('formicula::', $args['form'] . ':.*:', ACCESS_COMMENT)) {
             $validcontacts[] = $contact;
         }
     }
@@ -99,7 +97,7 @@ function formicula_userapi_sendtoContact($args)
     $format   = $args['format'];
 
     if(pnModAvailable('Mailer')) {
-        $pnr = new pnRender('formicula', false);
+        $pnr = pnRender::getInstance('formicula', false, null, true);
         $ip = getenv('REMOTE_ADDR');
         $pnr->assign('host', gethostbyaddr($ip));
         $pnr->assign('ip', $ip);
@@ -174,7 +172,7 @@ function formicula_userapi_sendtoUser($args)
     $format   = $args['format'];
 
     if(pnModAvailable('Mailer')) {
-        $pnr = new pnRender('formicula', false);
+        $pnr = pnRender::getInstance('formicula', false, null, true);
         $ip = getenv('REMOTE_ADDR');
         $pnr->assign('host', gethostbyaddr($ip));
         $pnr->assign('ip', $ip);
