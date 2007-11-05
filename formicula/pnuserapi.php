@@ -36,7 +36,7 @@ function formicula_userapi_getContact($args)
         $args['form'] = 0;
     }
 
-    if(!SecurityUtil::checkPermission('formicula::', $args['form'} . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
+    if(!SecurityUtil::checkPermission('formicula::', $args['form'] . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
         return LogUtil::registerPermissionError();
     }
 
