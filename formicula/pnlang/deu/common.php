@@ -60,6 +60,7 @@ define('_FOR_CREATETABLEFAILED', 'Während der Installation konnte die formcontac
 //
 // D
 //
+define('_FOR_DBUPGRADEFAILED', 'Datenbankänderung fehlgeschlagen');
 define('_FOR_DELETE', 'löschen' );
 define('_FOR_DELETECONTACT', 'Kontakt löschen' );
 define('_FOR_DELETETABLEFAILED', 'konnte Tabelle nicht löschen');

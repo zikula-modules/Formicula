@@ -83,68 +83,59 @@ function formicula_upgrade($oldversion)
     // Get database information
     pnModDBInfoLoad('formicula');
 
+    // perform a global db change for all versions >= 0.4
+    if(version_compare($oldversion, '0.5', '>')) { 
+        if (!DBUtil::changeTable('formcontacts')) {
+            return LogUtil::registerError(_FOR_DBUPGRADEFAILED);
+        }
+    }
+
     // Upgrade dependent on old version number
     switch($oldversion) {
         case '0.1':
-                pnModSetVar('formicula', 'upload_dir', 'pnTemp');
-                pnModSetVar('formicula', 'delete_file', 1);
+            pnModSetVar('formicula', 'upload_dir', 'pnTemp');
+            pnModSetVar('formicula', 'delete_file', 1);
         case '0.2':
-                // nothing to do
+            // nothing to do
         case '0.3':
-                // nothing to do
+            // nothing to do
         case '0.4':
-                // create the formicula table
-                if (!DBUtil::createTable('formcontacts')) {
-                    return LogUtil::registerError(_FOR_CREATETABLEFAILED);
-                }
+            // create the formicula table
+            if (!DBUtil::createTable('formcontacts')) {
+                return LogUtil::registerError(_FOR_CREATETABLEFAILED);
+            }
 
-                // migrate contacts from config var to table
-                $contacts = pnModGetVar('formicula', 'contacts');
-                if( @unserialize( $contacts ) != "" ) {
-                    $contacts_array = unserialize( $contacts );
-                } else {
-                    $contacts_array = array();
-                }
-                foreach ($contacts_array as $contact) {
-                    $name  = pnVarPrepForStore($contact['name']);
-                    $email = pnVarPrepForStore($contact['email']);
-                    pnModAPIFunc('formicula',
-                                 'admin',
-                                 'createContact',
-                                 array('name'     => $name,
-                                       'email'    => $email,
-                                       'public'   => 1,
-                                       'sname'    => '',   
-                                       'semail'   => '',
-                                       'ssubject' => ''));
-                }
-                pnModDelVar('formicula', 'contacts'); 
-                pnModDelVar('formicula', 'version' );
+            // migrate contacts from config var to table
+            $contacts = pnModGetVar('formicula', 'contacts');
+            if( @unserialize( $contacts ) != "" ) {
+                $contacts_array = unserialize( $contacts );
+            } else {
+                $contacts_array = array();
+            }
+            foreach ($contacts_array as $contact) {
+                $name  = pnVarPrepForStore($contact['name']);
+                $email = pnVarPrepForStore($contact['email']);
+                pnModAPIFunc('formicula',
+                             'admin',
+                             'createContact',
+                             array('name'     => $name,
+                                   'email'    => $email,
+                                   'public'   => 1,
+                                   'sname'    => '',   
+                                   'semail'   => '',
+                                   'ssubject' => ''));
+            }
+            pnModDelVar('formicula', 'contacts'); 
+            pnModDelVar('formicula', 'version' );
         case '0.5':
                 // nothing to do
         case '0.6':
-                $dbconn  =& pnDBGetConn(true);
-                $pntable =& pnDBGetTables();
-            
-                $contactstable  =  $pntable['formcontacts'];
-                $contactscolumn = &$pntable['formcontacts_column'];
-                
-                $sql = "ALTER TABLE $contactstable
-                        ADD $contactscolumn[sname]     varchar(40) NOT NULL default '',
-                        ADD $contactscolumn[semail]    varchar(80) NOT NULL default '',
-                        ADD $contactscolumn[ssubject]  varchar(80) NOT NULL default ''";
-                $dbconn->Execute($sql);
-                if ($dbconn->ErrorNo() != 0) {
-                    return LogUtil::registerError(_FOR_ALTERTABLEFAILED);
-                }
-                pnModSetVar('formicula', 'spamcheck', 1);
-                pnModSetVar('formicula', 'excludespamcheck', '');
+            // the db change has been already
+            pnModSetVar('formicula', 'spamcheck', 1);
+            pnModSetVar('formicula', 'excludespamcheck', '');
         case '1.0':
             // nothing to do
         case '1.1':
-            if (!DBUtil::changeTable('formicula')) {
-                return LogUtil::registerError(_MH_UPGRADETO50FAILED);
-            }
 
             $tempdir = pnConfigGetVar('temp');
             if(StringUtil::right($tempdir, 1) <> '/') {

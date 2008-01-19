@@ -60,6 +60,7 @@ define('_FOR_CREATETABLEFAILED', 'The installer could not create the formcontact
 //
 // D
 //
+define('_FOR_DBUPGRADEFAILED', 'Database upgrade failed');
 define('_FOR_DELETE','Delete contact' );
 define('_FOR_DELETECONTACT','Delete contact' );
 define('_FOR_DELETETABLEFAILED', 'could not delete table');
