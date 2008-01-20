@@ -22,11 +22,7 @@
 //
 // A
 //
-define('_FOR_ACTIVATESPAMCHECK', 'Activer l\'anti-spam 
-(il faut être certain que les champs 
-du formulaire soient disponibles, 
-lire la documentation pour plus d\'informations) 
-'); 
+define('_FOR_ACTIVATESPAMCHECK', 'Activer l\'anti-spam (il faut être certain que les champs du formulaire soient disponibles, lire la documentation pour plus d\'informations) '); 
 define('_FOR_ADDCONTACT','Ajouter un contact' ); 
 define('_FOR_ADMINMAIL1', 'Un visiteur de votre site web a utilisé le formulaire de contact pour vous envoyer ceci :' ); 
 define('_FOR_ADMINMAIL2', 'L\'utilisateur avait l\'adresse IP/FAI suivant : ' ); 
@@ -44,6 +40,7 @@ define('_FOR_BADAUTHKEY', 'Mauvaise clé d\'authentification');
 //
 // C
 //
+define('_FOR_CACHEDIRPROBLEM', 'Le répertoire formicula_cache n\'existe pas dans le répertoire temporaire de PostNuke ou n\'a pas les droits en écriture - captchas a été désactivé');
 define('_FOR_CANCELDELETE','Annuler la supression automatique' ); //?? Cancel deletion routine 
 define('_FOR_COMMENT', 'Commentaire' ); 
 define('_FOR_COMPANY', 'Société' ); 
@@ -52,9 +49,13 @@ define('_FOR_CONTACTCREATED', 'Contact créé');
 define('_FOR_CONTACTDELETED', 'Contact supprimé');
 define('_FOR_CONTACTFORM', 'Formulaire de Contact');
 define('_FOR_CONTACTID','ID' ); 
+define('_FOR_CONTACTNAME','Nom');
 define('_FOR_CONTACTTITLE', 'Contacter notre groupe' ); 
 define('_FOR_CONTACTUPDATED', 'Contact mis à jour');
 define('_FOR_CREATETABLEFAILED', 'impossible de créer la table'); 
+define('_FOR_CREATEFILESFAILED', 'La procédure d\'installation ne peut pas créer formicula_cache/index.html et/ou le fichier formicula_cache/.htaccess, merci de se référer au manual avant d\'utiliser le module!');
+define('_FOR_CREATEFOLDERFAILED', 'La procédure d\'installation ne peut pas créer le répertoire formicula_cache, merci de se référer au manual avant d\'utiliser le module!');
+define('_FOR_CREATETABLEFAILED', 'La procédure d\'installation ne peut pas créer la table formcontacts');
 
 //
 // D
@@ -63,6 +64,7 @@ define('_FOR_DELETE','Supprimer le contact' );
 define('_FOR_DELETECONTACT','Supprimer le contact' ); 
 define('_FOR_DELETETABLEFAILED', 'impossible de supprimer la table'); 
 define('_FOR_DELETEUPLOADEDFILE','Supprimer le fichier après l\'envoi' ); 
+define('_FOR_DESC', 'Module permettant de créer des formulaires de contact de toute sorte'); 
 
 //
 // E
@@ -71,16 +73,19 @@ define('_FOR_EDIT','Editer le contact' );
 define('_FOR_EDITCONFIG','Modifier la configuration' ); 
 define('_FOR_EDITCONTACT','Editer le contact' ); 
 define('_FOR_EMAIL', 'E-mail' ); 
-define('_FOR_EMAIL','E-mail' ); 
 define('_FOR_EMAILFROM', 'E-mail en provenance de'); 
 define('_FOR_ERROR', 'Il y a une erreur dans votre formulaire' ); 
+define('_FOR_ERRORCOMMENT', 'Erreur: commentaire vide ou invalide (pas de HTML!)');
+define('_FOR_ERRORCONTACT', 'Erreur: aucun nom de contact');
 define('_FOR_ERRORCREATINGCONTACT', 'Impossible de créer le contact !');
+define('_FOR_ERROREMAIL', 'Erreur: adresse e-mail vide ou incorrecte');
+define('_FOR_ERRORINVALIDEMAIL', 'Erreur: adresse e-mail incorrecte');
+define('_FOR_ERRORNOMANDATORYFIELD', 'Erreur: champs obligatoire manquant');
 define('_FOR_ERRORSENDINGMAIL', 'Il y a eu une erreur lors de l\'envoi de l\'e-mail.');
 define('_FOR_ERRORSENDINGUSERMAIL', 'Il y a eu une erreur interne lors de l\'envoi de l\'e-mail de confirmation' ); 
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'Ne pas activer l\'anti-spam pour ces formulaires 
-(utiliser la virgule pour séparer les ID des formulaires, 
-ex : formulaires incorporés dans pagesetter. La redirection 
-peut ne pas fonctionner correctement pour ceux-ci)'); 
+define('_FOR_ERRORUPLOADERROR', 'Erreur: erreur de téléchargement');
+define('_FOR_ERRORUSERNAME', 'Erreur: aucun nom');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'Ne pas activer l\'anti-spam pour ces formulaires (utiliser la virgule pour séparer les ID des formulaires, ex : formulaires incorporés dans pagesetter. La redirection peut ne pas fonctionner correctement pour ceux-ci)'); 
 
 //
 // F
@@ -92,6 +97,7 @@ define('_FOR_FORMNUMBER', 'Formulaire #' );
 // H
 //
 define('_FOR_HELLO', 'Bonjour,' ); 
+define('_FOR_HTACCESSPROBLEM', 'Le fichier .htaccess du répertoire formicula_cache n\'existe pas');
 define('_FOR_HTMLMAIL', 'HTML' ); 
 
 //
@@ -117,6 +123,8 @@ define('_FOR_NAMEOFCONTACT','Nom du contact' );
 define('_FOR_NOAUTH', 'Vous n\'êtes pas autorisé à faire cela.');
 define('_FOR_NOAUTHFORFORM', 'Pas d\'autorisation pour ce formulaire.');
 define('_FOR_NOCONTACTS', 'Pas de contacts trouvé.');
+define('_FOR_NOIMAGEFUNCTION', 'Aucune fonction image disponible - captcha est désactivé');
+define('_FOR_NOMAILERMODULE', 'Le module Mailer n\'est pas disponible - impossible d\'envoyer des e-mails!');
 define('_FOR_NOSUCHCONTACT', 'Contact inconnu');
 
 //
@@ -171,6 +179,8 @@ define('_FOR_SHOWLOCATION','Afficher l\'adresse?' );
 define('_FOR_SHOWPHONE','Afficher le numéro de téléphone ?' ); 
 define('_FOR_SHOWURL','Afficher l\'url ?' ); 
 define('_FOR_SIMPLEMATHEQUATION', 'Svp résolvez ce simple problème de math'); 
+define('_FOR_SUBMIT', 'Mise à jour de la configuration' );
+
 
 //
 // T
