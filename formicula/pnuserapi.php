@@ -249,21 +249,25 @@ function formicula_userapi_sendtoUser($args)
  * checks if mandatory arguments are correct
  *@param userdata array with user submitted data, we are interested in uemail, uname and comment here
  *@param custom array with custom data
+ *@param userformat string format of users email for relaxed checking if userformat=none
  *@returns boolean
  */
 function formicula_userapi_checkArguments($args)
 {
-    $userdata = $args['userdata'];
-    $custom   = $args['custom'];
+    $userdata   = $args['userdata'];
+    $custom     = $args['custom'];
+    $userformat = $args['userformat'];
     
     $ok = true;
 
-    if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
-        $ok = LogUtil::registerError(_FOR_ERROREMAIL);
-    }
-
-    if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnVarCensor($userdata['uname']))) {
-        $ok = LogUtil::registerError(_FOR_ERRORUSERNAME);
+    if ($userformat <> 'none') {
+        if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
+            $ok = LogUtil::registerError(_FOR_ERROREMAIL);
+        }
+        
+        if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnVarCensor($userdata['uname']))) {
+            $ok = LogUtil::registerError(_FOR_ERRORUSERNAME);
+        }
     }
 
     if ($userdata['comment'] != pnVarCensor($userdata['comment'])) {

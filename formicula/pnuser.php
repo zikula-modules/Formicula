@@ -54,7 +54,7 @@ function formicula_user_main($args=array())
     }
 
     if (count($contacts) == 0) {
-        return LogUtil::registerPermissionError('index.php');
+        return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
 
     if (pnUserLoggedIn()) {
@@ -73,8 +73,7 @@ function formicula_user_main($args=array())
         }
     }
 
-    $pnr = pnRender::getInstance('formicula', false);
-    $pnr->add_core_data();
+    $pnr = pnRender::getInstance('formicula', false, null, true);
     $pnr->assign('uname', $uname);
     $pnr->assign('uemail', $uemail);
     $pnr->assign('contacts', $contacts);
@@ -119,7 +118,7 @@ function formicula_user_send($args=array())
     $ud['comment']  =      FormUtil::getPassedValue('comment',     (isset($args['comment'])) ? $args['comment'] : '', 'GETPOST');
 
     if(empty($cid) && empty($form)) {
-        return pnRedirect('index.php');
+        return pnRedirect(pnConfigGetVar('entrypoint', 'index.php'));
     }
 
     // remove tags from comment to avoid spam
@@ -159,13 +158,17 @@ function formicula_user_send($args=array())
             if(is_array($addinfo) && count($addinfo)>0) {
                 $params['addinfo'] = $addinfo;
             }
-            return LogUtil::registerError(_FOR_WRONGCAPTCHA, null, pnServerGetVar('HTTP_REFERER'));
+            return LogUtil::registerError(_FOR_WRONGCAPTCHA, null, pnModURL('formicula', 'user', 'main', $params));
         }
     }
     SessionUtil::delVar('formicula_captcha');
 
     if(!SecurityUtil::confirmAuthKey()) {
-        return LogUtil::registerAuthidError(pnModURL('formicula', 'user', 'main', array('form' => $form)));
+        $params = array('form' => $form);
+        if(is_array($addinfo) && count($addinfo)>0) {
+            $params['addinfo'] = $addinfo;
+        }
+        return LogUtil::registerAuthidError(pnModURL('formicula', 'user', 'main', $params));
     }
     
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
@@ -195,7 +198,7 @@ function formicula_user_send($args=array())
         $uploaddir .= "/";
     }
     $custom = array();
-    for($i=0;$i<$numfields;$i++) {
+    for($i=0;$i < $numfields;$i++) {
         $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name');
         $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
 
@@ -229,7 +232,8 @@ function formicula_user_send($args=array())
                      'user',
                      'checkArguments',
                      array('userdata'   => $ud,
-                           'custom'     => $custom)) == true) {
+                           'custom'     => $custom,
+                           'userformat' => $userformat)) == true) {
         if(pnModAPIFunc('formicula',
                          'user',
                          'sendtoContact',

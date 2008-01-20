@@ -41,7 +41,7 @@ function Formicula_admin_main()
 function Formicula_admin_edit()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADD)) {
-        return LogUtil::registerPermissionError('index.php');
+        return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
 
     // check necessary environment
@@ -69,7 +69,7 @@ function Formicula_admin_edit()
 function formicula_admin_delete()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_DELETE)) {
-        return LogUtil::registerPermissionError('index.php');
+        return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
 
     // check necessary environment
@@ -119,7 +119,7 @@ function formicula_admin_delete()
 function formicula_admin_view()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError('index.php');
+        return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
 
     // check necessary environment
@@ -162,7 +162,7 @@ function formicula_admin_view()
 function formicula_admin_modifyconfig()
 {
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-        return LogUtil::registerPermissionError('index.php');
+        return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
 
     // check necessary environment
