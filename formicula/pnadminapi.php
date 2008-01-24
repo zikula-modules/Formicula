@@ -82,7 +82,7 @@ function formicula_adminapi_readContacts()
  */
 function formicula_adminapi_createContact($args)
 {
-    if (!SecurityUtil::checkPermission('formicula::', "::", ACCESS_ADD)) {
+    if (!defined('_PNINSTALLVER') && !SecurityUtil::checkPermission('formicula::', "::", ACCESS_ADD)) {
         return LogUtil::registerPermissionError();
     }
 
