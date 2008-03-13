@@ -136,9 +136,6 @@ This makes it necessary to send certain information from the form page to the mo
 The custom fields are numbered (# in the following examples), starting at 0.
 
 These are:
-
-* numFields (hidden field) number of custom fields used
-  This is mandatory!
   
 * custom#name (hidden field) name of the custom field
   can be used in the confirmation email
@@ -149,17 +146,19 @@ These are:
 * custom#data (any kind of input field) the data with #=number.
   the payload
 
+The hidden field numFields for the number of custom fields used is not longer 
+necessary. Just make sure that your custom field numbering consistent. This 
+means 1-2-3-4-5 is ok while 1-2-7-8-9 will not work. Formicula reads all custom
+fields until it finds a gap of three digits. In the second example above this 
+means it reads custom field 1 and 2, fails reading 3,4 and 5 and then stops
+and does not care about others that may have been sent (or not).
+
 Example:
 
 <label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--></label><br />
 <input type="hidden" name="custom0name" value="<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->" />
 <input type="hidden" name="custom0mandatory" value="1" />
 <input type="text" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
-
-This will create a mandatory custom field 0. 
-In this case you also need:
-
-<input type="hidden" name="numFields" value="1" />
 
 Permissions
 ------------------
