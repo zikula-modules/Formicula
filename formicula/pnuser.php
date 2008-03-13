@@ -204,7 +204,7 @@ function formicula_user_send($args=array())
     do {
 //    for($i=0;$i < $numfields;$i++) {
         $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name', null, 'POST');
-        if($custom[$1] == null) {
+        if($custom[$i] == null) {
             // increase the numbmer of missing indices
             $missing++;
         } else {
