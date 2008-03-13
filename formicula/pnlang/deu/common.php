@@ -26,7 +26,7 @@ define('_FOR_ACTIVATESPAMCHECK', 'Spamcheck aktivieren<br />(dies erfordert u.U.
 define('_FOR_ADDCONTACT', 'Kontakt hinzufügen' );
 define('_FOR_ADMINMAIL1', 'ein Besucher der Seite hat das Kontaktformular genutzt und folgendes mitgeteilt:' );
 define('_FOR_ADMINMAIL2', 'Der Nutzer hat folgende IP-Adresse/Hostname: ' );
-define('_FOR_ADVICE_EMAIL', 'Bitte eine gültige Emailadresse in der Form name@domain.de eingeben.');
+define('_FOR_ADVICE_EMAIL', 'Bitte eine gültige E-Mailadresse in der Form name@domain.de eingeben.');
 define('_FOR_ADVICE_MANDATORY', 'Dies ist ein Pflichtfeld, bitte ausfüllen.');
 define('_FOR_ADVICE_URL', 'Bitte eine gültige Internetadresse in der Form http://www.domain.de eingeben.');
 define('_FOR_ALTERTABLEFAILED', 'konnte Tabelle nicht ändern');
@@ -72,14 +72,14 @@ define('_FOR_DELETEUPLOADEDFILE','Datei nach dem Senden löschen');
 define('_FOR_EDIT', 'editieren' );
 define('_FOR_EDITCONFIG', 'Konfiguration' );
 define('_FOR_EDITCONTACT', 'Kontakt ändern' );
-define('_FOR_EMAIL', 'Email' );
-define('_FOR_EMAILFROM', 'Email von');
+define('_FOR_EMAIL', 'E-Mail' );
+define('_FOR_EMAILFROM', 'E-Mail von');
 define('_FOR_ERROR', 'Ein oder mehrere notwendige Felder wurden nicht ausgefüllt oder enthalten fehlerhafte Daten' );
 define('_FOR_ERRORCOMMENT', 'Fehler: Keinen oder ungültigen Kommentar abgegeben (kein HTML!)');
 define('_FOR_ERRORCONTACT', 'Fehler: Name des Kontakts fehlt');
 define('_FOR_ERRORCREATINGCONTACT', 'Fehler beim Erstellen des Kontaktes');
-define('_FOR_ERROREMAIL', 'Fehler: keine oder feherhafte Emailadresse angegeben');
-define('_FOR_ERRORINVALIDEMAIL', 'Fehler: feherhafte Emailadresse angegeben');
+define('_FOR_ERROREMAIL', 'Fehler: keine oder feherhafte E-Mailadresse angegeben');
+define('_FOR_ERRORINVALIDEMAIL', 'Fehler: fehlerhafte E-Mailadresse angegeben');
 define('_FOR_ERRORNOMANDATORYFIELD', 'Fehler: folgendes Pflichtfeld fehlt');
 define('_FOR_ERRORSENDINGMAIL', 'Fehler beim Senden der Mail');
 define('_FOR_ERRORSENDINGUSERMAIL', 'interner Fehler: konnte Bestätigungsmail nicht versenden' );
@@ -103,7 +103,7 @@ define('_FOR_HTMLMAIL', 'HTML-Format' );
 //
 // I
 //
-define('_FOR_ILLEGALEMAIL', 'ungültige Emailadresse');
+define('_FOR_ILLEGALEMAIL', 'ungültige E-Mailadresse');
 
 //
 // L
@@ -124,7 +124,7 @@ define('_FOR_NOAUTH', 'Keine Berechtigung für diese Aktion');
 define('_FOR_NOAUTHFORFORM', 'Keine Berechtigung für dieses Formular');
 define('_FOR_NOCONTACTS', 'keine Kontakt gefunden');
 define('_FOR_NOIMAGEFUNCTION', 'Keine Funktion zur Bilderzeugung verfügbar - Captcha deaktiviert');
-define('_FOR_NOMAILERMODULE', 'Mailer-Modul nicht verfügbar, Emails können nicht verssendet werden!');
+define('_FOR_NOMAILERMODULE', 'Mailer-Modul nicht verfügbar, E-Mails können nicht verssendet werden!');
 define('_FOR_NOSUCHCONTACT', 'unbekannter Kontakt');
 
 //
@@ -155,8 +155,8 @@ define('_FOR_RESUME','Lebenslauf');
 // S
 //
 define('_FOR_SEND', 'Senden' );
-define('_FOR_SENDEREMAIL', 'Absenderemail');
-define('_FOR_SENDERINFO', 'Verwende folgende Daten für die Bestätigungsemail an den Benutzer');
+define('_FOR_SENDEREMAIL', 'E-Mail des Absenders');
+define('_FOR_SENDERINFO', 'Verwende folgende Daten für die Bestätigungsmail an den Benutzer');
 define('_FOR_SENDERNAME', 'Absendername');
 define('_FOR_SENDERSUBJECT', 'Betreff');
 define('_FOR_SENDERSUBJECTHINT', '
