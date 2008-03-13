@@ -107,7 +107,7 @@ function formicula_user_send($args=array())
     $captcha        = (int)FormUtil::getPassedValue('captcha',     (isset($args['captcha'])) ? $args['captcha'] : 0, 'GETPOST');
     $userformat     =      FormUtil::getPassedValue('userformat',  (isset($args['userformat'])) ? $args['userformat'] : 'plain',  'GETPOST');
     $adminformat    =      FormUtil::getPassedValue('adminformat', (isset($args['adminformat'])) ? $args['adminformat'] : 'plain', 'GETPOST');
-    $numfields      = (int)FormUtil::getPassedValue('numFields',   (isset($args['numFields'])) ? $args['numFields'] : 0,  'GETPOST');
+    //$numfields      = (int)FormUtil::getPassedValue('numFields',   (isset($args['numFields'])) ? $args['numFields'] : 0,  'GETPOST');
     $returntourl    =      FormUtil::getPassedValue('returntourl', (isset($args['returntourl'])) ? $args['returntourl'] : '',  'GETPOST');
     $ud['uname']    =      FormUtil::getPassedValue('uname',       (isset($args['uname'])) ? $args['uname'] : '', 'GETPOST');
     $ud['uemail']   =      FormUtil::getPassedValue('uemail',      (isset($args['uemail'])) ? $args['uemail'] : '',  'GETPOST');
@@ -198,27 +198,38 @@ function formicula_user_send($args=array())
         $uploaddir .= "/";
     }
     $custom = array();
-    for($i=0;$i < $numfields;$i++) {
-        $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name');
-        $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
-
-        if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
-            $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
-            if($custom[$i]['data']['error'] == 0) {
-                $custom[$i]['data']['size']     = $_FILES['custom'.$i.'data']['size'];
-                $custom[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
-                $custom[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
-                $custom[$i]['upload'] = true;
-                move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], DataUtil::formatForOS($uploaddir.$custom[$i]['data']['name']));
-            } else {
-                // error - replace the 'data' with an errormessage
-                $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error']);
-            }
+    // we read custom fields until we find three missing indices in a row
+    $i = 0;
+    $missing = 0;
+    do {
+//    for($i=0;$i < $numfields;$i++) {
+        $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name', null, 'POST');
+        if($custom[$1] == null) {
+            // increase the numbmer of missing indices
+            $missing++;
         } else {
-            $custom[$i]['data'] = FormUtil::getPassedValue('custom'.$i.'data');
-            $custom[$i]['upload'] = false;
+            $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
+            
+            if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
+                $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
+                if($custom[$i]['data']['error'] == 0) {
+                    $custom[$i]['data']['size']     = $_FILES['custom'.$i.'data']['size'];
+                    $custom[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
+                    $custom[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
+                    $custom[$i]['upload'] = true;
+                    move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], DataUtil::formatForOS($uploaddir.$custom[$i]['data']['name']));
+                } else {
+                    // error - replace the 'data' with an errormessage
+                    $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error']);
+                }
+            } else {
+                $custom[$i]['data'] = FormUtil::getPassedValue('custom'.$i.'data');
+                $custom[$i]['upload'] = false;
+            }
+            // increase the counter
+            $i++;
         }
-    }
+    } while ($missing < 3);
 
     $contact = pnModAPIFunc('formicula', 'user', 'getContact',
                             array('cid'  => $cid,
