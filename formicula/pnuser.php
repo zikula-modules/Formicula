@@ -229,8 +229,6 @@ function formicula_user_send($args=array())
             // increase the counter
             $i++;
         }
-prayer($i);
-prayer($missing);
     } while ($missing < 3);
 
     $contact = pnModAPIFunc('formicula', 'user', 'getContact',
