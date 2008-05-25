@@ -204,7 +204,7 @@ function formicula_user_send($args=array())
     do {
 //    for($i=0;$i < $numfields;$i++) {
         $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name', null, 'POST');
-        if($custom[$i] == null) {
+        if($custom[$i]['name'] == null) {
             // increase the numbmer of missing indices
             $missing++;
         } else {
@@ -229,6 +229,8 @@ function formicula_user_send($args=array())
             // increase the counter
             $i++;
         }
+prayer($i);
+prayer($missing);
     } while ($missing < 3);
 
     $contact = pnModAPIFunc('formicula', 'user', 'getContact',
