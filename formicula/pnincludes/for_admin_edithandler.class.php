@@ -1,5 +1,5 @@
 <?php
-// $Id: mh_admin_edithandler.class.php 161 2007-01-28 17:00:20Z landseer $
+// $Id: for_admin_edithandler.class.php 107 2008-05-23 09:22:59Z landseer $
 // ----------------------------------------------------------------------
 // LICENSE
 //

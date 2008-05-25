@@ -1,5 +1,5 @@
 <?php
-// $Id: pnuserapi.php 139 2006-12-11 18:10:50Z landseer $
+// $Id: common.php 107 2008-05-23 09:22:59Z landseer $
 // ----------------------------------------------------------------------
 // LICENSE
 //
@@ -123,6 +123,7 @@ define('_FOR_NAME', 'Ihr Name' );
 define('_FOR_NOAUTH', 'Keine Berechtigung für diese Aktion');
 define('_FOR_NOAUTHFORFORM', 'Keine Berechtigung für dieses Formular');
 define('_FOR_NOCONTACTS', 'keine Kontakt gefunden');
+define('_FOR_NOFORMSELECTED', 'kein Formular ausgewählt');
 define('_FOR_NOIMAGEFUNCTION', 'Keine Funktion zur Bilderzeugung verfügbar - Captcha deaktiviert');
 define('_FOR_NOMAILERMODULE', 'Mailer-Modul nicht verfügbar, E-Mails können nicht verssendet werden!');
 define('_FOR_NOSUCHCONTACT', 'unbekannter Kontakt');

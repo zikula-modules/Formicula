@@ -1,5 +1,5 @@
 <?php
-// $Id: version.php 37 2006-08-24 20:21:49Z landseer $
+// $Id: version.php 107 2008-05-23 09:22:59Z landseer $
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2002 by the PostNuke Development Team.

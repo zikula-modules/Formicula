@@ -1,5 +1,5 @@
 <?php
-// $Id: init.php 52 2006-08-26 16:07:13Z landseer $
+// $Id: common.php 107 2008-05-23 09:22:59Z landseer $
 // ----------------------------------------------------------------------
 // LICENSE
 //
@@ -124,6 +124,7 @@ define('_FOR_NAMEOFCONTACT','Contact name' );
 define('_FOR_NOAUTH', 'No authorization for this action.');
 define('_FOR_NOAUTHFORFORM', 'No authorization for this form.');
 define('_FOR_NOCONTACTS', 'No contacts found.');
+define('_FOR_NOFORMSELECTED', 'no form selected');
 define('_FOR_NOIMAGEFUNCTION', 'no image function available - captcha deactivated');
 define('_FOR_NOMAILERMODULE', 'Mailer module is not available - unable to send emails!');
 define('_FOR_NOSUCHCONTACT', 'Unknown Contact');

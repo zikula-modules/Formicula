@@ -1,5 +1,5 @@
 <?php
-// $Id: init.php 52 2006-08-26 16:07:13Z landseer $
+// $Id: common.php 107 2008-05-23 09:22:59Z landseer $
 // ----------------------------------------------------------------------
 // LICENSE
 //
@@ -128,6 +128,7 @@ define('_FOR_NAMEOFCONTACT','Nombre del contacto' );
 define('_FOR_NOAUTH', 'No tienes autorización para ejecutar esta acción.');
 define('_FOR_NOAUTHFORFORM', 'No tienes autorización para ver este formulario.');
 define('_FOR_NOCONTACTS', 'No se encontraron contactos.');
+define('_FOR_NOFORMSELECTED', 'no form selected');
 define('_FOR_NOIMAGEFUNCTION', 'funciones de PHP para manipular imágenes no disponibles - captcha desactivado');
 define('_FOR_NOMAILERMODULE', 'El módulo de correo no está disponible - incapaz de enviar correos!');
 define('_FOR_NOSUCHCONTACT', 'Contacto desconocido');
