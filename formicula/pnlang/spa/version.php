@@ -1,27 +1,21 @@
 <?php
-// $Id: version.php 107 2008-05-23 09:22:59Z landseer $
-// ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2002 by the PostNuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WIthOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
+/**
+ * Avatar Module
+ *
+ * The Avatar module allows uploading of individual Avatars.
+ * It is based on EnvoAvatar from A.T.Web, http://www.atw.it
+ *
+ * @package      Avatar
+ * @version      $Id: version.php 70 2008-02-03 13:06:29Z herr_vorragend $
+ * @author       Joerg Napp, Frank Schummertz
+ * @link         http://lottasophie.sf.net, http://www.pn-cms.de
+ * @copyright    Copyright (C) 2004-2007
+ * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ */
 
-define('_FOR_DESC', 'Herramientas para crear todo tipo de formularios de contacto');
+/**
+ * Translated by
+ * @author       Mateo Tibaquirá
+ */
+
+define('_AVATAR_DESCRIPTION', 'Administrador de Avatars individuales');
