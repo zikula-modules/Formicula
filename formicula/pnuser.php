@@ -50,7 +50,7 @@ function formicula_user_main($args=array())
                                    'user',
                                    'getContact',
                                    array('cid'  => $cid,
-                            	         'form' => $form));
+                                         'form' => $form));
     }
 
     if (count($contacts) == 0) {
@@ -274,4 +274,40 @@ function formicula_user_send($args=array())
         $pnr->assign('custom', pnModAPIFunc('formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
         return $pnr->fetch($form."_usererror.html");
     }
+}
+
+/**
+ * getimage
+ * returns an image for the captcha even if pnTemp is located outside of the webroot
+ *@param img  string the image filename
+ *@returns image output
+ */
+function formicula_user_getimage()
+{
+    $img = FormUtil::getPassedValue('img', '', 'GET');
+    
+    $temp = pnConfigGetVar('temp');
+    if(StringUtil::right($temp, 1) <> '/') {
+        $temp .= '/';
+    }
+    $imgfile = $temp . 'formicula_cache/' . DataUtil::formatForStore($img);
+    $parts = explode('.', $img);
+    $data = file_get_contents($imgfile);
+
+    $mimetypes = array('png' => 'image/png',
+                       'jpg' => 'image/jpeg',
+                       'gif' => 'image/gif');
+
+    // following code is based on Axels MediaAttach/pnuser/download.php
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+    header("Cache-Control: public");
+    header("Content-Description: formicula image");
+    header("Content-Disposition: inline; filename=" . DataUtil::formatForDisplay($img) . ";");
+    header("Content-type: image/" . $mimetypes[$parts[1]]);
+    header("Content-Transfer-Encoding: binary");
+    
+    echo $data;
+    exit;
 }

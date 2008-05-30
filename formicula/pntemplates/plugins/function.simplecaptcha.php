@@ -33,6 +33,9 @@ if (!isset($smarty->imagetextcount)) $smarty->imagetextcount = 0;
 
 function smarty_function_simplecaptcha($params, &$smarty)
 {
+    // load StringUtil
+    Loader::includeOnce('StringUtil');
+    
     // check which image types are supported
     $freetype = function_exists('imagettfbbox');
     if($freetype && (imagetypes() && IMG_PNG)) {
@@ -56,29 +59,28 @@ function smarty_function_simplecaptcha($params, &$smarty)
         }
     }
 
-	// Fehlerhafte Eingaben abfangen
-	if (empty($params['font'])) { 
-	    $smarty->trigger_error("pnimagetext: missing 'font' parameter"); 
-	    return;
-	}
+    // catch wrong input
+    if (empty($params['font'])) { 
+        $smarty->trigger_error("pnimagetext: missing 'font' parameter"); 
+        return;
+    }
     $params['font'] = DataUtil::formatForOS('modules/formicula/pnimages/' . $params['font'] . '.ttf');
     if(!file_exists($params['font']) || !is_readable($params['font'])) {
         $smarty->trigger_error('pnimagetext: missing font ' . DataUtil::formatForDisplay($params['font'])); 
         return;
     }
-	if (empty($params['size'])) { 
-	    $smarty->trigger_error("pnimagetext: missing 'size' parameter"); 
-	    return; 
-	}
-	if (empty($params['bgcolor'])) { 
-	    $smarty->trigger_error("pnimagetext: missing 'bgcolor' parameter"); 
-	    return; 
-	}
-	if (empty($params['fgcolor'])) { 
-	    $smarty->trigger_error("pnimagetext: missing 'fgcolor' parameter"); 
-	    return; 
-	}
-
+    if (empty($params['size'])) { 
+        $smarty->trigger_error("pnimagetext: missing 'size' parameter"); 
+        return; 
+    }
+    if (empty($params['bgcolor'])) { 
+        $smarty->trigger_error("pnimagetext: missing 'bgcolor' parameter"); 
+        return; 
+    }
+    if (empty($params['fgcolor'])) { 
+        $smarty->trigger_error("pnimagetext: missing 'fgcolor' parameter"); 
+        return; 
+    }
 
     srand ((double)microtime()*1000000);
     $x = rand(1,10); /* 1 to 10 */
@@ -95,52 +97,52 @@ function smarty_function_simplecaptcha($params, &$smarty)
     // create the text for the image
     $params['text'] = $x . ' ' . $m[$z] . ' ' . $y . ' =';
 
-	// has params for cache filename
-	$hash = md5(implode('', $params));
-	// create uri of image
-	$temp = pnConfigGetVar('temp');
-	if($temp[strlen($temp)-1] <> '/') {
-	    $temp .= '/';
-	}
-	$imgurl	= DataUtil::formatForOS($temp . 'formicula_cache/' . $hash . $imagetype);
-	if(!file_exists($imgurl)) {
-        // we create a larger picture than needed, this makes it looking better at the end
-	    $multi = 4;
-        
-	    // get the textsize in the image
-	    $bbox = imagettfbbox ($params['size'] * $multi, 0, $params['font'], $params['text']);
-	    $xcorr = 0 - $bbox[6]; // northwest X
-	    $ycorr = 0 - $bbox[7]; // northwest Y
-	    $box['left'] = $bbox[6] + $xcorr;
-	    $box['height'] = abs($bbox[5]) + abs($bbox[1]);
-	    $box['width'] = abs($bbox[2]) + abs($bbox[0]);
-	    $box['top'] = abs($bbox[5]);
-        
-	    // create the image
-	    $im = imagecreate ($box['width'], $box['height']);
+    // has params for cache filename
+    $hash = DataUtil::hash(implode('', $params), 'sha256');
+    // create uri of image
+    $temp = pnConfigGetVar('temp');
+    if(StringUtil::right($temp, 1) <> '/') {
+        $temp .= '/';
+    }
+    $imgurl = $temp . 'formicula_cache/' . $hash . $imagetype;
 
-	    $bgcolor = fromhex($im, $params['bgcolor']);
-	    $fgcolor = fromhex($im, $params['fgcolor']);
-	    
-	    // add the text to the image
-	    imagettftext ($im, $params['size'] * $multi, 0, $box['left'], $box['top'], $fgcolor, $params['font'], $params['text']);
+    if(!file_exists($imgurl)) {
+        // we create a larger picture than needed, this makes it looking better at the end
+        $multi = 4;
+        // get the textsize in the image
+        $bbox = imagettfbbox ($params['size'] * $multi, 0, $params['font'], $params['text']);
+        $xcorr = 0 - $bbox[6]; // northwest X
+        $ycorr = 0 - $bbox[7]; // northwest Y
+        $box['left'] = $bbox[6] + $xcorr;
+        $box['height'] = abs($bbox[5]) + abs($bbox[1]);
+        $box['width'] = abs($bbox[2]) + abs($bbox[0]);
+        $box['top'] = abs($bbox[5]);
         
-	    // resize the image now
-	    $finalwidth  = round($box['width'] / $multi);
-	    $finalheight = round($box['height'] / $multi);
+        // create the image
+        $im = imagecreate ($box['width'], $box['height']);
+
+        $bgcolor = fromhex($im, $params['bgcolor']);
+        $fgcolor = fromhex($im, $params['fgcolor']);
+        
+        // add the text to the image
+        imagettftext ($im, $params['size'] * $multi, 0, $box['left'], $box['top'], $fgcolor, $params['font'], $params['text']);
+        
+        // resize the image now
+        $finalwidth  = round($box['width'] / $multi);
+        $finalheight = round($box['height'] / $multi);
         $ds = imagecreatetruecolor ($finalwidth, $finalheight);
-	    
-	    $bgcolor2 = fromhex($ds,$params['bgcolor']);
-	    imageFill($ds, 0, 0, $bgcolor2);
-	    imagecopyresampled($ds, $im, 0, $params['y'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
-	    imagetruecolortopalette($ds, 0, 256);
-	    imagepalettecopy($ds, $im);
-	    ImageColorTransparent($ds, $bgcolor);
         
-   	    // write the file
-	    $createimagefunction($ds, $imgurl);
-	    ImageDestroy ($im);
-	    ImageDestroy ($ds);
+        $bgcolor2 = fromhex($ds,$params['bgcolor']);
+        imageFill($ds, 0, 0, $bgcolor2);
+        imagecopyresampled($ds, $im, 0, $params['y'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
+        imagetruecolortopalette($ds, 0, 256);
+        imagepalettecopy($ds, $im);
+        ImageColorTransparent($ds, $bgcolor);
+        
+        // write the file
+        $createimagefunction($ds, $imgurl);
+        ImageDestroy ($im);
+        ImageDestroy ($ds);
     } else {
         // file already exists, calculate image size
         $imgdata = getimagesize($imgurl);
@@ -148,7 +150,14 @@ function smarty_function_simplecaptcha($params, &$smarty)
         $finalheight = $imgdata[1];
     }
 
-    return '<img src="' . $imgurl . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
+    // If the imgurl starts with / we assume that pntemp is pointing to an absolute path which
+    // is outside the webservers root. In this case we have to use a function to show the image instead
+    // of loading the image directly
+    if(StringUtil::left(pnConfigGetVar('temp'), 1) == '/') {
+        return '<img src="' . pnModURL('formicula', 'user', 'getimage', array('img' => $hash . $imagetype), null, null, true) . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
+    } else {
+        return '<img src="' . $imgurl . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
+    }
 }
 
 // get the rgb values form the hex color value

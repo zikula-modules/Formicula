@@ -15,7 +15,7 @@ with earlier versions - sorry. Use Formicula < 2.0 instead.
 For creating captchas you need PHP compiled with the GD graphics library.
 
 Installation
------------------
+------------
 1. Extract the files to your Postnuke directory.
 2. Load, initialize and activate the module in the admin section.
 3. During installation, Formicula tries to create a folder formicula_cache containing an
@@ -47,8 +47,8 @@ Installation
 6. Add a link to your main menu with: {formicula} (using [formicula] will not work!)
    This uses form 0. To call a specific form id use
    index.php?name=formicula&form=<formid>
-   e.g. index.php?name=formicula&form=5 to use for #5
-In the distribution package you will find 2 sample forms 0 and 1, 
+   e.g. index.php?name=formicula&form=5 to use form #5
+In the distribution package you will find two sample forms 0 and 1, 
 0 is a normal contact form and form #1 is for filing an online job application.
 
 Configuration
@@ -128,7 +128,7 @@ in an error message.
 captcha: mandatory if spamcheck feature is enabled,see 0_userform.html for an example
 
 Custom Fields
-----------------------
+-------------
 You can add as many custom fields to your form as you want. 
 This makes it easy to create e.g. an online job application form if needed.
 
@@ -161,7 +161,7 @@ Example:
 <input type="text" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
 
 Permissions
-------------------
+-----------
 To use a form you need the right to COMMENT.
 
 Unregistered   |   formicula::  |  .*   |  comment
@@ -195,7 +195,7 @@ As you can see you can use this to e.g. load data from Pagesetter in the userfor
 Client side input validation
 ----------------------------
 The supplied templates use a prototype.js-based input validation. If you do not want 
-to use this, simply remove the javascript from templates.
+to use this, simply remove the javascript from the templates.
 
 A detailed explanation how to use this feature can be found at
 http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/
@@ -213,3 +213,7 @@ png
 If all these image types are not supported by your server, captchas are deactivated, in this
 case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
+
+Formicula also supports pnTemp-folders located outside the websites root folder. In this case
+(when the temp folder points to an absolute path) the image is deliverd by a internal 
+function and not linked directly.
