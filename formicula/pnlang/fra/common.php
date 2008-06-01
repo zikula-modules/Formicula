@@ -42,6 +42,7 @@ define('_FOR_BADAUTHKEY', 'Mauvaise clé d\'authentification');
 //
 define('_FOR_CACHEDIRPROBLEM', 'Le répertoire formicula_cache n\'existe pas dans le répertoire temporaire de PostNuke ou n\'a pas les droits en écriture - captchas a été désactivé');
 define('_FOR_CANCELDELETE','Annuler la supression automatique' ); //?? Cancel deletion routine 
+define('_FOR_CLEARIMAGECACHE', 'Clear captcha image cache' );
 define('_FOR_COMMENT', 'Commentaire' ); 
 define('_FOR_COMPANY', 'Société' ); 
 define('_FOR_CONFIRMDELETE','Cliquer ici pour supprimer ce contact' ); 

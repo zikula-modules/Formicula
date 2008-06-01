@@ -179,6 +179,7 @@ function formicula_adminapi_getlinks()
     if (SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
         $links[] = array('url' => pnModURL('formicula', 'admin', 'view'), 'text' => _FOR_VIEWCONTACT);
         $links[] = array('url' => pnModURL('formicula', 'admin', 'edit', array('cid' => -1)), 'text' => _FOR_ADDCONTACT);
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'clearcache'), 'text' => _FOR_CLEARIMAGECACHE);
         $links[] = array('url' => pnModURL('formicula', 'admin', 'modifyconfig'), 'text' => _FOR_EDITCONFIG);
     }
     return $links;

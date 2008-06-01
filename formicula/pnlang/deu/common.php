@@ -42,6 +42,7 @@ define('_FOR_BADAUTHKEY', 'Ungültiger AuthKey');
 //
 define('_FOR_CACHEDIRPROBLEM', 'formicula_cache-Verzeichnis nicht vorhanden in pnTemp oder Verzeichnis ist nicht beschreibbar, Captcha deaktiviert');
 define('_FOR_CANCELDELETE', 'Löschung abbrechen' );
+define('_FOR_CLEARIMAGECACHE', 'Captchabilder löschen' );
 define('_FOR_COMMENT', 'Kommentar' );
 define('_FOR_COMPANY', 'Firma' );
 define('_FOR_CONFIRMDELETE', 'Löschung bestätigen' );

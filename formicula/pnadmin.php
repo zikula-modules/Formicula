@@ -209,3 +209,33 @@ function formicula_envcheck()
     }
     return true;
 }
+
+/**
+ * clear image cache
+ *
+ */
+function formicula_admin_clearcache()
+{
+    if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
+        return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
+    }
+
+    // clear the image cache
+    $temp = pnConfigGetVar('temp');
+    if(StringUtil::right($temp, 1) <> '/') {
+        $temp .= '/';
+    }
+    $path = $temp . 'formicula_cache/';
+    
+    $dh = opendir($path);
+
+    while(($file = readdir($dh)) !== false) {
+        $osfile = DataUtil::formatForOS($file);
+        if ($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'index.htm' && $file != 'index.html') {
+            unlink("${path}/${osfile}");
+        }
+    }
+
+    closedir($dh);
+    return pnRedirect(pnModURL('formicula', 'admin', 'main'));
+}
