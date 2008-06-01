@@ -154,7 +154,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
     // is outside the webservers root. In this case we have to use a function to show the image instead
     // of loading the image directly
     if(StringUtil::left(pnConfigGetVar('temp'), 1) == '/') {
-        return '<img src="' . pnModURL('formicula', 'user', 'getimage', array('img' => $hash . $imagetype), null, null, true) . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
+        return '<img src="' . DataUtil::formatForDisplay(pnModURL('formicula', 'user', 'getimage', array('img' => $hash . $imagetype), null, null, true)) . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
     } else {
         return '<img src="' . $imgurl . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
     }
