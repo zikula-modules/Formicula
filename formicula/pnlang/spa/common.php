@@ -1,139 +1,226 @@
 <?php
-/**
- * Avatar Module
- * 
- * The Avatar module allows uploading of individual Avatars.
- * It is based on EnvoAvatar from A.T.Web, http://www.atw.it
- *
- * @package      Avatar
- * @version      $Id: common.php 72 2008-03-24 14:45:09Z landseer $
- * @author       Joerg Napp, Frank Schummertz
- * @link         http://lottasophie.sf.net, http://www.pn-cms.de
- * @copyright    Copyright (C) 2004-2007
- * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
- */
+// $Id: common.php 108 2008-05-23 09:22:59Z landseer $
+// ----------------------------------------------------------------------
+// LICENSE
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License (GPL)
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// To read the license please visit http://www.gnu.org/copyleft/gpl.html
+// ----------------------------------------------------------------------
+// Original Author of file: Frank Schummertz
+// Purpose of file:  language file
+// ----------------------------------------------------------------------
 
 /**
  * Translated by
- * @author       Mateo Tibaquirá
+ * @author  Mateo Tibaquira [mateo]
  */
 
 //
 // A
 //
-define('_AVATAR_ADM_ALLOWMULTIPLEAVATARS',    'Permitir multiples avatars');
-define('_AVATAR_ADM_ALLOWRESIZE',             'Redimensionar el avatar automáticamente');
-define('_AVATAR_ADM_AVATARDIR',               'Carpeta de Avatar (PostNuke)');
-define('_AVATAR_ADM_AVATARDIR_HINT',          'Por defecto: images/avatar <strong>sin barra final</strong>');
-define('_AVATAR_ADM_EXTENSIONS',              'Extensiones permitidas');
-define('_AVATAR_ADM_EXTENSIONS_HINT',         '(una lista separada por punto y coma de las extensiones permitidas. Tipos soportados: gif, jpg, jpeg, png, wbm. Al usar PHP 5 o mayor tienes que permitir \'jpeg\' en vez de \'jpg\')');
-define('_AVATAR_ADM_FORUMDIR',                'Carpeta de Avatars (phpBB');
-define('_AVATAR_ADM_MAXHEIGHT',               'Alto max. en pixeles');
-define('_AVATAR_ADM_MAXSIZE',                 'Tamaño max. del archivo en bytes');
-define('_AVATAR_ADM_MAXWIDTH',                'Ancho max. en pixeles');
-define('_AVATAR_ADM_MULTIPLE_HINT',           'Esto le permite al usuario almacenar un avatar por extensión');
-define('_AVATAR_ADM_TITLE',                   'Administración de Avatar');
-define('_AVATAR_ADM_UPLOAD',                  'Configuración de archivos');
-define('_AVATAR_ALLOWEDEXTENSIONS',           'Extensiones permitidas');
-define('_AVATAR_AVATARINUSE',                 'Advertencia: Este avatar está en uso y no puede ser borrado. Si quieres borrarlo, por favor cambia los avatars de los usuarios listados a continuación.');
+define('_FOR_ACTIVATESPAMCHECK', 'Activar verificación antispam<br />(asegúrate de que los campos del formulario necesarios<br />están disponibles, mira los documentos para más información. Esta opción será desactivada por Formicula automáticamente si no existen las funciones de PHP para crear imágenes)');
+define('_FOR_ADDCONTACT','Añadir contacto' );
+define('_FOR_ADMINMAIL1', 'un visitante de tu sitio web usó el formulario de contacto y envió lo siguiente:' );
+define('_FOR_ADMINMAIL2', 'El usuario tenía la siguiente dirección IP (o nombre de host): ' );
+define('_FOR_ADVICE_EMAIL', 'Por favor digita un correo electrónico válido como usuario@ejemplo.com.');
+define('_FOR_ADVICE_MANDATORY', 'Este es un campo obligatorio.');
+define('_FOR_ADVICE_URL', 'Por favor digita una dirección de internet válida como http://www.ejemplo.com.');
+define('_FOR_ALTERTABLEFAILED', 'no se pudo alterar la tabla');
+
+//
+// B
+//
+define('_FOR_BACK', 'Volver al formulario de contacto' );
+define('_FOR_BADAUTHKEY', 'Clave de autorización no válida');
 
 //
 // C
 //
-define('_AVATAR_CHANGEDTO',                   'El avatar del usuario %username% fue cambiado a %avatar%');
-define('_AVATAR_CLEAR_BUTTON',                'Limpiar');
-define('_AVATAR_CONFIRMDELETE',               'Confirmar eliminación');
-define('_AVATAR_CURRENTAVATAR',               'Tu avatar actual es ');
+define('_FOR_CACHEDIRPROBLEM', 'La carpeta formicula_cache no existe en la carpeta temporal de PostNuke\'s o no es escribible - las captchas fueron deshabilitadas');
+define('_FOR_CANCELDELETE','Cancelar eliminación de rutina' );
+define('_FOR_CLEARIMAGECACHE', 'Clear captcha image cache' );
+define('_FOR_COMMENT', 'Comentario' );
+define('_FOR_COMPANY', 'Empresa' );
+define('_FOR_CONFIRMDELETE','Click aquí para borrar este contacto' );
+define('_FOR_CONTACTCREATED', 'Contacto creado');
+define('_FOR_CONTACTDELETED', 'El contacto ha sido borrado');
+define('_FOR_CONTACTFORM', 'Formulario de Contacto');
+define('_FOR_CONTACTID','ID' );
+define('_FOR_CONTACTNAME','Nombre');
+define('_FOR_CONTACTTITLE', 'Contáctenos' );
+define('_FOR_CONTACTUPDATED', 'La información del contacto ha sido actualizada');
+define('_FOR_CREATECONTACTFAILED', 'Error creando el contacto!');
+define('_FOR_CREATEFILESFAILED', 'El instalador no pudo crear el archivo formicula_cache/index.html y/o formicula_cache/.htaccess, por favor lee el manual antes de usar el módulo!');
+define('_FOR_CREATEFOLDERFAILED', 'El instalador no pudo crear la carpeta formicula_cache, por favor lee el manual antes de usar el módulo!');
+define('_FOR_CREATETABLEFAILED', 'El instalador no pudo crear la tabla formcontacts');
 
 //
 // D
 //
-define('_AVATAR_DELETEAVATAR',                'borrar avatar');
-define('_AVATAR_DELETECURRENTAVATAR',         'Borrar avatar actual?');
-define('_AVATAR_DELETED',                     'El avatar %avatar% ha sido borrado');
+define('_FOR_DELETE','Borrar contacto' );
+define('_FOR_DELETECONTACT','Borrar contacto' );
+define('_FOR_DELETETABLEFAILED', 'No se pudo borrar la tabla');
+define('_FOR_DELETEUPLOADEDFILE','Borrar archivo después del envio' );
+define('_FOR_DESC', 'Herramientas para crear todo tipo de formularios de contacto');
 
 //
 // E
 //
-define('_AVATAR_ENTERUSERNAME',               'Nombre de usuario');
-define('_AVATAR_ERRORDELETINGAVATAR',         'Error: No se pudo borrar el avatar %avatar%');
-define('_AVATAR_ERR_AUTHORIZED',              'No estas autorizado para subir tu avatar.');
-define('_AVATAR_ERR_COPYAVATAR',              'Falla al copiar el archivo a la carpeta de avatars.');
-define('_AVATAR_ERR_COPYFORUM',               'Falla al copiar el archivo a la carpeta de phpbb.');
-define('_AVATAR_ERR_FILEDIMENSIONS',          'Error en el alto (max. %h%px) o ancho (max. %w%px) de la imágen.');
-define('_AVATAR_ERR_FILESIZE',                'Error en tamaño de archivo, sólo se permite un máximo de %max% bytes.');
-define('_AVATAR_ERR_FILETYPE',                'Extensión de archivo no está dentro de las permitidas: %ft%.');
-define('_AVATAR_ERR_FILEUPLOAD',              'No se seleccionó ningún archivo.');
-define('_AVATAR_ERR_NOIMAGE',                 'El archivo subido no es una imágen');
-define('_AVATAR_ERR_NOTLOGGEDIN',             'No eres un usuario registrado.');
-define('_AVATAR_ERR_SELECT',                  'Error mientras se seleccionaba el avatar.');
-define('_AVATAR_ERR_USERNOTAUTHORIZED',       'No estás autorizado para usar este avatar. Para cambiar esto, actualiza el permiso para %avatar%.');
+define('_FOR_EDIT','Editar contacto' );
+define('_FOR_EDITCONFIG','Modificar configuración' );
+define('_FOR_EDITCONTACT','Editar contacto' );
+define('_FOR_EMAIL','Correo electrónico' );
+define('_FOR_EMAILFROM', 'Correo electrónico de');
+define('_FOR_ERROR', 'Hay un error en tu formulario' );
+define('_FOR_ERRORCOMMENT', 'Error: El comentario no fue suministrado o no es válido (HTML prohibido!)');
+define('_FOR_ERRORCONTACT', 'Error: No escogiste el nombre del contacto');
+define('_FOR_ERRORCREATINGCONTACT', 'No se pudo crear el contacto!');
+define('_FOR_ERROREMAIL', 'Error: El correo electrónico no fue suministrado o no es válido');
+define('_FOR_ERRORINVALIDEMAIL', 'Error: Correo electrónico suministrado incorrecto');
+define('_FOR_ERRORNOMANDATORYFIELD', 'Error: falta campo obligatorio');
+define('_FOR_ERRORSENDINGMAIL', 'Hubo un error enviando el correo.');
+define('_FOR_ERRORSENDINGUSERMAIL', 'Hubo un error interno enviando el correo de confirmación' );
+define('_FOR_ERRORUPLOADERROR', 'Error: Error subiendo archivo');
+define('_FOR_ERRORUSERNAME', 'Error: Nombre de usuario no suministradono username');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'No usar verificación antispam en estos formularios<br />(lista de los ods de formularios separados por comas, ej. formularios embebidos en pagesetter. El redireccionamiento quizas no funcione correctamente aqui');
+
+//
+// F
+//
+define('_FOR_FORMICULA','Formicula!' );
+define('_FOR_FORMNUMBER', 'Formulario #' );
+
+//
+// H
+//
+define('_FOR_HELLO', 'Hola,' );
+define('_FOR_HTACCESSPROBLEM', 'el archivo indispensable .htaccess en la carpeta formicula_cache no existe');
+define('_FOR_HTMLMAIL', 'HTML' );
+
+//
+// I
+//
+define('_FOR_ILLEGALEMAIL', 'Correo electrónico inválido detectado');
 
 //
 // L
 //
-define('_AVATAR_LISTUSERS',                   'lista de usuarios que usan este avatar');
+define('_FOR_LOCATION', 'Ubicación' );
 
 //
 // M
 //
-define('_AVATAR_MAINTAINAVATARS',             'Mantenimiento de Avatars');
-define('_AVATAR_MAXDIMENSIONS',               'Dimensiones máximas');
-define('_AVATAR_MAXHEIGHT',                   'Alto máximo');
-define('_AVATAR_MAXSIZE',                     'Tamaño max. del Avatar');
-define('_AVATAR_MAXWIDTH',                    'Ancho máximo');
-define('_AVATAR_MISSINGPATH',                 'ruta no encontrada');
-define('_AVATAR_MODIFYCONFIG',                'Modificar configuración');
+define('_FOR_MUSTBE', 'Campo obligatorio' );
 
 //
 // N
 //
-define('_AVATAR_NOUSERFORTHISAVATAR',         'Ningún usuario está usando este avatar');
-define('_AVATAR_NOAVATARSELECTED',            'ningún avatar seleccionado');
+define('_FOR_NAME', 'Tu nombre' );
+define('_FOR_NAMEOFCONTACT','Nombre del contacto' );
+define('_FOR_NOAUTH', 'No tienes autorización para ejecutar esta acción.');
+define('_FOR_NOAUTHFORFORM', 'No tienes autorización para ver este formulario.');
+define('_FOR_NOCONTACTS', 'No se encontraron contactos.');
+define('_FOR_NOFORMSELECTED', 'no form selected');
+define('_FOR_NOIMAGEFUNCTION', 'funciones de PHP para manipular imágenes no disponibles - captcha desactivado');
+define('_FOR_NOMAILERMODULE', 'El módulo de correo no está disponible - incapaz de enviar correos!');
+define('_FOR_NOSUCHCONTACT', 'Contacto desconocido');
+
+//
+// O
+//
+define('_FOR_ONLINEAPPLYAS', 'Aplicar como' );
+define('_FOR_ONLINEBIRTHDATE', 'fecha de nacimiento' );
+define('_FOR_ONLINECOUNTRY', 'País' );
+define('_FOR_ONLINEDATE', 'Fecha de entrada' );
+define('_FOR_ONLINEJOBAPPLY', 'Aplicar en línea!' );
+define('_FOR_ONLINEPRIVACY', 'Gracias por aplicar, mantendremos tus datos en estricta confidencialidad' );
+define('_FOR_ONLINESALARY', 'Salario' );
+define('_FOR_ONLINESTREET', 'Calle' );
+define('_FOR_ONLINEZIPCITY', 'ZIP Ciudad' );
+define('_FOR_OPTIONS','Opciones' );
 
 //
 // P
 //
-define('_AVATAR_PATHDOESNOTEXIST',            'La ruta %path% no existe o no es accesible para el servidor.');
-define('_AVATAR_PATHISNOTWRITABLE',           'El servidor no puede escribir en %path%.');
-define('_AVATAR_PIXEL',                       'pixeles');
+define('_FOR_PHONE', 'Número telefónico' );
+define('_FOR_PUBLIC', 'Público' );
 
 //
 // R
 //
-define('_AVATAR_RESIZE',                      'Imágenes grandes serán redimensionadas automáticamente.');
+define('_FOR_RESUME','Reanudar');
 
 //
 // S
 //
-define('_AVATAR_SEARCHUSERS',                 'Buscar usuario');
-define('_AVATAR_SELECTAVATAR',                'Seleccionar avatar');
-define('_AVATAR_SELECTAVATARFORUSERS',        'Escoge el avatar para actualizar a todos los usuarios seleccionados');
-define('_AVATAR_SELECTAVATAR_LINK',           'Cambiar Avatar');
-define('_AVATAR_SELECTEDAVATAR',              'Avatar seleccionado');
-define('_AVATAR_SELECTNEWAVATAR',             'Seleccionar un nuevo avatar');
-define('_AVATAR_SELECTYOURAVATAR',            'Escoge tu avatar preferido');
+define('_FOR_SEND', 'Enviar' );
+define('_FOR_SENDEREMAIL', 'Correo del remitente');
+define('_FOR_SENDERINFO', 'Usar esta información en el correo de confirmación a los usuarios');
+define('_FOR_SENDERNAME', 'Nombre del remitente');
+define('_FOR_SENDERSUBJECT', 'Asunto');
+define('_FOR_SENDERSUBJECTHINT', '
+con <ul>
+    <li>%s = nombre del sitio</li>
+    <li>%l = slogan</li>
+    <li>%u = url del sitio</li>
+    <li>%c = nombre del remitente</li>
+    <li>%n&lt;num&gt; = nombre de campo definido por el usuario &lt;num&gt;</li>
+    <li>%d&lt;num&gt; = dato de campo definido por el usuario &lt;num&gt;</li>
+</ul>
+');
+define('_FOR_SENDTOADMIN', 'Esta información fue enviada a nosotros:');
+define('_FOR_SENDTOUSER', 'Una confirmación de tu envio será enviada a tu correo electrónico en unos minutos.' );
+define('_FOR_SENDUSER','Send confirmation email to user?' );
+define('_FOR_SHOWCOMMENT', 'Mostrar texto para el comentario' );
+define('_FOR_SHOWCOMPANY','Mostrar empresa?' );
+define('_FOR_SHOWLOCATION','Mostrar ubicación?' );
+define('_FOR_SHOWPHONE','Mostrar número telefónico?' );
+define('_FOR_SHOWURL','Mostrar URL?' );
+define('_FOR_SIMPLEMATHEQUATION', 'Por favor soluciona esta simple ecuación matemática');
+define('_FOR_SUBMIT', 'Actualizar configuración' );
 
 //
 // T
 //
-define('_AVATAR_TITLE',                       'Avatar');
+define('_FOR_TEAM', 'Equipo' );
+define('_FOR_TEXTMAIL', 'Texto' );
+define('_FOR_THANKS', 'Gracias por tus preguntas/comentarios a nuestro sitio web!<br>Te responderemos lo más pronto posible.' );
+define('_FOR_THE', 'El' );
+define('_FOR_THEME', 'Contacto' );
 
 //
 // U
 //
-define('_AVATAR_UPLOADFILE',                  'Subir archivo');
-define('_AVATAR_UPLOAD_BUTTON',               'Subir');
-define('_AVATAR_USERLISTPERAVATAR',           'usuarios que usan este avatar');
-define('_AVATAR_USER_CHOOSE',                 'Si ninguno de los avatars disponibles te representa, puedes subir tu propio avatar.');
+define('_FOR_UPDATECONTACTFAILED', 'Error actualizando contacto!');
+define('_FOR_UPLOADDIRNOTWRITABLE','El servidor web no puede escribir en esta carpeta!' );
+define('_FOR_UPLOADERROR1', 'error de carga: archivo muy grande (php.ini)' );
+define('_FOR_UPLOADERROR2', 'error de carga: archivo muy grande (formulario)' );
+define('_FOR_UPLOADERROR3', 'error de carga: archivo recibido parcialmente' );
+define('_FOR_UPLOADERROR4', 'error de carga: no se recibió ningún archivo' );
+define('_FOR_UPLOADFILEDIR', 'Carpeta para subir archivos' );
+define('_FOR_UPLOADLIMIT', '(Subir, max. 2MB)');
+define('_FOR_URL', 'Página de inicio' );
+define('_FOR_USERMAIL1', 'Gracias por los comentarios enviados desde nuestro sitio Web. Los datos enviados son:' );
+define('_FOR_USERMAIL2', 'Te responderemos a tu correo lo más pronto posiible.' );
+define('_FOR_USERMAILFORMAT', 'Formato del correo' );
 
 //
 // V
 //
-define('_AVATAR_VISITHOMEPAGE',               'Visita el proyecto Avatar en el NOC');
+define('_FOR_VIEWCONTACT','Ver contactos' );
+define('_FOR_VISITHOMEPAGE', 'Visitar Formicula en el NOC');
 
 //
-// w
+// W
 //
-define('_AVATAR_WARN_AVARTARDIR',             'Advertencia: el servidor no puede escribir en la carpeta de avatars');
-define('_AVATAR_WARN_FORUMDIR',               'Advertencia: el servidor no puede escribir en la carpeta de avatars de los foros (no es problema cuando PNphpBB2 no está instalado)');
+define('_FOR_WRONGCAPTCHA', 'Mal en matemáticas? Puedes hacerlo mejor, intenta de nuevo.');
+

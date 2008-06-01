@@ -18,4 +18,4 @@
  * @author       Mateo Tibaquirá
  */
 
-define('_AVATAR_DESCRIPTION', 'Administrador de Avatars individuales');
+define('_FOR_DESC', 'Herramientas para crear todo tipo de formularios de contacto');
