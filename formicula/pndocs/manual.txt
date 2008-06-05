@@ -10,13 +10,13 @@ of custom fields (ok, infinite as long as you have enough server memory).
 
 Requirements
 ------------
-Formicula 2.0 requires PostNuke .8 or later. It *will not* run
+Formicula 2.0 requires Zikula 1.0 or later. It *will not* run
 with earlier versions - sorry. Use Formicula < 2.0 instead.
 For creating captchas you need PHP compiled with the GD graphics library.
 
 Installation
 ------------
-1. Extract the files to your Postnuke directory.
+1. Extract the files to your Zikula directory.
 2. Load, initialize and activate the module in the admin section.
 3. During installation, Formicula tries to create a folder formicula_cache containing an
    index.html and a .htaccess file.
@@ -122,7 +122,7 @@ url: the users homepage (optional)
 location, phone, company: these are obvious... (optional)
 comment: normally a textarea for entering free text. Since 0.6 this is not longer 
 a mandatory field! HTML is stripped from the comments to avoid spam. In addition, the
-comment is send to PostNuke's internal censor function. If the result differs from the 
+comment is send to Zikula's internal censor function. If the result differs from the 
 original comment, the submission is also treated as spam and not sent. This results
 in an error message. 
 captcha: mandatory if spamcheck feature is enabled,see 0_userform.html for an example

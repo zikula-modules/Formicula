@@ -50,6 +50,6 @@
 // fixed [#3429] Captcha function not working
 //
 // Formicula 2.0 (fs)
-// PostNuke .8 only version
+// Zikula 1.0 only version
 //
 

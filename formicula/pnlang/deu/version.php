@@ -1,9 +1,9 @@
 <?php
 // $Id: version.php 107 2008-05-23 09:22:59Z landseer $
 // ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2002 by the PostNuke Development Team.
-// http://www.postnuke.com/
+// Zikula Application Framework
+// Copyright (C) 2002 by the Zikula Development Team.
+// http://www.zikula.org/
 // ----------------------------------------------------------------------
 // Based on:
 // PHP-NUKE Web Portal System - http://phpnuke.org/

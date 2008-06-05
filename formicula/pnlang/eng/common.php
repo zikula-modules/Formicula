@@ -40,7 +40,7 @@ define('_FOR_BADAUTHKEY', 'Bad AuthKey');
 //
 // C
 //
-define('_FOR_CACHEDIRPROBLEM', 'formicula_cache folder does not exist in PostNuke\'s temporary folder or is not writable - captchas have been disabled');
+define('_FOR_CACHEDIRPROBLEM', 'formicula_cache folder does not exist in Zikula\'s temporary folder or is not writable - captchas have been disabled');
 define('_FOR_CANCELDELETE','Cancel deletion routine' );
 define('_FOR_CLEARIMAGECACHE', 'Clear captcha image cache' );
 define('_FOR_COMMENT', 'Comment' );

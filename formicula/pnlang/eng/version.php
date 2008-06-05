@@ -1,9 +1,9 @@
 <?php
 // $Id$
 // ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2002 by the PostNuke Development Team.
-// http://www.postnuke.com/
+// Zikula Application Framework
+// Copyright (C) 2002 by the Zikula Development Team.
+// http://www.zikula.org/
 // ----------------------------------------------------------------------
 // Based on:
 // PHP-NUKE Web Portal System - http://phpnuke.org/

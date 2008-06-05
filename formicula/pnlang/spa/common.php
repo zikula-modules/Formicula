@@ -45,7 +45,7 @@ define('_FOR_BADAUTHKEY', 'Clave de autorización no válida');
 //
 // C
 //
-define('_FOR_CACHEDIRPROBLEM', 'La carpeta formicula_cache no existe en la carpeta temporal de PostNuke\'s o no es escribible - las captchas fueron deshabilitadas');
+define('_FOR_CACHEDIRPROBLEM', 'La carpeta formicula_cache no existe en la carpeta temporal de Zikula\'s o no es escribible - las captchas fueron deshabilitadas');
 define('_FOR_CANCELDELETE','Cancelar eliminación de rutina' );
 define('_FOR_CLEARIMAGECACHE', 'Clear captcha image cache' );
 define('_FOR_COMMENT', 'Comentario' );
