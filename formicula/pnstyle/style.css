@@ -45,8 +45,12 @@
     width: 99%;
 }
 
+#contactform .validation-failed {
+  border: 1px solid red!important;
+}
+
 #contactform .custom-advice {
-    color: red;
+    color:red!important;
 }
 
 #formicula-admin {
