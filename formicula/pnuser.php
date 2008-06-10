@@ -178,12 +178,6 @@ function formicula_user_send($args=array())
         $adminformat = 'plain';
     }
 
-    if($userformat == 'none') {
-        // fake values for checkargument function
-        $ud['uemail'] = pnConfigGetVar('adminmail');
-        $ud['uname'] =  pnConfigGetVar('adminmail');
-    }
-
     if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
         return LogUtil::registerPermissionError(pnModURL('formicula', 'user', 'main', array('form' => $form)));
     }
