@@ -25,12 +25,15 @@ Loader::requireOnce('includes/pnobjlib/StringUtil.class.php');
 function formicula_init()
 {
     $tempdir = pnConfigGetVar('temp');
-    if(StringUtil::right($tempdir, 1) <> '/') {
-        $tempdir .= '/';
-    }
-    if(FileUtil::mkdirs($tempdir . 'formicula_cache')) {
-        $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
-        $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+    if(StringUtil::left($tempdir, 1) <> '/') {
+        // tempdir does not start with a / which means it does not reside outside
+        // the webroot, continue
+        if(StringUtil::right($tempdir, 1) <> '/') {
+            $tempdir .= '/';
+        }
+        if(FileUtil::mkdirs($tempdir . 'formicula_cache')) {
+            $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
+            $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
 Order deny,allow
@@ -39,13 +42,17 @@ Allow from env=object_is_gif
 Allow from env=object_is_png
 Allow from env=object_is_jpg
 ');
-        if($res1===false || $res2===false){
-            LogUtil::registerStatus(_FOR_CREATEFILESFAILED);
+            if($res1===false || $res2===false){
+                LogUtil::registerStatus(_FOR_CREATEFILESFAILED);
+            }
+        } else {
+            LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
         }
     } else {
-        LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
+        // tempdir starts with /, so it is an absolute path, probably outside the webroot
+        LogUtil::registerStatus(_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT);
     }
-
+    
     // create the formicula table
     if (!DBUtil::createTable('formcontacts')) {
         return LogUtil::registerError(_FOR_CREATETABLEFAILED);

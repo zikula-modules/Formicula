@@ -20,8 +20,8 @@ Installation
 2. Load, initialize and activate the module in the admin section.
 3. During installation, Formicula tries to create a folder formicula_cache containing an
    index.html and a .htaccess file.
-   If this fails (most probably when safemode is set to 'on' in your PHP environment), you
-   will be notified and have to create them on your own:
+   If this fails (most probably when safemode is set to 'on' in your PHP environment or the pnTemp
+   folder is outside your web root), you will be notified and have to create them on your own:
    a) Create a folder formicula_cache in your temporary folder (most likely pnTemp) and make it 
       writable for the web server (chmod 777)
    b) Add an empty index.html file (you can copy the one from modules/formicula if you want).

@@ -19,6 +19,9 @@
 // Purpose of file:  language file
 // ----------------------------------------------------------------------
 
+// new
+define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp folder found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.');
+
 //
 // A
 //
