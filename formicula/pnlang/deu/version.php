@@ -1,5 +1,5 @@
 <?php
-// $Id: version.php 107 2008-05-23 09:22:59Z landseer $
+// $Id$
 // ----------------------------------------------------------------------
 // Zikula Application Framework
 // Copyright (C) 2002 by the Zikula Development Team.
