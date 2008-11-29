@@ -20,8 +20,9 @@
 <!--[ foreach item=field from=$custom ]-->
 <!--[ $field.name ]--> : <!--[ $field.data ]--><br />
 <!--[ /foreach ]-->
+<br />
+<!--[ pnml name='_FOR_COMMENT' ]--> : <!--[ $userdata.comment|nl2br|pnvarprepfordisplay ]--> <br />
+ <br />
 
-<!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> <br />
-</p>
-</body>
-</html>
+<!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> <br /> 
+</p> </body> </html>

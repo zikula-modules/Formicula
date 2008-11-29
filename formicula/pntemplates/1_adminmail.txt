@@ -15,5 +15,7 @@
 <!--[ $field.name ]--> : <!--[ $field.data ]-->
 <!--[ /foreach ]-->
 
+<!--[ pnml name='_FOR_COMMENT' ]--> : <!--[ $userdata.comment|pnvarprepfordisplay ]-->
+
 <!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> 
  
