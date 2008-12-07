@@ -217,7 +217,7 @@ define('_FOR_USERMAILFORMAT', 'Formato del correo' );
 // V
 //
 define('_FOR_VIEWCONTACT','Ver contactos' );
-define('_FOR_VISITHOMEPAGE', 'Visitar Formicula en el NOC');
+define('_FOR_VISITHOMEPAGE', 'Visitar Formicula en el http://code.zikula.org');
 
 //
 // W

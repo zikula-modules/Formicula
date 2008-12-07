@@ -214,7 +214,7 @@ define('_FOR_USERMAILFORMAT', 'Bestätigungsmail');
 // V
 //
 define('_FOR_VIEWCONTACT', 'Kontakte anzeigen' );
-define('_FOR_VISITHOMEPAGE', 'Formicula im NOC besuchen');
+define('_FOR_VISITHOMEPAGE', 'Formicula auf http://code.zikula.org besuchen');
 
 //
 // W

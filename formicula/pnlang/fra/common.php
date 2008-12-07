@@ -212,7 +212,7 @@ define('_FOR_USERMAILFORMAT', 'Format de l\'e-mail' );
 // V
 //
 define('_FOR_VIEWCONTACT','Afficher les contacts' ); 
-define('_FOR_VISITHOMEPAGE', 'Se rendre sur le NOC de Formicula'); 
+define('_FOR_VISITHOMEPAGE', 'Se rendre sur le http://code.zikula.org de Formicula'); 
 
 //
 // W
