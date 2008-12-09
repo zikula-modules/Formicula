@@ -2,48 +2,53 @@
 <!--[* $Id$ *]-->
 
 <!--[ include file=formicula_admin_header.html ]-->
-<h2><!--[ pnml name=_FOR_EDITCONFIG html=1 ]--></h2>
 
 <!--[ pnform ]-->
-<div>
-    <div class="forfloatbox">
-        <!--[ pnformvalidationsummary ]-->
-        <dl class="forclearfix">
-            <dt><!--[ pnformlabel for="show_phone" text='_FOR_SHOWPHONE' ]--></dt>
-            <dd><!--[ pnformcheckbox id="show_phone" checked=$pncore.formicula.show_phone ]--></dd>
-            
-            <dt><!--[ pnformlabel for="show_company" text='_FOR_SHOWCOMPANY' ]--></dt>
-            <dd><!--[ pnformcheckbox id="show_company" checked=$pncore.formicula.show_company ]--></dd>
-            
-            <dt><!--[ pnformlabel for="show_url" text='_FOR_SHOWURL' ]--></dt>
-            <dd><!--[ pnformcheckbox id="show_url" checked=$pncore.formicula.show_url ]--></dd>
-            
-            <dt><!--[ pnformlabel for="show_location" text='_FOR_SHOWLOCATION' ]--></dt>
-            <dd><!--[ pnformcheckbox id="show_location" checked=$pncore.formicula.show_location ]--></dd>
+<!--[ pnformvalidationsummary ]-->
 
-            <dt><!--[ pnformlabel for="show_comment" text='_FOR_SHOWCOMMENT' ]--></dt>
-            <dd><!--[ pnformcheckbox id="show_comment" checked=$pncore.formicula.show_comment ]--></dd>
+<fieldset>
+  <legend><!--[ pnml name=_FOR_EDITCONFIG html=1 ]--></legend>
 
-            <dt><!--[ pnformlabel for="send_user" text='_FOR_SENDUSER' ]--></dt>
-            <dd><!--[ pnformcheckbox id="send_user" checked=$pncore.formicula.send_user ]--></dd>
-            
-            <dt><!--[ pnformlabel for="upload_dir" text='_FOR_UPLOADFILEDIR' ]--></dt>
-            <dd><!--[ pnformtextinput size="40" maxLength="80" id="upload_dir" text=$pncore.formicula.upload_dir ]--></dd>
+  <dl class="pn-clearfix">
+    <dt><!--[ pnformlabel for="show_phone" text='_FOR_SHOWPHONE' ]--></dt>
+    <dd><!--[ pnformcheckbox id="show_phone" checked=$pncore.formicula.show_phone ]--></dd>
 
-            <dt><!--[ pnformlabel for="delete_file" text='_FOR_DELETEUPLOADEDFILE' ]--></dt>
-            <dd><!--[ pnformcheckbox id="delete_file" checked=$pncore.formicula.delete_file  ]--></dd>
+    <dt><!--[ pnformlabel for="show_company" text='_FOR_SHOWCOMPANY' ]--></dt>
+    <dd><!--[ pnformcheckbox id="show_company" checked=$pncore.formicula.show_company ]--></dd>
 
-            <dt><!--[ pnformlabel for="spamcheck" text='_FOR_ACTIVATESPAMCHECK' html=1 ]--></dt>
-            <dd><!--[ pnformcheckbox id="spamcheck" checked=$pncore.formicula.spamcheck ]--></dd>
-            
-            <dt><!--[ pnformlabel for="excludespamcheck" text='_FOR_EXCLUDEFROMSPAMCHECK' html=1 ]--></dt>
-            <dd><!--[ pnformtextinput size="20" maxLength="40" id="excludespamcheck" text=$pncore.formicula.excludespamcheck ]--></dd>
-            
-        </dl>
-    </div>
-    <p>
-      <!--[pnformbutton id="submit" commandName="submit" text="_SUBMIT"]-->
-    </p>
+    <dt><!--[ pnformlabel for="show_url" text='_FOR_SHOWURL' ]--></dt>
+    <dd><!--[ pnformcheckbox id="show_url" checked=$pncore.formicula.show_url ]--></dd>
+
+    <dt><!--[ pnformlabel for="show_location" text='_FOR_SHOWLOCATION' ]--></dt>
+    <dd><!--[ pnformcheckbox id="show_location" checked=$pncore.formicula.show_location ]--></dd>
+
+    <dt><!--[ pnformlabel for="show_comment" text='_FOR_SHOWCOMMENT' ]--></dt>
+    <dd><!--[ pnformcheckbox id="show_comment" checked=$pncore.formicula.show_comment ]--></dd>
+
+    <dt><!--[ pnformlabel for="send_user" text='_FOR_SENDUSER' ]--></dt>
+    <dd><!--[ pnformcheckbox id="send_user" checked=$pncore.formicula.send_user ]--></dd>
+
+    <dt><!--[ pnformlabel for="upload_dir" text='_FOR_UPLOADFILEDIR' ]--></dt>
+    <dd><!--[ pnformtextinput size="40" maxLength="80" id="upload_dir" text=$pncore.formicula.upload_dir ]--></dd>
+
+    <dt><!--[ pnformlabel for="delete_file" text='_FOR_DELETEUPLOADEDFILE' ]--></dt>
+    <dd><!--[ pnformcheckbox id="delete_file" checked=$pncore.formicula.delete_file  ]--></dd>
+
+    <dt><!--[ pnformlabel for="spamcheck" text='_FOR_ACTIVATESPAMCHECK' html=1 ]--></dt>
+    <dd><!--[ pnformcheckbox id="spamcheck" checked=$pncore.formicula.spamcheck ]-->
+      <div class="pn-informationmsg"><!--[pnml name="_FOR_ACTIVATESPAMCHECK_HINT"]--></div>
+    </dd>
+
+    <dt><!--[ pnformlabel for="excludespamcheck" text='_FOR_EXCLUDEFROMSPAMCHECK' html=1 ]--></dt>
+    <dd><!--[ pnformtextinput size="20" maxLength="40" id="excludespamcheck" text=$pncore.formicula.excludespamcheck ]-->
+      <div class="pn-informationmsg"><!--[pnml name="_FOR_EXCLUDEFROMSPAMCHECK_HINT"]--></div>
+    </dd>
+
+  </dl>
+</fieldset>
+
+<div class="pn-formrow pn-formbuttons">
+  <!--[pnformbutton id="submit" commandName="submit" text="_SUBMIT"]-->
 </div>
 <!--[ /pnform ]-->
 

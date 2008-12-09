@@ -25,7 +25,8 @@ define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp-Verzeichnis außerhalb de
 //
 // A
 //
-define('_FOR_ACTIVATESPAMCHECK', 'Spamcheck aktivieren<br />(dies erfordert u.U. Anpassungen an den Templates, weitere Informationen dazu finden sich in der Dokumentation. Diese Option wird automatisch deaktiviert, wenn Formicula keine PHP-Funktion zur Erstellung von Captcha-Grafiken findet!)');
+define('_FOR_ACTIVATESPAMCHECK', 'Spamcheck aktivieren');
+define('_FOR_ACTIVATESPAMCHECK_HINT', 'Dies erfordert u.U. Anpassungen an den Templates, weitere Informationen dazu finden sich in der Dokumentation. Diese Option wird automatisch deaktiviert, wenn Formicula keine PHP-Funktion zur Erstellung von Captcha-Grafiken findet!');
 define('_FOR_ADDCONTACT', 'Kontakt hinzufügen' );
 define('_FOR_ADMINMAIL1', 'ein Besucher der Seite hat das Kontaktformular genutzt und folgendes mitgeteilt:' );
 define('_FOR_ADMINMAIL2', 'Der Nutzer hat folgende IP-Adresse/Hostname: ' );
@@ -46,6 +47,7 @@ define('_FOR_BADAUTHKEY', 'Ungültiger AuthKey');
 define('_FOR_CACHEDIRPROBLEM', 'formicula_cache-Verzeichnis nicht vorhanden in pnTemp oder Verzeichnis ist nicht beschreibbar, Captcha deaktiviert');
 define('_FOR_CANCELDELETE', 'Löschung abbrechen' );
 define('_FOR_CLEARIMAGECACHE', 'Captchabilder löschen' );
+define('_FOR_CLEAREDIMAGECACHE', 'Die zwischengespeicherten Captchabilder wurde gelöscht' );
 define('_FOR_COMMENT', 'Kommentar' );
 define('_FOR_COMPANY', 'Firma' );
 define('_FOR_CONFIRMDELETE', 'Löschung bestätigen' );
@@ -89,7 +91,8 @@ define('_FOR_ERRORSENDINGMAIL', 'Fehler beim Senden der Mail');
 define('_FOR_ERRORSENDINGUSERMAIL', 'interner Fehler: konnte Bestätigungsmail nicht versenden' );
 define('_FOR_ERRORUPLOADERROR', 'Fehler: Uploadfehler');
 define('_FOR_ERRORUSERNAME', 'Fehler: kein Username angegeben');
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'Spam Check nicht in diesem Formularen verwenden<br />(kommaseparierte Liste der FormIDs, die z.B. in Pagesetter eingebettet sind, hier könnte es zu Problemen beim Weiterleiten kommen, wenn der Benutzer die Rechenaufgabe nicht korrekt löst.');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'Spamcheck nicht in diesen Formularen verwenden');
+define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Kommaseparierte Liste der FormIDs, die z.B. in Pagesetter eingebettet sind. Hier könnte es zu Problemen beim Weiterleiten kommen, wenn der Benutzer die Rechenaufgabe nicht korrekt löst.');
 
 //
 // F

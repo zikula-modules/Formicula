@@ -4,45 +4,45 @@
 }
 
 #contactform label {
-    display: inline;
-    font-size: 1em;
-    font-weight: bold;
-    margin: 2px 0;
+  display: inline;
+  font-size: 1em;
+  font-weight: bold;
+  margin: 2px 0;
 }
 
 #contactform label:before {
-    content: url("../pnimages/bullet.gif");
-    margin-right: 0.5em;
+  content: url("../pnimages/bullet.gif");
+  margin-right: 0.5em;
 }
 
 #contactform .mandatory:after {
-    content: "*";
-    color: red;
-    margin-left: 0.5em;
+  content: "*";
+  color: red;
+  margin-left: 0.5em;
 }
 
 #contactform input,
 #contactform select,
 #contactform textarea {
-    margin: 3px 0;
+  margin: 3px 0;
 }
 
 #contactform .formborder {
-    border: 1px solid #ccc;
-    padding: 5px;
-    width: 80%;
+  border: 1px solid #ccc;
+  padding: 5px;
+  width: 80%;
 }
 
 #contactform input:focus,
 #contactform select:focus,
 #contactform form .formborder:focus,
 #content textarea:focus {
-    border-color: #ccc;
-    background-color: #eee;
+  border-color: #ccc;
+  background-color: #eee;
 }
 
 #contactform textarea {
-    width: 99%;
+  width: 99%;
 }
 
 #contactform .validation-failed {
@@ -50,76 +50,56 @@
 }
 
 #contactform .custom-advice {
-    color:red!important;
+  color:red!important;
 }
 
 #formicula-admin {
-    padding-top: 2em;
+  /*  padding-top: 2em; */
 }
 
 #formicula-admin .footer {
-    font-size: 0.8em;
-    text-align: center;
-    margin-top: 1em;
+  font-size: 0.8em;
+  text-align: center;
+  margin-top: 1em;
 }
 
 #formicula-admin .headerlink {
-    width: 33%;
-    float: left;
-    text-align: center;
+  width: 33%;
+  float: left;
+  text-align: center;
 }
 
 #formicula-admin .error {
-    color: red;
+  color: red;
 }
 
 #formicula-admin .delete {
-    text-align: center;
+  text-align: center;
 }
 
 #formicula-admin td {
-    padding: 0.3em 0 0.3em 0.5em;
-    vertical-align: top;
+  padding: 0.3em 0 0.3em 0.5em;
+  vertical-align: top;
 }
 
-#formicula-admin dl {
-    float: left;
-}
-    
 #formicula-admin dl dt {
-    clear: both;
-    margin: 3px;
-    float: left; 
-    font-weight: normal;
-    width: 300px;
+  clear:both;
+  display:block;
+  float:left;
+  line-height:2em;
+  margin:0.5em;
+  padding:0;
+  text-align:right;
+  width:40%;
 }
 
 #formicula-admin dl dd {
-    margin: 3px 0;
-    float: left;
+  display:block;
+  float:left;
+  line-height:2em;
+  margin:0.5em;
+  padding:0;
+  text-align:left;
+  width:50%;
 }
 
-/*
- * clearfix solution
- *
- */
-
-.forclearfix:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
-    visibility: hidden;
-}
-
-.forclearfix {display: inline-table;}
-
-/* Hides from IE-mac \*/
-* html .forclearfix {height: 1%;}
-.forclearfix {display: block;}
-/* End hide from IE-mac */
-
-/* Overflow-Methode zum Clearen der Float-Umgebungen */
-.forfloatbox { 
-    overflow:hidden; 
-}

@@ -21,7 +21,8 @@
  * @translated by Arthens
  */
 
-define('_FOR_ACTIVATESPAMCHECK', 'Attiva spamcheck<br />(assicurati che i requisiti siano soddisfatti, leggi la documentazione per informazioni. Questa opzione sarà automaticamente disattivata se la funzione PHP per creare immagini non fosse disponibile)');
+define('_FOR_ACTIVATESPAMCHECK', 'Attiva spamcheck');
+define('_FOR_ACTIVATESPAMCHECK_HINT', 'Assicurati che i requisiti siano soddisfatti, leggi la documentazione per informazioni. Questa opzione sarà automaticamente disattivata se la funzione PHP per creare immagini non fosse disponibile');
 define('_FOR_ADDCONTACT','Aggiungi contatto' );
 define('_FOR_ADMINMAIL1', 'Un visitatore del tuo sito ha usato il form per contattarti e mandarti ciò che segue:' );
 define('_FOR_ADMINMAIL2', 'L\'utente aveva i seguenti indirizzo IP/hostname: ' );
@@ -87,7 +88,8 @@ define('_FOR_ERRORSENDINGMAIL', 'Si è verificato un errore durante l\'invio dell
 define('_FOR_ERRORSENDINGUSERMAIL', 'Si è verificato un errore interno durante l\'invio dell\'e-mail di conferma.' );
 define('_FOR_ERRORUPLOADERROR', 'Errore: Errore di upload');
 define('_FOR_ERRORUSERNAME', 'Errore: username mancante');
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'Non utilizzare lo spamcheck nei seguenti form <br />(lista degli id dei form separati da una virgola, es. form integrati in pagesetter. Il redirect potrebbe non funzionare correttamente in questo caso)');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'Non utilizzare lo spamcheck nei seguenti form');
+define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Lista degli id dei form separati da una virgola, es. form integrati in pagesetter. Il redirect potrebbe non funzionare correttamente in questo caso');
 
 //
 // F

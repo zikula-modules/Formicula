@@ -27,7 +27,8 @@
 //
 // A
 //
-define('_FOR_ACTIVATESPAMCHECK', 'Activar verificación antispam<br />(asegúrate de que los campos del formulario necesarios<br />están disponibles, mira los documentos para más información. Esta opción será desactivada por Formicula automáticamente si no existen las funciones de PHP para crear imágenes)');
+define('_FOR_ACTIVATESPAMCHECK', 'Activar verificación antispam');
+define('_FOR_ACTIVATESPAMCHECK_HINT', 'Asegúrate de que los campos del formulario necesarios<br />están disponibles, mira los documentos para más información. Esta opción será desactivada por Formicula automáticamente si no existen las funciones de PHP para crear imágenes');
 define('_FOR_ADDCONTACT','Añadir contacto' );
 define('_FOR_ADMINMAIL1', 'un visitante de tu sitio web usó el formulario de contacto y envió lo siguiente:' );
 define('_FOR_ADMINMAIL2', 'El usuario tenía la siguiente dirección IP (o nombre de host): ' );
@@ -91,7 +92,8 @@ define('_FOR_ERRORSENDINGMAIL', 'Hubo un error enviando el correo.');
 define('_FOR_ERRORSENDINGUSERMAIL', 'Hubo un error interno enviando el correo de confirmación' );
 define('_FOR_ERRORUPLOADERROR', 'Error: Error subiendo archivo');
 define('_FOR_ERRORUSERNAME', 'Error: Nombre de usuario no suministradono username');
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'No usar verificación antispam en estos formularios<br />(lista de los ods de formularios separados por comas, ej. formularios embebidos en pagesetter. El redireccionamiento quizas no funcione correctamente aqui');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'No usar verificación antispam en estos formularios');
+define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Llista de los ods de formularios separados por comas, ej. formularios embebidos en pagesetter. El redireccionamiento quizas no funcione correctamente aqui');
 
 //
 // F

@@ -25,7 +25,8 @@ define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp folder found outside of 
 //
 // A
 //
-define('_FOR_ACTIVATESPAMCHECK', 'Activate spamcheck<br />(make sure you the necessary form fields<br />are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available)');
+define('_FOR_ACTIVATESPAMCHECK', 'Activate spamcheck');
+define('_FOR_ACTIVATESPAMCHECK_HINT', 'Make sure you the necessary form fields<br />are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available');
 define('_FOR_ADDCONTACT','Add contact' );
 define('_FOR_ADMINMAIL1', 'A visitor of to your web site used the form for contact and sent the following:' );
 define('_FOR_ADMINMAIL2', 'The user has the following IP address/hostname: ' );
@@ -46,6 +47,7 @@ define('_FOR_BADAUTHKEY', 'Bad AuthKey');
 define('_FOR_CACHEDIRPROBLEM', 'formicula_cache folder does not exist in Zikula\'s temporary folder or is not writable - captchas have been disabled');
 define('_FOR_CANCELDELETE','Cancel deletion routine' );
 define('_FOR_CLEARIMAGECACHE', 'Clear captcha image cache' );
+define('_FOR_CLEAREDIMAGECACHE', 'The captcha image cached was cleared' );
 define('_FOR_COMMENT', 'Comment' );
 define('_FOR_COMPANY', 'Company' );
 define('_FOR_CONFIRMDELETE','Click here to delete this contact' );
@@ -90,7 +92,8 @@ define('_FOR_ERRORSENDINGMAIL', 'There was an error sending the email.');
 define('_FOR_ERRORSENDINGUSERMAIL', 'There was an internal error when sending confirmation mail' );
 define('_FOR_ERRORUPLOADERROR', 'Error: Upload error');
 define('_FOR_ERRORUSERNAME', 'Error: no username');
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'Do not use spam check in these forms<br />(comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'Do not use spam check in these forms');
+define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly');
 
 //
 // F

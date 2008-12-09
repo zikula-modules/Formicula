@@ -22,7 +22,8 @@
 //
 // A
 //
-define('_FOR_ACTIVATESPAMCHECK', 'Activer l\'anti-spam (il faut être certain que les champs du formulaire soient disponibles, lire la documentation pour plus d\'informations) '); 
+define('_FOR_ACTIVATESPAMCHECK', 'Activer l\'anti-spam'); 
+define('_FOR_ACTIVATESPAMCHECK_HINT', 'Il faut être certain que les champs du formulaire soient disponibles, lire la documentation pour plus d\'informations'); 
 define('_FOR_ADDCONTACT','Ajouter un contact' ); 
 define('_FOR_ADMINMAIL1', 'Un visiteur de votre site web a utilisé le formulaire de contact pour vous envoyer ceci :' ); 
 define('_FOR_ADMINMAIL2', 'L\'utilisateur avait l\'adresse IP/FAI suivant : ' ); 
@@ -86,7 +87,8 @@ define('_FOR_ERRORSENDINGMAIL', 'Il y a eu une erreur lors de l\'envoi de l\'e-m
 define('_FOR_ERRORSENDINGUSERMAIL', 'Il y a eu une erreur interne lors de l\'envoi de l\'e-mail de confirmation' ); 
 define('_FOR_ERRORUPLOADERROR', 'Erreur: erreur de téléchargement');
 define('_FOR_ERRORUSERNAME', 'Erreur: aucun nom');
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'Ne pas activer l\'anti-spam pour ces formulaires (utiliser la virgule pour séparer les ID des formulaires, ex : formulaires incorporés dans pagesetter. La redirection peut ne pas fonctionner correctement pour ceux-ci)'); 
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'Ne pas activer l\'anti-spam pour ces formulaires'); 
+define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Utiliser la virgule pour séparer les ID des formulaires, ex : formulaires incorporés dans pagesetter. La redirection peut ne pas fonctionner correctement pour ceux-ci'); 
 
 //
 // F

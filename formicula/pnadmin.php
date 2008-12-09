@@ -237,5 +237,7 @@ function formicula_admin_clearcache()
     }
 
     closedir($dh);
+    
+    LogUtil::registerStatus(_FOR_CLEAREDIMAGECACHE);
     return pnRedirect(pnModURL('formicula', 'admin', 'main'));
 }

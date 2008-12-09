@@ -3,38 +3,32 @@
 
 <!--[ include file=formicula_admin_header.html ]-->
 
-<h2><!--[ pnml name=_FOR_VIEWCONTACT html=1 ]--></h2>
+<h3><!--[ pnml name=_FOR_VIEWCONTACT html=1 ]--></h3>
 
-<table border="0" cellspacing="0" cellpadding="0" width="100%">
+<table class="pn-admintable">
     <thead>
-    <tr style="width: 100%;">
-        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_CONTACTID' ]--></th>
-        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_CONTACTNAME' ]--></th>
-        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_EMAIL' ]--></th>
-        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_PUBLIC' ]--></th>
-        <th style="background: #eeeeee; text-align: center;"><!--[ pnml name='_FOR_OPTIONS' ]--></th>
+    <tr>
+        <th><!--[ pnml name='_FOR_CONTACTID' ]--></th>
+        <th><!--[ pnml name='_FOR_CONTACTNAME' ]--></th>
+        <th><!--[ pnml name='_FOR_EMAIL' ]--></th>
+        <th><!--[ pnml name='_FOR_PUBLIC' ]--></th>
+        <th><!--[ pnml name='_FOR_OPTIONS' ]--></th>
     </tr>
     </thead>
     <tbody>
     <!--[ foreach item=contact from=$contacts ]-->
-    <tr>
-        <td style="text-align:center;">
-            <!--[ $contact.cid ]-->
-        </td>
-        <td style="text-align:center;">
-            <!--[ $contact.name ]-->
-        </td>
-        <td style="text-align:center;">
-            <!--[ $contact.email ]-->
-        </td>
-        <td style="text-align:center;">
+    <tr class="<!--[cycle values="pn-odd,pn-even" name=contacts]-->">
+        <td><!--[ $contact.cid ]--></td>
+        <td><!--[ $contact.name ]--></td>
+        <td><!--[ $contact.email ]--></td>
+        <td>
             <!--[ if $contact.public==1 ]-->
             <!--[ pnml name="_YES" html=1 ]-->
             <!--[ else ]-->
             <!--[ pnml name="_NO" html=1 ]-->
             <!--[ /if ]-->
         </td>
-        <td style="text-align:center;">
+        <td>
             <!--[ if $contact.acc_edit==true ]-->
                 <a href="<!--[ pnmodurl modname=Formicula type=admin func=edit cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_EDIT" ]-->"><!--[ pnimg src="xedit.gif" modname="core" set="icons/extrasmall" alt="_FOR_EDIT" altml=true ]--></a>
             <!--[ /if ]-->
