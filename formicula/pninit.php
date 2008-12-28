@@ -80,6 +80,8 @@ Allow from env=object_is_jpg
     pnModSetVar('formicula', 'upload_dir', 'pnTemp');
     pnModSetVar('formicula', 'delete_file', 1);
 
+    pnModSetVar('formicula', 'default_form', 0);
+
     // Initialisation successful
     return true;
 }
@@ -167,6 +169,10 @@ Allow from env=object_is_jpg
                     LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
                 }
             }
+        case '2.0':
+            // set the default form
+            pnModSetVar('formicula', 'default_form', 0);
+
     }
 
     // clear compiled templates

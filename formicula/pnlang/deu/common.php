@@ -20,6 +20,8 @@
 // ----------------------------------------------------------------------
 
 // new
+define('_FOR_SETNUMBERXWITHYFILES', 'Templatesatz #%formid% mit %files% Dateien');
+define('_FOR_SETDEFAULTFORM', 'Standardformular (wird verwendet, wenn keine Formular-ID form=xxx im Aufruf übergeben wird)');
 define('_FOR_CONFIGURATIONCHANGED', 'Die Konfiguration wurde aktualisiert.');
 define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp-Verzeichnis außerhalb des Webroots gefunden, bitte das formicula_cache Verzeichnis manuell anlegen, wie in der Dokumentation beschrieben');
 

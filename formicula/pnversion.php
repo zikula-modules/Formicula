@@ -20,7 +20,7 @@
 // ----------------------------------------------------------------------
 
 $modversion['name'] = 'formicula';
-$modversion['version'] = '2.0';
+$modversion['version'] = '2.1';
 $modversion['description'] = _FOR_DESC;
 $modversion['credits'] = 'pndocs/credits.txt';
 $modversion['help'] = 'pndocs/eng/manual.htm';

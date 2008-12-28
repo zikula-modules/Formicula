@@ -52,4 +52,10 @@
 // Formicula 2.0 (fs)
 // Zikula 1.0 only version
 //
+// Formicula 2.1 (fs)
+// Zikula 1.1.0 only version
+// fixed [#20] Installation unter zk 1.1.0
+// added [#17] missing status-messages
+// added [#19] Add configuration for the templates
+//
 

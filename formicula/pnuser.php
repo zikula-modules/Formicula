@@ -28,7 +28,8 @@
  */
 function formicula_user_main($args=array())
 {
-    $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
+    $default_form = pnModGetVar('formicula', 'default_form', 0);
+    $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : $default_form, 'GETPOST');
     $cid  = (int)FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
     // get subitted information - will be passed to the template

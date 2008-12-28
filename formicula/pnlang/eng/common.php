@@ -20,6 +20,8 @@
 // ----------------------------------------------------------------------
 
 // new
+define('_FOR_SETNUMBERXWITHYFILES', 'Set #%formid% with %files% templates');
+define('_FOR_SETDEFAULTFORM', 'Set the default form (used when no form is specified');
 define('_FOR_CONFIGURATIONCHANGED', 'The configuration has been changed.');
 define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp folder found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.');
 
@@ -53,7 +55,7 @@ define('_FOR_COMMENT', 'Comment' );
 define('_FOR_COMPANY', 'Company' );
 define('_FOR_CONFIRMDELETE','Click here to delete this contact' );
 define('_FOR_CONTACTCREATED', 'Contact created');
-define('_FOR_CONTACTDELETED', 'Contact has been Delete');
+define('_FOR_CONTACTDELETED', 'Contact has been deleted');
 define('_FOR_CONTACTFORM', 'Contact Form');
 define('_FOR_CONTACTID','ID' );
 define('_FOR_CONTACTNAME','Name');

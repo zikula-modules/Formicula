@@ -21,6 +21,8 @@
  * @translated by Arthens
  */
 // new
+define('_FOR_SETNUMBERXWITHYFILES', 'Set #%formid% with %files% templates');
+define('_FOR_SETDEFAULTFORM', 'Set the default form (used when no form is specified');
 define('_FOR_CONFIGURATIONCHANGED', 'The configuration has been changed.');
 define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp folder found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.');
 

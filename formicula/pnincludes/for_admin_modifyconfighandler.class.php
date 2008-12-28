@@ -25,6 +25,26 @@ class Formicula_admin_modifyconfighandler
     {
         $pnRender->caching = false;
         $pnRender->add_core_data();
+        // scan the tempaltes flder for installed forms
+        Loader::loadClass('FileUtil');
+        $files = FileUtil::getFiles('modules/formicula/pntemplates/', false, true, null, false);
+        $sets_found = array();
+        foreach ($files as $file) {
+            $parts = explode('_', $file);
+            if (is_array($parts) && count($parts) > 1) {
+                if ($parts[0] == 'formicula') {
+                    continue;
+                }
+                if (!in_array($sets_found, $parts[0])) {
+                    $sets_found[$parts[0]]++;
+                }
+            }
+        }
+        $items = array();
+        foreach ($sets_found as $formid => $files) {
+            $items[] = array('text' => pnML('_FOR_SETNUMBERXWITHYFILES', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+        }        
+        $pnRender->assign('items', $items);       
         return true;
     }
 
@@ -56,6 +76,7 @@ class Formicula_admin_modifyconfighandler
             pnModSetVar('formicula', 'upload_dir',       $data['upload_dir']);
             pnModSetVar('formicula', 'spamcheck',        $data['spamcheck']);
             pnModSetVar('formicula', 'excludespamcheck', $data['excludespamcheck']);
+            pnModSetVar('formicula', 'default_form',     $data['default_form']);
             
             LogUtil::registerStatus(_FOR_CONFIGURATIONCHANGED);
         }
