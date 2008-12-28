@@ -19,8 +19,8 @@
 // Purpose of file:  Initialisation functions for formicula
 // ----------------------------------------------------------------------
 
-Loader::requireOnce('includes/pnobjlib/FileUtil.class.php');
-Loader::requireOnce('includes/pnobjlib/StringUtil.class.php');
+Loader::requireOnce('includes/FileUtil.class.php');
+Loader::requireOnce('includes/StringUtil.class.php');
 
 function formicula_init()
 {
@@ -183,9 +183,6 @@ function formicula_delete()
     if (!DBUtil::dropTable('formcontacts')) {
         return LogUtil::registerError(_FOR_DROPTABLEFAILED);
     }
-
-    Loader::requireOnce('includes/pnobjlib/FileUtil.class.php');
-    Loader::requireOnce('includes/pnobjlib/StringUtil.class.php');
 
     $tempdir = pnConfigGetVar('temp');
     if(StringUtil::right($tempdir, 1) <> '/') {
