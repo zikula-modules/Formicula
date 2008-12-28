@@ -15,8 +15,7 @@
   margin-right: 0.5em;
 }
 
-#contactform .mandatory:after {
-  content: "*";
+#contactform .mandatory {
   color: red;
   margin-left: 0.5em;
 }

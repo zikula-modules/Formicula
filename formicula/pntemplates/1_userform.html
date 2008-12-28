@@ -18,11 +18,11 @@
 
 
 <p>
-    <span class="mandatory"><!--[ pnml name="_FOR_MUSTBE" html=1 ]--></span>
+    <!--[ pnml name="_FOR_MUSTBE" html=1 ]--><span class="mandatory">*</span>
 </p>
 
 <p>
-    <label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--></label><br />
+    <label for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--> <span class="mandatory">*</span></label><br />
     <input type="hidden" name="custom0name" value="<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->" />
     <input type="hidden" name="custom0mandatory" value="1" />
     <input type="text" class="formborder required" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
@@ -31,12 +31,12 @@
 
 <p style="clear: left;">
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="uname"><!--[ pnml name='_FOR_NAME' html=1 ]--></label><br />
+        <label for="uname"><!--[ pnml name='_FOR_NAME' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="text" class="formborder required" name="uname" id="uname" size="35" maxlength="80" value="<!--[ $uname ]-->" />
         <span id="advice-required-uname" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
     </span>
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="custom4data"><!--[ pnml name='_FOR_ONLINEBIRTHDATE' html=1 ]--></label><br />
+        <label for="custom4data"><!--[ pnml name='_FOR_ONLINEBIRTHDATE' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="hidden" name="custom4name" value="<!--[ pnml name='_FOR_ONLINEBIRTHDATE' ]-->" />
         <input type="hidden" name="custom4mandatory" value="1" />
         <input type="text" class="formborder required validate-date" name="custom4data" id="custom4data" size="35" maxlength="40" value="" />
@@ -47,14 +47,14 @@
 
 <p style="clear: left;">
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="custom1data"><!--[ pnml name='_FOR_ONLINESTREET' html=1 ]--></label><br />
+        <label for="custom1data"><!--[ pnml name='_FOR_ONLINESTREET' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="hidden" name="custom1name" value="<!--[ pnml name='_FOR_ONLINESTREET' ]-->" />
         <input type="hidden" name="custom1mandatory" value="1" />
         <input type="text" class="formborder required" name="custom1data" id="custom1data" size="35" maxlength="40" value="" />
         <span id="advice-required-custom1data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
     </span>
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="custom5data"><!--[ pnml name='_FOR_ONLINESALARY' html=1 ]--></label><br />
+        <label for="custom5data"><!--[ pnml name='_FOR_ONLINESALARY' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="hidden" name="custom5name" value="<!--[ pnml name='_FOR_ONLINESALARY' ]-->" />
         <input type="hidden" name="custom5mandatory" value="1" />
         <input type="text" class="formborder required validate-number" name="custom5data" id="custom5data" size="35" maxlength="40" value="" />
@@ -65,14 +65,14 @@
 
 <p style="clear: left;">
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="custom2data"><!--[ pnml name='_FOR_ONLINEZIPCITY' html=1 ]--></label><br />
+        <label for="custom2data"><!--[ pnml name='_FOR_ONLINEZIPCITY' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="hidden" name="custom2name" value="<!--[ pnml name='_FOR_ONLINEZIPCITY' ]-->" />
         <input type="hidden" name="custom2mandatory" value="1" />
         <input type="text" class="formborder required" name="custom2data" id="custom2data" size="35" maxlength="40" value="" />
         <span id="advice-required-custom2data" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
     </span>
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="custom6data"><!--[ pnml name='_FOR_ONLINEDATE' html=1 ]--></label><br />
+        <label for="custom6data"><!--[ pnml name='_FOR_ONLINEDATE' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="hidden" name="custom6name" value="<!--[ pnml name='_FOR_ONLINEDATE' ]-->" />
         <input type="hidden" name="custom6mandatory" value="1" />
         <input type="text" class="formborder required validate-date" name="custom6data" id="custom6data" size="35" maxlength="40" value="" />
@@ -83,7 +83,7 @@
 
 <p style="clear: left;">
     <span style="float:left; width: 49%;">
-        <label class="mandatory" for="custom3data"><!--[ pnml name='_FOR_PHONE' html=1 ]--></label><br />
+        <label for="custom3data"><!--[ pnml name='_FOR_PHONE' html=1 ]--> <span class="mandatory">*</span></label><br />
         <input type="hidden" name="custom3name" value="<!--[ pnml name='_FOR_PHONE' ]-->" />
         <input type="hidden" name="custom3mandatory" value="1" />
         <input type="text" class="formborder required" name="custom3data" id="custom3data" size="35" maxlength="40" value="" />
@@ -97,21 +97,21 @@
 </p>
 
 <p style="clear: left; width: 49%;">
-    <label class="mandatory" for="uemail"><!--[ pnml name='_FOR_EMAIL' html=1 ]--></label><br />
+    <label for="uemail"><!--[ pnml name='_FOR_EMAIL' html=1 ]--> <span class="mandatory">*</span></label><br />
     <input type="text" class="formborder required validate-email" name="uemail" id="uemail" value="" size="35" maxlength="40" />
     <span id="advice-required-uemail" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></span>
     <span id="advice-validate-email-uemail" class="custom-advice" style="display:none"><br /><!--[ pnml name='_FOR_ADVICE_EMAIL' ]--></span>
 </p>
 
 <p style="clear: left;">
-    <label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_COMMENT' html=1 ]--></label><br />
+    <label for="custom0data"><!--[ pnml name='_FOR_COMMENT' html=1 ]--> <span class="mandatory">*</span></label><br />
     <textarea class="formborder required" rows="10" cols="45" name="comment" id="comment"></textarea>
 </p>
 <p id="advice-required-comment" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
 <!--[ if $spamcheck eq 1 ]-->
 <p>
-    <label class="mandatory" for="formicula_captcha"><!--[ pnml name='_FOR_SIMPLEMATHEQUATION' ]--> : </label> <!--[ simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000']--> <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
+    <label for="formicula_captcha"><!--[ pnml name='_FOR_SIMPLEMATHEQUATION' ]--> : <span class="mandatory">*</span></label> <!--[ simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000']--> <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
 </p>
 <!--[ /if ]-->
 

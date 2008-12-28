@@ -14,7 +14,7 @@
 <input type="hidden" name="adminformat" value="html" />
 
 <p>
-    <span class="mandatory"><!--[ pnml name="_FOR_MUSTBE" html=1 ]--></span>
+    <!--[ pnml name="_FOR_MUSTBE" html=1 ]--><span class="mandatory">*</span>
 </p>
 
 <p>
@@ -27,13 +27,13 @@
 </p>
 
 <p>
-    <label class="mandatory" for="uname"><!--[ pnml name="_FOR_NAME" html=1 ]-->&nbsp;:</label><br />
+    <label for="uname"><!--[ pnml name="_FOR_NAME" html=1 ]-->&nbsp;:<span class="mandatory">*</span></label><br />
     <input type="text" class="formborder required" id="uname" name="uname" size="40" maxlength="80" value="<!--[ $uname ]-->" />
 </p>
 <p id="advice-required-uname" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
 
 <p>
-    <label class="mandatory" for="uemail"><!--[ pnml name="_FOR_EMAIL" html=1 ]-->&nbsp;:</label><br />
+    <label for="uemail"><!--[ pnml name="_FOR_EMAIL" html=1 ]-->&nbsp;:<span class="mandatory">*</span></label><br />
     <input type="text" class="formborder required validate-email" id="uemail" name="uemail" size="40" maxlength="40" value="<!--[ $uemail ]-->" />
 </p>
 <p id="advice-validate-email-uemail" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_EMAIL' ]--></p>
@@ -69,7 +69,7 @@
 <!--[ /if ]-->
 
 <p>
-    <label class="mandatory" for="comment"><!--[ pnml name="_FOR_COMMENT" html=1 ]-->&nbsp;:</label><br />
+    <label for="comment"><!--[ pnml name="_FOR_COMMENT" html=1 ]-->&nbsp;:<span class="mandatory">*</span></label><br />
     <textarea class="formborder required" rows="6" cols="45" id="comment" name="comment"></textarea>
 </p>
 <p id="advice-required-comment" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
@@ -84,7 +84,7 @@
 
 <!--[ if $spamcheck eq 1 ]-->
 <p>
-    <label class="mandatory" for="formicula_captcha"><!--[ pnml name='_FOR_SIMPLEMATHEQUATION' ]--> : </label> <!--[ simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000']--> <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
+    <label for="formicula_captcha"><!--[ pnml name='_FOR_SIMPLEMATHEQUATION' ]--> :<span class="mandatory">*</span></label> <!--[ simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000']--> <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
 
 </p>
 <!--[ /if ]-->
