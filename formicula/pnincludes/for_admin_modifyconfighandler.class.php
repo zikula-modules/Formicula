@@ -56,6 +56,8 @@ class Formicula_admin_modifyconfighandler
             pnModSetVar('formicula', 'upload_dir',       $data['upload_dir']);
             pnModSetVar('formicula', 'spamcheck',        $data['spamcheck']);
             pnModSetVar('formicula', 'excludespamcheck', $data['excludespamcheck']);
+            
+            LogUtil::registerStatus(_FOR_CONFIGURATIONCHANGED);
         }
         return true;
     }

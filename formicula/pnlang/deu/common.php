@@ -20,6 +20,7 @@
 // ----------------------------------------------------------------------
 
 // new
+define('_FOR_CONFIGURATIONCHANGED', 'Die Konfiguration wurde aktualisiert.');
 define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp-Verzeichnis auﬂerhalb des Webroots gefunden, bitte das formicula_cache Verzeichnis manuell anlegen, wie in der Dokumentation beschrieben');
 
 //
