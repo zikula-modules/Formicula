@@ -1,21 +1,16 @@
 <?php
 /**
- * Avatar Module
+ * Formicula - the contact mailer for Zikula
+ * -----------------------------------------
  *
- * The Avatar module allows uploading of individual Avatars.
- * It is based on EnvoAvatar from A.T.Web, http://www.atw.it
- *
- * @package      Avatar
- * @version      $Id$
- * @author       Joerg Napp, Frank Schummertz
- * @link         http://lottasophie.sf.net, http://www.pn-cms.de
- * @copyright    Copyright (C) 2004-2007
- * @license      http://www.gnu.org/copyleft/gpl.html GNU General Public License
- */
-
-/**
- * Translated by
- * @author       Mateo Tibaquirá
+ * @copyright  (c) Formicula Development Team
+ * @link       http://code.zikula.org/formicula 
+ * @version    $Id$
+ * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
+ * @author     Frank Schummertz <frank@zikula.org>
+ * @author     Mateo Tibaquirá
+ * @package    Third_Party_Components
+ * @subpackage formicula
  */
 
 define('_FOR_DESC', 'Herramientas para crear todo tipo de formularios de contacto');
