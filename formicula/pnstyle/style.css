@@ -102,3 +102,18 @@
   width:50%;
 }
 
+
+/*---------------------------------------------------------*/
+/* Workaround: Clearfix-Modifikation for all IE-Versions   */
+/*
+** IE7 - x
+*/
+.pn-clearfix { display: inline-block; }
+/*
+** IE5.x/Win - x
+** IE6 - x
+*/
+* html .pn-clearfix { height: 1%; }
+.pn-clearfix { display: block; }
+
+/*--------------------------------------------------------*/
