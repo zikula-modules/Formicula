@@ -2,17 +2,22 @@
 <!--[* $Id$ *]-->
 
 <!--[ include file=formicula_admin_header.html ]-->
+<!--[ if $mode==create ]-->
+<!--[ pnml name=_FOR_ADDCONTACT html=1 assign=fortitle ]-->
+<!--[else]-->
+<!--[ pnml name=_FOR_EDITCONTACT html=1 assign=fortitle ]-->
+<!--[/if]-->
+
+<h3><!--[ $fortitle ]--></h3>
+<br class="pn-clearer" />
+
 <!--[ pnform ]-->
 <!--[ pnformvalidationsummary ]-->
 
 <fieldset>
-  <!--[ if $mode==create ]-->
-  <legend><!--[ pnml name=_FOR_ADDCONTACT html=1 ]--></legend>
-  <!--[ else ]-->
-  <legend><!--[ pnml name=_FOR_EDITCONTACT html=1 ]--></legend>
-  <!--[ /if ]-->
+  <legend><!--[ $fortitle ]--></legend>
 
-  <dl class="pn-clearfix">
+  <dl class="configrow">
     <dt><!--[ pnformlabel for="cname" text='_FOR_NAMEOFCONTACT' ]--></dt>
     <dd><!--[ pnformtextinput size="40" maxLength="40" id="cname" text=$contact.name ]--></dd>
 
@@ -24,7 +29,7 @@
   </dl>
 
   <div class="pn-warningmsg"><!--[pnml name="_FOR_SENDERINFO"]--></div>
-  <dl class="pn-clearfix">
+  <dl class="configrow">
     <dt><!--[ pnformlabel for="semail" text='_FOR_SENDEREMAIL' ]--></dt>
     <dd><!--[ pnformtextinput size="40" maxLength="40" id="semail" text=$contact.semail ]--></dd>
 

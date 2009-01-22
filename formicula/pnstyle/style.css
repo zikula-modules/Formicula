@@ -52,68 +52,40 @@
   color:red!important;
 }
 
-#formicula-admin {
-  /*  padding-top: 2em; */
-}
+/*******************************************************************************/
+/* Administration / Preferences
+/*******************************************************************************/
 
+#formicula-admin dl.configrow {
+  margin:0.5em;
+  min-height:0;
+}
+#formicula-admin dl.configrow dt {
+  clear:left;
+  float:left;
+  margin:0;
+  padding:0.5em 0;
+  text-align:right;
+  width:30%;
+}
+#formicula-admin dl.configrow dd {
+  margin:0 0 0 33%;
+  padding:0.5em 0;
+  text-align:left;
+}
+#formicula-admin dl.configrow dd:after {
+  content: ".";
+  display:block;
+  clear:left;
+  height:0;
+  visibility:hidden;
+}
+#formicula-admin dl.configrow dd div.pn-informationmsg {
+  margin-left:0;
+  margin-right:0;
+}
 #formicula-admin .footer {
   font-size: 0.8em;
   text-align: center;
   margin-top: 1em;
 }
-
-#formicula-admin .headerlink {
-  width: 33%;
-  float: left;
-  text-align: center;
-}
-
-#formicula-admin .error {
-  color: red;
-}
-
-#formicula-admin .delete {
-  text-align: center;
-}
-
-#formicula-admin td {
-  padding: 0.3em 0 0.3em 0.5em;
-  vertical-align: top;
-}
-
-#formicula-admin dl dt {
-  clear:both;
-  display:block;
-  float:left;
-  line-height:2em;
-  margin:0.5em;
-  padding:0;
-  text-align:right;
-  width:20%;
-}
-
-#formicula-admin dl dd {
-  display:block;
-  float:left;
-  line-height:2em;
-  margin:0.5em;
-  padding:0;
-  text-align:left;
-  width:50%;
-}
-
-
-/*---------------------------------------------------------*/
-/* Workaround: Clearfix-Modifikation for all IE-Versions   */
-/*
-** IE7 - x
-*/
-.pn-clearfix { display: inline-block; }
-/*
-** IE5.x/Win - x
-** IE6 - x
-*/
-* html .pn-clearfix { height: 1%; }
-.pn-clearfix { display: block; }
-
-/*--------------------------------------------------------*/
