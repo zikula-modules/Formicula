@@ -66,7 +66,6 @@ define('_FOR_DELETE','Borrar contacto' );
 define('_FOR_DELETECONTACT','Borrar contacto' );
 define('_FOR_DELETETABLEFAILED', 'No se pudo borrar la tabla');
 define('_FOR_DELETEUPLOADEDFILE','Borrar archivo después del envio' );
-define('_FOR_DESC', 'Herramientas para crear todo tipo de formularios de contacto');
 
 //
 // E

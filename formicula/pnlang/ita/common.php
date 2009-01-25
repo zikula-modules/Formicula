@@ -68,7 +68,6 @@ define('_FOR_DELETE','Elimina contatto' );
 define('_FOR_DELETECONTACT','Elimina contatto' );
 define('_FOR_DELETETABLEFAILED', 'impossibile eliminare la tabella');
 define('_FOR_DELETEUPLOADEDFILE','Elimina il file dopo aver spedito' );
-define('_FOR_DESC', 'Strumento per la creazione di contact form di ogni tipo');
 
 //
 // E
