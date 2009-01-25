@@ -136,7 +136,6 @@ define('_FOR_NOSUCHCONTACT', 'Unknown Contact');
 //
 define('_FOR_ONLINEAPPLYAS', 'Apply as' );
 define('_FOR_ONLINEBIRTHDATE', 'Date of birth' );
-define('_FOR_ONLINECOUNTRY', 'Country' );
 define('_FOR_ONLINEDATE', 'Entry date' );
 define('_FOR_ONLINEJOBAPPLY', 'Apply online!' );
 define('_FOR_ONLINEPRIVACY', 'Thanks for applying, we will keep your data strictly confidential' );

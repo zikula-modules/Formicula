@@ -137,7 +137,6 @@ define('_FOR_NOSUCHCONTACT', 'Contatto sconosciuto');
 //
 define('_FOR_ONLINEAPPLYAS', 'Fai domanda come' );
 define('_FOR_ONLINEBIRTHDATE', 'Data di nascita' );
-define('_FOR_ONLINECOUNTRY', 'Nazione' );
 define('_FOR_ONLINEDATE', 'Data della domanda' );
 define('_FOR_ONLINEJOBAPPLY', 'Fai domanda online!' );
 define('_FOR_ONLINEPRIVACY', 'Grazie per aver fatto domanda, manterremo i tuoi dati strettamente confidenziali' );
