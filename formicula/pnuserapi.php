@@ -270,7 +270,7 @@ function formicula_userapi_checkArguments($args)
     foreach($custom as $field) {
         if($field['mandatory'] == true) {
             if(!is_array($field['data']) && (empty($field['data']))) {
-                $ok = LogUtil::registerError(_FOR_ERRORNOMANDATORFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
+                $ok = LogUtil::registerError(_FOR_ERRORNOMANDATORYFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
             }
             if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
                 $ok = LogUtil::registerError(_FOR_ERRORUPLOADERROR);
