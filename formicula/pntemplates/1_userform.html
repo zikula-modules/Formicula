@@ -7,7 +7,7 @@
 <!--[ pnpageaddvar name="javascript" value="javascript/ajax/validation.js" ]-->
 <!--[ pnpageaddvar name="javascript" value="javascript/ajax/effects.js" ]-->
 
-<form id="contactform" action="<!--[ pnmodurl modname=formicula type=user func=send ]-->" method="post" enctype="multipart/form-data">
+<form id="contactform" action="<!--[ pnmodurl modname=formicula type=user func=send ]-->" method="post">
 <div>
 <input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module="formicula" ]-->" />
 <input type="hidden" name="form" value="1" />
@@ -104,7 +104,7 @@
 </p>
 
 <p style="clear: left;">
-    <label for="custom0data"><!--[ pnml name='_FOR_COMMENT' html=1 ]--> <span class="mandatory">*</span></label><br />
+    <label for="comment"><!--[ pnml name='_FOR_COMMENT' html=1 ]--> <span class="mandatory">*</span></label><br />
     <textarea class="formborder required" rows="10" cols="45" name="comment" id="comment"></textarea>
 </p>
 <p id="advice-required-comment" class="custom-advice" style="display:none"><!--[ pnml name='_FOR_ADVICE_MANDATORY' ]--></p>
