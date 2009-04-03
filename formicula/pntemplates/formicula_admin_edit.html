@@ -4,48 +4,47 @@
 <!--[ include file=formicula_admin_header.html ]-->
 <!--[ if $mode==create ]-->
 <!--[ pnml name=_FOR_ADDCONTACT html=1 assign=fortitle ]-->
-<!--[else]-->
+<!--[ else ]-->
 <!--[ pnml name=_FOR_EDITCONTACT html=1 assign=fortitle ]-->
-<!--[/if]-->
+<!--[ /if ]-->
 
-<h3><!--[ $fortitle ]--></h3>
-<br class="pn-clearer" />
-
-<!--[ pnform ]-->
+<h2><!--[ $fortitle ]--></h2>
+<!--[ cssversion assign=configclass ]-->
+<!--[ pnform cssClass=$configclass]-->
 <!--[ pnformvalidationsummary ]-->
 
 <fieldset>
-  <legend><!--[ $fortitle ]--></legend>
-
-  <dl class="configrow">
-    <dt><!--[ pnformlabel for="cname" text='_FOR_NAMEOFCONTACT' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="100" id="cname" text=$contact.name ]--></dd>
-
-    <dt><!--[ pnformlabel for="email" text='_FOR_EMAIL' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="100" id="email" text=$contact.email ]--></dd>
-
-    <dt><!--[ pnformlabel for="public" text='_FOR_PUBLIC' ]--></dt>
-    <dd><!--[ pnformcheckbox id="public" checked=$contact.public ]--></dd>
-  </dl>
-
-  <div class="pn-warningmsg"><!--[pnml name="_FOR_SENDERINFO"]--></div>
-  <dl class="configrow">
-    <dt><!--[ pnformlabel for="semail" text='_FOR_SENDEREMAIL' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="100" id="semail" text=$contact.semail ]--></dd>
-
-    <dt><!--[ pnformlabel for="sname" text='_FOR_SENDERNAME' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="480" id="sname" text=$contact.sname ]--></dd>
-
-    <dt><!--[ pnformlabel for="ssubject" text='_FOR_SENDERSUBJECT' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="100" id="ssubject" text=$contact.ssubject ]-->
-      <div class="pn-informationmsg"><!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1]--></div>
-    </dd>
-
-  </dl>
+    <legend><!--[ $fortitle ]--></legend>
+    <div class="<!--[$configclass]-->row">
+        <!--[ pnformlabel for="cname" text='_FOR_NAMEOFCONTACT' ]-->
+        <!--[ pnformtextinput size="40" maxLength="100" id="cname" text=$contact.name ]-->
+    </div>
+    <div class="<!--[$configclass]-->row">
+        <!--[ pnformlabel for="email" text='_FOR_EMAIL' ]-->
+        <!--[ pnformtextinput size="40" maxLength="100" id="email" text=$contact.email ]-->
+    </div>
+    <div class="<!--[$configclass]-->row">
+        <!--[ pnformlabel for="public" text='_FOR_PUBLIC' ]-->
+        <!--[ pnformcheckbox id="public" checked=$contact.public ]-->
+    </div>
+    <p class="zk-formnote pn-warningmsg"><!--[pnml name="_FOR_SENDERINFO"]--></p>
+    <div class="<!--[$configclass]-->row">
+        <!--[ pnformlabel for="semail" text='_FOR_SENDEREMAIL' ]-->
+        <!--[ pnformtextinput size="40" maxLength="100" id="semail" text=$contact.semail ]-->
+    </div>
+    <div class="<!--[$configclass]-->row">
+        <!--[ pnformlabel for="sname" text='_FOR_SENDERNAME' ]-->
+        <!--[ pnformtextinput size="40" maxLength="480" id="sname" text=$contact.sname ]-->
+    </div>
+    <div class="<!--[$configclass]-->row">
+        <!--[ pnformlabel for="ssubject" text='_FOR_SENDERSUBJECT' ]-->
+        <!--[ pnformtextinput size="40" maxLength="100" id="ssubject" text=$contact.ssubject ]-->
+    </div>
+    <div class="zk-formnote pn-informationmsg"><!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1]--></div>
 </fieldset>
 
-<div class="pn-formrow pn-formbuttons">
-  <!--[pnformbutton id="submit" commandName="submit" text="_SUBMIT"]-->
+<div class="<!--[$configclass]-->buttons">
+    <!--[pnformbutton id="submit" commandName="submit" text="_SUBMIT"]-->
 </div>
 
 <!--[ /pnform ]-->
