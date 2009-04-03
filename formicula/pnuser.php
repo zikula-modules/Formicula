@@ -116,7 +116,7 @@ function formicula_user_send($args=array())
     }
 
     // remove tags from comment to avoid spam
-    $comments = strip_tags($comments);
+    $ud['comment'] = strip_tags($ud['comment']);
 
     // check captcha
     $spamcheck = pnModGetVar('formicula', 'spamcheck');
