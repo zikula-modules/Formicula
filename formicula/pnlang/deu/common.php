@@ -26,8 +26,10 @@ define('_FOR_ACTIVATESPAMCHECK_HINT', 'Dies erfordert u.U. Anpassungen an den Te
 define('_FOR_ADDCONTACT', 'Kontakt hinzufügen' );
 define('_FOR_ADMINMAIL1', 'ein Besucher der Seite hat das Kontaktformular genutzt und folgendes mitgeteilt:' );
 define('_FOR_ADMINMAIL2', 'Der Nutzer hat folgende IP-Adresse/Hostname: ' );
+define('_FOR_ADVICE_DATE', 'Bitte ein gültiges Datum eingeben.');
 define('_FOR_ADVICE_EMAIL', 'Bitte eine gültige E-Mailadresse in der Form name@domain.de eingeben.');
 define('_FOR_ADVICE_MANDATORY', 'Dies ist ein Pflichtfeld, bitte ausfüllen.');
+define('_FOR_ADVICE_NUMBER', 'Bitte nur Zahlenwerte eingeben.');
 define('_FOR_ADVICE_URL', 'Bitte eine gültige Internetadresse in der Form http://www.domain.de eingeben.');
 define('_FOR_ALTERTABLEFAILED', 'konnte Tabelle nicht ändern');
 

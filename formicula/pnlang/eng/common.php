@@ -26,8 +26,10 @@ define('_FOR_ACTIVATESPAMCHECK_HINT', 'Make sure you the necessary form fields<b
 define('_FOR_ADDCONTACT','Add contact' );
 define('_FOR_ADMINMAIL1', 'A visitor of to your web site used the form for contact and sent the following:' );
 define('_FOR_ADMINMAIL2', 'The user has the following IP address/hostname: ' );
+define('_FOR_ADVICE_DATE', 'Please enter a valid date.');
 define('_FOR_ADVICE_EMAIL', 'Please enter a valid emailaddress like user@example.com.');
 define('_FOR_ADVICE_MANDATORY', 'This is a mandatory field.');
+define('_FOR_ADVICE_NUMBER', 'Please use only numeric characters.');
 define('_FOR_ADVICE_URL', 'Please enter a valid internet address like http://www.example.com.');
 define('_FOR_ALTERTABLEFAILED', 'could not alter table');
 
