@@ -13,7 +13,8 @@
 <!--[ pnml name='_FOR_PHONE' ]--> : <!--[ $userdata.phone ]-->
 <!--[ pnml name='_FOR_LOCATION' ]--> : <!--[ $userdata.location ]-->
 
-<!--[ pnml name='_FOR_COMMENT' ]--> : <!--[ $userdata.comment|pnvarprepfordisplay ]-->
+<!--[ pnml name='_FOR_COMMENT' ]--> :
+<!--[ $userdata.comment|pnvarprepfordisplay ]-->
 
 <!--[ pnml name='_FOR_USERMAIL2' ]-->
 
