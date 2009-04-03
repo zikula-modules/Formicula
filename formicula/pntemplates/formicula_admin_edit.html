@@ -19,10 +19,10 @@
 
   <dl class="configrow">
     <dt><!--[ pnformlabel for="cname" text='_FOR_NAMEOFCONTACT' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="40" id="cname" text=$contact.name ]--></dd>
+    <dd><!--[ pnformtextinput size="40" maxLength="100" id="cname" text=$contact.name ]--></dd>
 
     <dt><!--[ pnformlabel for="email" text='_FOR_EMAIL' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="40" id="email" text=$contact.email ]--></dd>
+    <dd><!--[ pnformtextinput size="40" maxLength="100" id="email" text=$contact.email ]--></dd>
 
     <dt><!--[ pnformlabel for="public" text='_FOR_PUBLIC' ]--></dt>
     <dd><!--[ pnformcheckbox id="public" checked=$contact.public ]--></dd>
@@ -31,13 +31,13 @@
   <div class="pn-warningmsg"><!--[pnml name="_FOR_SENDERINFO"]--></div>
   <dl class="configrow">
     <dt><!--[ pnformlabel for="semail" text='_FOR_SENDEREMAIL' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="40" id="semail" text=$contact.semail ]--></dd>
+    <dd><!--[ pnformtextinput size="40" maxLength="100" id="semail" text=$contact.semail ]--></dd>
 
     <dt><!--[ pnformlabel for="sname" text='_FOR_SENDERNAME' ]--></dt>
     <dd><!--[ pnformtextinput size="40" maxLength="480" id="sname" text=$contact.sname ]--></dd>
 
     <dt><!--[ pnformlabel for="ssubject" text='_FOR_SENDERSUBJECT' ]--></dt>
-    <dd><!--[ pnformtextinput size="40" maxLength="40" id="ssubject" text=$contact.ssubject ]-->
+    <dd><!--[ pnformtextinput size="40" maxLength="100" id="ssubject" text=$contact.ssubject ]-->
       <div class="pn-informationmsg"><!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1]--></div>
     </dd>
 
