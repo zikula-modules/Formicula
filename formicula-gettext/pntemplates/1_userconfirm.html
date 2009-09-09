@@ -1,0 +1,70 @@
+<!--[* Smartytemplate *]-->
+<!--[* $Id$ *]-->
+
+<!--[ include file=1_userheader.html ]-->
+
+<div style="text-align: center;">
+    <!--[ pnml name='_FOR_SENDTOADMIN' html=1 ]-->
+    <br /><br />
+    <!--[ pnml name='_FOR_ONLINEPRIVACY' html=1 ]-->
+    <br /><br />
+</div>
+
+<table width="80%">
+
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            <!--[ pnml name='_FOR_NAME' ]-->&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            <!--[ $userdata.uname|pnvarprephtmldisplay ]-->
+        </td>
+    </tr>
+
+    <!--[ foreach item=field from=$custom ]-->
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            <!--[ $field.name ]-->&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            <!--[ $field.data ]-->
+        </td>
+    </tr>
+    <!--[ /foreach ]-->
+
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            <!--[ pnml name='_FOR_EMAIL' ]-->&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            <!--[ $userdata.uemail|pnvarprephtmldisplay ]-->
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            <!--[ pnml name='_FOR_URL' ]-->&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            <!--[ $userdata.url|pnvarprephtmldisplay ]-->
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            <!--[ pnml name='_FOR_COMMENT' ]-->&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            <!--[ $userdata.comment|pnvarprephtmldisplay|nl2br ]-->
+        </td>
+    </tr>
+
+</table>
+
+<br />
+<!--[ if $sendtouser==true ]-->
+<!--[ pnml name='_FOR_SENDTOUSER' ]-->
+<!--[ else ]-->
+<!--[ pnml name='_FOR_ERRORSENDINGUSERMAIL' ]-->
+<!--[ /if ]-->
+
