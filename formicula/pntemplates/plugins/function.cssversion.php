@@ -19,7 +19,7 @@ function smarty_function_cssversion($params, &$smarty)
     $assign = isset($params['assign']) ? $params['assign'] : null;
 
     if (version_compare(PN_VERSION_NUM, '1.2.0-dev', '>=')) {
-        $return = 'zk-form';
+        $return = 'z-form';
     } else {
         $return = 'pn-adminform';
     }
