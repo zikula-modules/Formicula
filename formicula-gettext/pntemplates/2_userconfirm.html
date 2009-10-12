@@ -1,0 +1,72 @@
+<!--[* Smartytemplate *]-->
+<!--[* $Id *]-->
+
+<!--[ include file=2_userheader.html ]-->
+
+<p class="z-informationmsg"><!--[ pnml name='_FOR_THANKS' html=1 ]--></p>
+
+<form class="z-form" action="<!--[ pnmodurl modname=formicula type=user func=main ]-->" method="post">
+    <fieldset>
+        <legend><!--[ pnml name='_FOR_SENDTOADMIN' html=1 ]--></legend>
+
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_THEME' html=1 ]--></label>
+            <span><!--[ $contact.name|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_NAME' html=1 ]--></label>
+            <span><!--[ $userdata.uname|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+
+        <!--[ pnmodgetvar module=formicula name=show_company assign=show_company ]-->
+        <!--[ if $show_company==1 ]-->
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_COMPANY' html=1 ]--></label>
+            <span><!--[ $userdata.company|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+        <!--[ /if ]-->
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_EMAIL' html=1 ]--></label>
+            <span><!--[ $userdata.uemail|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+
+        <!--[ pnmodgetvar module=formicula name=show_url assign=show_url ]-->
+        <!--[ if $show_url==1 ]-->
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_URL' html=1 ]--></label>
+            <span><!--[ $userdata.url|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+        <!--[ /if ]-->
+
+        <!--[ pnmodgetvar module=formicula name=show_phone assign=show_phone ]-->
+        <!--[ if $show_phone==1 ]-->
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_PHONE' html=1 ]--></label>
+            <span><!--[ $userdata.phone|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+        <!--[ /if ]-->
+
+        <!--[ pnmodgetvar module=formicula name=show_location assign=show_location ]-->
+        <!--[ if $show_location==1 ]-->
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_LOCATION' html=1 ]--></label>
+            <span><!--[ $userdata.location|pnvarprephtmldisplay|default:"&nbsp;" ]--></span>
+        </div>
+        <!--[ /if ]-->
+
+        <div class="z-formrow">
+            <label><!--[ pnml name='_FOR_COMMENT' html=1 ]--></label>
+            <div><!--[ $userdata.comment|pnvarprephtmldisplay|nl2br|default:"&nbsp;" ]--></div>
+        </div>
+
+    </fieldset>
+</form>
+
+<p class="z-sub">
+    <!--[ if $sendtouser==true ]-->
+    <!--[ pnml name='_FOR_SENDTOUSER' html=1 ]-->
+    <!--[ else ]-->
+    <!--[ pnml name='_FOR_ERRORSENDINGUSERMAIL' html=1 ]-->
+    <!--[ /if ]-->
+</p>

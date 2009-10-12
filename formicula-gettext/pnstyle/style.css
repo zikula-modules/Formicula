@@ -15,7 +15,8 @@
   margin-right: 0.5em;
 }
 
-#contactform .mandatory {
+#contactform .mandatory,
+#contactform2 .mandatory {
   color: red;
   margin-left: 0.5em;
 }
@@ -44,11 +45,13 @@
   width: 99%;
 }
 
-#contactform .validation-failed {
+#contactform .validation-failed,
+#contactform2 .validation-failed {
   border: 1px solid red!important;
 }
 
-#contactform .custom-advice {
+#contactform .custom-advice,
+#contactform2 .custom-advice {
   color:red!important;
 }
 

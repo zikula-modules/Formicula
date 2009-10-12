@@ -1,17 +1,19 @@
 <!--[* Smartytemplate *]-->
-<!--[* $Id$ *]-->
+<!--[* $Id *]-->
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
     <head>
-        <title>formicula_user_html_email</title>
+        <title>formicula_admin_html_email</title>
         <meta http-equiv="Content-Type" content="text/html; charset=<!--[ pnml name='_CHARSET' ]-->" />
     </head>
     <body>
         <p>
             <!--[ pnml name='_FOR_HELLO' ]--><br />
             <br />
-            <!--[ pnml name='_FOR_USERMAIL1' ]--><br />
+            <!--[ pnml name='_FOR_ADMINMAIL1' ]--> <br />
             <br />
+            <!--[ pnml name='_FOR_FORMNUMBER' ]--> : <!--[ $form ]--><br />
             <!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]--><br />
             <!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]--><br />
             <!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]--><br />
@@ -20,11 +22,10 @@
             <!--[ pnml name='_FOR_PHONE' ]--> : <!--[ $userdata.phone ]--><br />
             <!--[ pnml name='_FOR_LOCATION' ]--> : <!--[ $userdata.location ]--><br />
             <br />
-            <!--[ pnml name='_FOR_COMMENT' html=1 ]--> : <!--[ $userdata.comment|pnvarprephtmldisplay|nl2br ]--><br />
+            <!--[ pnml name='_FOR_COMMENT' ]--> : <!--[ $userdata.comment|pnvarprephtmldisplay|nl2br ]--> <br />
             <br />
-            <!--[ pnml name='_FOR_USERMAIL2' ]--><br />
+            <!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> <br />
             <br />
-            <!--[ pnml name='_FOR_THE' ]--> <!--[ $sitename ]--> <!--[ pnml name='_FOR_TEAM' html=1 ]--><br />
-        <br /></p>
+        </p>
     </body>
 </html>
