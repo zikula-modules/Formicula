@@ -8,7 +8,7 @@
     <fieldset>
         <legend><!--[ pnml name=_FOR_DELETECONTACT html=1 ]--></legend>
         <input type="hidden" name="cid" value="<!--[ $contact.cid ]-->" />
-        <input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module=formicula ]-->" />
+        <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="formicula" ]-->" />
         <div class="z-formrow">
             <span class="z-label"><!--[ pnml name="_FOR_NAMEOFCONTACT" ]--></span>
             <span><!--[ $contact.name|pnvarprepfordisplay ]--></span>

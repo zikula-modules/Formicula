@@ -12,7 +12,7 @@
 
 <form id="contactform2" class="z-form" action="<!--[ pnmodurl modname=formicula type=user func=send ]-->" method="post">
     <fieldset>
-        <input type="hidden" name="authid" value="<!--[ pnsecgenauthkey module="formicula" ]-->" />
+        <input type="hidden" name="authid" value="<!--[insert name="generateauthkey" module="formicula" ]-->" />
         <input type="hidden" name="form" value="2" />
         <input type="hidden" name="adminformat" value="html" />
 
@@ -21,7 +21,9 @@
             <label for="cid"><!--[ pnml name="_FOR_THEME" html=1 ]--></label>
             <select class="formborder" id="cid" name="cid">
                 <!--[ foreach item=contact from=$contacts ]-->
+                <!--[ if $contact.public == "1" ]-->
                 <option value="<!--[ $contact.cid ]-->"><!--[ $contact.name ]--></option>
+                <!--[ /if ]-->
                 <!--[ /foreach ]-->
             </select>
         </div>
