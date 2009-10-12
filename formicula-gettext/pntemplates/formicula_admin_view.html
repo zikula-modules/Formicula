@@ -1,10 +1,9 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
-
 <!--[ include file=formicula_admin_header.html ]-->
 <h2><!--[ pnml name=_FOR_VIEWCONTACT html=1 ]--></h2>
 
-<table class="pn-admintable pn-clearer">
+<table class="z-admintable z-clearer">
     <thead>
         <tr>
             <th><!--[ pnml name='_FOR_CONTACTID' ]--></th>
@@ -16,7 +15,7 @@
     </thead>
     <tbody>
         <!--[ foreach item=contact from=$contacts ]-->
-        <tr class="<!--[cycle values="pn-odd,pn-even" name=contacts]-->">
+        <tr class="<!--[cycle values="z-odd,z-even" name=contacts]-->">
             <td><!--[ $contact.cid ]--></td>
             <td><!--[ $contact.name ]--></td>
             <td><!--[ $contact.email ]--></td>
@@ -29,10 +28,10 @@
             </td>
             <td>
                 <!--[ if $contact.acc_edit==true ]-->
-                <a href="<!--[ pnmodurl modname=Formicula type=admin func=edit cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_EDIT" ]-->"><!--[ pnimg src="xedit.gif" modname="core" set="icons/extrasmall" alt="_FOR_EDIT" altml=true ]--></a>
+                <a href="<!--[ pnmodurl modname=formicula type=admin func=edit cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_EDIT" ]-->"><!--[ pnimg src="xedit.gif" modname="core" set="icons/extrasmall" alt="_FOR_EDIT" altml=true ]--></a>
                 <!--[ /if ]-->
                 <!--[ if $contact.acc_delete==true ]-->
-                &nbsp;&nbsp;<a href="<!--[ pnmodurl modname=Formicula type=admin func=delete cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_DELETE" ]-->"><!--[ pnimg src="14_layer_deletelayer.gif" modname="core" set="icons/extrasmall" alt="_FOR_DELETE" altml=true ]--></a>
+                &nbsp;&nbsp;<a href="<!--[ pnmodurl modname=formicula type=admin func=delete cid=$contact.cid ]-->" title="<!--[ pnml name="_FOR_DELETE" ]-->"><!--[ pnimg src="14_layer_deletelayer.gif" modname="core" set="icons/extrasmall" alt="_FOR_DELETE" altml=true ]--></a>
                 <!--[ /if ]-->
             </td>
         </tr>

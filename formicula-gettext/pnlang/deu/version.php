@@ -12,4 +12,4 @@
  * @subpackage formicula
  */
 
-define('_FOR_DESC', 'Werkzeug für Kontaktformulare aller Art');
+define('_FOR_DESC', 'Werkzeug fÃ¼r Kontaktformulare aller Art');

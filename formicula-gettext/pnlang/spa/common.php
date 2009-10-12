@@ -22,41 +22,41 @@ define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp folder found outside of 
 //
 // A
 //
-define('_FOR_ACTIVATESPAMCHECK', 'Activar verificaciÛn antispam');
-define('_FOR_ACTIVATESPAMCHECK_HINT', 'Aseg˙rate de que los campos del formulario necesarios<br />est·n disponibles, mira los documentos para m·s informaciÛn. Esta opciÛn ser· desactivada por Formicula autom·ticamente si no existen las funciones de PHP para crear im·genes');
-define('_FOR_ADDCONTACT','AÒadir contacto' );
-define('_FOR_ADMINMAIL1', 'un visitante de tu sitio web usÛ el formulario de contacto y enviÛ lo siguiente:' );
-define('_FOR_ADMINMAIL2', 'El usuario tenÌa la siguiente direcciÛn IP (o nombre de host): ' );
-define('_FOR_ADVICE_EMAIL', 'Por favor digita un correo electrÛnico v·lido como usuario@ejemplo.com.');
+define('_FOR_ACTIVATESPAMCHECK', 'Activar verificaci√≥n antispam');
+define('_FOR_ACTIVATESPAMCHECK_HINT', 'Aseg√∫rate de que los campos del formulario necesarios<br />est√°n disponibles, mira los documentos para m√°s informaci√≥n. Esta opci√≥n ser√° desactivada por Formicula autom√°ticamente si no existen las funciones de PHP para crear im√°genes');
+define('_FOR_ADDCONTACT','A√±adir contacto' );
+define('_FOR_ADMINMAIL1', 'un visitante de tu sitio web us√≥ el formulario de contacto y envi√≥ lo siguiente:' );
+define('_FOR_ADMINMAIL2', 'El usuario ten√≠a la siguiente direcci√≥n IP (o nombre de host): ' );
+define('_FOR_ADVICE_EMAIL', 'Por favor digita un correo electr√≥nico v√°lido como usuario@ejemplo.com.');
 define('_FOR_ADVICE_MANDATORY', 'Este es un campo obligatorio.');
-define('_FOR_ADVICE_URL', 'Por favor digita una direcciÛn de internet v·lida como http://www.ejemplo.com.');
+define('_FOR_ADVICE_URL', 'Por favor digita una direcci√≥n de internet v√°lida como http://www.ejemplo.com.');
 define('_FOR_ALTERTABLEFAILED', 'no se pudo alterar la tabla');
 
 //
 // B
 //
 define('_FOR_BACK', 'Volver al formulario de contacto' );
-define('_FOR_BADAUTHKEY', 'Clave de autorizaciÛn no v·lida');
+define('_FOR_BADAUTHKEY', 'Clave de autorizaci√≥n no v√°lida');
 
 //
 // C
 //
 define('_FOR_CACHEDIRPROBLEM', 'La carpeta formicula_cache no existe en la carpeta temporal de Zikula\'s o no es escribible - las captchas fueron deshabilitadas');
-define('_FOR_CANCELDELETE','Cancelar eliminaciÛn de rutina' );
+define('_FOR_CANCELDELETE','Cancelar eliminaci√≥n de rutina' );
 define('_FOR_CLEARIMAGECACHE', 'Clear captcha image cache' );
 define('_FOR_COMMENT', 'Comentario' );
 define('_FOR_COMPANY', 'Empresa' );
-define('_FOR_CONFIRMDELETE','Click aquÌ para borrar este contacto' );
+define('_FOR_CONFIRMDELETE','Click aqu√≠ para borrar este contacto' );
 define('_FOR_CONTACTCREATED', 'Contacto creado');
 define('_FOR_CONTACTDELETED', 'El contacto ha sido borrado');
 define('_FOR_CONTACTFORM', 'Formulario de Contacto');
 define('_FOR_CONTACTID','ID' );
 define('_FOR_CONTACTNAME','Nombre');
-define('_FOR_CONTACTTITLE', 'Cont·ctenos' );
-define('_FOR_CONTACTUPDATED', 'La informaciÛn del contacto ha sido actualizada');
+define('_FOR_CONTACTTITLE', 'Cont√°ctenos' );
+define('_FOR_CONTACTUPDATED', 'La informaci√≥n del contacto ha sido actualizada');
 define('_FOR_CREATECONTACTFAILED', 'Error creando el contacto!');
-define('_FOR_CREATEFILESFAILED', 'El instalador no pudo crear el archivo formicula_cache/index.html y/o formicula_cache/.htaccess, por favor lee el manual antes de usar el mÛdulo!');
-define('_FOR_CREATEFOLDERFAILED', 'El instalador no pudo crear la carpeta formicula_cache, por favor lee el manual antes de usar el mÛdulo!');
+define('_FOR_CREATEFILESFAILED', 'El instalador no pudo crear el archivo formicula_cache/index.html y/o formicula_cache/.htaccess, por favor lee el manual antes de usar el m√≥dulo!');
+define('_FOR_CREATEFOLDERFAILED', 'El instalador no pudo crear la carpeta formicula_cache, por favor lee el manual antes de usar el m√≥dulo!');
 define('_FOR_CREATETABLEFAILED', 'El instalador no pudo crear la tabla formcontacts');
 
 //
@@ -65,28 +65,28 @@ define('_FOR_CREATETABLEFAILED', 'El instalador no pudo crear la tabla formconta
 define('_FOR_DELETE','Borrar contacto' );
 define('_FOR_DELETECONTACT','Borrar contacto' );
 define('_FOR_DELETETABLEFAILED', 'No se pudo borrar la tabla');
-define('_FOR_DELETEUPLOADEDFILE','Borrar archivo despuÈs del envio' );
+define('_FOR_DELETEUPLOADEDFILE','Borrar archivo despu√©s del envio' );
 
 //
 // E
 //
 define('_FOR_EDIT','Editar contacto' );
-define('_FOR_EDITCONFIG','Modificar configuraciÛn' );
+define('_FOR_EDITCONFIG','Modificar configuraci√≥n' );
 define('_FOR_EDITCONTACT','Editar contacto' );
-define('_FOR_EMAIL','Correo electrÛnico' );
-define('_FOR_EMAILFROM', 'Correo electrÛnico de');
+define('_FOR_EMAIL','Correo electr√≥nico' );
+define('_FOR_EMAILFROM', 'Correo electr√≥nico de');
 define('_FOR_ERROR', 'Hay un error en tu formulario' );
-define('_FOR_ERRORCOMMENT', 'Error: El comentario no fue suministrado o no es v·lido (HTML prohibido!)');
+define('_FOR_ERRORCOMMENT', 'Error: El comentario no fue suministrado o no es v√°lido (HTML prohibido!)');
 define('_FOR_ERRORCONTACT', 'Error: No escogiste el nombre del contacto');
 define('_FOR_ERRORCREATINGCONTACT', 'No se pudo crear el contacto!');
-define('_FOR_ERROREMAIL', 'Error: El correo electrÛnico no fue suministrado o no es v·lido');
-define('_FOR_ERRORINVALIDEMAIL', 'Error: Correo electrÛnico suministrado incorrecto');
+define('_FOR_ERROREMAIL', 'Error: El correo electr√≥nico no fue suministrado o no es v√°lido');
+define('_FOR_ERRORINVALIDEMAIL', 'Error: Correo electr√≥nico suministrado incorrecto');
 define('_FOR_ERRORNOMANDATORYFIELD', 'Error: falta campo obligatorio');
 define('_FOR_ERRORSENDINGMAIL', 'Hubo un error enviando el correo.');
-define('_FOR_ERRORSENDINGUSERMAIL', 'Hubo un error interno enviando el correo de confirmaciÛn' );
+define('_FOR_ERRORSENDINGUSERMAIL', 'Hubo un error interno enviando el correo de confirmaci√≥n' );
 define('_FOR_ERRORUPLOADERROR', 'Error: Error subiendo archivo');
 define('_FOR_ERRORUSERNAME', 'Error: Nombre de usuario no suministradono username');
-define('_FOR_EXCLUDEFROMSPAMCHECK', 'No usar verificaciÛn antispam en estos formularios');
+define('_FOR_EXCLUDEFROMSPAMCHECK', 'No usar verificaci√≥n antispam en estos formularios');
 define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Llista de los ods de formularios separados por comas, ej. formularios embebidos en pagesetter. El redireccionamiento quizas no funcione correctamente aqui');
 
 //
@@ -105,12 +105,12 @@ define('_FOR_HTMLMAIL', 'HTML' );
 //
 // I
 //
-define('_FOR_ILLEGALEMAIL', 'Correo electrÛnico inv·lido detectado');
+define('_FOR_ILLEGALEMAIL', 'Correo electr√≥nico inv√°lido detectado');
 
 //
 // L
 //
-define('_FOR_LOCATION', 'UbicaciÛn' );
+define('_FOR_LOCATION', 'Ubicaci√≥n' );
 
 //
 // M
@@ -122,12 +122,12 @@ define('_FOR_MUSTBE', 'Campo obligatorio' );
 //
 define('_FOR_NAME', 'Tu nombre' );
 define('_FOR_NAMEOFCONTACT','Nombre del contacto' );
-define('_FOR_NOAUTH', 'No tienes autorizaciÛn para ejecutar esta acciÛn.');
-define('_FOR_NOAUTHFORFORM', 'No tienes autorizaciÛn para ver este formulario.');
+define('_FOR_NOAUTH', 'No tienes autorizaci√≥n para ejecutar esta acci√≥n.');
+define('_FOR_NOAUTHFORFORM', 'No tienes autorizaci√≥n para ver este formulario.');
 define('_FOR_NOCONTACTS', 'No se encontraron contactos.');
 define('_FOR_NOFORMSELECTED', 'no form selected');
-define('_FOR_NOIMAGEFUNCTION', 'funciones de PHP para manipular im·genes no disponibles - captcha desactivado');
-define('_FOR_NOMAILERMODULE', 'El mÛdulo de correo no est· disponible - incapaz de enviar correos!');
+define('_FOR_NOIMAGEFUNCTION', 'funciones de PHP para manipular im√°genes no disponibles - captcha desactivado');
+define('_FOR_NOMAILERMODULE', 'El m√≥dulo de correo no est√° disponible - incapaz de enviar correos!');
 define('_FOR_NOSUCHCONTACT', 'Contacto desconocido');
 
 //
@@ -136,7 +136,7 @@ define('_FOR_NOSUCHCONTACT', 'Contacto desconocido');
 define('_FOR_ONLINEAPPLYAS', 'Aplicar como' );
 define('_FOR_ONLINEBIRTHDATE', 'fecha de nacimiento' );
 define('_FOR_ONLINEDATE', 'Fecha de entrada' );
-define('_FOR_ONLINEJOBAPPLY', 'Aplicar en lÌnea!' );
+define('_FOR_ONLINEJOBAPPLY', 'Aplicar en l√≠nea!' );
 define('_FOR_ONLINEPRIVACY', 'Gracias por aplicar, mantendremos tus datos en estricta confidencialidad' );
 define('_FOR_ONLINESALARY', 'Salario' );
 define('_FOR_ONLINESTREET', 'Calle' );
@@ -146,8 +146,8 @@ define('_FOR_OPTIONS','Opciones' );
 //
 // P
 //
-define('_FOR_PHONE', 'N˙mero telefÛnico' );
-define('_FOR_PUBLIC', 'P˙blico' );
+define('_FOR_PHONE', 'N√∫mero telef√≥nico' );
+define('_FOR_PUBLIC', 'P√∫blico' );
 
 //
 // R
@@ -159,7 +159,7 @@ define('_FOR_RESUME','Reanudar');
 //
 define('_FOR_SEND', 'Enviar' );
 define('_FOR_SENDEREMAIL', 'Correo del remitente');
-define('_FOR_SENDERINFO', 'Usar esta informaciÛn en el correo de confirmaciÛn a los usuarios');
+define('_FOR_SENDERINFO', 'Usar esta informaci√≥n en el correo de confirmaci√≥n a los usuarios');
 define('_FOR_SENDERNAME', 'Nombre del remitente');
 define('_FOR_SENDERSUBJECT', 'Asunto');
 define('_FOR_SENDERSUBJECTHINT', '
@@ -172,23 +172,23 @@ con <ul>
     <li>%d&lt;num&gt; = dato de campo definido por el usuario &lt;num&gt;</li>
 </ul>
 ');
-define('_FOR_SENDTOADMIN', 'Esta informaciÛn fue enviada a nosotros:');
-define('_FOR_SENDTOUSER', 'Una confirmaciÛn de tu envio ser· enviada a tu correo electrÛnico en unos minutos.' );
+define('_FOR_SENDTOADMIN', 'Esta informaci√≥n fue enviada a nosotros:');
+define('_FOR_SENDTOUSER', 'Una confirmaci√≥n de tu envio ser√° enviada a tu correo electr√≥nico en unos minutos.' );
 define('_FOR_SENDUSER','Send confirmation email to user?' );
 define('_FOR_SHOWCOMMENT', 'Mostrar texto para el comentario' );
 define('_FOR_SHOWCOMPANY','Mostrar empresa?' );
-define('_FOR_SHOWLOCATION','Mostrar ubicaciÛn?' );
-define('_FOR_SHOWPHONE','Mostrar n˙mero telefÛnico?' );
+define('_FOR_SHOWLOCATION','Mostrar ubicaci√≥n?' );
+define('_FOR_SHOWPHONE','Mostrar n√∫mero telef√≥nico?' );
 define('_FOR_SHOWURL','Mostrar URL?' );
-define('_FOR_SIMPLEMATHEQUATION', 'Por favor soluciona esta simple ecuaciÛn matem·tica');
-define('_FOR_SUBMIT', 'Actualizar configuraciÛn' );
+define('_FOR_SIMPLEMATHEQUATION', 'Por favor soluciona esta simple ecuaci√≥n matem√°tica');
+define('_FOR_SUBMIT', 'Actualizar configuraci√≥n' );
 
 //
 // T
 //
 define('_FOR_TEAM', 'Equipo' );
 define('_FOR_TEXTMAIL', 'Texto' );
-define('_FOR_THANKS', 'Gracias por tus preguntas/comentarios a nuestro sitio web!<br>Te responderemos lo m·s pronto posible.' );
+define('_FOR_THANKS', 'Gracias por tus preguntas/comentarios a nuestro sitio web!<br>Te responderemos lo m√°s pronto posible.' );
 define('_FOR_THE', 'El' );
 define('_FOR_THEME', 'Contacto' );
 
@@ -200,12 +200,12 @@ define('_FOR_UPLOADDIRNOTWRITABLE','El servidor web no puede escribir en esta ca
 define('_FOR_UPLOADERROR1', 'error de carga: archivo muy grande (php.ini)' );
 define('_FOR_UPLOADERROR2', 'error de carga: archivo muy grande (formulario)' );
 define('_FOR_UPLOADERROR3', 'error de carga: archivo recibido parcialmente' );
-define('_FOR_UPLOADERROR4', 'error de carga: no se recibiÛ ning˙n archivo' );
+define('_FOR_UPLOADERROR4', 'error de carga: no se recibi√≥ ning√∫n archivo' );
 define('_FOR_UPLOADFILEDIR', 'Carpeta para subir archivos' );
 define('_FOR_UPLOADLIMIT', '(Subir, max. 2MB)');
-define('_FOR_URL', 'P·gina de inicio' );
+define('_FOR_URL', 'P√°gina de inicio' );
 define('_FOR_USERMAIL1', 'Gracias por los comentarios enviados desde nuestro sitio Web. Los datos enviados son:' );
-define('_FOR_USERMAIL2', 'Te responderemos a tu correo lo m·s pronto posiible.' );
+define('_FOR_USERMAIL2', 'Te responderemos a tu correo lo m√°s pronto posiible.' );
 define('_FOR_USERMAILFORMAT', 'Formato del correo' );
 
 //
@@ -217,5 +217,5 @@ define('_FOR_VISITHOMEPAGE', 'Visitar Formicula en el http://code.zikula.org');
 //
 // W
 //
-define('_FOR_WRONGCAPTCHA', 'Mal en matem·ticas? Puedes hacerlo mejor, intenta de nuevo.');
+define('_FOR_WRONGCAPTCHA', 'Mal en matem√°ticas? Puedes hacerlo mejor, intenta de nuevo.');
 

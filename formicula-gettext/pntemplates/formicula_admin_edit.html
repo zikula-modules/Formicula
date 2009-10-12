@@ -9,41 +9,40 @@
 <!--[ /if ]-->
 
 <h2><!--[ $fortitle ]--></h2>
-<!--[ cssversion assign=configclass ]-->
-<!--[ pnform cssClass=$configclass]-->
+<!--[ pnform cssClass="z-form"]-->
 <!--[ pnformvalidationsummary ]-->
 
 <fieldset>
     <legend><!--[ $fortitle ]--></legend>
-    <div class="<!--[$configclass]-->row">
+    <div class="z-formrow">
         <!--[ pnformlabel for="cname" text='_FOR_NAMEOFCONTACT' ]-->
         <!--[ pnformtextinput size="40" maxLength="100" id="cname" text=$contact.name ]-->
     </div>
-    <div class="<!--[$configclass]-->row">
+    <div class="z-formrow">
         <!--[ pnformlabel for="email" text='_FOR_EMAIL' ]-->
         <!--[ pnformtextinput size="40" maxLength="100" id="email" text=$contact.email ]-->
     </div>
-    <div class="<!--[$configclass]-->row">
+    <div class="z-formrow">
         <!--[ pnformlabel for="public" text='_FOR_PUBLIC' ]-->
         <!--[ pnformcheckbox id="public" checked=$contact.public ]-->
     </div>
-    <div class="z-formnote pn-warningmsg"><!--[pnml name="_FOR_SENDERINFO"]--></div>
-    <div class="<!--[$configclass]-->row">
+    <div class="z-formnote z-warningmsg"><!--[pnml name="_FOR_SENDERINFO"]--></div>
+    <div class="z-formrow">
         <!--[ pnformlabel for="semail" text='_FOR_SENDEREMAIL' ]-->
         <!--[ pnformtextinput size="40" maxLength="100" id="semail" text=$contact.semail ]-->
     </div>
-    <div class="<!--[$configclass]-->row">
+    <div class="z-formrow">
         <!--[ pnformlabel for="sname" text='_FOR_SENDERNAME' ]-->
         <!--[ pnformtextinput size="40" maxLength="480" id="sname" text=$contact.sname ]-->
     </div>
-    <div class="<!--[$configclass]-->row">
+    <div class="z-formrow">
         <!--[ pnformlabel for="ssubject" text='_FOR_SENDERSUBJECT' ]-->
         <!--[ pnformtextinput size="40" maxLength="100" id="ssubject" text=$contact.ssubject ]-->
     </div>
-    <div class="z-formnote pn-informationmsg"><!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1]--></div>
+    <div class="z-formnote z-informationmsg"><!--[ pnml name="_FOR_SENDERSUBJECTHINT" html=1]--></div>
 </fieldset>
 
-<div class="<!--[$configclass]-->buttons">
+<div class="z-formbuttons">
     <!--[pnformbutton id="submit" commandName="submit" text="_SUBMIT"]-->
 </div>
 

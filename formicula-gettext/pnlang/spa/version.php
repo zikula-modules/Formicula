@@ -8,7 +8,7 @@
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
- * @author     Mateo Tibaquir·
+ * @author     Mateo Tibaquir√°
  * @package    Third_Party_Components
  * @subpackage formicula
  */

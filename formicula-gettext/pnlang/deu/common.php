@@ -14,83 +14,83 @@
 
 // new
 define('_FOR_SETNUMBERXWITHYFILES', 'Templatesatz #%formid% mit %files% Dateien');
-define('_FOR_SETDEFAULTFORM', 'Standardformular (wird verwendet, wenn keine Formular-ID form=xxx im Aufruf übergeben wird)');
+define('_FOR_SETDEFAULTFORM', 'Standardformular (wird verwendet, wenn keine Formular-ID form=xxx im Aufruf Ã¼bergeben wird)');
 define('_FOR_CONFIGURATIONCHANGED', 'Die Konfiguration wurde aktualisiert.');
-define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp-Verzeichnis außerhalb des Webroots gefunden, bitte das formicula_cache Verzeichnis manuell anlegen, wie in der Dokumentation beschrieben');
+define('_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT', 'pnTemp-Verzeichnis auÃŸerhalb des Webroots gefunden, bitte das formicula_cache Verzeichnis manuell anlegen, wie in der Dokumentation beschrieben');
 
 //
 // A
 //
 define('_FOR_ACTIVATESPAMCHECK', 'Spamcheck aktivieren');
 define('_FOR_ACTIVATESPAMCHECK_HINT', 'Dies erfordert u.U. Anpassungen an den Templates, weitere Informationen dazu finden sich in der Dokumentation. Diese Option wird automatisch deaktiviert, wenn Formicula keine PHP-Funktion zur Erstellung von Captcha-Grafiken findet!');
-define('_FOR_ADDCONTACT', 'Kontakt hinzufügen' );
+define('_FOR_ADDCONTACT', 'Kontakt hinzufÃ¼gen' );
 define('_FOR_ADMINMAIL1', 'ein Besucher der Seite hat das Kontaktformular genutzt und folgendes mitgeteilt:' );
 define('_FOR_ADMINMAIL2', 'Der Nutzer hat folgende IP-Adresse/Hostname: ' );
-define('_FOR_ADVICE_DATE', 'Bitte ein gültiges Datum eingeben.');
-define('_FOR_ADVICE_EMAIL', 'Bitte eine gültige E-Mailadresse in der Form name@domain.de eingeben.');
-define('_FOR_ADVICE_MANDATORY', 'Dies ist ein Pflichtfeld, bitte ausfüllen.');
+define('_FOR_ADVICE_DATE', 'Bitte ein gÃ¼ltiges Datum eingeben.');
+define('_FOR_ADVICE_EMAIL', 'Bitte eine gÃ¼ltige E-Mailadresse in der Form name@domain.de eingeben.');
+define('_FOR_ADVICE_MANDATORY', 'Dies ist ein Pflichtfeld, bitte ausfÃ¼llen.');
 define('_FOR_ADVICE_NUMBER', 'Bitte nur Zahlenwerte eingeben.');
-define('_FOR_ADVICE_URL', 'Bitte eine gültige Internetadresse in der Form http://www.domain.de eingeben.');
-define('_FOR_ALTERTABLEFAILED', 'konnte Tabelle nicht ändern');
+define('_FOR_ADVICE_URL', 'Bitte eine gÃ¼ltige Internetadresse in der Form http://www.domain.de eingeben.');
+define('_FOR_ALTERTABLEFAILED', 'konnte Tabelle nicht Ã¤ndern');
 
 //
 // B
 //
-define('_FOR_BACK', 'Zurück zum Kontaktformular' );
-define('_FOR_BADAUTHKEY', 'Ungültiger AuthKey');
+define('_FOR_BACK', 'ZurÃ¼ck zum Kontaktformular' );
+define('_FOR_BADAUTHKEY', 'UngÃ¼ltiger AuthKey');
 
 //
 // C
 //
 define('_FOR_CACHEDIRPROBLEM', 'formicula_cache-Verzeichnis nicht vorhanden in pnTemp oder Verzeichnis ist nicht beschreibbar, Captcha deaktiviert');
-define('_FOR_CANCELDELETE', 'Löschung abbrechen' );
-define('_FOR_CLEARIMAGECACHE', 'Captchabilder löschen' );
-define('_FOR_CLEAREDIMAGECACHE', 'Die zwischengespeicherten Captchabilder wurde gelöscht' );
+define('_FOR_CANCELDELETE', 'LÃ¶schung abbrechen' );
+define('_FOR_CLEARIMAGECACHE', 'Captchabilder lÃ¶schen' );
+define('_FOR_CLEAREDIMAGECACHE', 'Die zwischengespeicherten Captchabilder wurde gelÃ¶scht' );
 define('_FOR_COMMENT', 'Kommentar' );
 define('_FOR_COMPANY', 'Firma' );
-define('_FOR_CONFIRMDELETE', 'Löschung bestätigen' );
+define('_FOR_CONFIRMDELETE', 'LÃ¶schung bestÃ¤tigen' );
 define('_FOR_CONTACTCREATED', 'Kontakt angelegt');
-define('_FOR_CONTACTDELETED', 'Kontakt gelöscht'); 
+define('_FOR_CONTACTDELETED', 'Kontakt gelÃ¶scht'); 
 define('_FOR_CONTACTFORM', 'Kontakt');
 define('_FOR_CONTACTID','ID');
 define('_FOR_CONTACTNAME','Name');
 define('_FOR_CONTACTTITLE', 'Kontaktformular' );
 define('_FOR_CONTACTUPDATED', 'Kontakt gepeichert');
 define('_FOR_CREATECONTACTFAILED', 'Fehler: Konnte Kontakt nicht anlegen');
-define('_FOR_CREATEFILESFAILED', 'Während der Installation konnten formicula_cache/index.html und/oder formicula_cache/.htaccess nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
-define('_FOR_CREATEFOLDERFAILED', 'Während der Installation konnte das formicula_cache-Verzeichnis nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
-define('_FOR_CREATETABLEFAILED', 'Während der Installation konnte die formcontacts-Tabelle nicht angelegt werden');
+define('_FOR_CREATEFILESFAILED', 'WÃ¤hrend der Installation konnten formicula_cache/index.html und/oder formicula_cache/.htaccess nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
+define('_FOR_CREATEFOLDERFAILED', 'WÃ¤hrend der Installation konnte das formicula_cache-Verzeichnis nicht angelegt werden, vor Benutzung des Moduls bitte den Anweisungen im Handbuch folgen!');
+define('_FOR_CREATETABLEFAILED', 'WÃ¤hrend der Installation konnte die formcontacts-Tabelle nicht angelegt werden');
 
 //
 // D
 //
-define('_FOR_DBUPGRADEFAILED', 'Datenbankänderung fehlgeschlagen');
-define('_FOR_DELETE', 'löschen' );
-define('_FOR_DELETECONTACT', 'Kontakt löschen' );
-define('_FOR_DELETETABLEFAILED', 'konnte Tabelle nicht löschen');
-define('_FOR_DELETEUPLOADEDFILE','Datei nach dem Senden löschen');
+define('_FOR_DBUPGRADEFAILED', 'DatenbankÃ¤nderung fehlgeschlagen');
+define('_FOR_DELETE', 'lÃ¶schen' );
+define('_FOR_DELETECONTACT', 'Kontakt lÃ¶schen' );
+define('_FOR_DELETETABLEFAILED', 'konnte Tabelle nicht lÃ¶schen');
+define('_FOR_DELETEUPLOADEDFILE','Datei nach dem Senden lÃ¶schen');
 
 //
 // E
 //
 define('_FOR_EDIT', 'editieren' );
 define('_FOR_EDITCONFIG', 'Konfiguration' );
-define('_FOR_EDITCONTACT', 'Kontakt ändern' );
+define('_FOR_EDITCONTACT', 'Kontakt Ã¤ndern' );
 define('_FOR_EMAIL', 'E-Mail' );
 define('_FOR_EMAILFROM', 'E-Mail von');
-define('_FOR_ERROR', 'Ein oder mehrere notwendige Felder wurden nicht ausgefüllt oder enthalten fehlerhafte Daten' );
-define('_FOR_ERRORCOMMENT', 'Fehler: Keinen oder ungültigen Kommentar abgegeben (kein HTML!)');
+define('_FOR_ERROR', 'Ein oder mehrere notwendige Felder wurden nicht ausgefÃ¼llt oder enthalten fehlerhafte Daten' );
+define('_FOR_ERRORCOMMENT', 'Fehler: Keinen oder ungÃ¼ltigen Kommentar abgegeben (kein HTML!)');
 define('_FOR_ERRORCONTACT', 'Fehler: Name des Kontakts fehlt');
 define('_FOR_ERRORCREATINGCONTACT', 'Fehler beim Erstellen des Kontaktes');
 define('_FOR_ERROREMAIL', 'Fehler: keine oder feherhafte E-Mailadresse angegeben');
 define('_FOR_ERRORINVALIDEMAIL', 'Fehler: fehlerhafte E-Mailadresse angegeben');
 define('_FOR_ERRORNOMANDATORYFIELD', 'Fehler: folgendes Pflichtfeld fehlt');
 define('_FOR_ERRORSENDINGMAIL', 'Fehler beim Senden der Mail');
-define('_FOR_ERRORSENDINGUSERMAIL', 'interner Fehler: konnte Bestätigungsmail nicht versenden' );
+define('_FOR_ERRORSENDINGUSERMAIL', 'interner Fehler: konnte BestÃ¤tigungsmail nicht versenden' );
 define('_FOR_ERRORUPLOADERROR', 'Fehler: Uploadfehler');
 define('_FOR_ERRORUSERNAME', 'Fehler: kein Username angegeben');
 define('_FOR_EXCLUDEFROMSPAMCHECK', 'Spamcheck nicht in diesen Formularen verwenden');
-define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Kommaseparierte Liste der FormIDs, die z.B. in Pagesetter eingebettet sind. Hier könnte es zu Problemen beim Weiterleiten kommen, wenn der Benutzer die Rechenaufgabe nicht korrekt löst.');
+define('_FOR_EXCLUDEFROMSPAMCHECK_HINT', 'Kommaseparierte Liste der FormIDs, die z.B. in Pagesetter eingebettet sind. Hier kÃ¶nnte es zu Problemen beim Weiterleiten kommen, wenn der Benutzer die Rechenaufgabe nicht korrekt lÃ¶st.');
 
 //
 // F
@@ -108,7 +108,7 @@ define('_FOR_HTMLMAIL', 'HTML-Format' );
 //
 // I
 //
-define('_FOR_ILLEGALEMAIL', 'ungültige E-Mailadresse');
+define('_FOR_ILLEGALEMAIL', 'ungÃ¼ltige E-Mailadresse');
 
 //
 // L
@@ -125,12 +125,12 @@ define('_FOR_MUSTBE', 'Notwendige Felder' );
 //
 define('_FOR_NAMEOFCONTACT', 'Bezeichnung' );
 define('_FOR_NAME', 'Ihr Name' );
-define('_FOR_NOAUTH', 'Keine Berechtigung für diese Aktion');
-define('_FOR_NOAUTHFORFORM', 'Keine Berechtigung für dieses Formular');
+define('_FOR_NOAUTH', 'Keine Berechtigung fÃ¼r diese Aktion');
+define('_FOR_NOAUTHFORFORM', 'Keine Berechtigung fÃ¼r dieses Formular');
 define('_FOR_NOCONTACTS', 'keine Kontakt gefunden');
-define('_FOR_NOFORMSELECTED', 'kein Formular ausgewählt');
-define('_FOR_NOIMAGEFUNCTION', 'Keine Funktion zur Bilderzeugung verfügbar - Captcha deaktiviert');
-define('_FOR_NOMAILERMODULE', 'Mailer-Modul nicht verfügbar, E-Mails können nicht verssendet werden!');
+define('_FOR_NOFORMSELECTED', 'kein Formular ausgewÃ¤hlt');
+define('_FOR_NOIMAGEFUNCTION', 'Keine Funktion zur Bilderzeugung verfÃ¼gbar - Captcha deaktiviert');
+define('_FOR_NOMAILERMODULE', 'Mailer-Modul nicht verfÃ¼gbar, E-Mails kÃ¶nnen nicht verssendet werden!');
 define('_FOR_NOSUCHCONTACT', 'unbekannter Kontakt');
 
 //
@@ -140,7 +140,7 @@ define('_FOR_ONLINEAPPLYAS', 'Bewerbung als' );
 define('_FOR_ONLINEBIRTHDATE', 'Geburtsdatum');
 define('_FOR_ONLINEDATE', 'Eintrittstermin');
 define('_FOR_ONLINEJOBAPPLY', 'Onlinebewerbung' );
-define('_FOR_ONLINEPRIVACY', 'Vielen Dank für Ihre Bewerbung, Ihre Daten werden streng vertraulich behandelt' );
+define('_FOR_ONLINEPRIVACY', 'Vielen Dank fÃ¼r Ihre Bewerbung, Ihre Daten werden streng vertraulich behandelt' );
 define('_FOR_ONLINESALARY', 'Gehaltsvorstellung');
 define('_FOR_ONLINESTREET', 'Strasse');
 define('_FOR_ONLINEZIPCITY', 'PLZ Ort');
@@ -150,7 +150,7 @@ define('_FOR_OPTIONS', 'Optionen' );
 // P
 //
 define('_FOR_PHONE', 'Telefon' );
-define('_FOR_PUBLIC', 'Öffentlich' );
+define('_FOR_PUBLIC', 'Ã–ffentlich' );
 
 //
 // R
@@ -162,7 +162,7 @@ define('_FOR_RESUME','Lebenslauf');
 //
 define('_FOR_SEND', 'Senden' );
 define('_FOR_SENDEREMAIL', 'E-Mail des Absenders');
-define('_FOR_SENDERINFO', 'Verwende folgende Daten für die Bestätigungsmail an den Benutzer');
+define('_FOR_SENDERINFO', 'Verwende folgende Daten fÃ¼r die BestÃ¤tigungsmail an den Benutzer');
 define('_FOR_SENDERNAME', 'Absendername');
 define('_FOR_SENDERSUBJECT', 'Betreff');
 define('_FOR_SENDERSUBJECTHINT', '
@@ -176,14 +176,14 @@ mit <ul>
 </ul>
 ');
 define('_FOR_SENDTOADMIN', 'Folgende Daten wurden gesendet' );
-define('_FOR_SENDTOUSER', 'Zur Bestätigung werden die gesendeten Daten auch nochmal an die angegebene E-Mail-Adresse verschickt.' );
-define('_FOR_SENDUSER', 'Bestätigungsmail an User verschicken?' );
+define('_FOR_SENDTOUSER', 'Zur BestÃ¤tigung werden die gesendeten Daten auch nochmal an die angegebene E-Mail-Adresse verschickt.' );
+define('_FOR_SENDUSER', 'BestÃ¤tigungsmail an User verschicken?' );
 define('_FOR_SHOWCOMMENT', 'Kommentarfeld anzeigen?' );
 define('_FOR_SHOWCOMPANY', 'Firma anzeigen?' );
 define('_FOR_SHOWLOCATION', 'Standort anzeigen?' );
 define('_FOR_SHOWPHONE', 'Telefonnummer anzeigen?' );
 define('_FOR_SHOWURL', 'Homepage anzeigen?' );
-define('_FOR_SIMPLEMATHEQUATION', 'Bitte diese einfache Rechenaufgabe lösen');
+define('_FOR_SIMPLEMATHEQUATION', 'Bitte diese einfache Rechenaufgabe lÃ¶sen');
 define('_FOR_SUBMIT', 'Absenden' );
 
 //
@@ -191,7 +191,7 @@ define('_FOR_SUBMIT', 'Absenden' );
 //
 define('_FOR_TEAM', 'Team' );
 define('_FOR_TEXTMAIL', 'normaler Text' );
-define('_FOR_THANKS', 'Vielen Dank für die Frage/den Kommentar zu unserer Website!<br>Falls gewünscht, werden wir unverzüglich antworten.' );
+define('_FOR_THANKS', 'Vielen Dank fÃ¼r die Frage/den Kommentar zu unserer Website!<br>Falls gewÃ¼nscht, werden wir unverzÃ¼glich antworten.' );
 define('_FOR_THE', 'Das' );
 define('_FOR_THEME', 'Thema' );
 
@@ -204,12 +204,12 @@ define('_FOR_UPLOADERROR1', 'Upload-Fehler: Datei zu gross (php.ini)' );
 define('_FOR_UPLOADERROR2', 'Upload-Fehler: Datei zu gross (form)' );
 define('_FOR_UPLOADERROR3', 'Upload-Fehler: Datei nur teilweise erhalten' );
 define('_FOR_UPLOADERROR4', 'Upload-Fehler: keine Datei erhalten' );
-define('_FOR_UPLOADFILEDIR', 'Verzeichnis für Dateiupload');
+define('_FOR_UPLOADFILEDIR', 'Verzeichnis fÃ¼r Dateiupload');
 define('_FOR_UPLOADLIMIT', '(Upload, max. 2MB)');
 define('_FOR_URL', 'Homepage' );
-define('_FOR_USERMAIL1', 'vielen Dank für die Frage/den Kommentar zu unserer Website. Die gesendeten Daten sind:' );
-define('_FOR_USERMAIL2', 'Wir werden, falls gewünscht, unverzüglich antworten.' );
-define('_FOR_USERMAILFORMAT', 'Bestätigungsmail');
+define('_FOR_USERMAIL1', 'vielen Dank fÃ¼r die Frage/den Kommentar zu unserer Website. Die gesendeten Daten sind:' );
+define('_FOR_USERMAIL2', 'Wir werden, falls gewÃ¼nscht, unverzÃ¼glich antworten.' );
+define('_FOR_USERMAILFORMAT', 'BestÃ¤tigungsmail');
 
 //
 // V
