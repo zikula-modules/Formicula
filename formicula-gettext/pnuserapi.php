@@ -4,14 +4,14 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
  * @subpackage formicula
  */
- 
+
 /**
  * getContact
  * reads a single contact by id
@@ -22,6 +22,7 @@
  */
 function formicula_userapi_getContact($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     if (!isset($args['cid']) || !is_numeric($args['cid'])) {
         return LogUtil::registerError(_MODARGSERROR . ' in formicula_userapi_getContact(cid=' . DataUtil::formatForDisplay($cid) . ')');
     }
@@ -47,13 +48,14 @@ function formicula_userapi_getContact($args)
  */
 function formicula_userapi_readValidContacts($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     extract($args);
 
     $allcontacts = pnModAPIFunc('formicula', 'admin', 'readContacts');
     // Check for an error with the database code, and if so set an appropriate
     // error message and return
     if ($allcontacts == false) {
-        return LogUtil::registerError(_GETFAILED);
+        return LogUtil::registerError(__('Error! Could not load items.', $dom));
     }
 
     // Put items into result array.  Note that each item is checked
@@ -158,6 +160,7 @@ function formicula_userapi_sendtoContact($args)
  */
 function formicula_userapi_sendtoUser($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     $userdata = $args['userdata'];
     $contact  = $args['contact'];
     $custom   = $args['custom'];
@@ -175,7 +178,7 @@ function formicula_userapi_sendtoUser($args)
 
         $sitename = pnConfigGetVar('sitename');
         $pnr->assign('sitename', $sitename);
-         
+
         $pnr->assign('custom', pnModAPIFunc('formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
 
         switch($format) {
@@ -192,7 +195,7 @@ function formicula_userapi_sendtoUser($args)
         if(!empty($contact['sname'])) {
             $fromname = $contact['sname'];
         } else {
-            $fromname = $sitename . ' - ' . DataUtil::formatForDisplay(_FOR_CONTACTFORM);
+            $fromname = $sitename . ' - ' . DataUtil::formatForDisplay(__('Contact Form', $dom));
         }
         // check for sender email
         if(!empty($contact['semail'])) {
@@ -247,24 +250,25 @@ function formicula_userapi_sendtoUser($args)
  */
 function formicula_userapi_checkArguments($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     $userdata   = $args['userdata'];
     $custom     = $args['custom'];
     $userformat = $args['userformat'];
-    
+
     $ok = true;
 
     if ($userformat <> 'none') {
         if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
-            $ok = LogUtil::registerError(_FOR_ERROREMAIL);
+            $ok = LogUtil::registerError(__('Error: no or incorrect email address supplied', $dom));
         }
-        
+
         if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnVarCensor($userdata['uname']))) {
-            $ok = LogUtil::registerError(_FOR_ERRORUSERNAME);
+            $ok = LogUtil::registerError(__('Error: no username', $dom));
         }
     }
 
     if ($userdata['comment'] != pnVarCensor($userdata['comment'])) {
-        $ok = LogUtil::registerError(_FOR_ERRORCOMMENT);
+        $ok = LogUtil::registerError(__('Error: no or invalid comment supplied (no HTML!)', $dom));
     }
 
     foreach($custom as $field) {
@@ -273,7 +277,7 @@ function formicula_userapi_checkArguments($args)
                 $ok = LogUtil::registerError(_FOR_ERRORNOMANDATORYFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
             }
             if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
-                $ok = LogUtil::registerError(_FOR_ERRORUPLOADERROR);
+                $ok = LogUtil::registerError(__('Error: Upload error', $dom));
             }
         }
     }
@@ -299,6 +303,6 @@ function formicula_userapi_removeUploadInformation($args)
         }
     } else {
         $custom = array();
-    } 
+    }
     return $custom;
 }

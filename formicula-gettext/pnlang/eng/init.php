@@ -12,4 +12,3 @@
  * @subpackage formicula
  */
 
-Loader::includeOnce('modules/formicula/pnlang/eng/common.php');

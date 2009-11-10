@@ -4,7 +4,7 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id: pnversion.php 131 2008-12-28 13:34:07Z Landseer $
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
@@ -35,19 +35,20 @@ class Formicula_admin_modifyconfighandler
         }
         $items = array();
         foreach ($sets_found as $formid => $files) {
-            $items[] = array('text' => pnML('_FOR_SETNUMBERXWITHYFILES', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
-        }        
-        $pnRender->assign('items', $items);       
+            $items[] = array('text' => __f('Set #%formid% with %files% templates';, array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+        }
+        $pnRender->assign('items', $items);
         return true;
     }
 
 
     function handleCommand(&$pnRender, &$args)
     {
+        $dom = ZLanguage::getModuleDomain('formicula');
         // Security check
         if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError('index.php');
-        }  
+        }
         if ($args['commandName'] == 'submit') {
             if (!$pnRender->pnFormIsValid()) {
                 return false;
@@ -55,7 +56,7 @@ class Formicula_admin_modifyconfighandler
             $data = $pnRender->pnFormGetValues();
             if(!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
                 $ifield = & $pnRender->pnFormGetPluginById('upload_dir');
-                $ifield->setError(DataUtil::formatForDisplay(_FOR_UPLOADDIRNOTWRITABLE));
+                $ifield->setError(DataUtil::formatForDisplay(__('The webserver cannot write into this folder!', $dom)));
                 return false;
             }
 
@@ -70,8 +71,8 @@ class Formicula_admin_modifyconfighandler
             pnModSetVar('formicula', 'spamcheck',        $data['spamcheck']);
             pnModSetVar('formicula', 'excludespamcheck', $data['excludespamcheck']);
             pnModSetVar('formicula', 'default_form',     $data['default_form']);
-            
-            LogUtil::registerStatus(_FOR_CONFIGURATIONCHANGED);
+
+            LogUtil::registerStatus(__('The configuration has been changed.', $dom));
         }
         return true;
     }

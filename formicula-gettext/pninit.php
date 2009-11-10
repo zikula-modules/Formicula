@@ -4,19 +4,20 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
  * @subpackage formicula
  */
- 
+
 Loader::requireOnce('includes/FileUtil.class.php');
 Loader::requireOnce('includes/StringUtil.class.php');
 
 function formicula_init()
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     $tempdir = pnConfigGetVar('temp');
     if(StringUtil::left($tempdir, 1) <> '/') {
         // tempdir does not start with a / which means it does not reside outside
@@ -36,19 +37,19 @@ Allow from env=object_is_png
 Allow from env=object_is_jpg
 ');
             if($res1===false || $res2===false){
-                LogUtil::registerStatus(_FOR_CREATEFILESFAILED);
+                LogUtil::registerStatus(__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!', $dom));
             }
         } else {
-            LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
+            LogUtil::registerStatus(__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!', $dom));
         }
     } else {
         // tempdir starts with /, so it is an absolute path, probably outside the webroot
-        LogUtil::registerStatus(_FOR_CANNOTCREATEFOLDEROUTSIDEWEBROOT);
+        LogUtil::registerStatus(__('pnTemp folder found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.', $dom));
     }
-    
+
     // create the formicula table
     if (!DBUtil::createTable('formcontacts')) {
-        return LogUtil::registerError(_FOR_CREATETABLEFAILED);
+        return LogUtil::registerError(__('The installer could not create the formcontacts table', $dom));
     }
 
     pnModAPILoad('formicula', 'admin', true);
@@ -82,13 +83,14 @@ Allow from env=object_is_jpg
 
 function formicula_upgrade($oldversion)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     // Get database information
     pnModDBInfoLoad('formicula');
 
     // perform a global db change for all versions >= 0.4
-    if(version_compare($oldversion, '0.5', '>')) { 
+    if(version_compare($oldversion, '0.5', '>')) {
         if (!DBUtil::changeTable('formcontacts')) {
-            return LogUtil::registerError(_FOR_DBUPGRADEFAILED);
+            return LogUtil::registerError(__('Database upgrade failed', $dom));
         }
     }
 
@@ -104,7 +106,8 @@ function formicula_upgrade($oldversion)
         case '0.4':
             // create the formicula table
             if (!DBUtil::createTable('formcontacts')) {
-                return LogUtil::registerError(_FOR_CREATETABLEFAILED);
+                LogUtil::registerError(__('The installer could not create the formcontacts table', $dom));
+                return '0.4';
             }
 
             // migrate contacts from config var to table
@@ -123,11 +126,11 @@ function formicula_upgrade($oldversion)
                              array('name'     => $name,
                                    'email'    => $email,
                                    'public'   => 1,
-                                   'sname'    => '',   
+                                   'sname'    => '',
                                    'semail'   => '',
                                    'ssubject' => ''));
             }
-            pnModDelVar('formicula', 'contacts'); 
+            pnModDelVar('formicula', 'contacts');
             pnModDelVar('formicula', 'version' );
         case '0.5':
                 // nothing to do
@@ -156,10 +159,10 @@ Allow from env=object_is_png
 Allow from env=object_is_jpg
 ');
                     if($res1===false || $res2===false){
-                        LogUtil::registerStatus(_FOR_CREATEFILESFAILED);
+                        LogUtil::registerStatus(__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!', $dom));
                     }
                 } else {
-                    LogUtil::registerStatus(_FOR_CREATEFOLDERFAILED);
+                    LogUtil::registerStatus(__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!', $dom));
                 }
             }
         case '2.0':
@@ -190,7 +193,7 @@ function formicula_delete()
     if(is_dir($tempdir . 'formicula_cache')) {
         FileUtil::deldir($tempdir . 'formicula_cache');
     }
-    
+
     // Remove module variables
     pnModDelVar('formicula');
 

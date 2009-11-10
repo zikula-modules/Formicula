@@ -4,7 +4,7 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
@@ -94,6 +94,7 @@ function formicula_user_main($args=array())
  */
 function formicula_user_send($args=array())
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     global $_FILES;
 
     $form           = (int)FormUtil::getPassedValue('form',        (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
@@ -152,7 +153,7 @@ function formicula_user_send($args=array())
             if(is_array($addinfo) && count($addinfo)>0) {
                 $params['addinfo'] = $addinfo;
             }
-            return LogUtil::registerError(_FOR_WRONGCAPTCHA, null, pnModURL('formicula', 'user', 'main', $params));
+            return LogUtil::registerError(__('Bad in mathematics? You can do better, try again.', $dom), null, pnModURL('formicula', 'user', 'main', $params));
         }
     }
     SessionUtil::delVar('formicula_captcha');
@@ -164,7 +165,7 @@ function formicula_user_send($args=array())
         }
         return LogUtil::registerAuthidError(pnModURL('formicula', 'user', 'main', $params));
     }
-    
+
     if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
         $userformat = 'plain';
     }
@@ -197,7 +198,7 @@ function formicula_user_send($args=array())
             $missing++;
         } else {
             $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
-            
+
             if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
                 $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
                 if($custom[$i]['data']['error'] == 0) {
@@ -241,7 +242,7 @@ function formicula_user_send($args=array())
                                'custom'   => $custom,
                                'form'     => $form,
                                'format'   => $adminformat)) == false) {
-            return LogUtil::registerError(_FOR_ERRORSENDINGMAIL, null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
+            return LogUtil::registerError(__('There was an error sending the email.', $dom), null, pnModURL('formicula', 'user', 'main', array('form' => $form)));
         }
 
         if((pnModGetVar('formicula', 'send_user') == 1) && ($userformat <> 'none')) {
@@ -273,7 +274,7 @@ function formicula_user_send($args=array())
 function formicula_user_getimage()
 {
     $img = FormUtil::getPassedValue('img', '', 'GET');
-    
+
     $temp = pnConfigGetVar('temp');
     if(StringUtil::right($temp, 1) <> '/') {
         $temp .= '/';
@@ -295,7 +296,7 @@ function formicula_user_getimage()
     header("Content-Disposition: inline; filename=" . DataUtil::formatForDisplay($img) . ";");
     header("Content-type: image/" . $mimetypes[$parts[1]]);
     header("Content-Transfer-Encoding: binary");
-    
+
     echo $data;
     exit;
 }

@@ -4,14 +4,14 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
  * @subpackage formicula
  */
- 
+
 /**
  * main
  * main entry point for configuration
@@ -61,6 +61,8 @@ function Formicula_admin_edit()
  */
 function formicula_admin_delete()
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
+
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_DELETE)) {
         return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
@@ -77,7 +79,7 @@ function formicula_admin_delete()
                             array('cid' => $cid));
 
     if ($contact == false) {
-        return LogUtil::registerError(_FOR_NOSUCHCONTACT, null, pnModURL('formicula', 'admin', 'main'));
+        return LogUtil::registerError(__('Unknown Contact', $dom), null, pnModURL('formicula', 'admin', 'main'));
     }
 
     // Check for confirmation.
@@ -96,7 +98,7 @@ function formicula_admin_delete()
                      'deleteContact',
                      array('cid' => $cid))) {
         // Success
-        LogUtil::registerStatus(_FOR_CONTACTDELETED);
+        LogUtil::registerStatus(__('Contact has been deleted', $dom));
     }
 
     return pnRedirect(pnModURL('formicula', 'admin', 'view'));
@@ -117,7 +119,7 @@ function formicula_admin_view()
 
     // check necessary environment
     formicula_envcheck();
-    
+
     $pnr = pnRender::getInstance('formicula', false);
 
     // read all items
@@ -177,8 +179,10 @@ function formicula_admin_modifyconfig()
  */
 function formicula_envcheck()
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
+
     if(!pnModAvailable('Mailer')) {
-        LogUtil::registerError(_FOR_NOMAILERMODULE);
+        LogUtil::registerError(__('Mailer module is not available - unable to send emails!', $dom));
     }
 
     if(pnModGetVar('formicula', 'spamcheck') <> 0) {
@@ -186,17 +190,17 @@ function formicula_envcheck()
         if(!$freetype || ( !(imagetypes() && IMG_PNG)
                       && !(imagetypes() && IMG_JPG)
                       && !(imagetypes() && IMG_GIF)) ) {
-            LogUtil::registerStatus(_FOR_NOIMAGEFUNCTION);
+            LogUtil::registerStatus(__('no image function available - captcha deactivated', $dom));
             pnModSetVar('formicula', 'spamcheck', 0);
         }
-        
+
         $cachedir = pnConfigGetVar('temp') . '/formicula_cache';
         if(!file_exists($cachedir) || !is_writable($cachedir)) {
-            LogUtil::registerStatus(_FOR_CACHEDIRPROBLEM);
+            LogUtil::registerStatus(__('formicula_cache folder does not exist in Zikula\'s temporary folder or is not writable - captchas have been disabled', $dom));
             pnModSetVar('formicula', 'spamcheck', 0);
         }
         if(!file_exists($cachedir.'/.htaccess')) {
-            LogUtil::registerStatus(_FOR_HTACCESSPROBLEM);
+            LogUtil::registerStatus(__('.htaccess file needed in formicula_cache folder not exist', $dom));
             pnModSetVar('formicula', 'spamcheck', 0);
         }
     }
@@ -209,6 +213,7 @@ function formicula_envcheck()
  */
 function formicula_admin_clearcache()
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
         return LogUtil::registerPermissionError(pnConfigGetVar('entrypoint', 'index.php'));
     }
@@ -219,7 +224,7 @@ function formicula_admin_clearcache()
         $temp .= '/';
     }
     $path = $temp . 'formicula_cache/';
-    
+
     $dh = opendir($path);
 
     while(($file = readdir($dh)) !== false) {
@@ -230,7 +235,7 @@ function formicula_admin_clearcache()
     }
 
     closedir($dh);
-    
-    LogUtil::registerStatus(_FOR_CLEAREDIMAGECACHE);
+
+    LogUtil::registerStatus(__('The captcha image cached was cleared', $dom));
     return pnRedirect(pnModURL('formicula', 'admin', 'main'));
 }

@@ -16,52 +16,65 @@
 // To read the license please visit http://www.gnu.org/copyleft/gpl.html
 // ----------------------------------------------------------------------
 
+
 class formicula_contenttypesapi_formPlugin extends contentTypeBase
 {
     var $eventid;
-    
-    function getModule() { return 'formicula'; }
-    function getName() { return 'form'; }
-    function getTitle() { return DataUtil::formatForDisplay(_FOR_FORMICULA); }
-    function getDescription() { return DataUtil::formatForDisplay(_FOR_FORMICULA); }
-    
-    
+
+    function getModule()
+    {
+        return 'formicula';
+    }
+    function getName()
+    {
+        return 'form';
+    }
+    function getTitle()
+    {
+        $dom = ZLanguage::getModuleDomain('formicula');
+        return DataUtil::formatForDisplay(__('Formicula!', $dom));
+    }
+    function getDescription()
+    {
+        $dom = ZLanguage::getModuleDomain('formicula');
+        return DataUtil::formatForDisplay(__('Formicula!', $dom));
+    }
+
     function loadData($data)
     {
         $this->form = $data['form'];
     }
-    
+
     function display()
     {
         if (isset($this->form)) {
             PageUtil::addVar('stylesheet', ThemeUtil::getModuleStylesheet('formicula'));
-            $form = pnModFunc('formicula', 'user', 'main', array('form' => (int)$this->form));
+            $form = pnModFunc('formicula', 'user', 'main', array('form' => (int) $this->form));
             return $form;
         }
         return DataUtil::formatForDisplay(_FOR_NOFORMSELECTED . $this->form);
     }
-    
+
     function displayEditing()
-    {    
+    {
+        $dom = ZLanguage::getModuleDomain('formicula');
         if (isset($this->form)) {
-          $form = pnModFunc('formicula', 'user', 'main', array('form' => $this->form));
-          return $form;
+            $form = pnModFunc('formicula', 'user', 'main', array('form' => $this->form));
+            return $form;
         }
-        return DataUtil::formatForDisplay(_FOR_NOFORMSELECTED);
+        return DataUtil::formatForDisplay(__('no form selected', $dom));
     }
-    
+
     function getDefaultData()
-    { 
+    {
         return array('form' => 0);
     }
-    
-    
+
     function startEditing(&$render)
     {
         return '';
     }
 }
-
 
 function formicula_contenttypesapi_form($args)
 {

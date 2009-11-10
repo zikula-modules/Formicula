@@ -4,17 +4,22 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
  * @subpackage formicula
  */
- 
+
+$dom = ZLanguage::getModuleDomain('formicula');
+
 $modversion['name'] = 'formicula';
-$modversion['version'] = '2.1';
-$modversion['description'] = _FOR_DESC;
+$modversion['version'] = '2.2';
+$modversion['description'] = __('Formicula forms module', $dom);
+$modversion['displayname'] = __('Formicula', $dom);
+//! module url shoudl be in lowercase without spaces different to displayname
+$modversion['url'] = __('formicula', $dom);
 $modversion['credits'] = 'pndocs/credits.txt';
 $modversion['help'] = 'pndocs/eng/manual.htm';
 $modversion['changelog'] = 'pndocs/changelog.txt';

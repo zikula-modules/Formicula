@@ -4,14 +4,14 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
  * @subpackage formicula
  */
- 
+
 /**
  * getContact
  * reads a single contact by id
@@ -21,8 +21,9 @@
  */
 function formicula_adminapi_getContact($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     if (!isset($args['cid']) || empty($args['cid'])) {
-        return LogUtil::registerError(_MODARGSERROR);
+        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
 
     // Security check - important to do this as early on as possible to
@@ -49,12 +50,12 @@ function formicula_adminapi_readContacts()
     if (!SecurityUtil::checkPermission("formicula::", "::", ACCESS_READ)) {
         return LogUtil::registerPermissionError();
     }
-    
+
     $contacts = array();
     $pntable =&pnDBGetTables();
     $contactscolumn = &$pntable['formcontacts_column'];
     $orderby = "ORDER BY $contactscolumn[cid]";
-    
+
     $contacts = DBUtil::selectObjectArray('formcontacts', '', $orderby);
 
     // Return the contacts
@@ -75,12 +76,13 @@ function formicula_adminapi_readContacts()
  */
 function formicula_adminapi_createContact($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     if (!defined('_PNINSTALLVER') && !SecurityUtil::checkPermission('formicula::', "::", ACCESS_ADD)) {
         return LogUtil::registerPermissionError();
     }
 
     if ((!isset($args['name'])) || (!isset($args['email']))) {
-        return LogUtil::registerError(_MODARGSERROR);
+        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
     if ((!isset($args['public'])) || empty($args['public'])) {
         $args['public'] = 0;
@@ -88,7 +90,7 @@ function formicula_adminapi_createContact($args)
 
     $obj = DBUtil::insertObject($args, 'formcontacts', 'cid');
     if($obj == false) {
-        return LogUtil::registerError(_CREATEFAILED);
+        return LogUtil::registerError(__('Error! Creation attempt failed.', $dom));
     }
     pnModCallHooks('item', 'create', $obj['cid']);
     return $obj['cid'];
@@ -103,8 +105,9 @@ function formicula_adminapi_createContact($args)
  */
 function formicula_adminapi_deleteContact($args)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     if ((!isset($args['cid'])) || empty($args['cid'])) {
-        return LogUtil::registerError(_MODARGSERROR);
+        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
 
     // Security check
@@ -114,7 +117,7 @@ function formicula_adminapi_deleteContact($args)
 
     $res = DBUtil::deleteObjectByID ('formcontacts', (int)$args['cid'], 'cid');
     if($res==false) {
-        return LogUtil::registerError(_DELETEFAILED);
+        return LogUtil::registerError(__('Error! Sorry! Deletion attempt failed.', $dom));
     }
 
     // Let any hooks know that we have deleted a contact
@@ -136,12 +139,13 @@ function formicula_adminapi_deleteContact($args)
  */
 function formicula_adminapi_updateContact($args)
 {
-    if ((!isset($args['cid'])) || 
-        (!isset($args['name'])) || 
+    $dom = ZLanguage::getModuleDomain('formicula');
+    if ((!isset($args['cid'])) ||
+        (!isset($args['name'])) ||
         (!isset($args['email']) ||
         (empty($args['name'])) ||
         (empty($args['email'])) )) {
-        return LogUtil::registerError(_MODARGSERROR);
+        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
     }
     if ((!isset($args['public'])) || empty($args['public'])) {
         $args['public'] = 0;
@@ -154,7 +158,7 @@ function formicula_adminapi_updateContact($args)
 
     $res = DBUtil::updateObject($args, 'formcontacts', '', 'cid');
     if($res == false) {
-        return LogUtil::registerError(_MH_UPDATEFAILED);
+        return LogUtil::registerError(_MH__('Error! Update attempt failed.', $dom));
     }
     pnModCallHooks('item', 'update', $args['cid']);
     return $args['cid'];
@@ -168,12 +172,13 @@ function formicula_adminapi_updateContact($args)
  */
 function formicula_adminapi_getlinks()
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     $links = array();
     if (SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-        $links[] = array('url' => pnModURL('formicula', 'admin', 'view'), 'text' => _FOR_VIEWCONTACT);
-        $links[] = array('url' => pnModURL('formicula', 'admin', 'edit', array('cid' => -1)), 'text' => _FOR_ADDCONTACT);
-        $links[] = array('url' => pnModURL('formicula', 'admin', 'clearcache'), 'text' => _FOR_CLEARIMAGECACHE);
-        $links[] = array('url' => pnModURL('formicula', 'admin', 'modifyconfig'), 'text' => _FOR_EDITCONFIG);
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'view'), 'text' => __('View contacts', $dom));
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'edit', array('cid' => -1)), 'text' => __('Add contact', $dom));
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'clearcache'), 'text' => __('Clear captcha image cache', $dom));
+        $links[] = array('url' => pnModURL('formicula', 'admin', 'modifyconfig'), 'text' => __('Modify configuration', $dom));
     }
     return $links;
 }
