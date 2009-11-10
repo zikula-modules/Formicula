@@ -9,18 +9,18 @@
 <!--[/if]-->
 
 <h2><!--[$fortitle]--></h2>
-<!--[pnform cssclass="z-form"]-->
+<!--[pnform cssClass="z-form"]-->
 <!--[pnformvalidationsummary]-->
 
 <fieldset>
     <legend><!--[$fortitle]--></legend>
     <div class="z-formrow">
         <!--[pnformlabel for="cname" __text='Contact name']-->
-        <!--[pnformtextinput size="40" maxlength="100" id="cname" __text=$contact.name]-->
+        <!--[pnformtextinput size="40" maxLength="100" id="cname" text=$contact.name]-->
     </div>
     <div class="z-formrow">
-        <!--[pnformlabel for="email" __text='Email']-->
-        <!--[pnformtextinput size="40" maxlength="100" id="email" __text=$contact.email]-->
+        <!--[pnformlabel for="email" __text='E-Mail']-->
+        <!--[pnformtextinput size="40" maxLength="100" id="email" text=$contact.email]-->
     </div>
     <div class="z-formrow">
         <!--[pnformlabel for="public" __text='Public']-->
@@ -28,22 +28,22 @@
     </div>
     <div class="z-formnote z-warningmsg"><!--[gt text="Use this information in the users confirmation mail"]--></div>
     <div class="z-formrow">
-        <!--[pnformlabel for="semail" __text='Sender email']-->
-        <!--[pnformtextinput size="40" maxlength="100" id="semail" __text=$contact.semail]-->
+        <!--[pnformlabel for="semail" __text='Sender E-Mail']-->
+        <!--[pnformtextinput size="40" maxLength="100" id="semail" text=$contact.semail]-->
     </div>
     <div class="z-formrow">
         <!--[pnformlabel for="sname" __text='Sender name']-->
-        <!--[pnformtextinput size="40" maxlength="480" id="sname" __text=$contact.sname]-->
+        <!--[pnformtextinput size="40" maxLength="480" id="sname" text=$contact.sname]-->
     </div>
     <div class="z-formrow">
         <!--[pnformlabel for="ssubject" __text='Subject']-->
-        <!--[pnformtextinput size="40" maxlength="100" id="ssubject" __text=$contact.ssubject]-->
+        <!--[pnformtextinput size="40" maxLength="100" id="ssubject" text=$contact.ssubject]-->
     </div>
     <div class="z-formnote z-informationmsg"><!--[gt text="with <ul>    <li>%s = sitename</li>    <li>%l = slogan</li>    <li>%u = site url</li>    <li>%c = contacts sender name</li>    <li>%n&lt;num&gt; = user defined field name &lt;num&gt;</li>    <li>%d&lt;num&gt; = user defined field data &lt;num&gt;</li></ul>"]--></div>
 </fieldset>
 
 <div class="z-formbuttons">
-    <!--[pnformbutton id="submit" commandname="submit" __text="Submit"]-->
+    <!--[pnformbutton id="submit" commandName="submit" __text="Submit"]-->
 </div>
 
 <!--[/pnform]-->

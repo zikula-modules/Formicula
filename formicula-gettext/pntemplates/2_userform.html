@@ -1,5 +1,5 @@
 <!--[* Smartytemplate *]-->
-<!--[* $Id *]-->
+<!--[* $Id$ *]-->
 
 <!--[include file=2_userheader.html]-->
 <!--[pnpageaddvar name="javascript" value="javascript/ajax/prototype.js"]-->
@@ -29,22 +29,22 @@
         </div>
 
         <div class="z-formrow">
-            <label for="uname"><!--[gt text="Your Name"]-->:<span class="mandatory">*</span></label>
+            <label for="uname"><!--[gt text="Your Name"]--><span class="mandatory">*</span></label>
             <input type="text" class="formborder required" id="uname" name="uname" size="40" maxlength="80" value="<!--[$uname]-->" />
             <p id="advice-required-uname" class="z-formnote custom-advice" style="display:none"><!--[gt text='This is a mandatory field.']--></p>
         </div>
 
         <div class="z-formrow">
-            <label for="uemail"><!--[gt text="Email"]-->:<span class="mandatory">*</span></label>
+            <label for="uemail"><!--[gt text="E-Mail"]--><span class="mandatory">*</span></label>
             <input type="text" class="formborder required validate-email" id="uemail" name="uemail" size="40" maxlength="40" value="<!--[$uemail]-->" />
 
-            <p id="advice-validate-email-uemail" class="z-formnote custom-advice" style="display:none"><!--[gt text='Please enter a valid emailaddress like user@example.com.']--></p>
+            <p id="advice-validate-email-uemail" class="z-formnote custom-advice" style="display:none"><!--[gt text='Please enter a valid E-mail address like user@example.com.']--></p>
             <p id="advice-required-uemail" class="z-formnote custom-advice" style="display:none"><!--[gt text='This is a mandatory field.']--></p>
         </div>
 
         <!--[if $pncore.formicula.show_url==1]-->
         <div class="z-formrow">
-            <label for="url"><!--[gt text="Homepage"]-->:</label>
+            <label for="url"><!--[gt text="Homepage"]--></label>
             <input type="text" class="formborder validate-url" id="url" name="url" size="40" maxlength="40" />
 
             <p id="advice-validate-url-url" class="z-formnote custom-advice" style="display:none"><!--[gt text='Please enter a valid internet address like http://www.example.com.']--></p>
@@ -53,34 +53,34 @@
 
         <!--[if $pncore.formicula.show_phone==1]-->
         <div class="z-formrow">
-            <label for="phone"><!--[gt text="Phone Number"]-->:</label>
+            <label for="phone"><!--[gt text="Phone Number"]--></label>
             <input type="text" class="formborder validate-digits" id="phone" name="phone" size="40" maxlength="40" />
         </div>
         <!--[/if]-->
 
         <!--[if $pncore.formicula.show_company==1]-->
         <div class="z-formrow">
-            <label for="company"><!--[gt text="Company"]-->:</label>
+            <label for="company"><!--[gt text="Company"]--></label>
             <input type="text" class="formborder" id="company" name="company" size="40" maxlength="40" />
         </div>
         <!--[/if]-->
 
         <!--[if $pncore.formicula.show_location==1]-->
         <div class="z-formrow">
-            <label for="location"><!--[gt text="Location"]-->:</label>
+            <label for="location"><!--[gt text="Location"]--></label>
             <input type="text" class="formborder" id="location" name="location" size="40" maxlength="40" />
         </div>
         <!--[/if]-->
 
         <div class="z-formrow">
-            <label for="comment"><!--[gt text="Comment"]-->:<span class="mandatory">*</span></label>
+            <label for="comment"><!--[gt text="Comment"]--><span class="mandatory">*</span></label>
             <textarea class="formborder required" rows="6" cols="45" id="comment" name="comment"></textarea>
 
             <p id="advice-required-comment" class="z-formnote custom-advice" style="display:none"><!--[gt text='This is a mandatory field.']--></p>
         </div>
 
         <div class="z-formrow">
-            <label for="userformat"><!--[gt text="Email Format"]-->:</label>
+            <label for="userformat"><!--[gt text="E-Mail Format"]--></label>
             <select class="formborder" id="userformat" name="userformat">
                 <option value="html"><!--[gt text="HTML"]--></option>
                 <option value="plain" selected="selected"><!--[gt text="Text"]--></option>
@@ -89,7 +89,7 @@
 
         <!--[if $spamcheck eq 1]-->
         <div class="z-formrow">
-            <label for="formicula_captcha"><!--[gt text='Please solve this simple math test']--> :<span class="mandatory">*</span></label>
+            <label for="formicula_captcha"><!--[gt text='Please solve this simple math test']--> <span class="mandatory">*</span></label>
             <span>
                 <!--[simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000']-->
                 <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />

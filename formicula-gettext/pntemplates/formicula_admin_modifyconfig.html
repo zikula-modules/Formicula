@@ -2,25 +2,25 @@
 <!--[* $Id$ *]-->
 <!--[include file=formicula_admin_header.html]-->
 <h2><!--[gt text="Modify configuration"]--></h2>
-<!--[pnform cssclass="z-form"]-->
+<!--[pnform cssClass="z-form"]-->
 <!--[pnformvalidationsummary]-->
 
 <fieldset>
-    <legend><!--[gt text="Modify configuration html=1"]--></legend>
+    <legend><!--[gt text="Modify configuration"]--></legend>
     <div class="z-formrow">
-        <!--[pnformlabel for="show_phone" __text='Show phone number?']-->
+        <!--[pnformlabel for="show_phone" __text='Show phone number']-->
         <!--[pnformcheckbox id="show_phone" checked=$pncore.formicula.show_phone]-->
     </div>
     <div class="z-formrow">
-        <!--[pnformlabel for="show_company" __text='Show company?']-->
+        <!--[pnformlabel for="show_company" __text='Show company']-->
         <!--[pnformcheckbox id="show_company" checked=$pncore.formicula.show_company]-->
     </div>
     <div class="z-formrow">
-        <!--[pnformlabel for="show_url" __text='Show URL?']-->
+        <!--[pnformlabel for="show_url" __text='Show URL']-->
         <!--[pnformcheckbox id="show_url" checked=$pncore.formicula.show_url]-->
     </div>
     <div class="z-formrow">
-        <!--[pnformlabel for="show_location" __text='Show location?']-->
+        <!--[pnformlabel for="show_location" __text='Show location']-->
         <!--[pnformcheckbox id="show_location" checked=$pncore.formicula.show_location]-->
     </div>
     <div class="z-formrow">
@@ -28,12 +28,12 @@
         <!--[pnformcheckbox id="show_comment" checked=$pncore.formicula.show_comment]-->
     </div>
     <div class="z-formrow">
-        <!--[pnformlabel for="send_user" __text='Send confirmation email to user?']-->
+        <!--[pnformlabel for="send_user" __text='Send confirmation email to user']-->
         <!--[pnformcheckbox id="send_user" checked=$pncore.formicula.send_user]-->
     </div>
     <div class="z-formrow">
         <!--[pnformlabel for="upload_dir" __text='Folder for uploaded files']-->
-        <!--[pnformtextinput size="40" maxlength="80" id="upload_dir" __text=$pncore.formicula.upload_dir]-->
+        <!--[pnformtextinput size="40" maxLength="80" id="upload_dir" text=$pncore.formicula.upload_dir]-->
     </div>
     <div class="z-formrow">
         <!--[pnformlabel for="delete_file" __text='Delete file after sending']-->
@@ -43,20 +43,21 @@
         <!--[pnformlabel for="spamcheck" __text='Activate spamcheck']-->
         <!--[pnformcheckbox id="spamcheck" checked=$pncore.formicula.spamcheck]-->
     </div>
-    <div class="z-formnote z-informationmsg"><!--[gt text="Make sure you the necessary form fields<br />are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available"]--></div>
+    <div class="z-formnote z-informationmsg"><!--[gt text="Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available"]--></div>
     <div class="z-formrow">
         <!--[pnformlabel for="excludespamcheck" __text='Do not use spam check in these forms']-->
-        <!--[pnformtextinput size="20" maxlength="40" id="excludespamcheck" __text=$pncore.formicula.excludespamcheck]-->
+        <!--[pnformtextinput size="20" maxLength="40" id="excludespamcheck" text=$pncore.formicula.excludespamcheck]-->
     </div>
     <div class="z-formnote z-informationmsg"><!--[gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"]--></div>
     <div class="z-formrow">
-        <!--[pnformlabel for="default_form" __text='Set the default form (used when no form is specified']-->
-        <!--[pnformdropdownlist id="default_form" items=$items selectedvalue=$pncore.formicula.default_form]-->
+        <!--[pnformlabel for="default_form" __text='Set the default form']-->
+        <!--[pnformdropdownlist id="default_form" items=$items selectedValue=$pncore.formicula.default_form]-->
+        <em class="z-sub z-formnote"><!--[gt text="(used when no form is specified)"]--></em>
     </div>
 </fieldset>
 
 <div class="z-formbuttons">
-    <!--[pnformbutton id="submit" commandname="submit" __text="Submit"]-->
+    <!--[pnformbutton id="submit" commandName="submit" __text="Submit"]-->
 </div>
 <!--[/pnform]-->
 

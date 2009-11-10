@@ -158,7 +158,7 @@ Example:
 <label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--></label><br />
 <input type="hidden" name="custom0name" value="<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->" />
 <input type="hidden" name="custom0mandatory" value="1" />
-<input type="text" name="custom0data" id="custom0data" size="35" maxlength="80" value="" />
+<input type="text" name="custom0data" id="custom0data" size="35" maxLength="80" value="" />
 
 Permissions
 -----------

@@ -1,24 +1,25 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
-<!--[ pnml name='_FOR_HELLO' ]-->
 
-<!--[ pnml name='_FOR_SENDTOADMIN' ]-->
+ <!--[gt text='Hello,']-->
 
-<!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]-->
-<!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]-->
-<!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]-->
-<!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]--> 
+<!--[gt text='This data was sent to us:']-->
+
+<!--[gt text='Contact or Theme']--> : <!--[ $contact.name ]-->
+<!--[gt text='Your Name']--> : <!--[ $userdata.uname ]-->
+<!--[gt text='E-Mail']--> : <!--[ $userdata.uemail ]-->
+<!--[gt text='Homepage']--> : <!--[ $userdata.url ]-->
 
 <!--[ foreach item=field from=$custom ]-->
 <!--[ $field.name ]--> : <!--[ $field.data ]-->
 <!--[ /foreach ]-->
 
-<!--[ pnml name='_FOR_COMMENT' ]--> :
+<!--[gt text='Comment']--> :
 <!--[ $userdata.comment|pnvarprepfordisplay ]-->
 
-<!--[ pnml name='_FOR_ONLINEPRIVACY' ]-->
+<!--[gt text='Thanks for applying, we will keep your data strictly confidential']-->
 
-<!--[ pnml name='_FOR_USERMAIL2' ]-->
+<!--[gt text='We will respond to your E-mail address as soon as possible.']-->
 
-<!--[ pnml name='_FOR_THE' ]--> <!--[ $sitename ]--> <!--[ pnml name='_FOR_TEAM' ]-->
+<!--[gt text='The']--> <!--[$sitename]--> <!--[gt text='Team']-->
 

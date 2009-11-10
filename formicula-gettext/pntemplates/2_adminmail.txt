@@ -1,21 +1,20 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
 
-<!--[ pnml name='_FOR_HELLO' ]-->
+<!--[gt text='Hello,']-->
 
-<!--[ pnml name='_FOR_ADMINMAIL1' ]-->
+<!--[gt text='A visitor of to your web site used the form for contact and sent the following:']-->
 
-<!--[ pnml name='_FOR_FORMNUMBER' ]--> : <!--[ $form ]-->
-<!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]-->
-<!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]-->
-<!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]-->
-<!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]-->
-<!--[ pnml name='_FOR_COMPANY' ]--> : <!--[ $userdata.company ]-->
-<!--[ pnml name='_FOR_PHONE' ]--> : <!--[ $userdata.phone ]-->
-<!--[ pnml name='_FOR_LOCATION' ]--> : <!--[ $userdata.location ]-->
+<!--[gt text='Form #']--> : <!--[ $form ]-->
+<!--[gt text='Contact or Theme']--> : <!--[ $contact.name ]-->
+<!--[gt text='Your Name']--> : <!--[ $userdata.uname ]-->
+<!--[gt text='E-Mail']--> : <!--[ $userdata.uemail ]-->
+<!--[gt text='Homepage']--> : <!--[ $userdata.url ]-->
+<!--[gt text='Company']--> : <!--[ $userdata.company ]-->
+<!--[gt text='Phone Number']--> : <!--[ $userdata.phone ]-->
+<!--[gt text='Location']--> : <!--[ $userdata.location ]-->
 
-<!--[ pnml name='_FOR_COMMENT' ]--> :
+<!--[gt text='Comment']--> :
 <!--[ $userdata.comment|pnvarprepfordisplay ]-->
 
-<!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]-->
-
+<!--[gt text='The user has the following IP address/hostname: ']--> <!--[ $ip ]--> / <!--[ $host ]-->

@@ -8,7 +8,7 @@
         <tr>
             <th><!--[gt text='ID']--></th>
             <th><!--[gt text='Name']--></th>
-            <th><!--[gt text='Email']--></th>
+            <th><!--[gt text='E-Mail']--></th>
             <th><!--[gt text='Public']--></th>
             <th><!--[gt text='Options']--></th>
         </tr>
@@ -35,6 +35,8 @@
                 <!--[/if]-->
             </td>
         </tr>
+        <!--[foreachelse]-->
+        <tr class="z-admintableempty"><td colspan="5"><!--[gt text="No items found."]--></td></tr>
         <!--[/foreach]-->
     </tbody>
 </table>

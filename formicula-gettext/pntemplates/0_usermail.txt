@@ -1,22 +1,21 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
 
-<!--[ pnml name='_FOR_HELLO' ]-->
+<!--[gt text='Hello,']-->
 
-<!--[ pnml name='_FOR_USERMAIL1' ]-->
+<!--[gt text='Thank you for the comments posted from our Website. The sent data is:']-->
 
-<!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]-->
-<!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]-->
-<!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]-->
-<!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]-->
-<!--[ pnml name='_FOR_COMPANY' ]--> : <!--[ $userdata.company ]-->
-<!--[ pnml name='_FOR_PHONE' ]--> : <!--[ $userdata.phone ]-->
-<!--[ pnml name='_FOR_LOCATION' ]--> : <!--[ $userdata.location ]-->
+<!--[gt text='Contact or Theme']--> : <!--[ $contact.name ]-->
+<!--[gt text='Your Name']--> : <!--[ $userdata.uname ]-->
+<!--[gt text='E-Mail']--> : <!--[ $userdata.uemail ]-->
+<!--[gt text='Homepage']--> : <!--[ $userdata.url ]-->
+<!--[gt text='Company']--> : <!--[ $userdata.company ]-->
+<!--[gt text='Phone Number']--> : <!--[ $userdata.phone ]-->
+<!--[gt text='Location']--> : <!--[ $userdata.location ]-->
 
-<!--[ pnml name='_FOR_COMMENT' ]--> :
+<!--[gt text='Comment']-->  :
 <!--[ $userdata.comment|pnvarprepfordisplay ]-->
 
-<!--[ pnml name='_FOR_USERMAIL2' ]-->
+<!--[gt text='We will respond to your e-mail as soon as possible.']-->
 
-<!--[ pnml name='_FOR_THE' ]--> <!--[ $sitename ]--> <!--[ pnml name='_FOR_TEAM' html=1 ]-->
-
+<!--[gt text='The']--> <!--[ $sitename ]--> <!--[gt text='Team']-->

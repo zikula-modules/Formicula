@@ -35,7 +35,7 @@ class Formicula_admin_modifyconfighandler
         }
         $items = array();
         foreach ($sets_found as $formid => $files) {
-            $items[] = array('text' => __f('Set #%formid% with %files% templates';, array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+            $items[] = array('text' => __f('Set form #%1$s with %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
         }
         $pnRender->assign('items', $items);
         return true;
