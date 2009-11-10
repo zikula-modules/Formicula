@@ -23,7 +23,7 @@ function formicula_adminapi_getContact($args)
 {
     $dom = ZLanguage::getModuleDomain('formicula');
     if (!isset($args['cid']) || empty($args['cid'])) {
-        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
 
     // Security check - important to do this as early on as possible to
@@ -82,7 +82,7 @@ function formicula_adminapi_createContact($args)
     }
 
     if ((!isset($args['name'])) || (!isset($args['email']))) {
-        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
     if ((!isset($args['public'])) || empty($args['public'])) {
         $args['public'] = 0;
@@ -107,7 +107,7 @@ function formicula_adminapi_deleteContact($args)
 {
     $dom = ZLanguage::getModuleDomain('formicula');
     if ((!isset($args['cid'])) || empty($args['cid'])) {
-        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
 
     // Security check
@@ -145,7 +145,7 @@ function formicula_adminapi_updateContact($args)
         (!isset($args['email']) ||
         (empty($args['name'])) ||
         (empty($args['email'])) )) {
-        return LogUtil::registerError(__('Error! Could not do what you wanted. Please check your input.', $dom));
+        return LogUtil::registerArgsError();
     }
     if ((!isset($args['public'])) || empty($args['public'])) {
         $args['public'] = 0;

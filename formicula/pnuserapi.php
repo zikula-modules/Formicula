@@ -24,7 +24,7 @@ function formicula_userapi_getContact($args)
 {
     $dom = ZLanguage::getModuleDomain('formicula');
     if (!isset($args['cid']) || !is_numeric($args['cid'])) {
-        return LogUtil::registerError(_MODARGSERROR . ' in formicula_userapi_getContact(cid=' . DataUtil::formatForDisplay($cid) . ')');
+        return LogUtil::registerArgsError();
     }
     if (!isset($args['form']) || !is_numeric($args['form'])) {
         $args['form'] = 0;
@@ -259,25 +259,25 @@ function formicula_userapi_checkArguments($args)
 
     if ($userformat <> 'none') {
         if (!isset($userdata['uemail']) || (pnVarValidate($userdata['uemail'], 'email') == false)) {
-            $ok = LogUtil::registerError(__('Error: no or incorrect email address supplied', $dom));
+            $ok = LogUtil::registerError(__('Error! No or incorrect E-Mail address supplied', $dom));
         }
 
         if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnVarCensor($userdata['uname']))) {
-            $ok = LogUtil::registerError(__('Error: no username', $dom));
+            $ok = LogUtil::registerError(__('Error! No username given', $dom));
         }
     }
 
     if ($userdata['comment'] != pnVarCensor($userdata['comment'])) {
-        $ok = LogUtil::registerError(__('Error: no or invalid comment supplied (no HTML!)', $dom));
+        $ok = LogUtil::registerError(__('Error! No or invalid comment supplied (no HTML!)', $dom));
     }
 
     foreach($custom as $field) {
         if($field['mandatory'] == true) {
             if(!is_array($field['data']) && (empty($field['data']))) {
-                $ok = LogUtil::registerError(_FOR_ERRORNOMANDATORYFIELD . ': ' . DataUtil::formatForDisplay($field['name']));
+                $ok = LogUtil::registerError(__('Error! Mandatory field:' . DataUtil::formatForDisplay($field['name'])));
             }
             if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
-                $ok = LogUtil::registerError(__('Error: Upload error', $dom));
+                $ok = LogUtil::registerError(__('Error! Upload error', $dom));
             }
         }
     }

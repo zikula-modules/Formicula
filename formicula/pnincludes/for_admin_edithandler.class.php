@@ -65,17 +65,17 @@ class Formicula_admin_edithandler
             // no deletion, further checks needed
             if(empty($data['cname'])) {
                 $ifield = & $pnRender->pnFormGetPluginById('cname');
-                $ifield->setError(DataUtil::formatForDisplay(__('Error: no contact name', $dom)));
+                $ifield->setError(DataUtil::formatForDisplay(__('Error! No contact name', $dom)));
                 $ok = false;
             }
             if(empty($data['email']) || !pnVarValidate($data['email'], 'email')) {
                 $ifield = & $pnRender->pnFormGetPluginById('email');
-                $ifield->setError(DataUtil::formatForDisplay(__('Error: no or incorrect email address supplied', $dom)));
+                $ifield->setError(DataUtil::formatForDisplay(__('Error! No or incorrect email address supplied', $dom)));
                 $ok = false;
             }
             if(!empty($data['semail']) && !pnVarValidate($data['semail'], 'email')) {
                 $ifield = & $pnRender->pnFormGetPluginById('semail');
-                $ifield->setError(DataUtil::formatForDisplay(__('Error: incorrect email address supplied', $dom)));
+                $ifield->setError(DataUtil::formatForDisplay(__('Error! Incorrect email address supplied', $dom)));
                 $ok = false;
             }
 
