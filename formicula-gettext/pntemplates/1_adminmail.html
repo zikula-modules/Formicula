@@ -4,28 +4,28 @@
 <html>
     <head>
         <title>formicula_admin_html_email</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=<!--[ pnml name='_CHARSET' ]-->" />
+        <meta http-equiv="Content-Type" content="text/html; charset=<!--[charset]-->" />
     </head>
     <body>
         <p>
-            <!--[ pnml name='_FOR_HELLO' ]--> <br /> <br />
+            <!--[gt text='Hello,']--> <br /> <br />
 
-            <!--[ pnml name='_FOR_ADMINMAIL1' ]--> <br /> <br />
+            <!--[gt text='A visitor of to your web site used the form for contact and sent the following:']--> <br /> <br />
 
-            <!--[ pnml name='_FOR_FORMNUMBER' ]--> : <!--[ $form ]--> <br />
-            <!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]-->  <br />
-            <!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]-->  <br />
-            <!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]--> <br />
-            <!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]--><br /><br />
+            <!--[gt text='Form #']--> : <!--[$form]--> <br />
+            <!--[gt text='Contact or Theme']--> : <!--[$contact.name]-->  <br />
+            <!--[gt text='Your Name']--> : <!--[$userdata.uname]-->  <br />
+            <!--[gt text='Email']--> : <!--[$userdata.uemail]--> <br />
+            <!--[gt text='Homepage']--> : <!--[$userdata.url]--><br /><br />
 
-            <!--[ foreach item=field from=$custom ]-->
-            <!--[ $field.name ]--> : <!--[ $field.data ]--><br />
-            <!--[ /foreach ]-->
+            <!--[foreach item=field from=$custom]-->
+            <!--[$field.name]--> : <!--[$field.data]--><br />
+            <!--[/foreach]-->
             <br />
-            <!--[ pnml name='_FOR_COMMENT' ]--> : <!--[ $userdata.comment|pnvarprephtmldisplay|nl2br ]--> <br />
+            <!--[gt text='Comment']--> : <!--[$userdata.comment|pnvarprephtmldisplay|nl2br]--> <br />
             <br />
 
-            <!--[ pnml name='_FOR_ADMINMAIL2' ]--> <!--[ $ip ]--> / <!--[ $host ]--> <br />
+            <!--[gt text='The user has the following IP address/hostname: ']--> <!--[$ip]--> / <!--[$host]--> <br />
         </p>
     </body>
 </html>

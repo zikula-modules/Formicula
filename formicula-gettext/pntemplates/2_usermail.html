@@ -5,27 +5,27 @@
 <html>
     <head>
         <title>formicula_user_html_email</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=<!--[ pnml name='_CHARSET' ]-->" />
+        <meta http-equiv="Content-Type" content="text/html; charset=<!--[charset]-->" />
     </head>
     <body>
         <p>
-            <!--[ pnml name='_FOR_HELLO' ]--><br />
+            <!--[gt text='Hello,']--><br />
             <br />
-            <!--[ pnml name='_FOR_USERMAIL1' ]--><br />
+            <!--[gt text='Thank you for the comments posted from our Website. The sent data is:']--><br />
             <br />
-            <!--[ pnml name='_FOR_THEME' ]--> : <!--[ $contact.name ]--><br />
-            <!--[ pnml name='_FOR_NAME' ]--> : <!--[ $userdata.uname ]--><br />
-            <!--[ pnml name='_FOR_EMAIL' ]--> : <!--[ $userdata.uemail ]--><br />
-            <!--[ pnml name='_FOR_URL' ]--> : <!--[ $userdata.url ]--><br />
-            <!--[ pnml name='_FOR_COMPANY' ]--> : <!--[ $userdata.company ]--><br />
-            <!--[ pnml name='_FOR_PHONE' ]--> : <!--[ $userdata.phone ]--><br />
-            <!--[ pnml name='_FOR_LOCATION' ]--> : <!--[ $userdata.location ]--><br />
+            <!--[gt text='Contact or Theme']--> : <!--[$contact.name]--><br />
+            <!--[gt text='Your Name']--> : <!--[$userdata.uname]--><br />
+            <!--[gt text='Email']--> : <!--[$userdata.uemail]--><br />
+            <!--[gt text='Homepage']--> : <!--[$userdata.url]--><br />
+            <!--[gt text='Company']--> : <!--[$userdata.company]--><br />
+            <!--[gt text='Phone Number']--> : <!--[$userdata.phone]--><br />
+            <!--[gt text='Location']--> : <!--[$userdata.location]--><br />
             <br />
-            <!--[ pnml name='_FOR_COMMENT' html=1 ]--> : <!--[ $userdata.comment|pnvarprephtmldisplay|nl2br ]--><br />
+            <!--[gt text='Comment']--> : <!--[$userdata.comment|pnvarprephtmldisplay|nl2br]--><br />
             <br />
-            <!--[ pnml name='_FOR_USERMAIL2' ]--><br />
+            <!--[gt text='We will respond to your email as soon as possible.']--><br />
             <br />
-            <!--[ pnml name='_FOR_THE' ]--> <!--[ $sitename ]--> <!--[ pnml name='_FOR_TEAM' html=1 ]--><br />
+            <!--[gt text='The']--> <!--[$sitename]--> <!--[gt text='Team']--><br />
             <br />
         </p>
     </body>

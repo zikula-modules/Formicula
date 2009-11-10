@@ -4,7 +4,7 @@
  * -----------------------------------------
  *
  * @copyright  (c) formicula Development Team
- * @link       http://code.zikula.org/formicula 
+ * @link       http://code.zikula.org/formicula
  * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
@@ -16,22 +16,23 @@
  * simplecaptcha plugin
  * adds a simplecaptcha image to a form
  *
- * based on pnimagetext (c) guite.de which is 
+ * based on pnimagetext (c) guite.de which is
  * based on imagetext (c) Christoph Erdmann <mail@cerdmann.com>
  *
  *@params font
  *@params size
  *@params bgcolor
  *@params fgcolor
- */ 
+ */
 
 if (!isset($smarty->imagetextcount)) $smarty->imagetextcount = 0;
 
 function smarty_function_simplecaptcha($params, &$smarty)
 {
+    $dom = ZLanguage::getModuleDomain('formicula');
     // load StringUtil
     Loader::includeOnce('StringUtil');
-    
+
     // check which image types are supported
     $freetype = function_exists('imagettfbbox');
     if($freetype && (imagetypes() && IMG_PNG)) {
@@ -48,7 +49,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
         pnModSetVar('formicula', 'spamcheck', 0);
         if(SecurityUtil::checkPermission('formicula::', '.*', ACCESS_ADMIN)) {
             // admin permission, show error messages
-            return  DataUtil::formatForDisplay(_FOR_NOIMAGEFUNCTION);
+            return  DataUtil::formatForDisplay(__('no image function available - captcha deactivated', $dom));
         } else {
             // return silently
             return;
@@ -56,26 +57,26 @@ function smarty_function_simplecaptcha($params, &$smarty)
     }
 
     // catch wrong input
-    if (empty($params['font'])) { 
-        $smarty->trigger_error("pnimagetext: missing 'font' parameter"); 
+    if (empty($params['font'])) {
+        $smarty->trigger_error("pnimagetext: missing 'font' parameter");
         return;
     }
     $params['font'] = DataUtil::formatForOS('modules/formicula/pnimages/' . $params['font'] . '.ttf');
     if(!file_exists($params['font']) || !is_readable($params['font'])) {
-        $smarty->trigger_error('pnimagetext: missing font ' . DataUtil::formatForDisplay($params['font'])); 
+        $smarty->trigger_error('pnimagetext: missing font ' . DataUtil::formatForDisplay($params['font']));
         return;
     }
-    if (empty($params['size'])) { 
-        $smarty->trigger_error("pnimagetext: missing 'size' parameter"); 
-        return; 
+    if (empty($params['size'])) {
+        $smarty->trigger_error("pnimagetext: missing 'size' parameter");
+        return;
     }
-    if (empty($params['bgcolor'])) { 
-        $smarty->trigger_error("pnimagetext: missing 'bgcolor' parameter"); 
-        return; 
+    if (empty($params['bgcolor'])) {
+        $smarty->trigger_error("pnimagetext: missing 'bgcolor' parameter");
+        return;
     }
-    if (empty($params['fgcolor'])) { 
-        $smarty->trigger_error("pnimagetext: missing 'fgcolor' parameter"); 
-        return; 
+    if (empty($params['fgcolor'])) {
+        $smarty->trigger_error("pnimagetext: missing 'fgcolor' parameter");
+        return;
     }
 
     srand ((double)microtime()*1000000);
@@ -86,7 +87,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
         // make sure that x>y if z=1 (minus)
         $a=$x; $x=$y; $y=$a;
     }
-        
+
     $m = array('+', '-', '*');
     SessionUtil::setVar('formicula_captcha', serialize(compact('x', 'y', 'z')));
 
@@ -113,28 +114,28 @@ function smarty_function_simplecaptcha($params, &$smarty)
         $box['height'] = abs($bbox[5]) + abs($bbox[1]);
         $box['width'] = abs($bbox[2]) + abs($bbox[0]);
         $box['top'] = abs($bbox[5]);
-        
+
         // create the image
         $im = imagecreate ($box['width'], $box['height']);
 
         $bgcolor = fromhex($im, $params['bgcolor']);
         $fgcolor = fromhex($im, $params['fgcolor']);
-        
+
         // add the text to the image
         imagettftext ($im, $params['size'] * $multi, 0, $box['left'], $box['top'], $fgcolor, $params['font'], $params['text']);
-        
+
         // resize the image now
         $finalwidth  = round($box['width'] / $multi);
         $finalheight = round($box['height'] / $multi);
         $ds = imagecreatetruecolor ($finalwidth, $finalheight);
-        
+
         $bgcolor2 = fromhex($ds,$params['bgcolor']);
         imageFill($ds, 0, 0, $bgcolor2);
         imagecopyresampled($ds, $im, 0, $params['y'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
         imagetruecolortopalette($ds, 0, 256);
         imagepalettecopy($ds, $im);
         ImageColorTransparent($ds, $bgcolor);
-        
+
         // write the file
         $createimagefunction($ds, $imgurl);
         ImageDestroy ($im);
