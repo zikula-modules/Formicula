@@ -1,13 +1,13 @@
 <!--[* Smartytemplate *]-->
 <!--[* $Id$ *]-->
 
-<!--[include file=2_userheader.html]-->
+<!--[include file=0_userheader.html]-->
 
-<p class="z-informationmsg"><!--[gt text='Thank you for your questions/comments to our website!<br>We will reply as soon as possible.']--></p>
+<p class="z-informationmsg"><!--[gt text='Thank you for your questions/comments to our website!<br />We will reply as soon as possible.']--></p>
 
 <form class="z-form" action="<!--[pnmodurl modname=formicula type=user func=main]-->" method="post">
     <fieldset>
-        <legend><!--[gt text='This data was sent to us:']--></legend>
+        <legend><!--[gt text='This data was sent to us']--></legend>
 
         <div class="z-formrow">
             <label><!--[gt text='Contact or Theme']--></label>
@@ -63,7 +63,7 @@
     </fieldset>
 </form>
 
-<p class="z-sub">
+<p class="z-sub z-center">
     <!--[if $sendtouser==true]-->
     <!--[gt text='Confirmation of your submission will be mailed to you in a few minutes.']-->
     <!--[else]-->
