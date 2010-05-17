@@ -12,8 +12,8 @@
  * @subpackage formicula
  */
 
-Loader::requireOnce('includes/FileUtil.class.php');
-Loader::requireOnce('includes/StringUtil.class.php');
+Loader::loadClass('FileUtil');
+Loader::loadClass('StringUtil');
 
 function formicula_init()
 {
