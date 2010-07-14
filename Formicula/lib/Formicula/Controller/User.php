@@ -162,7 +162,7 @@ class Formicula_Controller_User extends Zikula_Controller
             if(is_array($addinfo) && count($addinfo)>0) {
                 $params['addinfo'] = $addinfo;
             }
-            return LogUtil::registerAuthidError(ModUtil::url('formicula', 'user', 'main', $params));
+            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'user', 'main', $params));
         }
 
         if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
@@ -172,7 +172,7 @@ class Formicula_Controller_User extends Zikula_Controller
             $adminformat = 'plain';
         }
 
-        if(!SecurityUtil::checkPermission('formicula::', "$form:$cid:", ACCESS_COMMENT)) {
+        if(!SecurityUtil::checkPermission('Formicula::', "$form:$cid:", ACCESS_COMMENT)) {
             return LogUtil::registerPermissionError(ModUtil::url('formicula', 'user', 'main', array('form' => $form)));
         }
 
@@ -223,11 +223,11 @@ class Formicula_Controller_User extends Zikula_Controller
                 array('cid'  => $cid,
                 'form' => $form));
 
-        $this->view = Zikula_View::getInstance('formicula', false);
+        $this->view->setCaching(false);
         $this->view->assign('contact', $contact);
         $this->view->assign('userdata', $ud);
 
-        if(ModUtil::apiFunc('formicula',
+        if(ModUtil::apiFunc('Formicula',
                 'user',
                 'checkArguments',
                 array('userdata'   => $ud,

@@ -67,7 +67,7 @@ class Formicula_Controller_Admin extends Zikula_Controller
     public function delete()
     {
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_DELETE)) {
-            return LogUtil::registerPermissionError(System::getVar('entrypoint', 'index.php'));
+            return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
 
         // check necessary environment

@@ -75,6 +75,6 @@
 // #41  Error during installation
 // #33  loader fails to include FileUtil
 //
-// Formicula 3.0
+// Formicula 3.0.0
 // #69  Rename module to Formicula
 // #68  Conversion to 1.3.0 standards

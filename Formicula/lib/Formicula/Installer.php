@@ -16,7 +16,6 @@ class Formicula_Installer extends Zikula_Installer
 {
     public function install()
     {
-        $dom = ZLanguage::getModuleDomain('Formicula');
         $tempdir = System::getVar('temp');
         if(StringUtil::left($tempdir, 1) <> '/') {
             // tempdir does not start with a / which means it does not reside outside
@@ -59,7 +58,7 @@ Allow from env=object_is_jpg
                 'public'   => 1,
                 'sname'    => 'Webmaster',
                 'semail'   => System::getVar('adminmail'),
-                'ssubject' => _FOR_EMAILFROM . ' %s'));
+                'ssubject' => $this->__('Email from %s')));
 
         $this->setVar('show_phone', 1);
         $this->setVar('show_company', 1);
@@ -165,7 +164,15 @@ Allow from env=object_is_jpg
             case '2.0':
             // set the default form
                 $this->setVar('default_form', 0);
-            case '2.2.1':
+            case '2.2':
+                $modvars = ModUtil::getVar('formicula');
+                if ($modvars) {
+                    foreach ($modvars as $key => $value) {
+                        $this->setVar($key, $value);
+                    }
+                    ModUtil::delVar('formicula');
+                }
+            case '3.0.0':
                 // future upgrades
 
         }

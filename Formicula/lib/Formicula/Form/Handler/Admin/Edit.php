@@ -29,12 +29,12 @@ class Formicula_Form_Handler_Admin_Edit
             $contact = array('cid'   => -1);
         } else {
             $mode = 'edit';
-            $contact = ModUtil::apiFunc('formicula',
+            $contact = ModUtil::apiFunc('Formicula',
                                     'admin',
                                     'getContact',
                                     array('cid' => $this->cid));
             if ($contact == false) {
-                return LogUtil::registerError(__('Unknown Contact', $dom), null, ModUtil::url('formicula', 'admin', 'main'));
+                return LogUtil::registerError(__('Unknown Contact', $dom), null, ModUtil::url('Formicula', 'admin', 'main'));
             }
         }
 
@@ -49,7 +49,7 @@ class Formicula_Form_Handler_Admin_Edit
     {
         $dom = ZLanguage::getModuleDomain('formicula');
         // Security check
-        if (!SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
+        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'admin', 'main'));
         }
         if ($args['commandName'] == 'submit') {
