@@ -1,0 +1,64 @@
+{* Smartytemplate *}
+{* $Id$ *}
+{include file=formicula_admin_header.html}
+<h2>{gt text="Modify configuration"}</h2>
+{form cssClass="z-form"}
+{formvalidationsummary}
+
+<fieldset>
+    <legend>{gt text="Modify configuration"}</legend>
+    <div class="z-formrow">
+        {formlabel for="show_phone" __text='Show phone number'}
+        {formcheckbox id="show_phone" checked=$zcore.Formicula.show_phone}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="show_company" __text='Show company'}
+        {formcheckbox id="show_company" checked=$zcore.Formicula.show_company}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="show_url" __text='Show URL'}
+        {formcheckbox id="show_url" checked=$zcore.Formicula.show_url}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="show_location" __text='Show location'}
+        {formcheckbox id="show_location" checked=$zcore.Formicula.show_location}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="show_comment" __text='Show comments textarea'}
+        {formcheckbox id="show_comment" checked=$zcore.Formicula.show_comment}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="send_user" __text='Send confirmation email to user'}
+        {formcheckbox id="send_user" checked=$zcore.Formicula.send_user}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="upload_dir" __text='Folder for uploaded files'}
+        {formtextinput size="40" maxLength="80" id="upload_dir" text=$zcore.Formicula.upload_dir}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="delete_file" __text='Delete file after sending'}
+        {formcheckbox id="delete_file" checked=$zcore.Formicula.delete_file}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="spamcheck" __text='Activate spamcheck'}
+        {formcheckbox id="spamcheck" checked=$zcore.Formicula.spamcheck}
+    </div>
+    <div class="z-formnote z-informationmsg">{gt text="Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available"}</div>
+    <div class="z-formrow">
+        {formlabel for="excludespamcheck" __text='Do not use spam check in these forms'}
+        {formtextinput size="20" maxLength="40" id="excludespamcheck" text=$zcore.Formicula.excludespamcheck}
+    </div>
+    <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"}</div>
+    <div class="z-formrow">
+        {formlabel for="default_form" __text='Set the default form'}
+        {formdropdownlist id="default_form" items=$items selectedValue=$zcore.Formicula.default_form}
+        <em class="z-sub z-formnote">{gt text="(used when no form is specified)"}</em>
+    </div>
+</fieldset>
+
+<div class="z-formbuttons">
+    {formbutton id="submit" commandName="submit" __text="Submit"}
+</div>
+{/form}
+
+{include file=formicula_admin_footer.html}

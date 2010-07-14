@@ -49,7 +49,7 @@ class formicula_contenttypesapi_formPlugin extends contentTypeBase
     {
         if (isset($this->form)) {
             PageUtil::addVar('stylesheet', ThemeUtil::getModuleStylesheet('formicula'));
-            $form = pnModFunc('formicula', 'user', 'main', array('form' => (int) $this->form));
+            $form = ModUtil::func('formicula', 'user', 'main', array('form' => (int) $this->form));
             return $form;
         }
         return DataUtil::formatForDisplay(_FOR_NOFORMSELECTED . $this->form);
@@ -59,7 +59,7 @@ class formicula_contenttypesapi_formPlugin extends contentTypeBase
     {
         $dom = ZLanguage::getModuleDomain('formicula');
         if (isset($this->form)) {
-            $form = pnModFunc('formicula', 'user', 'main', array('form' => $this->form));
+            $form = ModUtil::func('formicula', 'user', 'main', array('form' => $this->form));
             return $form;
         }
         return DataUtil::formatForDisplay(__('no form selected', $dom));
