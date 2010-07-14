@@ -1,13 +1,11 @@
-{* Smartytemplate *}
 {* $Id$ *}
-
 {include file=0_userheader.html}
 {pageaddvar name="javascript" value="javascript/ajax/prototype.js"}
 {pageaddvar name="javascript" value="javascript/ajax/validation.js"}
 {pageaddvar name="javascript" value="javascript/ajax/effects.js"}
 
 <p class="z-informationmsg">
-    {gt text="Mandatory field"} <span class="mandatory">*</span>
+    <span class="mandatory">*</span> {gt text="Mandatory field"}
 </p>
 
 <form id="contactform2" class="z-form" action="{modurl modname=formicula type=user func=send}" method="post">
@@ -99,8 +97,8 @@
 
     </fieldset>
 
-    <div class="z-formbuttons">
-        <input type="submit" name="submit" value="{gt text="Send"}" />
+    <div class="z-formbuttons z-buttons">
+        {button src='button_ok.gif' name='submit' value='submit' set='icons/extrasmall' __alt='Send' __title='Send' __text='Send'}
     </div>
 
     <script type="text/javascript">
