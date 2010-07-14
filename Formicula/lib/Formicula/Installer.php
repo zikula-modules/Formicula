@@ -42,7 +42,7 @@ Allow from env=object_is_jpg
             }
         } else {
             // tempdir starts with /, so it is an absolute path, probably outside the webroot
-            LogUtil::registerStatus($this->__('pnTemp folder found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
+            LogUtil::registerStatus($this->__('The folder \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
         }
 
         // create the formicula table
@@ -68,7 +68,7 @@ Allow from env=object_is_jpg
         $this->setVar('send_user', 1);
         $this->setVar('spamcheck', 1);
 
-        $this->setVar('upload_dir', 'pnTemp');
+        $this->setVar('upload_dir', 'ztemp');
         $this->setVar('delete_file', 1);
 
         $this->setVar('default_form', 0);
@@ -93,7 +93,7 @@ Allow from env=object_is_jpg
         // Upgrade dependent on old version number
         switch($oldversion) {
             case '0.1':
-                $this->setVar('upload_dir', 'pnTemp');
+                $this->setVar('upload_dir', 'ztemp');
                 $this->setVar('delete_file', 1);
             case '0.2':
             // nothing to do
