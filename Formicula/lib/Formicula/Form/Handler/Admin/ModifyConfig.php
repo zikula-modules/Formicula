@@ -12,7 +12,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Form_Handler_Admin_ModifyConfig
+class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
 {
     function initialize(&$view)
     {
@@ -34,7 +34,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig
         }
         $items = array();
         foreach ($sets_found as $formid => $files) {
-            $items[] = array('text' => __f('Set form #%1$s with %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+            $items[] = array('text' => $this->__f('Set form #%1$s with %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
         }
         $view->assign('items', $items);
         return true;
@@ -55,7 +55,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig
             $data = $view->getValues();
             if(!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
                 $ifield = & $view->pnFormGetPluginById('upload_dir');
-                $ifield->setError(DataUtil::formatForDisplay(__('The webserver cannot write into this folder!', $dom)));
+                $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this folder!', $dom)));
                 return false;
             }
 
@@ -71,7 +71,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig
             ModUtil::setVar('Formicula', 'excludespamcheck', $data['excludespamcheck']);
             ModUtil::setVar('Formicula', 'default_form',     $data['default_form']);
 
-            LogUtil::registerStatus(__('The configuration has been changed.', $dom));
+            LogUtil::registerStatus($this->__('The configuration has been changed.', $dom));
         }
         return true;
     }
