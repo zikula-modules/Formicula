@@ -49,8 +49,6 @@ class Formicula_Api_User extends Zikula_Api
      */
     public function readValidContacts($args)
     {
-        extract($args);
-
         $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
@@ -125,14 +123,14 @@ class Formicula_Api_User extends Zikula_Api
             }
 
             $res = ModUtil::apiFunc('Mailer', 'user', 'sendmessage',
-                    array('fromname'    => $userdata['uname'],
-                    'fromaddress' => $userdata['uemail'],
-                    'toname'      => $contact['mail'],
-                    'toaddress'   => $contact['email'],
-                    'subject'     => $sitename." - ".$contact['name'],
-                    'body'        => $body,
-                    'attachments' => $attachments,
-                    'html'        => $html));
+                                    array('fromname'    => $userdata['uname'],
+                                          'fromaddress' => $userdata['uemail'],
+                                          'toname'      => $contact['mail'],
+                                          'toaddress'   => $contact['email'],
+                                          'subject'     => $sitename." - ".$contact['name'],
+                                          'body'        => $body,
+                                          'attachments' => $attachments,
+                                          'html'        => $html));
 
             if(ModUtil::getVar('Formicula', 'delete_file') == 1) {
                 foreach($attachments as $attachment) {
@@ -225,13 +223,13 @@ class Formicula_Api_User extends Zikula_Api
             }
 
             return ModUtil::apiFunc('Mailer', 'user', 'sendmessage',
-                    array('fromname'    => $fromname,
-                    'fromaddress' => $frommail,
-                    'toname'      => $userdata['uname'],
-                    'toaddress'   => $userdata['uemail'],
-                    'subject'     => $subject,
-                    'body'        => $body,
-                    'html'        => $html));
+                                    array('fromname'    => $fromname,
+                                          'fromaddress' => $frommail,
+                                          'toname'      => $userdata['uname'],
+                                          'toaddress'   => $userdata['uemail'],
+                                          'subject'     => $subject,
+                                          'body'        => $body,
+                                          'html'        => $html));
 
 
         }

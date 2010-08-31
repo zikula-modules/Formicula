@@ -50,15 +50,13 @@ Allow from env=object_is_jpg
             return LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
         }
 
-        ModUtil::apiFunc('Formicula',
-                'admin',
-                'createContact',
-                array('name'     => 'Webmaster',
-                'email'    => System::getVar('adminmail'),
-                'public'   => 1,
-                'sname'    => 'Webmaster',
-                'semail'   => System::getVar('adminmail'),
-                'ssubject' => $this->__('Email from %s')));
+        ModUtil::apiFunc('Formicula', 'admin', 'createContact',
+                         array('name'     => 'Webmaster',
+                               'email'    => System::getVar('adminmail'),
+                               'public'   => 1,
+                               'sname'    => 'Webmaster',
+                               'semail'   => System::getVar('adminmail'),
+                               'ssubject' => $this->__('Email from %s')));
 
         $this->setVar('show_phone', 1);
         $this->setVar('show_company', 1);
@@ -67,6 +65,7 @@ Allow from env=object_is_jpg
         $this->setVar('show_comment', 1);
         $this->setVar('send_user', 1);
         $this->setVar('spamcheck', 1);
+        $this->setVar('excludespamcheck', '');
 
         $this->setVar('upload_dir', 'ztemp');
         $this->setVar('delete_file', 1);
@@ -116,16 +115,14 @@ Allow from env=object_is_jpg
                 foreach ($contacts_array as $contact) {
                     $name  = DataUtil::formatForStore($contact['name']);
                     $email = DataUtil::formatForStore($contact['email']);
-                    ModUtil::apiFunc('formicula',
-                            'admin',
-                            'createContact',
-                            array('name'     => $name,
-                            'email'    => $email,
-                            'public'   => 1,
-                            'sname'    => '',
-                            'semail'   => '',
-                            'ssubject' => ''));
-                }
+                    ModUtil::apiFunc('formicula', 'admin', 'createContact',
+                                     array('name'    => $name,
+                                          'email'    => $email,
+                                          'public'   => 1,
+                                          'sname'    => '',
+                                          'semail'   => '',
+                                          'ssubject' => ''));
+                    }
                 $this->delVar('contacts');
                 $this->delVar('version');
             case '0.5':
@@ -189,7 +186,7 @@ Allow from env=object_is_jpg
     {
         // drop the table
         if (!DBUtil::dropTable('formcontacts')) {
-            return LogUtil::registerError(_FOR_DROPTABLEFAILED);
+            return LogUtil::registerError($this->__('The installer could not delete the formcontacts table'));
         }
 
         $tempdir = System::getVar('temp');

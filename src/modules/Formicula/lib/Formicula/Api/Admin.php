@@ -29,7 +29,7 @@ class Formicula_Api_Admin extends Zikula_Api
 
         // Security check - important to do this as early on as possible to
         // avoid potential security holes or just too much wasted processing
-        if (!SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_EDIT)) {
+        if (!SecurityUtil::checkPermission('Formicula::', ':'.(int)$args['cid'].':', ACCESS_EDIT)) {
             return LogUtil::registerPermissionError();
         }
 
@@ -53,8 +53,8 @@ class Formicula_Api_Admin extends Zikula_Api
         }
 
         $contacts = array();
-        $pntable =&DBUtil::getTables();
-        $contactscolumn = &$pntable['formcontacts_column'];
+        $pntable =DBUtil::getTables();
+        $contactscolumn = $pntable['formcontacts_column'];
         $orderby = "ORDER BY $contactscolumn[cid]";
 
         $contacts = DBUtil::selectObjectArray('formcontacts', '', $orderby);
@@ -90,7 +90,7 @@ class Formicula_Api_Admin extends Zikula_Api
 
         $obj = DBUtil::insertObject($args, 'formcontacts', 'cid');
         if($obj == false) {
-            return LogUtil::registerError(__('Error! Creation attempt failed.', $dom));
+            return LogUtil::registerError(__('Error! Creation attempt failed.'));
         }
         $this->callHooks('item', 'create', $obj['cid']);
         return $obj['cid'];
@@ -150,7 +150,7 @@ class Formicula_Api_Admin extends Zikula_Api
         }
 
         // Security check
-        if (!SecurityUtil::checkPermission('formicula::', ':' . $args['cid'] . ':', ACCESS_EDIT)) {
+        if (!SecurityUtil::checkPermission('formicula::', ':' . (int)$args['cid'] . ':', ACCESS_EDIT)) {
             return LogUtil::registerPermissionError();
         }
 

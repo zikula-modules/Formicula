@@ -40,7 +40,7 @@
             <p id="advice-required-uemail" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
         </div>
 
-        {if $pncore.formicula.show_url==1}
+        {if $zcore.Formicula.show_url==1}
         <div class="z-formrow">
             <label for="url">{gt text="Homepage"}</label>
             <input type="text" class="formborder validate-url" id="url" name="url" size="40" maxlength="40" />
@@ -49,21 +49,21 @@
         </div>
         {/if}
 
-        {if $pncore.formicula.show_phone==1}
+        {if $zcore.Formicula.show_phone==1}
         <div class="z-formrow">
             <label for="phone">{gt text="Phone Number"}</label>
             <input type="text" class="formborder validate-digits" id="phone" name="phone" size="40" maxlength="40" />
         </div>
         {/if}
 
-        {if $pncore.formicula.show_company==1}
+        {if $zcore.Formicula.show_company==1}
         <div class="z-formrow">
             <label for="company">{gt text="Company"}</label>
             <input type="text" class="formborder" id="company" name="company" size="40" maxlength="40" />
         </div>
         {/if}
 
-        {if $pncore.formicula.show_location==1}
+        {if $zcore.Formicula.show_location==1}
         <div class="z-formrow">
             <label for="location">{gt text="Location"}</label>
             <input type="text" class="formborder" id="location" name="location" size="40" maxlength="40" />

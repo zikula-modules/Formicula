@@ -14,7 +14,7 @@
 
 class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
 {
-    function initialize(&$view)
+    function initialize($view)
     {
         $view->caching = false;
         $view->add_core_data();
@@ -27,9 +27,10 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
                 if ($parts[0] == 'formicula') {
                     continue;
                 }
-                if (!in_array($sets_found, $parts[0])) {
-                    $sets_found[$parts[0]]++;
+                if( !isset($sets_found[$parts[0]])) {
+                    $sets_found[$parts[0]] = 0;
                 }
+                $sets_found[$parts[0]]++;
             }
         }
         $items = array();
@@ -41,9 +42,8 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
     }
 
 
-    function handleCommand(&$view, &$args)
+    function handleCommand($view, &$args)
     {
-        $dom = ZLanguage::getModuleDomain('Formicula');
         // Security check
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError(System::getHomepageUrl());
@@ -55,7 +55,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
             $data = $view->getValues();
             if(!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
                 $ifield = & $view->pnFormGetPluginById('upload_dir');
-                $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this folder!', $dom)));
+                $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this folder!')));
                 return false;
             }
 
@@ -71,7 +71,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
             ModUtil::setVar('Formicula', 'excludespamcheck', $data['excludespamcheck']);
             ModUtil::setVar('Formicula', 'default_form',     $data['default_form']);
 
-            LogUtil::registerStatus($this->__('The configuration has been changed.', $dom));
+            LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }
         return true;
     }

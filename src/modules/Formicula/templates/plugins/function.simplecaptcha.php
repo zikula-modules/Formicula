@@ -25,13 +25,11 @@
  *@params fgcolor
  */
 
-if (!isset($smarty->imagetextcount)) $smarty->imagetextcount = 0;
+//if (!isset($smarty->imagetextcount)) $smarty->imagetextcount = 0;
 
 function smarty_function_simplecaptcha($params, &$smarty)
 {
-    $dom = ZLanguage::getModuleDomain('Formicula');
-
-    // check which image types are supported
+     // check which image types are supported
     $freetype = function_exists('imagettfbbox');
     if($freetype && (imagetypes() && IMG_PNG)) {
         $imagetype = '.png';
@@ -47,7 +45,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
         ModUtil::setVar('Formicula', 'spamcheck', 0);
         if(SecurityUtil::checkPermission('Formicula::', '.*', ACCESS_ADMIN)) {
             // admin permission, show error messages
-            return DataUtil::formatForDisplay(__('no image function available - captcha deactivated', $dom));
+            return $this->__('no image function available - captcha deactivated');
         } else {
             // return silently
             return;
@@ -93,7 +91,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
     $params['text'] = $x . ' ' . $m[$z] . ' ' . $y . ' =';
 
     // has params for cache filename
-    $hash = DataUtil::hash(implode('', $params), 'sha256');
+    $hash = hash('sha256', implode('', $params));
     // create uri of image
     $temp = System::getVar('temp');
     if(StringUtil::right($temp, 1) <> '/') {
@@ -129,7 +127,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
 
         $bgcolor2 = fromhex($ds,$params['bgcolor']);
         imageFill($ds, 0, 0, $bgcolor2);
-        imagecopyresampled($ds, $im, 0, $params['y'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
+        imagecopyresampled($ds, $im, 0, $box['left'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
         imagetruecolortopalette($ds, 0, 256);
         imagepalettecopy($ds, $im);
         ImageColorTransparent($ds, $bgcolor);

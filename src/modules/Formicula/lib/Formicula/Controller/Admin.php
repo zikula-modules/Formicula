@@ -76,10 +76,8 @@ class Formicula_Controller_Admin extends Zikula_Controller
         $cid          = (int)FormUtil::getPassedValue('cid', -1, 'GETPOST');
         $confirmation =      FormUtil::getPassedValue('confirmation', '', 'GETPOST');
 
-        $contact = ModUtil::apiFunc('Formicula',
-                'admin',
-                'getContact',
-                array('cid' => $cid));
+        $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact',
+                                    array('cid' => $cid));
 
         if ($contact == false) {
             return LogUtil::registerError($this->__('Unknown Contact'), null, ModUtil::url('formicula', 'admin', 'main'));
@@ -123,23 +121,21 @@ class Formicula_Controller_Admin extends Zikula_Controller
         Formicula_Util::envcheck();
 
         // read all items
-        $allcontacts = ModUtil::apiFunc('Formicula',
-                'admin',
-                'readContacts');
+        $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
         // only use those where we have the necessary rights for
         $allowedcontacts = array();
         foreach ($allcontacts as $contact) {
             $cid = $contact['cid'];
             if (SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_EDIT)) {
                 $allowedcontact = array('cid'        => $contact['cid'],
-                        'name'       => $contact['name'],
-                        'email'      => $contact['email'],
-                        'public'     => $contact['public'],
-                        'sname'      => $contact['sname'],
-                        'semail'     => $contact['semail'],
-                        'ssubject'   => $contact['ssubject'],
-                        'acc_edit'   => true,
-                        'acc_delete' => SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_DELETE));
+                                        'name'       => $contact['name'],
+                                        'email'      => $contact['email'],
+                                        'public'     => $contact['public'],
+                                        'sname'      => $contact['sname'],
+                                        'semail'     => $contact['semail'],
+                                        'ssubject'   => $contact['ssubject'],
+                                        'acc_edit'   => true,
+                                        'acc_delete' => SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_DELETE));
                 array_push($allowedcontacts, $allowedcontact);
             }
         }
@@ -162,6 +158,7 @@ class Formicula_Controller_Admin extends Zikula_Controller
 
         // check necessary environment
         Formicula_Util::envcheck();
+
         // Create output object
         $pnf = FormUtil::newForm('Formicula');
 
@@ -197,7 +194,7 @@ class Formicula_Controller_Admin extends Zikula_Controller
 
         closedir($dh);
 
-        LogUtil::registerStatus($this->__('The captcha image cached was cleared'));
+        LogUtil::registerStatus($this->__('The captcha image cached has been cleared'));
         return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
     }
 }

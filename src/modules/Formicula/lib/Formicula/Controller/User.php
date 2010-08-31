@@ -14,6 +14,11 @@
 
 class Formicula_Controller_User extends Zikula_Controller
 {
+    public function postInitialize()
+    {
+        $this->view->setCaching(false)->add_core_data();
+    }
+
     /**
      * main
      * main entry point for the user
@@ -37,16 +42,12 @@ class Formicula_Controller_User extends Zikula_Controller
         SessionUtil::delVar('formicula_captcha');
 
         if ($cid == -1) {
-            $contacts = ModUtil::apiFunc('Formicula',
-                    'user',
-                    'readValidContacts',
-                    array('form' => $form));
+            $contacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
+                                         array('form' => $form));
         } else {
-            $contacts[] = ModUtil::apiFunc('Formicula',
-                    'user',
-                    'getContact',
-                    array('cid'  => $cid,
-                    'form' => $form));
+            $contacts[] = ModUtil::apiFunc('Formicula', 'user', 'getContact',
+                                           array('cid'  => $cid,
+                                                 'form' => $form));
         }
 
         if (count($contacts) == 0) {
@@ -220,8 +221,8 @@ class Formicula_Controller_User extends Zikula_Controller
         } while ($missing < 3);
 
         $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
-                array('cid'  => $cid,
-                'form' => $form));
+                                    array('cid'  => $cid,
+                                          'form' => $form));
 
         $this->view->setCaching(false);
         $this->view->assign('contact', $contact);
@@ -233,27 +234,23 @@ class Formicula_Controller_User extends Zikula_Controller
                 array('userdata'   => $ud,
                 'custom'     => $custom,
                 'userformat' => $userformat)) == true) {
-            if(ModUtil::apiFunc('Formicula',
-                    'user',
-                    'sendtoContact',
-                    array('contact'  => $contact,
-                    'userdata' => $ud,
-                    'custom'   => $custom,
-                    'form'     => $form,
-                    'format'   => $adminformat)) == false) {
+            if(ModUtil::apiFunc('Formicula', 'user', 'sendtoContact',
+                                array('contact'  => $contact,
+                                      'userdata' => $ud,
+                                      'custom'   => $custom,
+                                      'form'     => $form,
+                                      'format'   => $adminformat)) == false) {
                 return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('formicula', 'user', 'main', array('form' => $form)));
             }
 
             if(($this->getVar('send_user') == 1) && ($userformat <> 'none')) {
                 // we replace the array of data of uploaded files with the filename
-                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula',
-                        'user',
-                        'sendtoUser',
-                        array('contact'  => $contact,
-                        'userdata' => $ud,
-                        'custom'   => $custom,
-                        'form'     => $form,
-                        'format'   => $userformat )));
+                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'user', 'sendtoUser',
+                                    array('contact'  => $contact,
+                                          'userdata' => $ud,
+                                          'custom'   => $custom,
+                                          'form'     => $form,
+                                          'format'   => $userformat )));
             }
 
             $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
@@ -283,8 +280,8 @@ class Formicula_Controller_User extends Zikula_Controller
         $data = file_get_contents($imgfile);
 
         $mimetypes = array('png' => 'image/png',
-                'jpg' => 'image/jpeg',
-                'gif' => 'image/gif');
+                           'jpg' => 'image/jpeg',
+                           'gif' => 'image/gif');
 
         // following code is based on Axels MediaAttach/pnuser/download.php
         header("Pragma: public");
