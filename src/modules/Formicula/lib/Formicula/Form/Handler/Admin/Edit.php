@@ -5,7 +5,6 @@
  *
  * @copyright  (c) Formicula Development Team
  * @link       http://code.zikula.org/formicula
- * @version    $Id: pnversion.php 131 2008-12-28 13:34:07Z Landseer $
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components

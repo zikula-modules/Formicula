@@ -1,6 +1,4 @@
-$Id$
-
-Formicula 2.0 user manual
+Formicula 3.0.0 user manual
 -------------------------
 manual for Formicula v.2 by Jim Hadfield and Frank Schummertz
 manual for Formicula >v.2: Frank Schummertz

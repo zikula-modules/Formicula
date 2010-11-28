@@ -1,6 +1,3 @@
-{* Smartytemplate *}
-{* $Id$ *}
-
  {gt text='Hello,'}
 
 {gt text='This data was sent to us:'}
