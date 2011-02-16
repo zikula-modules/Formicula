@@ -15,4 +15,4 @@
 
 {gt text='We will respond to your e-mail as soon as possible.'}
 
-{gt text='The'} { $sitename } {gt text='Team'}
+{gt text="The %s Team" tag1=$sitename comment="%s will be replaced with the sitename"}
