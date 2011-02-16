@@ -19,6 +19,10 @@
   margin-left: 0.5em;
 }
 
+#contactform .required {
+  border: 1px solid #c88;
+}
+
 #contactform input,
 #contactform select,
 #contactform textarea {
@@ -52,4 +56,5 @@
 #contactform2 .custom-advice {
   color:red!important;
 }
+
 
