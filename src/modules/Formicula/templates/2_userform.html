@@ -38,7 +38,7 @@
         <p id="advice-validate-email-uemail" class="custom-advice" style="display:none">{gt text='Please enter a valid E-mail address like user@example.com.'}</p>
         <p id="advice-required-uemail" class="custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
 
-        {if $zcore.Formicula.show_url==1}
+        {if $coredata.Formicula.show_url==1}
         <p>
             <label for="url">{gt text="Homepage"}&nbsp;:</label><br />
             <input type="text" class="formborder validate-url" id="url" name="url" size="40" maxlength="40" />
@@ -46,21 +46,21 @@
         <p id="advice-validate-url-url" class="custom-advice" style="display:none">{gt text='Please enter a valid internet address like http://www.example.com.'}</p>
         {/if}
 
-        {if $zcore.Formicula.show_phone==1}
+        {if $coredata.Formicula.show_phone==1}
         <p>
             <label for="phone">{gt text="Phone Number"}&nbsp;:</label><br />
             <input type="text" class="formborder validate-digits" id="phone" name="phone" size="40" maxlength="40" />
         </p>
         {/if}
 
-        {if $zcore.Formicula.show_company==1}
+        {if $coredata.Formicula.show_company==1}
         <p>
             <label for="company">{gt text="Company"}&nbsp;:</label><br />
             <input type="text" class="formborder" id="company" name="company" size="40" maxlength="40" />
         </p>
         {/if}
 
-        {if $zcore.Formicula.show_location==1}
+        {if $coredata.Formicula.show_location==1}
         <p>
             <label for="location">{gt text="Location"}&nbsp;:</label><br />
             <input type="text" class="formborder" id="location" name="location" size="40" maxlength="40" />
