@@ -58,7 +58,7 @@ class Formicula_Controller_User extends Zikula_Controller
             $uemail = UserUtil::getVar('email');
         } else {
             $uname = '';
-            $email = '';
+            $uemail = '';
         }
 
         $spamcheck = $this->getVar('spamcheck');
