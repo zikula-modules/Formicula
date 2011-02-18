@@ -52,7 +52,7 @@ class Formicula_Api_User extends Zikula_Api
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($allcontacts == false) {
-            return LogUtil::registerError($this->__('Error! Could not load items.'));
+            return LogUtil::registerError($this->__('Error! No contacts defined.'));
         }
 
         // Put items into result array.  Note that each item is checked
