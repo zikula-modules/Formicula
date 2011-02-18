@@ -34,7 +34,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
         }
         $items = array();
         foreach ($sets_found as $formid => $files) {
-            $items[] = array('text' => $this->__f('Set form #%1$s with %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+            $items[] = array('text' => $this->__f('Form #%1$s that contains %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
         }
         $view->assign('items', $items);
         return true;
