@@ -31,7 +31,7 @@ class Formicula_Controller_User extends Zikula_Controller
         $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : $default_form, 'GETPOST');
         $cid  = (int)FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
-        // get subitted information - will be passed to the template
+        // get submitted information - will be passed to the template
         // addinfo is an array:
         // addinfo[name1] = value1
         // addinfo[name2] = value2
