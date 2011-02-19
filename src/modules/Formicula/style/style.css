@@ -38,7 +38,7 @@
 #contactform input:focus,
 #contactform select:focus,
 #contactform form .formborder:focus,
-#content textarea:focus {
+#contentform textarea:focus {
   border-color: #ccc;
   background-color: #eee;
 }

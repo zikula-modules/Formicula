@@ -52,8 +52,8 @@ class Formicula_Api_Admin extends Zikula_Api
         }
 
         $contacts = array();
-        $pntable =DBUtil::getTables();
-        $contactscolumn = $pntable['formcontacts_column'];
+        $dbtables =DBUtil::getTables();
+        $contactscolumn = $dbtables['formcontacts_column'];
         $orderby = "ORDER BY $contactscolumn[cid]";
 
         $contacts = DBUtil::selectObjectArray('formcontacts', '', $orderby);
@@ -109,7 +109,7 @@ class Formicula_Api_Admin extends Zikula_Api
         }
 
         // Security check
-        if (!SecurityUtil::checkPermission('formicula::', ':' . (int)$args['cid'] . ':', ACCESS_DELETE)) {
+        if (!SecurityUtil::checkPermission('Formicula::', ':' . (int)$args['cid'] . ':', ACCESS_DELETE)) {
             return LogUtil::registerPermissionError();
         }
 
@@ -149,7 +149,7 @@ class Formicula_Api_Admin extends Zikula_Api
         }
 
         // Security check
-        if (!SecurityUtil::checkPermission('formicula::', ':' . (int)$args['cid'] . ':', ACCESS_EDIT)) {
+        if (!SecurityUtil::checkPermission('Formicula::', ':' . (int)$args['cid'] . ':', ACCESS_EDIT)) {
             return LogUtil::registerPermissionError();
         }
 
@@ -159,7 +159,7 @@ class Formicula_Api_Admin extends Zikula_Api
         }
         $this->callHooks('item', 'update', $args['cid']);
         return $args['cid'];
-    }
+    }    
 
     /**
      * get available admin panel links
@@ -170,11 +170,11 @@ class Formicula_Api_Admin extends Zikula_Api
     public function getlinks()
     {
         $links = array();
-        if (SecurityUtil::checkPermission('formicula::', '::', ACCESS_ADMIN)) {
-            $links[] = array('url' => ModUtil::url('formicula', 'admin', 'view'), 'text' => $this->__('View contacts'), 'class' => 'z-icon-es-list');
-            $links[] = array('url' => ModUtil::url('formicula', 'admin', 'edit', array('cid' => -1)), 'text' => $this->__('Add contact'), 'class' => 'z-icon-es-new');
-            $links[] = array('url' => ModUtil::url('formicula', 'admin', 'clearcache'), 'text' => $this->__('Clear captcha image cache'), 'class' => 'z-icon-es-delete');
-            $links[] = array('url' => ModUtil::url('formicula', 'admin', 'modifyconfig'), 'text' => $this->__('Modify configuration'), 'class' => 'z-icon-es-config');
+        if (SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
+            $links[] = array('url' => ModUtil::url('Formicula', 'Admin', 'view'), 'text' => $this->__('View contacts'), 'class' => 'z-icon-es-list');
+            $links[] = array('url' => ModUtil::url('Formicula', 'Admin', 'edit', array('cid' => -1)), 'text' => $this->__('Add contact'), 'class' => 'z-icon-es-new');
+            $links[] = array('url' => ModUtil::url('Formicula', 'Admin', 'clearcache'), 'text' => $this->__('Clear captcha image cache'), 'class' => 'z-icon-es-delete');
+            $links[] = array('url' => ModUtil::url('Formicula', 'Admin', 'modifyconfig'), 'text' => $this->__('Modify configuration'), 'class' => 'z-icon-es-config');
         }
         return $links;
     }
