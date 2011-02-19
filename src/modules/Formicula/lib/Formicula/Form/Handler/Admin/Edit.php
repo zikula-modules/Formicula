@@ -33,7 +33,7 @@ class Formicula_Form_Handler_Admin_Edit extends Form_Handler
                              'ssubject' => '');
         } else {
             $mode = 'edit';
-            $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact',
+            $contact = ModUtil::apiFunc('Formicula', 'Admin', 'getContact',
                                         array('cid' => $this->cid));
             if ($contact == false) {
                 return LogUtil::registerError($this->__('Unknown Contact'), null, ModUtil::url('Formicula', 'admin', 'main'));
@@ -86,14 +86,14 @@ class Formicula_Form_Handler_Admin_Edit extends Form_Handler
 
             // The API function is called
             if($data['cid'] == -1) {
-                if(ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data) <> false) {
+                if(ModUtil::apiFunc('Formicula', 'Admin', 'createContact', $data) <> false) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact created'));
                 } else {
                     LogUtil::registerError($this->__('Error creating contact!'));
                 }
             } else {
-                if(ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data) <> false) {
+                if(ModUtil::apiFunc('Formicula', 'Admin', 'updateContact', $data) <> false) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact info has been updated'));
                 } else {
