@@ -48,7 +48,7 @@ class Formicula_Api_User extends Zikula_Api
      */
     public function readValidContacts($args)
     {
-        $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
+        $allcontacts = ModUtil::apiFunc('Formicula', 'Admin', 'readContacts');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($allcontacts == false) {
@@ -89,42 +89,42 @@ class Formicula_Api_User extends Zikula_Api
         $format   = $args['format'];
 
         if(ModUtil::available('Mailer')) {
-            $pnr = Zikula_View::getInstance('Formicula', false, null, true);
+            $render = Zikula_View::getInstance('Formicula', false, null, true);
             $ip = getenv('REMOTE_ADDR');
-            $pnr->assign('host', gethostbyaddr($ip));
-            $pnr->assign('ip', $ip);
-            $pnr->assign('form', $form);
-            $pnr->assign('contact', $contact);
-            $pnr->assign('userdata', $userdata);
+            $render->assign('host', gethostbyaddr($ip));
+            $render->assign('ip', $ip);
+            $render->assign('form', $form);
+            $render->assign('contact', $contact);
+            $render->assign('userdata', $userdata);
 
             $sitename = System::getVar('sitename');
-            $pnr->assign('sitename', $sitename);
+            $render->assign('sitename', $sitename);
 
             // attach all files we have got
             $attachments = array();
             $uploaddir = ModUtil::getVar('Formicula', 'upload_dir');
             for($i=0;$i<count($custom);$i++) {
-                if(is_array($custom[$i]['data']))  {
+                if(isset($custom[$i]['data']) && is_array($custom[$i]['data']))  {
                     $attachments[] = $uploaddir."/".$custom[$i]['data']['name'];
                     $custom[$i]['data'] = $custom[$i]['data']['name'];
                 }
             }
-            $pnr->assign('custom', $custom);
+            $render->assign('custom', $custom);
 
             switch($format) {
                 case 'html' :
-                    $body = $pnr->fetch($form."_adminmail.html");
+                    $body = $render->fetch($form."_adminmail.html");
                     $html = true;
                     break;
                 default:
-                    $body = $pnr->fetch($form."_adminmail.txt");
+                    $body = $render->fetch($form."_adminmail.txt");
                     $html = false;
             }
 
             $res = ModUtil::apiFunc('Mailer', 'user', 'sendmessage',
                                     array('fromname'    => $userdata['uname'],
                                           'fromaddress' => $userdata['uemail'],
-                                          'toname'      => $contact['mail'],
+                                          'toname'      => $contact['name'],
                                           'toaddress'   => $contact['email'],
                                           'subject'     => $sitename." - ".$contact['name'],
                                           'body'        => $body,
@@ -164,26 +164,26 @@ class Formicula_Api_User extends Zikula_Api
         $format   = $args['format'];
 
         if(ModUtil::available('Mailer')) {
-            $pnr = Zikula_View::getInstance('Formicula', false, null, true);
+            $render = Zikula_View::getInstance('Formicula', false, null, true);
             $ip = getenv('REMOTE_ADDR');
-            $pnr->assign('host', gethostbyaddr($ip));
-            $pnr->assign('ip', $ip);
-            $pnr->assign('form', $form);
-            $pnr->assign('contact', $contact);
-            $pnr->assign('userdata', $userdata);
+            $render->assign('host', gethostbyaddr($ip));
+            $render->assign('ip', $ip);
+            $render->assign('form', $form);
+            $render->assign('contact', $contact);
+            $render->assign('userdata', $userdata);
 
             $sitename = System::getVar('sitename');
-            $pnr->assign('sitename', $sitename);
+            $render->assign('sitename', $sitename);
 
-            $pnr->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
+            $render->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
 
             switch($format) {
                 case 'html' :
-                    $body = $pnr->fetch($form."_usermail.html");
+                    $body = $render->fetch($form."_usermail.html");
                     $html = true;
                     break;
                 default:
-                    $body = $pnr->fetch($form."_usermail.txt");
+                    $body = $render->fetch($form."_usermail.txt");
                     $html = false;
             }
 
@@ -257,8 +257,8 @@ class Formicula_Api_User extends Zikula_Api
                 $ok = LogUtil::registerError($this->__('Error! No or incorrect E-Mail address supplied'));
             }
 
-            if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != pnvarcensor*DEPRECATED*($userdata['uname']))) {
-                $ok = LogUtil::registerError($this->__('Error! No username given'));
+            if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != DataUtil::censor($userdata['uname']))) {
+                $ok = LogUtil::registerError($this->__('Error! No or invalid username given'));
             }
         }
 
@@ -268,7 +268,7 @@ class Formicula_Api_User extends Zikula_Api
         }
 
         foreach($custom as $field) {
-            if($field['mandatory'] == true) {
+            if(isset($field['mandatory']) && $field['mandatory']) {
                 if(!is_array($field['data']) && (empty($field['data']))) {
                     $ok = LogUtil::registerError($this->__('Error! Mandatory field:' . DataUtil::formatForDisplay($field['name'])));
                 }
@@ -293,7 +293,7 @@ class Formicula_Api_User extends Zikula_Api
         if(isset($args['custom']) && is_array($args['custom'])) {
             $custom = $args['custom'];
             for($i=0;$i<count($custom);$i++) {
-                if($custom[$i]['upload'] == true) {
+                if(isset($custom[$i]['upload']) && $custom[$i]['upload'] == true) {
                     $custom[$i]['data'] = $custom[$i]['data']['name'];
                 }
             }
