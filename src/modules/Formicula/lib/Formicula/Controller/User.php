@@ -152,7 +152,7 @@ class Formicula_Controller_User extends Zikula_Controller
                 if(is_array($addinfo) && count($addinfo)>0) {
                     $params['addinfo'] = $addinfo;
                 }
-                return LogUtil::registerError($this->__('Bad in mathematics? You can do better, try again.'), null, ModUtil::url('Formicula', 'User', 'main', $params));
+                return LogUtil::registerError($this->__('Bad in mathematics? You can do better, try again.'), null, ModUtil::url('Formicula', 'user', 'main', $params));
             }
         }
         SessionUtil::delVar('formicula_captcha');
@@ -173,7 +173,7 @@ class Formicula_Controller_User extends Zikula_Controller
         }
 
         if(!SecurityUtil::checkPermission('Formicula::', "$form:$cid:", ACCESS_COMMENT)) {
-            return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'User', 'main', array('form' => $form)));
+            return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
         }
 
         // very basic input validation against HTTP response splitting
@@ -244,7 +244,7 @@ class Formicula_Controller_User extends Zikula_Controller
                                       'custom'   => $custom,
                                       'form'     => $form,
                                       'format'   => $adminformat)) == false) {
-                return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('Formicula', 'User', 'main', array('form' => $form)));
+                return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
             }
 
             if(($this->getVar('send_user') == 1) && ($userformat <> 'none')) {

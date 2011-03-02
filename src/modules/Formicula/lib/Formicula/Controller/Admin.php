@@ -89,7 +89,7 @@ class Formicula_Controller_Admin extends Zikula_Controller
         }
 
         if (!SecurityUtil::confirmAuthKey()) {
-            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'Admin', 'main'));
+            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'admin', 'main'));
         }
 
         if (ModUtil::apiFunc('Formicula',
@@ -100,7 +100,7 @@ class Formicula_Controller_Admin extends Zikula_Controller
             LogUtil::registerStatus($this->__('Contact has been deleted'));
         }
 
-        return System::redirect(ModUtil::url('Formicula', 'Admin', 'view'));
+        return System::redirect(ModUtil::url('Formicula', 'admin', 'view'));
     }
 
     /**
@@ -235,6 +235,6 @@ class Formicula_Controller_Admin extends Zikula_Controller
         closedir($dh);
 
         LogUtil::registerStatus($this->__('The captcha image cached has been cleared'));
-        return System::redirect(ModUtil::url('Formicula', 'Admin', 'main'));
+        return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
     }
 }
