@@ -2,7 +2,7 @@
 
 <h2>{gt text="Delete contact"}</h2>
 <p class="z-warningmsg">{gt text="Do you really want to delete this contact?"}</p>
-<form class="z-form" action="{modurl modname=Formicula type=Admin func=delete}" method="post">
+<form class="z-form" action="{modurl modname=Formicula type=admin func=delete}" method="post">
     <fieldset>
         <legend>{gt text='Confirmation prompt'}</legend>
         <input type="hidden" name="cid" value="{$contact.cid}" />
