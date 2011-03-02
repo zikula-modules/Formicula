@@ -237,6 +237,44 @@ class Formicula_Api_User extends Zikula_Api
     }
 
     /**
+     * storeInDatabase
+     * stores a form submit in the database
+     *@param userdata array with user submitted data
+     *@param contact  array with contact data
+     *@param custom   array of custom fields information
+     *@param form     int form id
+     *@returns boolean
+     */
+    public function storeInDatabase($args)
+    {
+        $userdata = $args['userdata'];
+        $contact  = $args['contact'];
+        $custom   = $args['custom'];
+        $form     = DataUtil::formatForOS($args['form']);
+                
+        $formsubmit['form'] = $form;
+        $formsubmit['cid'] = $contact['cid'];
+        $formsubmit['name'] = $userdata['uname'];
+        $formsubmit['email'] = $userdata['uemail'];
+        $formsubmit['phone'] = $userdata['phone'];
+        $formsubmit['company'] = $userdata['company'];
+        $formsubmit['url'] = $userdata['url'];
+        $formsubmit['location'] = $userdata['location'];
+        $formsubmit['comment'] = $userdata['comment'];
+        foreach($custom as $customdata) {
+            $customarray[$customdata['name']] = $customdata['data'];
+        }
+        $formsubmit['customdata'] = serialize($customarray);
+        $ip = getenv('REMOTE_ADDR');
+        $formsubmit['ip'] = $ip;
+        $formsubmit['host'] = gethostbyaddr($ip);
+        
+        if (!($obj = DBUtil::insertObject($formsubmit, 'formsubmits', 'sid'))) {
+            return LogUtil::registerError($this->__f('Error! Could not store data submitted by form %s.', $form));
+        } 
+    }
+
+    /**
      * checkArguments
      * checks if mandatory arguments are correct
      *@param userdata array with user submitted data, we are interested in uemail, uname and comment here
@@ -262,7 +300,6 @@ class Formicula_Api_User extends Zikula_Api
             }
         }
 
-        // TODO - remove pnVarCensor?  This is not supported any more?
         if ($userdata['comment'] != DataUtil::censor($userdata['comment'])) {
             $ok = LogUtil::registerError($this->__('Error! No or invalid comment supplied (no HTML!)'));
         }

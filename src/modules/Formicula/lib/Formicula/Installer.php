@@ -48,8 +48,12 @@ Allow from env=object_is_jpg
         if (!DBUtil::createTable('formcontacts')) {
             return LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
         }
+        // create the formicula table
+        if (!DBUtil::createTable('formsubmits')) {
+            return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
+        }
 
-        ModUtil::apiFunc('Formicula', 'admin', 'createContact',
+        ModUtil::apiFunc('Formicula', 'Admin', 'createContact',
                          array('name'     => 'Webmaster',
                                'email'    => System::getVar('adminmail'),
                                'public'   => 1,
@@ -71,6 +75,9 @@ Allow from env=object_is_jpg
 
         $this->setVar('default_form', 0);
 
+        $this->setVar('store_data', false);
+        $this->setVar('store_data_forms', '');
+        
         // Initialisation successful
         return true;
     }
@@ -161,12 +168,26 @@ Allow from env=object_is_jpg
             // set the default form
                 $this->setVar('default_form', 0);
             case '2.2':
-                $modvars = ModUtil::getVar('formicula');
+                $modvars = ModUtil::getVar('Formicula');
                 if ($modvars) {
                     foreach ($modvars as $key => $value) {
                         $this->setVar($key, $value);
                     }
                     ModUtil::delVar('formicula');
+                }
+                $this->setVar('store_data', false);
+                $this->setVar('store_data_forms', '');
+                
+                // Update permission strings for uppercase module name
+                $tables  = DBUtil::getTables();
+                $grperms = $tables['group_perms_column'];
+                $sqls   = array();
+                $sqls[] = "UPDATE $tables[group_perms] SET $grperms[component] = 'Formicula::' WHERE $grperms[component] = 'formicula::'";
+                foreach ($sqls as $sql) {
+                    if (!DBUtil::executeSQL($sql)) {
+                        LogUtil::registerError($this->__('Error! Could not update table.'));
+                        return '2.2';
+                    }
                 }
             case '3.0.0':
                 // future upgrades
@@ -186,6 +207,9 @@ Allow from env=object_is_jpg
         // drop the table
         if (!DBUtil::dropTable('formcontacts')) {
             return LogUtil::registerError($this->__('The installer could not delete the formcontacts table'));
+        }
+        if (!DBUtil::dropTable('formsubmits')) {
+            return LogUtil::registerError($this->__('The installer could not delete the formsubmits table'));
         }
 
         $tempdir = System::getVar('temp');

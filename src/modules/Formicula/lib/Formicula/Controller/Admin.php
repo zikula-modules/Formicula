@@ -79,7 +79,7 @@ class Formicula_Controller_Admin extends Zikula_Controller
                                     array('cid' => $cid));
 
         if ($contact == false) {
-            return LogUtil::registerError($this->__('Unknown Contact'), null, ModUtil::url('Formicula', 'Admin', 'main'));
+            return LogUtil::registerError($this->__('Unknown Contact'), null, ModUtil::url('Formicula', 'admin', 'main'));
         }
 
         // Check for confirmation.
@@ -143,6 +143,47 @@ class Formicula_Controller_Admin extends Zikula_Controller
     }
 
     /**
+     * view
+     * show list of contacts
+     *
+     *@param none
+     *@returns view output
+     */
+    public function viewsubmits()
+    {
+        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
+            return LogUtil::registerPermissionError(System::getHomepageUrl());
+        }
+        
+        $allsubmits = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmits');
+        $this->view->assign('formsubmits', $allsubmits);
+        
+        return $this->view->fetch('formicula_admin_viewsubmits.html');
+    }
+
+    /**
+     * displaysubmit
+     * show a specific form submission
+     *
+     *@param sid int formsubmit id
+     *@returns view output
+     */
+    public function displaysubmit()
+    {
+        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
+            return LogUtil::registerPermissionError(System::getHomepageUrl());
+        }
+        
+        $sid = (int)FormUtil::getPassedValue('sid', -1, 'GETPOST');
+        
+        $submit = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmit', array('sid' => $sid));
+        $submit['customdata'] = unserialize($submit['customdata']);
+        $this->view->assign('submit', $submit);
+        
+        return $this->view->fetch('formicula_admin_displaysubmit.html');
+    }
+
+    /**
      * modifyconfig
      * main entry point for configuration of module behaviour
      *
@@ -194,6 +235,6 @@ class Formicula_Controller_Admin extends Zikula_Controller
         closedir($dh);
 
         LogUtil::registerStatus($this->__('The captcha image cached has been cleared'));
-        return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
+        return System::redirect(ModUtil::url('Formicula', 'Admin', 'main'));
     }
 }

@@ -69,6 +69,8 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
             ModUtil::setVar('Formicula', 'spamcheck',        $data['spamcheck']);
             ModUtil::setVar('Formicula', 'excludespamcheck', $data['excludespamcheck']);
             ModUtil::setVar('Formicula', 'default_form',     $data['default_form']);
+            ModUtil::setVar('Formicula', 'store_data',       $data['store_data']);
+            ModUtil::setVar('Formicula', 'store_data_forms', $data['store_data_forms']);
 
             LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }

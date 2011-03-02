@@ -51,7 +51,7 @@ class Formicula_Form_Handler_Admin_Edit extends Form_Handler
     {
         // Security check
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
-            return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'admin', 'main'));
+            return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'Admin', 'main'));
         }
         if ($args['commandName'] == 'submit') {
             $ok = $view->isValid();
@@ -102,7 +102,7 @@ class Formicula_Form_Handler_Admin_Edit extends Form_Handler
             }
 
         }
-        return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
+        return System::redirect(ModUtil::url('Formicula', 'Admin', 'main'));
     }
 
 }
