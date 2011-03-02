@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Form_Handler_Admin_Edit extends Form_Handler
+class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_Handler
 {
     public $cid;
 
