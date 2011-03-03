@@ -53,13 +53,8 @@ Allow from env=object_is_jpg
             return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
         }
 
-        ModUtil::apiFunc('Formicula', 'Admin', 'createContact',
-                         array('name'     => 'Webmaster',
-                               'email'    => System::getVar('adminmail'),
-                               'public'   => 1,
-                               'sname'    => 'Webmaster',
-                               'semail'   => System::getVar('adminmail'),
-                               'ssubject' => $this->__('Email from %s')));
+        // create the default data for the Formicula module
+        $this->defaultdata();        
 
         $this->setVar('show_phone', 1);
         $this->setVar('show_company', 1);
@@ -81,7 +76,6 @@ Allow from env=object_is_jpg
         // Initialisation successful
         return true;
     }
-
 
     public function upgrade($oldversion)
     {
@@ -201,7 +195,6 @@ Allow from env=object_is_jpg
         return true;
     }
 
-
     public function uninstall()
     {
         // drop the table
@@ -225,4 +218,23 @@ Allow from env=object_is_jpg
 
         return true;
     }
+    
+// -----------------------------------------------------------------------
+// Create default data for a new install
+// -----------------------------------------------------------------------
+    protected function defaultdata()
+    {
+        // create a contact for the webmaster
+        $contact = array('name'     => $this->__('Webmaster'),
+                         'email'    => System::getVar('adminmail'),
+                         'public'   => 1,
+                         'sname'    => $this->__('Webmaster'),
+                         'semail'   => System::getVar('adminmail'),
+                         'ssubject' => $this->__('Email from %s'));
+        
+        // Insert the default contact
+        if (!($obj = DBUtil::insertObject($contact, 'formcontacts'))) {
+            LogUtil::registerStatus($this->__('Warning! Could not create the default Webmaster contact.'));
+        }
+    }    
 }

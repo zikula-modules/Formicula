@@ -15,7 +15,7 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_Handler
 {
     public $cid;
 
-    function initialize($view)
+    function initialize(Zikula_Form_View $view)
     {
         $this->cid = (int)FormUtil::getPassedValue('cid', -1, 'GETPOST');
 
@@ -47,7 +47,7 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_Handler
     }
 
 
-    function handleCommand($view, &$args)
+    function handleCommand(Zikula_Form_View $view, &$args)
     {
         // Security check
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
