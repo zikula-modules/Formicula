@@ -113,11 +113,11 @@ class Formicula_Api_User extends Zikula_Api
 
             switch($format) {
                 case 'html' :
-                    $body = $render->fetch($form."_adminmail.html");
+                    $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form."_adminmail.html");
                     $html = true;
                     break;
                 default:
-                    $body = $render->fetch($form."_adminmail.txt");
+                    $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form."_adminmail.txt");
                     $html = false;
             }
 
@@ -179,11 +179,11 @@ class Formicula_Api_User extends Zikula_Api
 
             switch($format) {
                 case 'html' :
-                    $body = $render->fetch($form."_usermail.html");
+                    $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usermail.html");
                     $html = true;
                     break;
                 default:
-                    $body = $render->fetch($form."_usermail.txt");
+                    $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usermail.txt");
                     $html = false;
             }
 

@@ -21,11 +21,11 @@ class Formicula_ContentType_Form extends Content_ContentType
 
     public function getTitle()
     {
-        return DataUtil::formatForDisplay($this->__('Formicula!'));
+        return DataUtil::formatForDisplay($this->__('Formicula! form'));
     }
     public function getDescription()
     {
-        return DataUtil::formatForDisplay($this->__('Formicula!'));
+        return DataUtil::formatForDisplay($this->__('Display a specific Formicula! form'));
     }
     public function loadData(&$data)
     {
@@ -42,10 +42,9 @@ class Formicula_ContentType_Form extends Content_ContentType
     }
     public function displayEditing()
     {
-        $dom = ZLanguage::getModuleDomain('formicula');
         if (isset($this->form)) {
-            $form = ModUtil::func('Formicula', 'user', 'main', array('form' => (int)$this->form));
-            return $form;
+            $output = '<p>' . $this->__f('The Formicula! form #%s is shown here.', $this->form) . '</p>';
+            return $output;
         }
         return DataUtil::formatForDisplay($this->__('No form selected'));
     }

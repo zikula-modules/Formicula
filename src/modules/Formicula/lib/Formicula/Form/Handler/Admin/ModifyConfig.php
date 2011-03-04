@@ -18,7 +18,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_Handler
         $view->caching = false;
         $view->add_core_data();
         // scan the tempaltes flder for installed forms
-        $files = FileUtil::getFiles('modules/Formicula/templates/', false, true, null, false);
+        $files = FileUtil::getFiles('modules/Formicula/templates/forms/', false, true, null, false);
         $sets_found = array();
         foreach ($files as $file) {
             $parts = explode('_', $file);
