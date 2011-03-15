@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Form_Handler_Admin_ModifyConfig extends Form_Handler
+class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_Handler
 {
     function initialize($view)
     {
