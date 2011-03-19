@@ -16,7 +16,7 @@ class Formicula_Version extends Zikula_Version
     public function getMetaData()
     {
         $meta = array();
-        $meta['version'] = '3.0.0';
+        $meta['version'] = '3.0.1';
         $meta['oldnames']    = array('formicula');
         $meta['description'] = $this->__('Formicula forms module');
         $meta['displayname'] = $this->__('Formicula');

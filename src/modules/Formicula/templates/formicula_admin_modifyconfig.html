@@ -1,3 +1,5 @@
+{ajaxheader modname='Formicula' filename='formicula_admin_modifyconfig.js' effects=true}
+
 {include file=formicula_admin_header.html}
 <h2>{gt text="Modify configuration"}</h2>
 {form cssClass="z-form"}
@@ -5,6 +7,11 @@
 
 <fieldset>
     <legend>{gt text="Modify configuration"}</legend>
+    <div class="z-formrow">
+        {formlabel for="default_form" __text='Set the default form'}
+        {formdropdownlist id="default_form" items=$items selectedValue=$coredata.Formicula.default_form}
+        <em class="z-sub z-formnote">{gt text="(used when no form is specified)"}</em>
+    </div>
     <div class="z-formrow">
         {formlabel for="show_phone" __text='Show phone number'}
         {formcheckbox id="show_phone" checked=$coredata.Formicula.show_phone}
@@ -30,11 +37,11 @@
         {formcheckbox id="send_user" checked=$coredata.Formicula.send_user}
     </div>
     <div class="z-formrow">
-        {formlabel for="upload_dir" __text='Folder for uploaded files'}
+        {formlabel for="upload_dir" __text='Folder for uploaded file(s)'}
         {formtextinput size="40" maxLength="80" id="upload_dir" text=$coredata.Formicula.upload_dir}
     </div>
     <div class="z-formrow">
-        {formlabel for="delete_file" __text='Delete file after sending'}
+        {formlabel for="delete_file" __text='Delete uploaded file(s) after sending'}
         {formcheckbox id="delete_file" checked=$coredata.Formicula.delete_file}
     </div>
     <div class="z-formrow">
@@ -42,15 +49,23 @@
         {formcheckbox id="spamcheck" checked=$coredata.Formicula.spamcheck}
     </div>
     <div class="z-formnote z-informationmsg">{gt text="Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available"}</div>
-    <div class="z-formrow">
-        {formlabel for="excludespamcheck" __text='Do not use spam check in these forms'}
-        {formtextinput size="20" maxLength="40" id="excludespamcheck" text=$coredata.Formicula.excludespamcheck}
+    <div id="formicula_spamcheck_details">
+        <div class="z-formrow">
+            {formlabel for="excludespamcheck" __text='Do not use spam check in these forms'}
+            {formtextinput size="20" maxLength="40" id="excludespamcheck" text=$coredata.Formicula.excludespamcheck}
+        </div>
+        <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"}</div>
     </div>
-    <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"}</div>
     <div class="z-formrow">
-        {formlabel for="default_form" __text='Set the default form'}
-        {formdropdownlist id="default_form" items=$items selectedValue=$coredata.Formicula.default_form}
-        <em class="z-sub z-formnote">{gt text="(used when no form is specified)"}</em>
+        {formlabel for="store_data" __text='Store submitted data in database'}
+        {formcheckbox id="store_data" checked=$coredata.Formicula.store_data}
+    </div>
+    <div id="formicula_storedata_details">
+        <div class="z-formrow">
+            {formlabel for="store_data_forms" __text='Only store submissions from these forms'}
+            {formtextinput size="20" maxLength="40" id="store_data_forms" text=$coredata.Formicula.store_data_forms}
+        </div>
+        <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids or leave empty for storing all forms."}</div>
     </div>
 </fieldset>
 

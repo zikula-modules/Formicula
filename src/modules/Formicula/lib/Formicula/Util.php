@@ -23,7 +23,7 @@ class Formicula_Util
             LogUtil::registerError(__('Mailer module is not available - unable to send emails!'));
         }
 
-        if(ModUtil::getVar('formicula', 'spamcheck') <> 0) {
+        if(ModUtil::getVar('Formicula', 'spamcheck') <> 0) {
             $freetype = function_exists('imagettfbbox');
             if(!$freetype || ( !(imagetypes() && IMG_PNG)
                             && !(imagetypes() && IMG_JPG)

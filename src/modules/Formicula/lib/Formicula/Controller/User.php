@@ -31,7 +31,7 @@ class Formicula_Controller_User extends Zikula_Controller
         $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : $default_form, 'GETPOST');
         $cid  = (int)FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
-        // get subitted information - will be passed to the template
+        // get submitted information - will be passed to the template
         // addinfo is an array:
         // addinfo[name1] = value1
         // addinfo[name2] = value2
@@ -41,10 +41,10 @@ class Formicula_Controller_User extends Zikula_Controller
         SessionUtil::delVar('formicula_captcha');
 
         if ($cid == -1) {
-            $contacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
+            $contacts = ModUtil::apiFunc('Formicula', 'User', 'readValidContacts',
                                          array('form' => $form));
         } else {
-            $contacts[] = ModUtil::apiFunc('Formicula', 'user', 'getContact',
+            $contacts[] = ModUtil::apiFunc('Formicula', 'User', 'getContact',
                                            array('cid'  => $cid,
                                                  'form' => $form));
         }
@@ -58,7 +58,7 @@ class Formicula_Controller_User extends Zikula_Controller
             $uemail = UserUtil::getVar('email');
         } else {
             $uname = '';
-            $email = '';
+            $uemail = '';
         }
 
         $spamcheck = $this->getVar('spamcheck');
@@ -75,7 +75,7 @@ class Formicula_Controller_User extends Zikula_Controller
         $this->view->assign('contacts', $contacts);
         $this->view->assign('addinfo', $addinfo);
         $this->view->assign('spamcheck', $spamcheck);
-        return $this->view->fetch($form.'_userform.html');
+        return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form.'_userform.html');
     }
 
     /**
@@ -152,7 +152,7 @@ class Formicula_Controller_User extends Zikula_Controller
                 if(is_array($addinfo) && count($addinfo)>0) {
                     $params['addinfo'] = $addinfo;
                 }
-                return LogUtil::registerError($this->__('Bad in mathematics? You can do better, try again.'), null, ModUtil::url('formicula', 'user', 'main', $params));
+                return LogUtil::registerError($this->__('Bad in mathematics? You can do better, try again.'), null, ModUtil::url('Formicula', 'user', 'main', $params));
             }
         }
         SessionUtil::delVar('formicula_captcha');
@@ -173,7 +173,7 @@ class Formicula_Controller_User extends Zikula_Controller
         }
 
         if(!SecurityUtil::checkPermission('Formicula::', "$form:$cid:", ACCESS_COMMENT)) {
-            return LogUtil::registerPermissionError(ModUtil::url('formicula', 'user', 'main', array('form' => $form)));
+            return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
         }
 
         // very basic input validation against HTTP response splitting
@@ -190,14 +190,15 @@ class Formicula_Controller_User extends Zikula_Controller
         $i = 0;
         $missing = 0;
         do {
-//    for($i=0;$i < $numfields;$i++) {
             $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name', null, 'POST');
             if($custom[$i]['name'] == null) {
-                // increase the numbmer of missing indices
+                // increase the number of missing indices and clear this custom var
                 $missing++;
+                unset($custom[$i]);
             } else {
                 $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
-
+                
+                // get uploaded files
                 if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
                     $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
                     if($custom[$i]['data']['error'] == 0) {
@@ -214,12 +215,16 @@ class Formicula_Controller_User extends Zikula_Controller
                     $custom[$i]['data'] = FormUtil::getPassedValue('custom'.$i.'data');
                     $custom[$i]['upload'] = false;
                 }
+                // reset the errorcounter if an existing field is found
+                $missing = 0;
                 // increase the counter
-                $i++;
+                // $i++;
             }
+            // increase the counter
+            $i++;
         } while ($missing < 3);
-
-        $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
+        
+        $contact = ModUtil::apiFunc('Formicula', 'User', 'getContact',
                                     array('cid'  => $cid,
                                           'form' => $form));
 
@@ -233,18 +238,18 @@ class Formicula_Controller_User extends Zikula_Controller
                 array('userdata'   => $ud,
                 'custom'     => $custom,
                 'userformat' => $userformat)) == true) {
-            if(ModUtil::apiFunc('Formicula', 'user', 'sendtoContact',
+            if(ModUtil::apiFunc('Formicula', 'User', 'sendtoContact',
                                 array('contact'  => $contact,
                                       'userdata' => $ud,
                                       'custom'   => $custom,
                                       'form'     => $form,
                                       'format'   => $adminformat)) == false) {
-                return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('formicula', 'user', 'main', array('form' => $form)));
+                return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
             }
 
             if(($this->getVar('send_user') == 1) && ($userformat <> 'none')) {
                 // we replace the array of data of uploaded files with the filename
-                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'user', 'sendtoUser',
+                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'User', 'sendtoUser',
                                     array('contact'  => $contact,
                                           'userdata' => $ud,
                                           'custom'   => $custom,
@@ -252,11 +257,11 @@ class Formicula_Controller_User extends Zikula_Controller
                                           'format'   => $userformat )));
             }
 
-            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
-            return $this->view->fetch($form."_userconfirm.html");
+            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
+            return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_userconfirm.html");
         } else {
-            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
-            return $this->view->fetch($form."_usererror.html");
+            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
+            return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usererror.html");
         }
     }
 

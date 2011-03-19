@@ -13,12 +13,12 @@
 
 class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_Handler
 {
-    function initialize($view)
+    function initialize(Zikula_Form_View $view)
     {
         $view->caching = false;
         $view->add_core_data();
         // scan the tempaltes flder for installed forms
-        $files = FileUtil::getFiles('modules/Formicula/templates/', false, true, null, false);
+        $files = FileUtil::getFiles('modules/Formicula/templates/forms/', false, true, null, false);
         $sets_found = array();
         foreach ($files as $file) {
             $parts = explode('_', $file);
@@ -34,14 +34,14 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_Handler
         }
         $items = array();
         foreach ($sets_found as $formid => $files) {
-            $items[] = array('text' => $this->__f('Set form #%1$s with %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+            $items[] = array('text' => $this->__f('Form #%1$s that contains %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
         }
         $view->assign('items', $items);
         return true;
     }
 
 
-    function handleCommand($view, &$args)
+    function handleCommand(Zikula_Form_View $view, &$args)
     {
         // Security check
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
@@ -69,6 +69,8 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_Handler
             ModUtil::setVar('Formicula', 'spamcheck',        $data['spamcheck']);
             ModUtil::setVar('Formicula', 'excludespamcheck', $data['excludespamcheck']);
             ModUtil::setVar('Formicula', 'default_form',     $data['default_form']);
+            ModUtil::setVar('Formicula', 'store_data',       $data['store_data']);
+            ModUtil::setVar('Formicula', 'store_data_forms', $data['store_data_forms']);
 
             LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }

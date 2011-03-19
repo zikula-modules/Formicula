@@ -57,7 +57,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
         $smarty->trigger_error("pnimagetext: missing 'font' parameter");
         return;
     }
-    $params['font'] = DataUtil::formatForOS('modules/formicula/images/' . $params['font'] . '.ttf');
+    $params['font'] = DataUtil::formatForOS('modules/Formicula/images/' . $params['font'] . '.ttf');
     if(!file_exists($params['font']) || !is_readable($params['font'])) {
         $smarty->trigger_error('pnimagetext: missing font ' . DataUtil::formatForDisplay($params['font']));
         return;

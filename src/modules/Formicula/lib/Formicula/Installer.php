@@ -44,18 +44,17 @@ Allow from env=object_is_jpg
             LogUtil::registerStatus($this->__('The folder \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
         }
 
-        // create the formicula table
+        // create the formicula table with the contacts
         if (!DBUtil::createTable('formcontacts')) {
             return LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
         }
+        // create the formicula table for storing submits
+        if (!DBUtil::createTable('formsubmits')) {
+            return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
+        }
 
-        ModUtil::apiFunc('Formicula', 'admin', 'createContact',
-                         array('name'     => 'Webmaster',
-                               'email'    => System::getVar('adminmail'),
-                               'public'   => 1,
-                               'sname'    => 'Webmaster',
-                               'semail'   => System::getVar('adminmail'),
-                               'ssubject' => $this->__('Email from %s')));
+        // create the default data for the Formicula module
+        $this->defaultdata();        
 
         $this->setVar('show_phone', 1);
         $this->setVar('show_company', 1);
@@ -71,10 +70,15 @@ Allow from env=object_is_jpg
 
         $this->setVar('default_form', 0);
 
+        $this->setVar('store_data', false);
+        $this->setVar('store_data_forms', '');
+        
+        // register handlers
+        EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
+        
         // Initialisation successful
         return true;
     }
-
 
     public function upgrade($oldversion)
     {
@@ -98,7 +102,7 @@ Allow from env=object_is_jpg
             case '0.3':
             // nothing to do
             case '0.4':
-            // create the formicula table
+            // create the formicula table with the contacts
                 if (!DBUtil::createTable('formcontacts')) {
                     LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
                     return '0.4';
@@ -161,16 +165,36 @@ Allow from env=object_is_jpg
             // set the default form
                 $this->setVar('default_form', 0);
             case '2.2':
-                $modvars = ModUtil::getVar('formicula');
+                $modvars = ModUtil::getVar('Formicula');
                 if ($modvars) {
                     foreach ($modvars as $key => $value) {
                         $this->setVar($key, $value);
                     }
                     ModUtil::delVar('formicula');
                 }
+                
+                // Update permission strings for uppercase module name
+                $tables  = DBUtil::getTables();
+                $grperms = $tables['group_perms_column'];
+                $sqls   = array();
+                $sqls[] = "UPDATE $tables[group_perms] SET $grperms[component] = 'Formicula::' WHERE $grperms[component] = 'formicula::'";
+                foreach ($sqls as $sql) {
+                    if (!DBUtil::executeSQL($sql)) {
+                        LogUtil::registerError($this->__('Error! Could not update table.'));
+                        return '2.2';
+                    }
+                }
             case '3.0.0':
+                // create the formicula table for storing submits
+                if (!DBUtil::createTable('formsubmits')) {
+                    return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
+                }
+                $this->setVar('store_data', false);
+                $this->setVar('store_data_forms', '');
+                // register handlers
+                EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
+            case '3.0.1':
                 // future upgrades
-
         }
 
         // clear compiled templates
@@ -180,12 +204,14 @@ Allow from env=object_is_jpg
         return true;
     }
 
-
     public function uninstall()
     {
         // drop the table
         if (!DBUtil::dropTable('formcontacts')) {
             return LogUtil::registerError($this->__('The installer could not delete the formcontacts table'));
+        }
+        if (!DBUtil::dropTable('formsubmits')) {
+            return LogUtil::registerError($this->__('The installer could not delete the formsubmits table'));
         }
 
         $tempdir = System::getVar('temp');
@@ -201,4 +227,23 @@ Allow from env=object_is_jpg
 
         return true;
     }
+    
+// -----------------------------------------------------------------------
+// Create default data for a new install
+// -----------------------------------------------------------------------
+    protected function defaultdata()
+    {
+        // create a contact for the webmaster
+        $contact = array('name'     => $this->__('Webmaster'),
+                         'email'    => System::getVar('adminmail'),
+                         'public'   => 1,
+                         'sname'    => $this->__('Webmaster'),
+                         'semail'   => System::getVar('adminmail'),
+                         'ssubject' => $this->__('Email from %s'));
+        
+        // Insert the default contact
+        if (!($obj = DBUtil::insertObject($contact, 'formcontacts'))) {
+            LogUtil::registerStatus($this->__('Warning! Could not create the default Webmaster contact.'));
+        }
+    }    
 }

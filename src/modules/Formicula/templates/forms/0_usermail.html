@@ -20,9 +20,10 @@
             <br />
             {gt text='Comment'} : {$userdata.comment|safehtml|nl2br}<br />
             <br />
-            {gt text='We will respond to your e-mail as soon as possible.'}<br />
+            {gt text='We will respond to your E-mail address as soon as possible.'}<br />
             <br />
-            {gt text='The'} {$sitename} {gt text='Team'}<br />
-        <br /></p>
+            {gt text="The %s Team" tag1=$sitename comment="%s will be replaced with the sitename"}<br />
+            <br />
+        </p>
     </body>
 </html>
