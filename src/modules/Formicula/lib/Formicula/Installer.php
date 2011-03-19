@@ -44,11 +44,11 @@ Allow from env=object_is_jpg
             LogUtil::registerStatus($this->__('The folder \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
         }
 
-        // create the formicula table
+        // create the formicula table with the contacts
         if (!DBUtil::createTable('formcontacts')) {
             return LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
         }
-        // create the formicula table
+        // create the formicula table for storing submits
         if (!DBUtil::createTable('formsubmits')) {
             return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
         }
@@ -72,6 +72,9 @@ Allow from env=object_is_jpg
 
         $this->setVar('store_data', false);
         $this->setVar('store_data_forms', '');
+        
+        // register handlers
+        EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
         
         // Initialisation successful
         return true;
@@ -99,7 +102,7 @@ Allow from env=object_is_jpg
             case '0.3':
             // nothing to do
             case '0.4':
-            // create the formicula table
+            // create the formicula table with the contacts
                 if (!DBUtil::createTable('formcontacts')) {
                     LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
                     return '0.4';
@@ -169,8 +172,6 @@ Allow from env=object_is_jpg
                     }
                     ModUtil::delVar('formicula');
                 }
-                $this->setVar('store_data', false);
-                $this->setVar('store_data_forms', '');
                 
                 // Update permission strings for uppercase module name
                 $tables  = DBUtil::getTables();
@@ -184,8 +185,16 @@ Allow from env=object_is_jpg
                     }
                 }
             case '3.0.0':
+                // create the formicula table for storing submits
+                if (!DBUtil::createTable('formsubmits')) {
+                    return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
+                }
+                $this->setVar('store_data', false);
+                $this->setVar('store_data_forms', '');
+                // register handlers
+                EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
+            case '3.0.1':
                 // future upgrades
-
         }
 
         // clear compiled templates
