@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Controller_Admin extends Zikula_Controller
+class Formicula_Controller_Admin extends Zikula_AbstractController
 {
     public function postInitialize()
     {
@@ -154,10 +154,10 @@ class Formicula_Controller_Admin extends Zikula_Controller
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
-        
+
         $allsubmits = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmits');
         $this->view->assign('formsubmits', $allsubmits);
-        
+
         return $this->view->fetch('formicula_admin_viewsubmits.html');
     }
 
@@ -173,13 +173,13 @@ class Formicula_Controller_Admin extends Zikula_Controller
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
-        
+
         $sid = (int)FormUtil::getPassedValue('sid', -1, 'GETPOST');
-        
+
         $submit = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmit', array('sid' => $sid));
         $submit['customdata'] = unserialize($submit['customdata']);
         $this->view->assign('submit', $submit);
-        
+
         return $this->view->fetch('formicula_admin_displaysubmit.html');
     }
 

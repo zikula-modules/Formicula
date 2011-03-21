@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Api_Admin extends Zikula_Api
+class Formicula_Api_Admin extends Zikula_AbstractApi
 {
     /**
      * getContact
@@ -159,7 +159,7 @@ class Formicula_Api_Admin extends Zikula_Api
         }
         $this->callHooks('item', 'update', $args['cid']);
         return $args['cid'];
-    }    
+    }
 
 
     /**
@@ -185,7 +185,7 @@ class Formicula_Api_Admin extends Zikula_Api
         // Return the contacts
         return $formsubmits;
     }
-    
+
     /**
      * getFormSubmits
      * reads the form submit list and returns it as array
@@ -198,7 +198,7 @@ class Formicula_Api_Admin extends Zikula_Api
         if (!isset($args['sid']) || empty($args['sid'])) {
             return LogUtil::registerArgsError();
         }
-        
+
         // Security check
         if (!SecurityUtil::checkPermission("Formicula::", "::", ACCESS_READ)) {
             return LogUtil::registerPermissionError();
@@ -207,7 +207,7 @@ class Formicula_Api_Admin extends Zikula_Api
         $submit = DBUtil::selectObjectByID('formsubmits', $args['sid'], 'sid');
         return $submit;
     }
-    
+
     /**
      * get available admin panel links
      *

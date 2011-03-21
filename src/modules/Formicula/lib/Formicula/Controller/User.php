@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Controller_User extends Zikula_Controller
+class Formicula_Controller_User extends Zikula_AbstractController
 {
     public function postInitialize()
     {
@@ -197,7 +197,7 @@ class Formicula_Controller_User extends Zikula_Controller
                 unset($custom[$i]);
             } else {
                 $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
-                
+
                 // get uploaded files
                 if(isset($_FILES['custom'.$i.'data']['tmp_name'])) {
                     $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
@@ -223,7 +223,7 @@ class Formicula_Controller_User extends Zikula_Controller
             // increase the counter
             $i++;
         } while ($missing < 3);
-        
+
         $contact = ModUtil::apiFunc('Formicula', 'User', 'getContact',
                                     array('cid'  => $cid,
                                           'form' => $form));

@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Version extends Zikula_Version
+class Formicula_Version extends Zikula_AbstractVersion
 {
     public function getMetaData()
     {

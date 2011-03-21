@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Api_User extends Zikula_Api
+class Formicula_Api_User extends Zikula_AbstractApi
 {
     /**
      * getContact
@@ -251,7 +251,7 @@ class Formicula_Api_User extends Zikula_Api
         $contact  = $args['contact'];
         $custom   = $args['custom'];
         $form     = DataUtil::formatForOS($args['form']);
-                
+
         $formsubmit['form'] = $form;
         $formsubmit['cid'] = $contact['cid'];
         $formsubmit['name'] = $userdata['uname'];
@@ -268,10 +268,10 @@ class Formicula_Api_User extends Zikula_Api
         $ip = getenv('REMOTE_ADDR');
         $formsubmit['ip'] = $ip;
         $formsubmit['host'] = gethostbyaddr($ip);
-        
+
         if (!($obj = DBUtil::insertObject($formsubmit, 'formsubmits', 'sid'))) {
             return LogUtil::registerError($this->__f('Error! Could not store data submitted by form %s.', $form));
-        } 
+        }
     }
 
     /**

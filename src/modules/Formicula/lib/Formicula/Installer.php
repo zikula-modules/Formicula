@@ -11,7 +11,7 @@
  * @subpackage formicula
  */
 
-class Formicula_Installer extends Zikula_Installer
+class Formicula_Installer extends Zikula_AbstractInstaller
 {
     public function install()
     {
@@ -54,7 +54,7 @@ Allow from env=object_is_jpg
         }
 
         // create the default data for the Formicula module
-        $this->defaultdata();        
+        $this->defaultdata();
 
         $this->setVar('show_phone', 1);
         $this->setVar('show_company', 1);
@@ -72,10 +72,10 @@ Allow from env=object_is_jpg
 
         $this->setVar('store_data', false);
         $this->setVar('store_data_forms', '');
-        
+
         // register handlers
         EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
-        
+
         // Initialisation successful
         return true;
     }
@@ -172,7 +172,7 @@ Allow from env=object_is_jpg
                     }
                     ModUtil::delVar('formicula');
                 }
-                
+
                 // Update permission strings for uppercase module name
                 $tables  = DBUtil::getTables();
                 $grperms = $tables['group_perms_column'];
@@ -227,7 +227,7 @@ Allow from env=object_is_jpg
 
         return true;
     }
-    
+
 // -----------------------------------------------------------------------
 // Create default data for a new install
 // -----------------------------------------------------------------------
@@ -240,10 +240,10 @@ Allow from env=object_is_jpg
                          'sname'    => $this->__('Webmaster'),
                          'semail'   => System::getVar('adminmail'),
                          'ssubject' => $this->__('Email from %s'));
-        
+
         // Insert the default contact
         if (!($obj = DBUtil::insertObject($contact, 'formcontacts'))) {
             LogUtil::registerStatus($this->__('Warning! Could not create the default Webmaster contact.'));
         }
-    }    
+    }
 }
