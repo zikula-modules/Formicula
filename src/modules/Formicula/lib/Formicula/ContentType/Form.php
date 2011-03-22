@@ -14,7 +14,7 @@
 /**
  * Content plugin class for displaying forms
  */
-class Formicula_ContentType_Form extends Content_ContentType
+class Formicula_ContentType_Form extends Content_AbstractContentType
 {
     protected $form;
 
