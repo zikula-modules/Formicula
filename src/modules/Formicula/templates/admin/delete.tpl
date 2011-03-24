@@ -1,4 +1,4 @@
-{include file=formicula_admin_header.html}
+{include file='admin/header.tpl'}
 
 <h2>{gt text="Delete contact"}</h2>
 <p class="z-warningmsg">{gt text="Do you really want to delete this contact?"}</p>
@@ -24,4 +24,4 @@
     </div>
 </form>
 
-{include file=formicula_admin_footer.html}
+{include file='admin/footer.tpl'}

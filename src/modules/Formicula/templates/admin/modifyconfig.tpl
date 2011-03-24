@@ -1,6 +1,6 @@
 {ajaxheader modname='Formicula' filename='formicula_admin_modifyconfig.js' effects=true}
 
-{include file=formicula_admin_header.html}
+{include file='admin/header.tpl'}
 <h2>{gt text="Modify configuration"}</h2>
 {form cssClass="z-form"}
 {formvalidationsummary}
@@ -74,4 +74,4 @@
 </div>
 {/form}
 
-{include file=formicula_admin_footer.html}
+{include file='admin/footer.tpl'}

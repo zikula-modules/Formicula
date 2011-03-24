@@ -1,4 +1,4 @@
-{include file=formicula_admin_header.html}
+{include file='admin/header.tpl'}
 {if $mode=='create'}
 {gt text="Add contact" assign=fortitle"}
 {else}
@@ -45,4 +45,4 @@
 
 {/form}
 
-{include file=formicula_admin_footer.html}
+{include file='admin/footer.tpl'}
