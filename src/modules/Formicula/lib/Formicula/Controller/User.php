@@ -137,9 +137,6 @@ class Formicula_Controller_User extends Zikula_Controller
                     case '1':
                         $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'])== $captcha);
                         break;
-                    case '2':
-                        $captcha_ok = (((int)$cdata['x'] * (int)$cdata['y'])== $captcha);
-                        break;
                     default:
                     // $captcha_ok is false
                 }
