@@ -234,7 +234,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
 
         closedir($dh);
 
-        LogUtil::registerStatus($this->__('The captcha image cached has been cleared'));
+        LogUtil::registerStatus($this->__('The captcha image cache has been cleared'));
         return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
     }
 }
