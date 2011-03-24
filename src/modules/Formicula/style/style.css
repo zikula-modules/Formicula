@@ -13,6 +13,11 @@
   margin-right: 0.5em;
 }
 
+#contactform label.radio:before {
+  content: '';
+  margin-right: 0;
+}
+
 #contactform .mandatory,
 #contactform2 .mandatory {
   color: red;
@@ -38,7 +43,7 @@
 #contactform input:focus,
 #contactform select:focus,
 #contactform form .formborder:focus,
-#contentform textarea:focus {
+#contactform textarea:focus {
   border-color: #ccc;
   background-color: #eee;
 }
