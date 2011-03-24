@@ -69,10 +69,22 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_Handler
                 $ifield->setError(DataUtil::formatForDisplay($this->__('Error! No contact name')));
                 $ok = false;
             }
-            if(empty($data['email']) || !System::varValidate($data['email'], 'email')) {
+            if(empty($data['email'])) {
                 $ifield = & $view->getPluginById('email');
-                $ifield->setError(DataUtil::formatForDisplay($this->__('Error! No or incorrect email address supplied')));
+                $ifield->setError(DataUtil::formatForDisplay($this->__('Error! No email address supplied')));
                 $ok = false;
+            } else {
+                // email addresses can be a comma seperated string, split and check seperately.
+                $data['email'] = preg_replace('/\s*/m', '', $data['email']); // remove spaces
+                $aMail = explode("," , $data['email']);
+                for ($i=0; $i<count($aMail); $i++) {
+                    if (!System::varValidate($aMail[$i], 'email')) {
+                        $ifield = & $view->getPluginById('email');
+                        $ifield->setError(DataUtil::formatForDisplay($this->__f('Error! Incorrect email address [%s] supplied', $aMail[$i])));
+                        $ok = false;
+                        break;
+                    }
+                }
             }
             if(!empty($data['semail']) && !System::varValidate($data['semail'], 'email')) {
                 $ifield = & $view->getPluginById('semail');
