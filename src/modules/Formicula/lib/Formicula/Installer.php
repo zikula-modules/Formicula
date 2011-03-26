@@ -74,7 +74,7 @@ Allow from env=object_is_jpg
         $this->setVar('store_data_forms', '');
 
         // register handlers
-        EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
+        EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
 
         // Initialisation successful
         return true;
@@ -192,7 +192,7 @@ Allow from env=object_is_jpg
                 $this->setVar('store_data', false);
                 $this->setVar('store_data_forms', '');
                 // register handlers
-                EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
+                EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
             case '3.0.1':
                 // future upgrades
         }
