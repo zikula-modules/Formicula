@@ -57,6 +57,9 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
                 $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this folder!')));
                 return false;
             }
+            // remove spaces in the comma seperated forms lists
+            $data['excludespamcheck'] = preg_replace('/\s*/m', '', $data['excludespamcheck']);
+            $data['store_data_forms'] = preg_replace('/\s*/m', '', $data['store_data_forms']);
 
             ModUtil::setVar('Formicula', 'show_phone',       $data['show_phone']);
             ModUtil::setVar('Formicula', 'show_company',     $data['show_company']);
