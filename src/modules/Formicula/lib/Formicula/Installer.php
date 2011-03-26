@@ -193,6 +193,10 @@ Allow from env=object_is_jpg
                 $this->setVar('store_data_forms', '');
                 // register handlers
                 EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
+                // upgrade the Content plugin names
+                if (ModUtil::available('Content')) {
+                    Content_Installer::updateContentType('Formicula');
+                }
             case '3.0.1':
                 // future upgrades
         }
@@ -246,4 +250,13 @@ Allow from env=object_is_jpg
             LogUtil::registerStatus($this->__('Warning! Could not create the default Webmaster contact.'));
         }
     }
+
+    public static function LegacyContentTypeMap()
+    {
+        $oldToNew = array(
+            'form' => 'Form'
+        );
+        return $oldToNew;
+    }
+
 }
