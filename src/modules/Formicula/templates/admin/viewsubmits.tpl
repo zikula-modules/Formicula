@@ -1,4 +1,4 @@
-{include file=formicula_admin_header.html}
+{include file='admin/header.tpl'}
 <h2>{gt text="View submitted form data"}</h2>
 
 <table class="z-admintable z-clearer">
@@ -31,4 +31,4 @@
     </tbody>
 </table>
 
-{include file=formicula_admin_footer.html}
+{include file='admin/footer.tpl'}

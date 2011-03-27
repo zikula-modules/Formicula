@@ -5,7 +5,6 @@
  *
  * @copyright  (c) formicula Development Team
  * @link       http://code.zikula.org/formicula
- * @version    $Id$
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
@@ -54,37 +53,37 @@ function smarty_function_simplecaptcha($params, &$smarty)
 
     // catch wrong input
     if (empty($params['font'])) {
-        $smarty->trigger_error("pnimagetext: missing 'font' parameter");
+        $smarty->trigger_error("simplecaptcha: missing 'font' parameter");
         return;
     }
     $params['font'] = DataUtil::formatForOS('modules/Formicula/images/' . $params['font'] . '.ttf');
     if(!file_exists($params['font']) || !is_readable($params['font'])) {
-        $smarty->trigger_error('pnimagetext: missing font ' . DataUtil::formatForDisplay($params['font']));
+        $smarty->trigger_error('simplecaptcha: missing font ' . DataUtil::formatForDisplay($params['font']));
         return;
     }
     if (empty($params['size'])) {
-        $smarty->trigger_error("pnimagetext: missing 'size' parameter");
+        $smarty->trigger_error("simplecaptcha: missing 'size' parameter");
         return;
     }
     if (empty($params['bgcolor'])) {
-        $smarty->trigger_error("pnimagetext: missing 'bgcolor' parameter");
+        $smarty->trigger_error("simplecaptcha: missing 'bgcolor' parameter");
         return;
     }
     if (empty($params['fgcolor'])) {
-        $smarty->trigger_error("pnimagetext: missing 'fgcolor' parameter");
+        $smarty->trigger_error("simplecaptcha: missing 'fgcolor' parameter");
         return;
     }
 
     srand ((double)microtime()*1000000);
     $x = rand(1,10); /* 1 to 10 */
     $y = rand(1,10); /* 1 to 10 */
-    $z = rand(0,2);  /* 0=+, 1=-, 2=* */
+    $z = rand(0,1);  /* 0=+, 1=- */
     if(($z==1) && ($y>$x)) {
         // make sure that x>y if z=1 (minus)
         $a=$x; $x=$y; $y=$a;
     }
 
-    $m = array('+', '-', '*');
+    $m = array('+', '-');
     SessionUtil::setVar('formicula_captcha', serialize(compact('x', 'y', 'z')));
 
     // create the text for the image

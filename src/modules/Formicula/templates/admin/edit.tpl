@@ -1,4 +1,4 @@
-{include file=formicula_admin_header.html}
+{include file='admin/header.tpl'}
 {if $mode=='create'}
 {gt text="Add contact" assign=fortitle"}
 {else}
@@ -17,7 +17,7 @@
     </div>
     <div class="z-formrow">
         {formlabel for="email" __text='E-Mail'}
-        {formtextinput size="40" maxLength="100" id="email" text=$contact.email}
+        {formtextinput size="40" maxLength="200" id="email" text=$contact.email}
     </div>
     <div class="z-formrow">
         {formlabel for="public" __text='Public'}
@@ -45,4 +45,4 @@
 
 {/form}
 
-{include file=formicula_admin_footer.html}
+{include file='admin/footer.tpl'}

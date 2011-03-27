@@ -15,35 +15,6 @@ class Formicula_Installer extends Zikula_AbstractInstaller
 {
     public function install()
     {
-        $tempdir = System::getVar('temp');
-        if(StringUtil::left($tempdir, 1) <> '/') {
-            // tempdir does not start with a / which means it does not reside outside
-            // the webroot, continue
-            if(StringUtil::right($tempdir, 1) <> '/') {
-                $tempdir .= '/';
-            }
-            if(FileUtil::mkdirs($tempdir . 'formicula_cache')) {
-                $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
-                $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
-SetEnvIf Request_URI "\.png$" object_is_png=png
-SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
-Order deny,allow
-Deny from all
-Allow from env=object_is_gif
-Allow from env=object_is_png
-Allow from env=object_is_jpg
-');
-                if($res1===false || $res2===false){
-                    LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
-                }
-            } else {
-                LogUtil::registerStatus($this->__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!'));
-            }
-        } else {
-            // tempdir starts with /, so it is an absolute path, probably outside the webroot
-            LogUtil::registerStatus($this->__('The folder \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
-        }
-
         // create the formicula table with the contacts
         if (!DBUtil::createTable('formcontacts')) {
             return LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
@@ -55,6 +26,9 @@ Allow from env=object_is_jpg
 
         // create the default data for the Formicula module
         $this->defaultdata();
+
+        // try to create the upload directory
+        $tmpdir = $this->createTempDir();
 
         $this->setVar('show_phone', 1);
         $this->setVar('show_company', 1);
@@ -193,6 +167,10 @@ Allow from env=object_is_jpg
                 $this->setVar('store_data_forms', '');
                 // register handlers
                 EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.getTypes', array('Formicula_Handlers', 'getTypes'));
+                // Call the update method for the Content plugin
+                if (ModUtil::available('Content')) {
+                    Content_Installer::updateContentType('Formicula');
+                }
             case '3.0.1':
                 // future upgrades
         }
@@ -229,6 +207,56 @@ Allow from env=object_is_jpg
     }
 
 // -----------------------------------------------------------------------
+// Converting Content plugin names
+// -----------------------------------------------------------------------
+    public static function LegacyContentTypeMap()
+    {
+        $oldToNew = array(
+            'form' => 'Form'
+        );
+        return $oldToNew;
+    }
+
+
+// -----------------------------------------------------------------------
+// Create default data for a new install
+// -----------------------------------------------------------------------
+    protected function createTempDir()
+    {
+        $tempdir = System::getVar('temp');
+        if(StringUtil::left($tempdir, 1) <> '/') {
+            // tempdir does not start with a / which means it does not reside outside
+            // the webroot, continue
+            if(StringUtil::right($tempdir, 1) <> '/') {
+                $tempdir .= '/';
+            }
+            if(FileUtil::mkdirs($tempdir . 'formicula_cache', System::getVar('system.chmod_dir', 0777))) {
+                $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
+                $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+SetEnvIf Request_URI "\.png$" object_is_png=png
+SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+Order deny,allow
+Deny from all
+Allow from env=object_is_gif
+Allow from env=object_is_png
+Allow from env=object_is_jpg
+');
+                if($res1===false || $res2===false){
+                    LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
+                } else {
+                    LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory with a .htaccess file for security in there.'));
+                }
+            } else {
+                LogUtil::registerStatus($this->__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!'));
+            }
+        } else {
+            // tempdir starts with /, so it is an absolute path, probably outside the webroot
+            LogUtil::registerStatus($this->__('The folder \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
+        }
+
+    }
+
+// -----------------------------------------------------------------------
 // Create default data for a new install
 // -----------------------------------------------------------------------
     protected function defaultdata()
@@ -245,5 +273,5 @@ Allow from env=object_is_jpg
         if (!($obj = DBUtil::insertObject($contact, 'formcontacts'))) {
             LogUtil::registerStatus($this->__('Warning! Could not create the default Webmaster contact.'));
         }
-    }
+    }    
 }
