@@ -75,7 +75,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         $cid          = (int)FormUtil::getPassedValue('cid', -1, 'GETPOST');
         $confirmation =      FormUtil::getPassedValue('confirmation', '', 'GETPOST');
 
-        $contact = ModUtil::apiFunc('Formicula', 'Admin', 'getContact',
+        $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact',
                                     array('cid' => $cid));
 
         if ($contact == false) {
@@ -120,7 +120,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         Formicula_Util::envcheck();
 
         // read all items
-        $allcontacts = ModUtil::apiFunc('Formicula', 'Admin', 'readContacts');
+        $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
         // only use those where we have the necessary rights for
         $allowedcontacts = array();
         foreach ($allcontacts as $contact) {
@@ -155,7 +155,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
 
-        $allsubmits = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmits');
+        $allsubmits = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmits');
         $this->view->assign('formsubmits', $allsubmits);
 
         return $this->view->fetch('admin/viewsubmits.tpl');
@@ -176,7 +176,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
 
         $sid = (int)FormUtil::getPassedValue('sid', -1, 'GETPOST');
 
-        $submit = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmit', array('sid' => $sid));
+        $submit = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', array('sid' => $sid));
         $submit['customdata'] = unserialize($submit['customdata']);
         $this->view->assign('submit', $submit);
 

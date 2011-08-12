@@ -68,7 +68,7 @@ msgid "Contact Form"
 msgstr ""
 
 #: pnuserapi.php:262
-msgid "Error! No or incorrect E-Mail address supplied"
+msgid "Error! No or incorrect Email address supplied"
 msgstr ""
 
 #: pnuserapi.php:266
@@ -244,7 +244,7 @@ msgstr ""
 #: pntemplates/1_userconfirm.html:37 pntemplates/formicula_admin_view.html:11
 #: pntemplates/2_usermail.html:17 pntemplates/0_adminmail.txt:11
 #: pntemplates/0_userconfirm.html:30
-msgid "E-Mail"
+msgid "Email"
 msgstr ""
 
 #: pntemplates/0_usermail.txt:11 pntemplates/2_adminmail.html:19
@@ -368,7 +368,7 @@ msgid "Please enter a valid internet address like http://www.example.com."
 msgstr ""
 
 #: pntemplates/0_userform.html:83 pntemplates/2_userform.html:80
-msgid "E-Mail Format"
+msgid "Email Format"
 msgstr ""
 
 #: pntemplates/0_userform.html:85 pntemplates/2_userform.html:82
@@ -577,7 +577,7 @@ msgid "Use this information in the users confirmation mail"
 msgstr ""
 
 #: pntemplates/formicula_admin_edit.html:31
-msgid "Sender E-Mail"
+msgid "Sender Email"
 msgstr ""
 
 #: pntemplates/formicula_admin_edit.html:35
