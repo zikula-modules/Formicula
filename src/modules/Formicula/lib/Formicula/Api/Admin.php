@@ -179,7 +179,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         $formsubmits = array();
         $dbtables = DBUtil::getTables();
         $submitscolumn = $dbtables['formsubmits_column'];
-        $orderby = "ORDER BY $submitscolumn[sid]";
+        $orderby = "ORDER BY $submitscolumn[sid] DESC";
         $formsubmits = DBUtil::selectObjectArray('formsubmits', '', $orderby);
 
         // Return the contacts
@@ -200,13 +200,41 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         // Security check
-        if (!SecurityUtil::checkPermission("Formicula::", "::", ACCESS_READ)) {
+        if (!SecurityUtil::checkPermission("Formicula::", "::", ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
 
         $submit = DBUtil::selectObjectByID('formsubmits', $args['sid'], 'sid');
         return $submit;
     }
+
+    /**
+     * deleteSubmit
+     * deletes a form submit.
+     *
+     *@param sid int contact id
+     *@returns boolean
+     */
+    public function deleteSubmit($args)
+    {
+        if ((!isset($args['sid'])) || empty($args['sid'])) {
+            return LogUtil::registerArgsError();
+        }
+
+        // Security check
+        if (SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
+            return LogUtil::registerPermissionError();
+        }
+
+        $res = DBUtil::deleteObjectByID ('formsubmits', (int)$args['sid'], 'sid');
+        if($res==false) {
+            return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
+        }
+
+        // Let the calling process know that we have finished successfully
+        return true;
+    }
+
 
     /**
      * get available admin panel links

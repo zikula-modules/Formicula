@@ -44,7 +44,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
 
         $this->setVar('default_form', 0);
 
-        $this->setVar('store_data', false);
+        $this->setVar('store_data', 0);
         $this->setVar('store_data_forms', '');
 
         // register handlers
@@ -163,7 +163,7 @@ Allow from env=object_is_jpg
                 if (!DBUtil::createTable('formsubmits')) {
                     return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
                 }
-                $this->setVar('store_data', false);
+                $this->setVar('store_data', 0);
                 $this->setVar('store_data_forms', '');
                 // register handlers
                 EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
