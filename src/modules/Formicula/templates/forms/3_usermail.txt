@@ -1,0 +1,24 @@
+<!--[* Smartytemplate *]-->
+<!--[* $Id:  $ *]-->
+
+<!--[gt text='Hello %s,' tag1=$userdata.uname]-->
+
+<!--[gt text='Thank you for your reservation.']-->
+
+<!--[gt text='Kind regards']-->
+<!--[$sitename]-->
+
+<!--[gt text='This data was sent to us:']-->
+
+<!--[gt text='Your Name']--> : <!--[ $userdata.uname ]-->
+<!--[gt text='E-Mail']--> : <!--[ $userdata.uemail ]-->
+
+<!--[ foreach item=field from=$custom ]-->
+<!--[ $field.name ]--> : <!--[ $field.data ]-->
+<!--[ /foreach ]-->
+
+<!--[gt text='Comment']--> :
+<!--[ $userdata.comment|pnvarprepfordisplay ]-->
+
+<!--[gt text='The']--> <!--[$sitename]--> <!--[gt text='Team']-->
+
