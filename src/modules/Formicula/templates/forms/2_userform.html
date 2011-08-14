@@ -11,7 +11,7 @@
         <input type="hidden" name="adminformat" value="html" />
 
         <p>
-            {gt text="Mandatory field"} <span class="mandatory">*</span>
+            {gt text="Mandatory fields are indicated with a"}<span class="mandatory">*</span>
         </p>
 
         <p>
@@ -83,8 +83,10 @@
 
         {if $spamcheck eq 1}
         <p>
-            <label for="formicula_captcha">{gt text='Please solve this simple math test'} :<span class="mandatory">*</span></label> {simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000'} <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
-
+            <label for="formicula_captcha">{gt text='Please solve this calculation'} :<span class="mandatory">*</span></label>
+            &nbsp;{simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000'} 
+            <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
+            <span class="z-sub">{gt text='(to prevent spam)'}</span>
         </p>
         {/if}
 
