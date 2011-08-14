@@ -258,9 +258,11 @@ class Formicula_Controller_User extends Zikula_AbstractController
             }
 
             // store the submitted data in the database
-            if ($this->getVar('store_data')) {
-                $store_data_forms_arr = explode(',', $this->getVar('store_data_forms'));
-                if(is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr)) {
+            $store_data = $this->getVar('store_data');
+            if ($store_data == 1) {
+                $store_data_forms = $this->getVar('store_data_forms');
+                $store_data_forms_arr = explode(',', $store_data_forms);
+                if (empty($store_data_forms) || (is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr))) {
                     ModUtil::apiFunc('Formicula', 'User', 'storeInDatabase',
                                         array('contact'  => $contact,
                                               'userdata' => $ud,

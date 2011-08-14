@@ -75,7 +75,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         $cid          = (int)FormUtil::getPassedValue('cid', -1, 'GETPOST');
         $confirmation =      FormUtil::getPassedValue('confirmation', '', 'GETPOST');
 
-        $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact',
+        $contact = ModUtil::apiFunc('Formicula', 'Admin', 'getContact',
                                     array('cid' => $cid));
 
         if ($contact == false) {
@@ -120,7 +120,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         Formicula_Util::envcheck();
 
         // read all items
-        $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
+        $allcontacts = ModUtil::apiFunc('Formicula', 'Admin', 'readContacts');
         // only use those where we have the necessary rights for
         $allowedcontacts = array();
         foreach ($allcontacts as $contact) {
@@ -155,7 +155,10 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
 
-        $allsubmits = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmits');
+        // check necessary environment
+        Formicula_Util::envcheck();
+
+        $allsubmits = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmits');
         $this->view->assign('formsubmits', $allsubmits);
 
         return $this->view->fetch('admin/viewsubmits.tpl');
@@ -174,13 +177,62 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
 
+        // check necessary environment
+        Formicula_Util::envcheck();
+
         $sid = (int)FormUtil::getPassedValue('sid', -1, 'GETPOST');
 
-        $submit = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', array('sid' => $sid));
+        $submit = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmit', array('sid' => $sid));
         $submit['customdata'] = unserialize($submit['customdata']);
         $this->view->assign('submit', $submit);
 
         return $this->view->fetch('admin/displaysubmit.tpl');
+    }
+
+    /**
+     * deleteSubmit
+     * deletes an existing contact from the database
+     * When called for the first time its produces an "Are you sure?" page. If the admin
+     * clicks on OK, confirmation is set and the function deletes the entry
+     *
+     *@param cid int contact id
+     *@param confirmation string any value
+     *@returns view output on error or forwards to view()
+     */
+    public function deletesubmit()
+    {
+        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
+            return LogUtil::registerPermissionError(System::getHomepageUrl());
+        }
+
+        // check necessary environment
+        Formicula_Util::envcheck();
+
+        $sid = (int)FormUtil::getPassedValue('sid', -1, 'GETPOST');
+        $confirmation =      FormUtil::getPassedValue('confirmation', '', 'GETPOST');
+
+        $submit = ModUtil::apiFunc('Formicula', 'Admin', 'getFormSubmit', array('sid' => $sid));
+
+        if ($submit == false) {
+            return LogUtil::registerError($this->__('Unknown Form submit'), null, ModUtil::url('Formicula', 'admin', 'main'));
+        }
+
+        // Check for confirmation.
+        if (empty($confirmation)) {
+            $this->view->assign('submit', $submit);
+            return $this->view->fetch('admin/deletesubmit.tpl');
+        }
+
+        if (!SecurityUtil::confirmAuthKey()) {
+            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'admin', 'main'));
+        }
+
+        if (ModUtil::apiFunc('Formicula', 'Admin', 'deleteSubmit', array('sid' => $sid))) {
+            // Success
+            LogUtil::registerStatus($this->__('Form submit has been deleted'));
+        }
+
+        return System::redirect(ModUtil::url('Formicula', 'admin', 'viewsubmits'));
     }
 
     /**
