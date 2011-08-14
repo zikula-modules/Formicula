@@ -5,7 +5,7 @@
 {pageaddvar name="javascript" value="javascript/ajax/effects.js"}
 
 <p class="z-informationmsg">
-    <span class="mandatory">*</span> {gt text="Mandatory field"}
+    {gt text="Mandatory fields are indicated by a"} <span class="mandatory">*</span>
 </p>
 
 <form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post">
@@ -87,10 +87,11 @@
 
         {if $spamcheck eq 1}
         <div class="z-formrow">
-            <label for="formicula_captcha">{gt text='Please solve this simple math test'} <span class="mandatory">*</span></label>
+            <label for="formicula_captcha">{gt text='Please solve this calculation'}<span class="mandatory">*</span></label>
             <span>
                 {simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000'}
                 <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
+                <span class="z-sub">{gt text='(to prevent spam)'}</span>
             </span>
         </div>
         {/if}
