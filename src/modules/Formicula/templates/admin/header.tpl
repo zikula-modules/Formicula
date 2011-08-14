@@ -1,4 +1,4 @@
-{admincategorymenu }
+{*admincategorymenu*}
 
 <div class="z-adminbox">
   <h1>{gt text='Formicula'}</h1>
