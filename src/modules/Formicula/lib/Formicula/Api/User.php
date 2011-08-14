@@ -261,6 +261,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $formsubmit['url'] = $userdata['url'];
         $formsubmit['location'] = $userdata['location'];
         $formsubmit['comment'] = $userdata['comment'];
+        $customarray = array();
         foreach($custom as $customdata) {
             $customarray[$customdata['name']] = $customdata['data'];
         }
