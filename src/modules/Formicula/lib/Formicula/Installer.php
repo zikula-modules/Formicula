@@ -244,7 +244,7 @@ Allow from env=object_is_jpg
                 if($res1===false || $res2===false){
                     LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
                 } else {
-                    LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory with a .htaccess file for security in there.'));
+                    LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory in Zikula\'s temporary folder with a .htaccess file for security in there.'));
                 }
             } else {
                 LogUtil::registerStatus($this->__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!'));
