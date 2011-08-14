@@ -62,7 +62,8 @@ class Formicula_Controller_User extends Zikula_AbstractController
         }
 
         $spamcheck = $this->getVar('spamcheck');
-        if($spamcheck == 1) {
+        if ($spamcheck == 1) {
+            // Split the list of formids to exclude from spam checking into an array
             $excludespamcheck = explode(',', $this->getVar('excludespamcheck'));
             if(is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
                 $spamcheck = 0;
@@ -80,7 +81,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
     /**
      * send
-     * sends the mail to the contact and, if configured, to the user
+     * sends the mail to the contact and, if configured, to the user and dbase
      *@param cid         int contact id
      *@param form        int form id
      *@param userformat  string email format for user, either 'plain' (default) or 'html'
@@ -144,12 +145,12 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
             if($captcha_ok==false) {
                 SessionUtil::delVar('formicula_captcha');
-                // todo: append params to $returntourl and redirect
+                // todo: append params to $returntourl and redirect, see ticket #44
                 $params = array('form' => $form);
                 if(is_array($addinfo) && count($addinfo)>0) {
                     $params['addinfo'] = $addinfo;
                 }
-                return LogUtil::registerError($this->__('Bad in mathematics? You can do better, try again.'), null, ModUtil::url('Formicula', 'user', 'main', $params));
+                return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, ModUtil::url('Formicula', 'user', 'main', $params));
             }
         }
         SessionUtil::delVar('formicula_captcha');
@@ -230,11 +231,12 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $this->view->assign('userdata', $ud);
 
         if(ModUtil::apiFunc('Formicula',
-                'user',
+                'User',
                 'checkArguments',
                 array('userdata'   => $ud,
                 'custom'     => $custom,
                 'userformat' => $userformat)) == true) {
+            // send the submitted data to the contact(s)
             if(ModUtil::apiFunc('Formicula', 'User', 'sendtoContact',
                                 array('contact'  => $contact,
                                       'userdata' => $ud,
@@ -244,6 +246,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
             }
 
+            // send the submitted data as confirmation to the user
             if(($this->getVar('send_user') == 1) && ($userformat <> 'none')) {
                 // we replace the array of data of uploaded files with the filename
                 $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'User', 'sendtoUser',
@@ -252,6 +255,18 @@ class Formicula_Controller_User extends Zikula_AbstractController
                                           'custom'   => $custom,
                                           'form'     => $form,
                                           'format'   => $userformat )));
+            }
+
+            // store the submitted data in the database
+            if ($this->getVar('store_data')) {
+                $store_data_forms_arr = explode(',', $this->getVar('store_data_forms'));
+                if(is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr)) {
+                    ModUtil::apiFunc('Formicula', 'User', 'storeInDatabase',
+                                        array('contact'  => $contact,
+                                              'userdata' => $ud,
+                                              'custom'   => $custom,
+                                              'form'     => $form));
+                }
             }
 
             $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
