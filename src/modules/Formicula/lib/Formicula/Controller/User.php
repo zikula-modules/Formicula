@@ -41,10 +41,10 @@ class Formicula_Controller_User extends Zikula_AbstractController
         SessionUtil::delVar('formicula_captcha');
 
         if ($cid == -1) {
-            $contacts = ModUtil::apiFunc('Formicula', 'User', 'readValidContacts',
+            $contacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
                                          array('form' => $form));
         } else {
-            $contacts[] = ModUtil::apiFunc('Formicula', 'User', 'getContact',
+            $contacts[] = ModUtil::apiFunc('Formicula', 'user', 'getContact',
                                            array('cid'  => $cid,
                                                  'form' => $form));
         }
@@ -222,7 +222,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
             $i++;
         } while ($missing < 3);
 
-        $contact = ModUtil::apiFunc('Formicula', 'User', 'getContact',
+        $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
                                     array('cid'  => $cid,
                                           'form' => $form));
 
@@ -237,7 +237,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 'custom'     => $custom,
                 'userformat' => $userformat)) == true) {
             // send the submitted data to the contact(s)
-            if(ModUtil::apiFunc('Formicula', 'User', 'sendtoContact',
+            if(ModUtil::apiFunc('Formicula', 'user', 'sendtoContact',
                                 array('contact'  => $contact,
                                       'userdata' => $ud,
                                       'custom'   => $custom,
@@ -249,7 +249,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
             // send the submitted data as confirmation to the user
             if(($this->getVar('send_user') == 1) && ($userformat <> 'none')) {
                 // we replace the array of data of uploaded files with the filename
-                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'User', 'sendtoUser',
+                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'user', 'sendtoUser',
                                     array('contact'  => $contact,
                                           'userdata' => $ud,
                                           'custom'   => $custom,
@@ -263,7 +263,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 $store_data_forms = $this->getVar('store_data_forms');
                 $store_data_forms_arr = explode(',', $store_data_forms);
                 if (empty($store_data_forms) || (is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr))) {
-                    ModUtil::apiFunc('Formicula', 'User', 'storeInDatabase',
+                    ModUtil::apiFunc('Formicula', 'user', 'storeInDatabase',
                                         array('contact'  => $contact,
                                               'userdata' => $ud,
                                               'custom'   => $custom,
@@ -271,10 +271,10 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 }
             }
 
-            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
+            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
             return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_userconfirm.html");
         } else {
-            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
+            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
             return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usererror.html");
         }
     }

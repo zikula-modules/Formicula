@@ -175,7 +175,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $sitename = System::getVar('sitename');
             $render->assign('sitename', $sitename);
 
-            $render->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
+            $render->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
 
             switch($format) {
                 case 'html' :
