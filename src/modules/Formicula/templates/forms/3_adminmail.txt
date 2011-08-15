@@ -3,7 +3,7 @@
 {gt text='A visitor to your website made a new rental request and sent the following:'}
 
 {gt text='Your Name'} : { $userdata.uname }
-{gt text='E-Mail'} : { $userdata.uemail }
+{gt text='Email'} : { $userdata.uemail }
 
 {foreach item=field from=$custom}
 {$field.name} : {$field.data}
