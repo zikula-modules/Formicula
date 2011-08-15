@@ -1,5 +1,8 @@
-{include file='admin/header.tpl'}
-<h2>{gt text="View submitted form data"}</h2>
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="list" size="small"}
+    <h3>{gt text="View submitted form data"}</h3>
+</div>
 
 <table class="z-admintable z-clearer">
     <thead>
@@ -31,4 +34,4 @@
     </tbody>
 </table>
 
-{include file='admin/footer.tpl'}
+{adminfooter}
