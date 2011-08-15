@@ -11,17 +11,20 @@
     {gt text='Homepage'} : {$submit.url}<br />
     {gt text='Company'} : {$submit.company}<br />
     {gt text='Phone Number'} : {$submit.phone}<br />
-    {gt text='Location'} : {$submit.location}<br />
-    <hr>
+    {gt text='Location'} : {$submit.location}
+</p>
+<hr />
+<p>
     {gt text='Custom Fields:'}<br />
     {foreach item=field key=k from=$submit.customdata}
     {$k} : {$field}<br />
     {/foreach}
-    <hr>
+</p>
+<hr />
+<p>
     {gt text='Comment'} : {$submit.comment|safehtml|nl2br} <br />
     <br />
     {gt text='The user submitted from the following IP address/hostname: '} {$submit.ip} / {$submit.host} <br />
-    <br />
 </p>
 
 {adminfooter}

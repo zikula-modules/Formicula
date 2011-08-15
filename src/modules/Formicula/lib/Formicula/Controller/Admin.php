@@ -214,7 +214,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         $submit = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', array('sid' => $sid));
 
         if ($submit == false) {
-            return LogUtil::registerError($this->__('Unknown Form submit'), null, ModUtil::url('Formicula', 'admin', 'main'));
+            return LogUtil::registerError($this->__('Unknown form submit'), null, ModUtil::url('Formicula', 'admin', 'main'));
         }
 
         // Check for confirmation.

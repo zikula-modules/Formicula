@@ -1,9 +1,9 @@
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="delete" size="small"}
-    <h3>{gt text="Delete Form submit"}</h3>
+    <h3>{gt text="Delete form submit"}</h3>
 </div>
-<p class="z-warningmsg">{gt text="Do you really want to delete this Form submit?"}</p>
+<p class="z-warningmsg">{gt text="Do you really want to delete this form submit?"}</p>
 <form class="z-form" action="{modurl modname=Formicula type=admin func=deletesubmit}" method="post">
     <fieldset>
         <legend>{gt text='Confirmation prompt'}</legend>
