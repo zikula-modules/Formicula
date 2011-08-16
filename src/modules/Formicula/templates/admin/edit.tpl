@@ -1,11 +1,14 @@
-{include file='admin/header.tpl'}
+{adminheader}
 {if $mode=='create'}
 {gt text="Add contact" assign=fortitle"}
 {else}
 {gt text="Edit contact" assign=fortitle"}
 {/if}
+<div class="z-admin-content-pagetitle">
+    {icon type="edit" size="small"}
+    <h3>{$fortitle}</h3>
+</div>
 
-<h2>{$fortitle}</h2>
 {form cssClass="z-form"}
 {formvalidationsummary}
 
@@ -16,20 +19,22 @@
         {formtextinput size="40" maxLength="100" id="cname" text=$contact.name}
     </div>
     <div class="z-formrow">
-        {formlabel for="email" __text='E-Mail'}
+        {formlabel for="email" __text='Email'}
         {formtextinput size="40" maxLength="200" id="email" text=$contact.email}
     </div>
     <div class="z-formrow">
         {formlabel for="public" __text='Public'}
         {formcheckbox id="public" checked=$contact.public}
     </div>
-    <div class="z-formnote z-warningmsg">{gt text="Use this information in the users confirmation mail"}</div>
+</fieldset>
+<fieldset>
+    <legend>{gt text="Use this information in the users confirmation mail"}</legend>
     <div class="z-formrow">
-        {formlabel for="semail" __text='Sender E-Mail'}
+        {formlabel for="semail" __text='Sender Email'}
         {formtextinput size="40" maxLength="100" id="semail" text=$contact.semail}
     </div>
     <div class="z-formrow">
-        {formlabel for="sname" __text='Sender name'}
+        {formlabel for="sname" __text='Sender Name'}
         {formtextinput size="40" maxLength="480" id="sname" text=$contact.sname}
     </div>
     <div class="z-formrow">
@@ -40,9 +45,8 @@
 </fieldset>
 
 <div class="z-formbuttons z-buttons">
-    {formbutton id="submit" commandName="submit" __text="Submit"}
+    {formbutton class="z-bt-ok" id="submit" commandName="submit" __text="Submit"}
 </div>
 
 {/form}
-
-{include file='admin/footer.tpl'}
+{adminfooter}

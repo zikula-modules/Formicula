@@ -48,7 +48,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function readValidContacts($args)
     {
-        $allcontacts = ModUtil::apiFunc('Formicula', 'Admin', 'readContacts');
+        $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if ($allcontacts == false) {
@@ -175,7 +175,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $sitename = System::getVar('sitename');
             $render->assign('sitename', $sitename);
 
-            $render->assign('custom', ModUtil::apiFunc('Formicula', 'User', 'removeUploadInformation', array('custom' => $custom)));
+            $render->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
 
             switch($format) {
                 case 'html' :
@@ -293,7 +293,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
 
         if ($userformat <> 'none') {
             if (!isset($userdata['uemail']) || (System::varValidate($userdata['uemail'], 'email') == false)) {
-                $ok = LogUtil::registerError($this->__('Error! No or incorrect E-Mail address supplied'));
+                $ok = LogUtil::registerError($this->__('Error! No or incorrect email address supplied'));
             }
 
             if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != DataUtil::censor($userdata['uname']))) {

@@ -5,7 +5,7 @@
 {gt text='Form #'} : { $form }
 {gt text='Contact or Theme'} : { $contact.name }
 {gt text='Your Name'} : { $userdata.uname }
-{gt text='E-Mail'} : { $userdata.uemail }
+{gt text='Email'} : { $userdata.uemail }
 {gt text='Homepage'} : { $userdata.url }
 {gt text='Company'} : { $userdata.company }
 {gt text='Phone Number'} : { $userdata.phone }

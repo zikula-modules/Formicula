@@ -1,7 +1,11 @@
 {include file='forms/3_userheader.html'}
 
 <p>{gt text='Thank you %s for your reservation.' tag1=$userdata.uname|safehtml}<p/>
+<<<<<<< HEAD
 <p>{An e-mail with the filled in data will be sent to our and your e-mailaddress (%s). We will reply 
+=======
+<p>{An email with the filled in data will be sent to our and your email address (%s). We will reply 
+>>>>>>> master-landseer
 as soon as possible.' tag1=$userdata.uemail|safehtml}</p>
 <p>{$sitename}</p>
 
@@ -25,7 +29,11 @@ as soon as possible.' tag1=$userdata.uemail|safehtml}</p>
 
     <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+<<<<<<< HEAD
             {gt text='E-Mail'}&nbsp;:
+=======
+            {gt text='Email'}&nbsp;:
+>>>>>>> master-landseer
         </td>
         <td style="width: 50%; text-align:left; padding-left: 50px;">
             {$userdata.uemail|safehtml}

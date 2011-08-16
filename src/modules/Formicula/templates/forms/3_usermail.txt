@@ -8,7 +8,11 @@
 {gt text='This data was sent to us:'}
 
 {gt text='Your Name'} : { $userdata.uname }
+<<<<<<< HEAD
 {gt text='E-Mail'} : { $userdata.uemail }
+=======
+{gt text='Email'} : { $userdata.uemail }
+>>>>>>> master-landseer
 
 { foreach item=field from=$custom }
 { $field.name } : { $field.data }
@@ -17,6 +21,10 @@
 {gt text='Comment'} :
 { $userdata.comment|safetext }
 
+<<<<<<< HEAD
 {gt text='We will respond to your e-mail as soon as possible.'}
+=======
+{gt text='We will respond to your email as soon as possible.'}
+>>>>>>> master-landseer
 
 {gt text="The %s Team" tag1=$sitename comment="%s will be replaced with the sitename"}

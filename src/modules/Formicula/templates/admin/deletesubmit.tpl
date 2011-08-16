@@ -1,7 +1,9 @@
-{include file='admin/header.tpl'}
-
-<h2>{gt text="Delete Form submit"}</h2>
-<p class="z-warningmsg">{gt text="Do you really want to delete this Form submit?"}</p>
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="delete" size="small"}
+    <h3>{gt text="Delete form submit"}</h3>
+</div>
+<p class="z-warningmsg">{gt text="Do you really want to delete this form submit?"}</p>
 <form class="z-form" action="{modurl modname=Formicula type=admin func=deletesubmit}" method="post">
     <fieldset>
         <legend>{gt text='Confirmation prompt'}</legend>
@@ -27,8 +29,8 @@
 
     <div class="z-formbuttons z-buttons">
         {button class="z-btgreen" src='button_ok.gif' name='confirmation' value='confirmation' set='icons/extrasmall' __alt='Delete' __title='Delete' __text='Delete'}
-        <a class="z-btred" href="{modurl modname='Formicula' type='Admin' func='viewsubmits'}">{img modname='core' src='button_cancel.gif' set='icons/extrasmall' __alt='Cancel'  __title='Cancel'} {gt text="Cancel"}</a>
+        <a class="z-btred" href="{modurl modname='Formicula' type='admin' func='viewsubmits'}">{img modname='core' src='button_cancel.gif' set='icons/extrasmall' __alt='Cancel'  __title='Cancel'} {gt text="Cancel"}</a>
     </div>
 </form>
 
-{include file='admin/footer.tpl'}
+{adminfooter}

@@ -1,7 +1,10 @@
 {ajaxheader modname='Formicula' filename='formicula_admin_modifyconfig.js' effects=true}
+{adminheader}
+<div class="z-admin-content-pagetitle">
+    {icon type="config" size="small"}
+    <h3>{gt text="Modify configuration"}</h3>
+</div>
 
-{include file='admin/header.tpl'}
-<h2>{gt text="Modify configuration"}</h2>
 {form cssClass="z-form"}
 {formvalidationsummary}
 
@@ -70,8 +73,8 @@
 </fieldset>
 
 <div class="z-formbuttons z-buttons">
-    {formbutton id="submit" commandName="submit" __text="Submit"}
+    {formbutton class="z-bt-ok" id="submit" commandName="submit" __text="Submit"}
 </div>
 {/form}
 
-{include file='admin/footer.tpl'}
+{adminfooter}
