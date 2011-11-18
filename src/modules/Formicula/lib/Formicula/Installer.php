@@ -59,13 +59,6 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         // Get database information
         ModUtil::dbInfoLoad('Formicula');
 
-        // perform a global db change for all versions >= 0.4
-        if(version_compare($oldversion, '0.5', '>')) {
-            if (!DBUtil::changeTable('formcontacts')) {
-                return LogUtil::registerError($this->__('Database upgrade failed'));
-            }
-        }
-
         // Upgrade dependent on old version number
         switch($oldversion) {
             case '0.1':
@@ -159,6 +152,23 @@ Allow from env=object_is_jpg
                     }
                 }
             case '3.0.0':
+                // drop table prefix
+                $prefix = $this->serviceManager['prefix'];
+                $connection = Doctrine_Manager::getInstance()->getConnection('default');
+                $sqlStatements = array();
+                $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_formcontacts' . " TO `formcontacts`";
+                foreach ($sqlStatements as $sql) {
+                    $stmt = $connection->prepare($sql);
+                    try {
+                        $stmt->execute();
+                    } catch (Exception $e) {
+                    }   
+                }
+
+                if (!DBUtil::changeTable('formcontacts')) {
+                    return '3.0.0';
+                }
+
                 // create the formicula table for storing submits
                 if (!DBUtil::createTable('formsubmits')) {
                     return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
