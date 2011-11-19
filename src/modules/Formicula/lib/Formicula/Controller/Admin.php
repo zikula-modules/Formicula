@@ -88,14 +88,10 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
             return $this->view->fetch('admin/delete.tpl');
         }
 
-        if (!SecurityUtil::confirmAuthKey()) {
-            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'admin', 'main'));
-        }
+        // Confirm security token code
+        $this->checkCsrfToken();        
 
-        if (ModUtil::apiFunc('Formicula',
-        'admin',
-        'deleteContact',
-        array('cid' => $cid))) {
+        if (ModUtil::apiFunc('Formicula', 'admin', 'deleteContact', array('cid' => $cid))) {
             // Success
             LogUtil::registerStatus($this->__('Contact has been deleted'));
         }
@@ -201,7 +197,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      */
     public function deletesubmit()
     {
-        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
+        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_DELETE)) {
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
 
@@ -209,10 +205,9 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         Formicula_Util::envcheck();
 
         $sid = (int)FormUtil::getPassedValue('sid', -1, 'GETPOST');
-        $confirmation =      FormUtil::getPassedValue('confirmation', '', 'GETPOST');
+        $confirmation = FormUtil::getPassedValue('confirmation', '', 'GETPOST');
 
         $submit = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', array('sid' => $sid));
-
         if ($submit == false) {
             return LogUtil::registerError($this->__('Unknown form submit'), null, ModUtil::url('Formicula', 'admin', 'main'));
         }
@@ -223,9 +218,8 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
             return $this->view->fetch('admin/deletesubmit.tpl');
         }
 
-        if (!SecurityUtil::confirmAuthKey()) {
-            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'admin', 'main'));
-        }
+        // Confirm security token code
+        $this->checkCsrfToken();        
 
         if (ModUtil::apiFunc('Formicula', 'admin', 'deleteSubmit', array('sid' => $sid))) {
             // Success

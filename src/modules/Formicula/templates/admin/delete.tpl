@@ -10,7 +10,7 @@
     <fieldset>
         <legend>{gt text='Confirmation prompt'}</legend>
         <input type="hidden" name="cid" value="{$contact.cid}" />
-        <input type="hidden" name="authid" value="{insert name="generateauthkey" module="Formicula"}" />
+        <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <div class="z-formrow">
             <span class="z-label">{gt text="Contact name"}</span>
             <span>{$contact.name|safetext}</span>
@@ -23,8 +23,8 @@
     </fieldset>
 
     <div class="z-formbuttons z-buttons">
-        {button class="z-btgreen" src='button_ok.gif' name='confirmation' value='confirmation' set='icons/extrasmall' __alt='Delete' __title='Delete' __text='Delete'}
-        <a class="z-btred" href="{modurl modname='Formicula' type='admin' func='view'}">{img modname='core' src='button_cancel.gif' set='icons/extrasmall' __alt='Cancel'  __title='Cancel'} {gt text="Cancel"}</a>
+        {button class="z-btgreen" src='button_ok.png' name='confirmation' value='confirmation' set='icons/extrasmall' __alt='Delete' __title='Delete' __text='Delete'}
+        <a class="z-btred" href="{modurl modname='Formicula' type='admin' func='view'}">{img modname='core' src='button_cancel.png' set='icons/extrasmall' __alt='Cancel'  __title='Cancel'} {gt text="Cancel"}</a>
     </div>
 </form>
 

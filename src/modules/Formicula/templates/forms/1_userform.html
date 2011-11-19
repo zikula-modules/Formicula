@@ -5,7 +5,7 @@
 
 <form id="contactform" action="{modurl modname=Formicula type=user func=send}" method="post">
 <div>
-<input type="hidden" name="authid" value="{insert name="generateauthkey" module="Formicula"}" />
+<input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
 <input type="hidden" name="form" value="1" />
 <input type="hidden" name="adminformat" value="html" />
 <input type="hidden" name="userformat" value="html" />
