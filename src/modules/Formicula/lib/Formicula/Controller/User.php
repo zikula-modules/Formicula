@@ -231,7 +231,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $this->view->assign('userdata', $ud);
 
         if(ModUtil::apiFunc('Formicula',
-                'User',
+                'user',
                 'checkArguments',
                 array('userdata'   => $ud,
                 'custom'     => $custom,
