@@ -155,12 +155,12 @@ class Formicula_Controller_User extends Zikula_AbstractController
         }
         SessionUtil::delVar('formicula_captcha');
 
-        if(!SecurityUtil::confirmAuthKey()) {
-            $params = array('form' => $form);
-            if(is_array($addinfo) && count($addinfo)>0) {
-                $params['addinfo'] = $addinfo;
-            }
-            return LogUtil::registerAuthidError(ModUtil::url('Formicula', 'user', 'main', $params));
+        // Confirm security token code
+        $this->checkCsrfToken();
+        
+        $params = array('form' => $form);
+        if(isset($addinfo) && is_array($addinfo) && count($addinfo)>0) {
+            $params['addinfo'] = $addinfo;
         }
 
         if(empty($userformat) || ($userformat<>'plain' && $userformat<>'html' && $userformat<>'none')) {
@@ -231,7 +231,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $this->view->assign('userdata', $ud);
 
         if(ModUtil::apiFunc('Formicula',
-                'User',
+                'user',
                 'checkArguments',
                 array('userdata'   => $ud,
                 'custom'     => $custom,

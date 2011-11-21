@@ -200,7 +200,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         // Security check
-        if (!SecurityUtil::checkPermission("Formicula::", "::", ACCESS_ADMIN)) {
+        if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError();
         }
 
