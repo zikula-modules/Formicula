@@ -456,7 +456,7 @@ msgid "Submit"
 msgstr ""
 
 #: pntemplates/formicula_admin_footer.html:6
-msgid "Visit Formicula on http://code.zikula.org/formicula"
+msgid "Visit Formicula on https://github.com/landseer/Formicula"
 msgstr ""
 
 #: pntemplates/1_usermail.txt:6 pntemplates/1_usermail.html:13
