@@ -22,7 +22,7 @@ Installation
    folder is outside your web root), you will be notified and have to create them on your own:
    a) Create a folder formicula_cache in your temporary folder (most likely zTemp) and make it 
       writable for the web server (chmod 777)
-   b) Add an empty index.html file (you can copy the one from modules/formicula if you want).
+   b) Add an empty index.html file (you can copy the one from modules/Formicula if you want).
       although this is not really needed for Apache-based webservers where we use the .htaccess
       in the zTemp to avoid access to the subfolders, it is needed on webserver who do not
       support .htaccess.
@@ -39,13 +39,13 @@ Installation
 4. Create some contact names/topics with respective email adresses	in the Formicula admin setion.
    Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.
-   unreg. users (group)  |  formicula::  |  .*  |  comment
+   unreg. users (group)  |  Formicula::  |  .*  |  comment
    This enables unregistered users to use all existing forms. In a default installation
    the users group has a generic comment permission to do the same.
-6. Add a link to your main menu with: {formicula} (using [formicula] will not work!)
+6. Add a link to your main menu with: {Formicula} (using [Formicula] will not work!)
    This uses form 0. To call a specific form id use
-   index.php?name=formicula&form=<formid>
-   e.g. index.php?name=formicula&form=5 to use form #5
+   index.php?name=Formicula&form=<formid>
+   e.g. index.php?name=Formicula&form=5 to use form #5
 In the distribution package you will find two sample forms 0 and 1, 
 0 is a normal contact form and form #1 is for filing an online job application.
 
@@ -162,13 +162,13 @@ Permissions
 -----------
 To use a form you need the right to COMMENT.
 
-Unregistered   |   formicula::  |  .*   |  comment
+Unregistered   |   Formicula::  |  .*   |  comment
 all unregistered users are allowed to use all forms and write to all contacts
 
-Unregistered   |   formicula::  |  0::  |  comment
+Unregistered   |   Formicula::  |  0::  |  comment
 all unregistered users are allowed to use form 0 with all existing contacts.
 	
-Users   |   formicula::   |  1:(2|3):  |  comment
+Users   |   Formicula::   |  1:(2|3):  |  comment
 all members of the group Users are allowed to use form 1 and write to contact 2 and 3.
     
 Use external information in the forms
@@ -180,7 +180,7 @@ These data are send in an associative array addinfo where the key is the name.
 
 With
 
-index.php?name=formicula&form=2&addinfo[tid]=4&addinfo[pid]=17
+index.php?name=Formicula&form=2&addinfo[tid]=4&addinfo[pid]=17
 
 you send two different information to the form 2 which can used in the userform template (in
 this example 2_userform.html) with
@@ -202,7 +202,7 @@ Captcha
 -------
 The simplecaptcha plugins adds an image with a very basic math equation (2 number from 1 to 2 
 and either +, - or *) to the form if the spam check is enabled. If the user enters a wrong
-value, formicula redirects back to the page where it came from.
+value, Formicula redirects back to the page where it came from.
 
 Formicula tries to create images in this order:
 gif

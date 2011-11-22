@@ -8,7 +8,7 @@
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
- * @subpackage formicula
+ * @subpackage Formicula
  */
 
 function Formicula_tables()
