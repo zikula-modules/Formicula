@@ -53,10 +53,11 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             }
             $data = $view->getValues();
             if(!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
-                $ifield = & $view->pnFormGetPluginById('upload_dir');
+                $ifield = & $view->getPluginById('upload_dir');
                 $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this folder!')));
                 return false;
             }
+
             // remove spaces in the comma seperated forms lists
             $data['excludespamcheck'] = preg_replace('/\s*/m', '', $data['excludespamcheck']);
             $data['store_data_forms'] = preg_replace('/\s*/m', '', $data['store_data_forms']);
