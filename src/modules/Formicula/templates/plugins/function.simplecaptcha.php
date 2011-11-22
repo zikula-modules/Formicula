@@ -15,7 +15,7 @@
  * simplecaptcha plugin
  * adds a simplecaptcha image to a form
  *
- * based on pnimagetext (c) guite.de which is
+ * based on imagetext (c) guite.de which is
  * based on imagetext (c) Christoph Erdmann <mail@cerdmann.com>
  *
  *@params font
@@ -142,7 +142,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
         $finalheight = $imgdata[1];
     }
 
-    // If the imgurl starts with / we assume that pntemp is pointing to an absolute path which
+    // If the imgurl starts with / we assume that ztemp is pointing to an absolute path which
     // is outside the webservers root. In this case we have to use a function to show the image instead
     // of loading the image directly
     if(StringUtil::left(System::getVar('temp'), 1) == '/') {

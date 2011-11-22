@@ -281,7 +281,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
     /**
      * getimage
-     * returns an image for the captcha even if pnTemp is located outside of the webroot
+     * returns an image for the captcha even if zTemp is located outside of the webroot
      *@param img  string the image filename
      *@returns image output
      */
@@ -301,7 +301,6 @@ class Formicula_Controller_User extends Zikula_AbstractController
                            'jpg' => 'image/jpeg',
                            'gif' => 'image/gif');
 
-        // following code is based on Axels MediaAttach/pnuser/download.php
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");

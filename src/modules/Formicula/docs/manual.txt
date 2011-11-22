@@ -18,13 +18,13 @@ Installation
 2. Load, initialize and activate the module in the admin section.
 3. During installation, Formicula tries to create a folder formicula_cache containing an
    index.html and a .htaccess file.
-   If this fails (most probably when safemode is set to 'on' in your PHP environment or the pnTemp
+   If this fails (most probably when safemode is set to 'on' in your PHP environment or the zTemp
    folder is outside your web root), you will be notified and have to create them on your own:
-   a) Create a folder formicula_cache in your temporary folder (most likely pnTemp) and make it 
+   a) Create a folder formicula_cache in your temporary folder (most likely zTemp) and make it 
       writable for the web server (chmod 777)
    b) Add an empty index.html file (you can copy the one from modules/formicula if you want).
       although this is not really needed for Apache-based webservers where we use the .htaccess
-      in the pnTemp to avoid access to the subfolders, it is needed on webserver who do not
+      in the zTemp to avoid access to the subfolders, it is needed on webserver who do not
       support .htaccess.
    c) Create a .htacess in formicula_cache containing the following lines to allow access to the
       images created for the captcha:
@@ -40,7 +40,7 @@ Installation
    Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.
    unreg. users (group)  |  formicula::  |  .*  |  comment
-   This enables unregistered users to use all existing forms. In a default PN installation
+   This enables unregistered users to use all existing forms. In a default installation
    the users group has a generic comment permission to do the same.
 6. Add a link to your main menu with: {formicula} (using [formicula] will not work!)
    This uses form 0. To call a specific form id use
@@ -95,8 +95,8 @@ This is the email that the admin gets after the user sends submits the userform.
 Note: the email format can be chosen by using a dropdown like
 			
 <select name="userformat">
-<option value="html"><!--[ pnml name='_FOR_HTMLMAIL' ]--></option>
-<option value="plain"><!--[ pnml name='_FOR_TEXTMAIL' ]--></option>
+<option value="html">{gt text='Html'}</option>
+<option value="plain">{gt text='Plain text'}</option>
 </select>
 
 or if you want to force the type of email, you can use a hidden field in the form
@@ -153,8 +153,8 @@ and does not care about others that may have been sent (or not).
 
 Example:
 
-<label class="mandatory" for="custom0data"><!--[ pnml name='_FOR_ONLINEAPPLYAS' html=1 ]--></label><br />
-<input type="hidden" name="custom0name" value="<!--[ pnml name='_FOR_ONLINEAPPLYAS' ]-->" />
+<label class="mandatory" for="custom0data">{gt text='foobar'}</label><br />
+<input type="hidden" name="custom0name" value="{gt text='foobar'}" />
 <input type="hidden" name="custom0mandatory" value="1" />
 <input type="text" name="custom0data" id="custom0data" size="35" maxLength="80" value="" />
 
@@ -185,8 +185,8 @@ index.php?name=formicula&form=2&addinfo[tid]=4&addinfo[pid]=17
 you send two different information to the form 2 which can used in the userform template (in
 this example 2_userform.html) with
 
-<!--[ $addinfo.tid ]-->   => 4
-<!--[ $addinfo.pid ]-->   => 17
+{$addinfo.tid}  => 4
+{$addinfo.pid}  => 17
 
 As you can see you can use this to e.g. load data from Pagesetter in the userform template.
 
@@ -212,6 +212,6 @@ If all these image types are not supported by your server, captchas are deactiva
 case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
 
-Formicula also supports pnTemp-folders located outside the websites root folder. In this case
+Formicula also supports zTemp-folders located outside the websites root folder. In this case
 (when the temp folder points to an absolute path) the image is deliverd by a internal 
 function and not linked directly.
