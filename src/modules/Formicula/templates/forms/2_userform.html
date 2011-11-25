@@ -9,6 +9,7 @@
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="2" />
         <input type="hidden" name="adminformat" value="html" />
+        <input type="hidden" name="dataformat" value="array" />
 
         <p>
             {gt text="Mandatory fields are indicated with a"}<span class="mandatory">*</span>
@@ -27,13 +28,13 @@
 
         <p>
             <label for="uname">{gt text="Your Name"}&nbsp;:<span class="mandatory">*</span></label><br />
-            <input type="text" class="formborder required" id="uname" name="uname" size="40" maxlength="80" value="{$uname}" />
+            <input type="text" class="formborder required" id="uname" name="userdata[uname]" size="40" maxlength="80" value="{$userdata.uname}" />
         </p>
         <p id="advice-required-uname" class="custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
 
         <p>
             <label for="uemail">{gt text="Email"}&nbsp;:<span class="mandatory">*</span></label><br />
-            <input type="text" class="formborder required validate-email" id="uemail" name="uemail" size="40" maxlength="40" value="{$uemail}" />
+            <input type="text" class="formborder required validate-email" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
         </p>
         <p id="advice-validate-email-uemail" class="custom-advice" style="display:none">{gt text='Please enter a valid email address like user@example.com.'}</p>
         <p id="advice-required-uemail" class="custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
@@ -41,7 +42,7 @@
         {if $coredata.Formicula.show_url==1}
         <p>
             <label for="url">{gt text="Homepage"}&nbsp;:</label><br />
-            <input type="text" class="formborder validate-url" id="url" name="url" size="40" maxlength="40" />
+            <input type="text" class="formborder validate-url" id="url" name="userdata[url]" size="40" maxlength="40" value="{$userdata.url}" />
         </p>
         <p id="advice-validate-url-url" class="custom-advice" style="display:none">{gt text='Please enter a valid internet address like http://www.example.com.'}</p>
         {/if}
@@ -49,27 +50,27 @@
         {if $coredata.Formicula.show_phone==1}
         <p>
             <label for="phone">{gt text="Phone Number"}&nbsp;:</label><br />
-            <input type="text" class="formborder validate-digits" id="phone" name="phone" size="40" maxlength="40" />
+            <input type="text" class="formborder validate-digits" id="phone" name="userdata[phone]" size="40" maxlength="40" value="{$userdata.phone}" />
         </p>
         {/if}
 
         {if $coredata.Formicula.show_company==1}
         <p>
             <label for="company">{gt text="Company"}&nbsp;:</label><br />
-            <input type="text" class="formborder" id="company" name="company" size="40" maxlength="40" />
+            <input type="text" class="formborder" id="company" name="userdata[company]" size="40" maxlength="40" value="{$userdata.company}" />
         </p>
         {/if}
 
         {if $coredata.Formicula.show_location==1}
         <p>
             <label for="location">{gt text="Location"}&nbsp;:</label><br />
-            <input type="text" class="formborder" id="location" name="location" size="40" maxlength="40" />
+            <input type="text" class="formborder" id="location" name="userdata[location]" size="40" maxlength="40" value="{$userdata.location}" />
         </p>
         {/if}
 
         <p>
             <label for="comment">{gt text="Comment"}&nbsp;:<span class="mandatory">*</span></label><br />
-            <textarea class="formborder required" rows="6" cols="45" id="comment" name="comment"></textarea>
+            <textarea class="formborder required" rows="6" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
         </p>
         <p id="advice-required-comment" class="custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
 

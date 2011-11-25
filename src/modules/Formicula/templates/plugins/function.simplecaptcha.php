@@ -78,6 +78,10 @@ function smarty_function_simplecaptcha($params, &$smarty)
     $x = rand(1,10); /* 1 to 10 */
     $y = rand(1,10); /* 1 to 10 */
     $z = rand(0,1);  /* 0=+, 1=- */
+    if(($z==1) && ($y==$x)) {
+        // turn minus into plus when x=y
+        $z=0;
+    }
     if(($z==1) && ($y>$x)) {
         // make sure that x>y if z=1 (minus)
         $a=$x; $x=$y; $y=$a;
