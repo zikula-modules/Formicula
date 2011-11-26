@@ -151,7 +151,7 @@ Allow from env=object_is_jpg
                         return '2.2';
                     }
                 }
-            case '3.0.0':
+
                 // drop table prefix
                 $prefix = $this->serviceManager['prefix'];
                 $connection = Doctrine_Manager::getInstance()->getConnection('default');
@@ -166,7 +166,7 @@ Allow from env=object_is_jpg
                 }
 
                 if (!DBUtil::changeTable('formcontacts')) {
-                    return '3.0.0';
+                    return '2.2';
                 }
 
                 // create the formicula table for storing submits
@@ -181,7 +181,7 @@ Allow from env=object_is_jpg
                 if (ModUtil::available('Content')) {
                     Content_Installer::updateContentType('Formicula');
                 }
-            case '3.0.1':
+            case '3.0.0':
                 // future upgrades
         }
 
