@@ -18,7 +18,7 @@ function Formicula_tables()
 
     // Get the name for the template item table.  This is not necessary
     // but helps in the following statements and keeps them readable
-    $dbtable['formcontacts'] = DBUtil::getLimitedTablename('formcontacts');
+    $dbtable['formcontacts'] = 'formcontacts';
 
     // Set the column names.  Note that the array has been formatted
     // on-screen to be very easy to read by a user.
@@ -39,7 +39,7 @@ function Formicula_tables()
                                                 'ssubject' => "C(80) NOTNULL DEFAULT ''");
 
     // Get the name for the template item table.
-    $dbtable['formsubmits'] = DBUtil::getLimitedTablename('formsubmits');
+    $dbtable['formsubmits'] = 'formsubmits';
 
     // Set the column names.
     $dbtable['formsubmits_column'] = array('sid'     => 'pn_sid',
