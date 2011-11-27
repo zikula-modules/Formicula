@@ -258,6 +258,14 @@ class Formicula_Controller_User extends Zikula_AbstractController
         }
         SessionUtil::delVar('formicula_captcha');
 
+        // Check hooked modules for validation
+        $hookvalidators = $this->notifyHooks(new Zikula_ValidationHook('formicula.ui_hooks.forms.validate_edit', new Zikula_Hook_ValidationProviders()))->getValidators();
+        if ($hookvalidators->hasErrors()) {
+            SessionUtil::setVar('formicula_userdata', serialize($userdata));
+            SessionUtil::setVar('formicula_custom', serialize($custom));
+            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
+        }
+
         $params = array('form' => $form);
         if(isset($addinfo) && is_array($addinfo) && count($addinfo)>0) {
             $params['addinfo'] = $addinfo;

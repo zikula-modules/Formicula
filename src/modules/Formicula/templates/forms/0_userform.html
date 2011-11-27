@@ -99,6 +99,17 @@
 
     </fieldset>
 
+    {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
+    {foreach from=$hooks key='provider_area' item='hook'}
+    {if $hook}
+    <fieldset>
+        <div class="z-formnote">
+            {$hook}
+        </div>
+    </fieldset>
+    {/if}
+    {/foreach}
+
     <div class="z-formbuttons z-buttons">
         {button src='button_ok.png' name='submit' value='submit' set='icons/extrasmall' __alt='Send' __title='Send' __text='Send'}
     </div>
