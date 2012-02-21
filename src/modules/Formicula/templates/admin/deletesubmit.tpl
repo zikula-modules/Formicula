@@ -18,12 +18,12 @@
             <span>{$submit.cid|safetext}</span>
         </div>
         <div class="z-formrow">
-            <span class="z-label">{gt text="Submitted on"}</span>
+            <span class="z-label">{gt text="Date"}</span>
             <span>{$submit.cr_date|dateformat:'datetimebrief'}</span>
         </div>
         <div class="z-formrow">
-            <span class="z-label">{gt text="Submitted by"}</span>
-            <span><a href="#" class="tooltips" title="Email: {$submit.email|safetext} - UID: {$submit.cr_uid|safetext}">{$submit.name|safetext}</a></span>
+            <span class="z-label">{gt text="Name"}</span>
+            <span><a href="#" class="tooltips" title="{gt text='Email: %1$s - UID: %2$s' tag1=$submit.email|safetext tag2=$submit.cr_uid|safetext}">{$submit.name|safetext}</a></span>
         </div>
     </fieldset>
     <div class="z-formbuttons z-buttons">

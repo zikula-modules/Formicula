@@ -7,11 +7,11 @@
 <table class="z-admintable">
     <thead>
         <tr>
-            <th>{gt text='Submit ID'}</th>
+            <th>{gt text='ID'}</th>
             <th>{gt text='Form #'}</th>
             <th>{gt text='Contact ID'}</th>
-            <th>{gt text='On'}</th>
-            <th>{gt text='By'}</th>
+            <th>{gt text='Date'}</th>
+            <th>{gt text='Name'}</th>
             <th class="z-right">{gt text='Options'}</th>
         </tr>
     </thead>
@@ -22,7 +22,7 @@
             <td>{$submit.form|safetext}</td>
             <td>{$submit.cid|safetext}</td>
             <td>{$submit.cr_date|dateformat:'datetimebrief'}</td>
-            <td><a href="#" class="tooltips" title="Email: {$submit.email|safetext} - UID: {$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
+            <td><a href="#" class="tooltips" title="{gt text='Email: %1$s - UID: %2$s' tag1=$submit.email|safetext tag2=$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
             <td class="z-right">
                 <a href="{modurl modname=Formicula type=admin func=displaysubmit sid=$submit.sid}" class="tooltips" title="{gt text="View form submit"}">{img src="14_layer_visible.png" modname="core" set="icons/extrasmall" __alt="View form submit" }</a>
                 <a href="{modurl modname=Formicula type=admin func=deletesubmit sid=$submit.sid}" class="tooltips" title="{gt text="Delete form submit"}">{img src="14_layer_deletelayer.png" modname="core" set="icons/extrasmall" __alt="Delete form submit" }</a>

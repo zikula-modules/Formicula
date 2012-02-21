@@ -17,7 +17,7 @@
     <tbody>
         <tr class="z-odd">
             <td>{$submit.cr_date|dateformat:'datetimebrief'}</td>
-            <td><a href="#" class="tooltips" title="Email: {$submit.email|safetext} - UID: {$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
+            <td><a href="#" class="tooltips" title="{gt text='Email: %1$s - UID: %2$s' tag1=$submit.email|safetext tag2=$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
             <td>{$submit.ip|safetext}</td>
             <td>{$submit.host|safetext}</td>
             <td>{$submit.cid|safetext}</td>

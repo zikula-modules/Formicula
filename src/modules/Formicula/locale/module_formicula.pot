@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-21 06:39-0500\n"
+"POT-Creation-Date: 2012-02-21 07:18-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgid "Error! No contacts defined."
 msgstr ""
 
 #: lib/Formicula/Api/User.php:194
-msgid "Contact Form"
+msgid "Contact form"
 msgstr ""
 
 #: lib/Formicula/Api/User.php:274
@@ -63,15 +63,15 @@ msgid "Error! Could not store data submitted by form %s."
 msgstr ""
 
 #: lib/Formicula/Api/User.php:296
-msgid "Error! No or incorrect email address supplied"
+msgid "Error! No or incorrect email address supplied."
 msgstr ""
 
 #: lib/Formicula/Api/User.php:300
-msgid "Error! No or invalid username given"
+msgid "Error! No or invalid username given."
 msgstr ""
 
 #: lib/Formicula/Api/User.php:305
-msgid "Error! No or invalid comment supplied (no HTML!)"
+msgid "Error! No or invalid comment supplied (no HTML!)."
 msgstr ""
 
 #: lib/Formicula/Api/User.php:311
@@ -79,7 +79,7 @@ msgid "Error! Mandatory field:"
 msgstr ""
 
 #: lib/Formicula/Api/User.php:314
-msgid "Error! Upload error"
+msgid "Error! Upload error."
 msgstr ""
 
 #: lib/Formicula/ContentType/Form.php:23
@@ -134,20 +134,20 @@ msgid "There was an error sending the email."
 msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/Edit.php:69
-msgid "Error! No contact name"
+msgid "Error! No contact name."
 msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/Edit.php:74
-msgid "Error! No email address supplied"
+msgid "Error! No email address supplied."
 msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/Edit.php:83
 #, php-format
-msgid "Error! Incorrect email address [%s] supplied"
+msgid "Error! Incorrect email address [%s] supplied."
 msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/Edit.php:91
-msgid "Error! Incorrect email address supplied"
+msgid "Error! Incorrect email address supplied."
 msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/Edit.php:103
@@ -346,24 +346,24 @@ msgstr ""
 msgid "Contact ID"
 msgstr ""
 
-#: templates/admin/deletesubmit.tpl:21
-msgid "Submitted on"
+#: templates/admin/deletesubmit.tpl:21 templates/admin/displaysubmit.tpl:10
+#: templates/admin/viewsubmits.tpl:13
+msgid "Date"
 msgstr ""
 
-#: templates/admin/deletesubmit.tpl:25
-msgid "Submitted by"
+#: templates/admin/deletesubmit.tpl:25 templates/admin/displaysubmit.tpl:11
+#: templates/admin/view.tpl:11 templates/admin/viewsubmits.tpl:14
+msgid "Name"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:26 templates/admin/displaysubmit.tpl:20
+#: templates/admin/viewsubmits.tpl:25
+#, php-format
+msgid "Email: %1$s - UID: %2$s"
 msgstr ""
 
 #: templates/admin/displaysubmit.tpl:4
 msgid "View submitted form data"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:10
-msgid "Date"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:11 templates/admin/view.tpl:11
-msgid "Name"
 msgstr ""
 
 #: templates/admin/displaysubmit.tpl:12
@@ -568,7 +568,7 @@ msgstr ""
 msgid "Comma separated list of form ids or leave empty for storing all forms."
 msgstr ""
 
-#: templates/admin/view.tpl:10
+#: templates/admin/view.tpl:10 templates/admin/viewsubmits.tpl:10
 msgid "ID"
 msgstr ""
 
@@ -587,18 +587,6 @@ msgstr ""
 
 #: templates/admin/view.tpl:40 templates/admin/viewsubmits.tpl:32
 msgid "No items found."
-msgstr ""
-
-#: templates/admin/viewsubmits.tpl:10
-msgid "Submit ID"
-msgstr ""
-
-#: templates/admin/viewsubmits.tpl:13
-msgid "On"
-msgstr ""
-
-#: templates/admin/viewsubmits.tpl:14
-msgid "By"
 msgstr ""
 
 #: templates/admin/viewsubmits.tpl:27
@@ -685,11 +673,12 @@ msgstr ""
 
 #: templates/forms/0_usererror.html:7 templates/forms/1_usererror.html:6
 #: templates/forms/2_usererror.html:6 templates/forms/3_usererror.html:6
-msgid "Back to Contact Form"
+msgid "Back to the contact form"
 msgstr ""
 
-#: templates/forms/0_userform.html:8
-msgid "Mandatory fields are indicated by a"
+#: templates/forms/0_userform.html:8 templates/forms/1_userform.html:17
+#: templates/forms/2_userform.html:15 templates/forms/3_userform.html:24
+msgid "Mandatory fields are indicated with a"
 msgstr ""
 
 #: templates/forms/0_userform.html:18 templates/forms/0_userheader.html:1
@@ -784,11 +773,6 @@ msgstr ""
 #: templates/forms/1_userconfirm.html:6 templates/forms/1_usermail.html:25
 #: templates/forms/1_usermail.txt:17
 msgid "Thanks for applying, we will keep your data strictly confidential"
-msgstr ""
-
-#: templates/forms/1_userform.html:17 templates/forms/2_userform.html:15
-#: templates/forms/3_userform.html:24
-msgid "Mandatory fields are indicated with a"
 msgstr ""
 
 #: templates/forms/1_userform.html:21 templates/forms/1_userform.html:22
@@ -899,7 +883,7 @@ msgid "Please make a selection."
 msgstr ""
 
 #: templates/forms/3_userform.html:118 templates/forms/3_userform.html:119
-msgid "Number of Persons"
+msgid "Number of persons"
 msgstr ""
 
 #: templates/forms/3_userform.html:123

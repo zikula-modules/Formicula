@@ -191,7 +191,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             if(!empty($contact['sname'])) {
                 $fromname = $contact['sname'];
             } else {
-                $fromname = $sitename . ' - ' . DataUtil::formatForDisplay($this->__('Contact Form'));
+                $fromname = $sitename . ' - ' . DataUtil::formatForDisplay($this->__('Contact form'));
             }
             // check for sender email
             if(!empty($contact['semail'])) {
@@ -293,16 +293,16 @@ class Formicula_Api_User extends Zikula_AbstractApi
 
         if ($userformat <> 'none') {
             if (!isset($userdata['uemail']) || (System::varValidate($userdata['uemail'], 'email') == false)) {
-                $ok = LogUtil::registerError($this->__('Error! No or incorrect email address supplied'));
+                $ok = LogUtil::registerError($this->__('Error! No or incorrect email address supplied.'));
             }
 
             if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != DataUtil::censor($userdata['uname']))) {
-                $ok = LogUtil::registerError($this->__('Error! No or invalid username given'));
+                $ok = LogUtil::registerError($this->__('Error! No or invalid username given.'));
             }
         }
 
         if ($userdata['comment'] != DataUtil::censor($userdata['comment'])) {
-            $ok = LogUtil::registerError($this->__('Error! No or invalid comment supplied (no HTML!)'));
+            $ok = LogUtil::registerError($this->__('Error! No or invalid comment supplied (no HTML!).'));
         }
 
         foreach($custom as $field) {
@@ -311,7 +311,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
                     $ok = LogUtil::registerError($this->__('Error! Mandatory field:' . DataUtil::formatForDisplay($field['name'])));
                 }
                 if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
-                    $ok = LogUtil::registerError($this->__('Error! Upload error'));
+                    $ok = LogUtil::registerError($this->__('Error! Upload error.'));
                 }
             }
         }
