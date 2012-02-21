@@ -36,7 +36,6 @@
         <div class="z-formrow">
             <label for="uemail">{gt text="Email"}<span class="mandatory">*</span></label>
             <input type="text" class="formborder required validate-email" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
-
             <p id="advice-validate-email-uemail" class="z-formnote custom-advice" style="display:none">{gt text='Please enter a valid email address like user@example.com.'}</p>
             <p id="advice-required-uemail" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
         </div>
@@ -45,7 +44,6 @@
         <div class="z-formrow">
             <label for="url">{gt text="Homepage"}</label>
             <input type="text" class="formborder validate-url" id="url" name="userdata[url]" size="40" maxlength="40" value="{$userdata.url}" />
-
             <p id="advice-validate-url-url" class="z-formnote custom-advice" style="display:none">{gt text='Please enter a valid internet address like http://www.example.com.'}</p>
         </div>
         {/if}
@@ -53,7 +51,7 @@
         {if $coredata.Formicula.show_phone==1}
         <div class="z-formrow">
             <label for="phone">{gt text="Phone Number"}</label>
-            <input type="text" class="formborder validate-digits" id="phone" name="userdata[phone]" size="40" maxlength="40" value="{$userdata.phone}" />
+            <input type="text" class="formborder" id="phone" name="userdata[phone]" size="40" maxlength="40" value="{$userdata.phone}" />
         </div>
         {/if}
 
@@ -74,7 +72,6 @@
         <div class="z-formrow">
             <label for="comment">{gt text="Comment"}<span class="mandatory">*</span></label>
             <textarea class="formborder required" rows="6" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
-
             <p id="advice-required-comment" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
         </div>
 
