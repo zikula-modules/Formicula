@@ -20,11 +20,11 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
 
     public function getTitle()
     {
-        return DataUtil::formatForDisplay($this->__('Formicula! form'));
+        return DataUtil::formatForDisplay($this->__('Formicula form'));
     }
     public function getDescription()
     {
-        return DataUtil::formatForDisplay($this->__('Display a specific Formicula! form'));
+        return DataUtil::formatForDisplay($this->__('Display a specific Formicula form'));
     }
     public function loadData(&$data)
     {
@@ -42,7 +42,7 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
     public function displayEditing()
     {
         if (isset($this->form)) {
-            $output = '<p>' . $this->__f('The Formicula! form #%s is shown here.', $this->form) . '</p>';
+            $output = '<p>' . $this->__f('The Formicula form #%s is shown here.', $this->form) . '</p>';
             return $output;
         }
         return DataUtil::formatForDisplay($this->__('No form selected'));
