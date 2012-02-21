@@ -47,18 +47,27 @@
         {formlabel for="delete_file" __text='Delete uploaded file(s) after sending'}
         {formcheckbox id="delete_file" checked=$coredata.Formicula.delete_file}
     </div>
+</fieldset>
+
+<fieldset>
+    <legend>{gt text="Spam check settings"}</legend>
+    <div class="z-warningmsg">{gt text='For your information: There are better spam check modules out there. For example the Zikula Captcha module which can be hooked to Formicula. If you want to use this module, then please do not forget to add the required permissions for the Captcha module, too.'}</div>
     <div class="z-formrow">
-        {formlabel for="spamcheck" __text='Activate spamcheck'}
+        {formlabel for="spamcheck" __text='Activate simple spam check'}
         {formcheckbox id="spamcheck" checked=$coredata.Formicula.spamcheck}
+        <div class="z-formnote z-informationmsg">{gt text="Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available"}</div>
     </div>
-    <div class="z-formnote z-informationmsg">{gt text="Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP-functions for creating images are available"}</div>
     <div id="formicula_spamcheck_details">
         <div class="z-formrow">
             {formlabel for="excludespamcheck" __text='Do not use spam check in these forms'}
             {formtextinput size="20" maxLength="40" id="excludespamcheck" text=$coredata.Formicula.excludespamcheck}
-        </div>
         <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"}</div>
+        </div>
     </div>
+</fieldset>
+
+<fieldset>
+    <legend>{gt text="Form submits"}</legend>
     <div class="z-formrow">
         {formlabel for="store_data" __text='Store submitted data in database'}
         {formcheckbox id="store_data" checked=$coredata.Formicula.store_data}

@@ -10,23 +10,22 @@
         <input type="hidden" name="sid" value="{$submit.sid}" />
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <div class="z-formrow">
-            <span class="z-label">{gt text="Submit Form #"}</span>
+            <span class="z-label">{gt text="Form #"}</span>
             <span>{$submit.form|safetext}</span>
         </div>
         <div class="z-formrow">
-            <span class="z-label">{gt text="Contact or Theme"}</span>
+            <span class="z-label">{gt text="Contact ID"}</span>
             <span>{$submit.cid|safetext}</span>
         </div>
         <div class="z-formrow">
             <span class="z-label">{gt text="Submitted on"}</span>
-            <span>{$submit.cr_date|dateformat}</span>
+            <span>{$submit.cr_date|dateformat:'datetimebrief'}</span>
         </div>
         <div class="z-formrow">
             <span class="z-label">{gt text="Submitted by"}</span>
-            <span>{$submit.cr_uid|profilelinkbyuid} ({$submit.cr_uid})</span>
+            <span><a href="#" class="tooltips" title="Email: {$submit.email|safetext} - UID: {$submit.cr_uid|safetext}">{$submit.name|safetext}</a></span>
         </div>
     </fieldset>
-
     <div class="z-formbuttons z-buttons">
         {button class="z-btgreen" src='button_ok.png' name='confirmation' value='confirmation' set='icons/extrasmall' __alt='Delete' __title='Delete' __text='Delete'}
         <a class="z-btred" href="{modurl modname='Formicula' type='admin' func='viewsubmits'}">{img modname='core' src='button_cancel.png' set='icons/extrasmall' __alt='Cancel'  __title='Cancel'} {gt text="Cancel"}</a>
@@ -34,3 +33,8 @@
 </form>
 
 {adminfooter}
+<script type="text/javascript">
+    // <![CDATA[
+    Zikula.UI.Tooltips($$('.tooltips'));
+    // ]]>
+</script>

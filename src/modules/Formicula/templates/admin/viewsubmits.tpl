@@ -1,10 +1,10 @@
 {adminheader}
 <div class="z-admin-content-pagetitle">
-    {icon type="list" size="small"}
-    <h3>{gt text="View submitted form data"}</h3>
+    {icon type="view" size="small"}
+    <h3>{gt text="View form submits"}</h3>
 </div>
 
-<table class="z-admintable z-clearer">
+<table class="z-admintable">
     <thead>
         <tr>
             <th>{gt text='Submit ID'}</th>
@@ -18,14 +18,14 @@
     <tbody>
         {foreach item=submit from=$formsubmits}
         <tr class="{cycle values="z-odd,z-even" name=submits}">
-            <td>{$submit.sid}</td>
-            <td>{$submit.form}</td>
-            <td>{$submit.cid}</td>
-            <td>{$submit.cr_date|dateformat}</td>
-            <td>{$submit.cr_uid|profilelinkbyuid} ({$submit.cr_uid})</td>
+            <td>{$submit.sid|safetext}</td>
+            <td>{$submit.form|safetext}</td>
+            <td>{$submit.cid|safetext}</td>
+            <td>{$submit.cr_date|dateformat:'datetimebrief'}</td>
+            <td><a href="#" class="tooltips" title="Email: {$submit.email|safetext} - UID: {$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
             <td class="z-right">
-                <a href="{modurl modname=Formicula type=admin func=displaysubmit sid=$submit.sid}" title="{gt text="View form submit"}">{img src="14_layer_visible.png" modname="core" set="icons/extrasmall" __alt="View form submit" }</a>
-                <a href="{modurl modname=Formicula type=admin func=deletesubmit sid=$submit.sid}" title="{gt text="Delete form submit"}">{img src="14_layer_deletelayer.png" modname="core" set="icons/extrasmall" __alt="Delete form submit" }</a>
+                <a href="{modurl modname=Formicula type=admin func=displaysubmit sid=$submit.sid}" class="tooltips" title="{gt text="View form submit"}">{img src="14_layer_visible.png" modname="core" set="icons/extrasmall" __alt="View form submit" }</a>
+                <a href="{modurl modname=Formicula type=admin func=deletesubmit sid=$submit.sid}" class="tooltips" title="{gt text="Delete form submit"}">{img src="14_layer_deletelayer.png" modname="core" set="icons/extrasmall" __alt="Delete form submit" }</a>
             </td>
         </tr>
         {foreachelse}
@@ -35,3 +35,8 @@
 </table>
 
 {adminfooter}
+<script type="text/javascript">
+// <![CDATA[
+    Zikula.UI.Tooltips($$('.tooltips'));
+// ]]>
+</script>

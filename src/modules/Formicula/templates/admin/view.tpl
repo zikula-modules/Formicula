@@ -4,7 +4,7 @@
     <h3>{gt text="View contacts"}</h3>
 </div>
 
-<table class="z-admintable z-clearer">
+<table class="z-admintable">
     <thead>
         <tr>
             <th>{gt text='ID'}</th>
@@ -28,7 +28,8 @@
                 {/if}
             </td>
             <td class="z-right z-nowrap">
-                {if $contact.acc_edit==true}<a href="{modurl modname=Formicula type=admin func=edit cid=$contact.cid}" class="tooltips" title="{gt text="Edit contact"}">{img src="xedit.png" modname="core" set="icons/extrasmall" __alt="Edit contact" }</a>
+                {if $contact.acc_edit==true}
+                <a href="{modurl modname=Formicula type=admin func=edit cid=$contact.cid}" class="tooltips" title="{gt text="Edit contact"}">{img src="xedit.png" modname="core" set="icons/extrasmall" __alt="Edit contact" }</a>
                 {/if}
                 {if $contact.acc_delete==true}
                 <a href="{modurl modname=Formicula type=admin func=delete cid=$contact.cid}" class="tooltips" title="{gt text="Delete contact"}">{img src="14_layer_deletelayer.png" modname="core" set="icons/extrasmall" __alt="Delete contact" }</a>

@@ -4,27 +4,81 @@
     <h3>{gt text="View submitted form data"}</h3>
 </div>
 
-<p>
-    {gt text='A visitor (name %1$s, uid %2$s) of your web site used form #%3$s for contact and sent the following on %4$s' tag1=$submit.cr_uid|profilelinkbyuid tag2=$submit.cr_uid tag3=$submit.form tag4=$submit.cr_date|dateformat} <br />
-    <br />
-    {gt text='Contact ID / Name'} : {$submit.cid} / {$submit.name}<br />
-    {gt text='Homepage'} : {$submit.url}<br />
-    {gt text='Company'} : {$submit.company}<br />
-    {gt text='Phone Number'} : {$submit.phone}<br />
-    {gt text='Location'} : {$submit.location}
-</p>
-<hr />
-<p>
-    {gt text='Custom Fields:'}<br />
-    {foreach item=field key=k from=$submit.customdata}
-    {$k} : {$field}<br />
-    {/foreach}
-</p>
-<hr />
-<p>
-    {gt text='Comment'} : {$submit.comment|safehtml|nl2br} <br />
-    <br />
-    {gt text='The user submitted from the following IP address/hostname: '} {$submit.ip} / {$submit.host} <br />
-</p>
+<table class="z-admintable">
+    <thead>
+        <tr>
+            <th>{gt text='Date'}</th>
+            <th>{gt text='Name'}</th>
+            <th>{gt text='IP address'}</th>
+            <th>{gt text='Hostname'}</th>
+            <th>{gt text='Contact ID'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="z-odd">
+            <td>{$submit.cr_date|dateformat:'datetimebrief'}</td>
+            <td><a href="#" class="tooltips" title="Email: {$submit.email|safetext} - UID: {$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
+            <td>{$submit.ip|safetext}</td>
+            <td>{$submit.host|safetext}</td>
+            <td>{$submit.cid|safetext}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="z-admintable">
+    <thead>
+        <tr>
+            <th>{gt text='Homepage'}</th>
+            <th>{gt text='Company'}</th>
+            <th>{gt text='Phone Number'}</th>
+            <th>{gt text='Location'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="z-odd">
+            <td><a href="{$submit.url|safetext}">{$submit.url|safetext}</a></td>
+            <td>{$submit.company|safetext}</td>
+            <td>{$submit.phone|safetext}</td>
+            <td>{$submit.location|safetext}</td>
+        </tr>
+    </tbody>
+</table>
+
+{if $submit.customdata}
+<table class="z-admintable">
+    <thead>
+        <tr>
+            <th>{gt text='Custom fields'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {foreach item=field key=k from=$submit.customdata}
+        <tr class="{cycle values="z-odd,z-even" name=submits}">
+            <td>{$k} : {$field|safetext}</td>
+        </tr>
+        {/foreach}
+    </tbody>
+</table>
+{/if}
+
+<table class="z-admintable">
+    <thead>
+        <tr>
+            <th>{gt text='Comment'}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="z-odd">
+            <td>{$submit.comment|safehtml|nl2br}</td>
+        </tr>
+    </tbody>
+</table>
+
+
 
 {adminfooter}
+<script type="text/javascript">
+    // <![CDATA[
+    Zikula.UI.Tooltips($$('.tooltips'));
+    // ]]>
+</script>
