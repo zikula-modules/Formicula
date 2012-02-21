@@ -32,6 +32,8 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
                 $sets_found[$parts[0]]++;
             }
         }
+        $cachedir = System::getVar('temp') . '/formicula_cache';
+        $view->assign('cachedir', $cachedir);
         $items = array();
         foreach ($sets_found as $formid => $files) {
             $items[] = array('text' => $this->__f('Form #%1$s that contains %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
@@ -54,7 +56,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             $data = $view->getValues();
             if(!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
                 $ifield = & $view->getPluginById('upload_dir');
-                $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this folder!')));
+                $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this directory!')));
                 return false;
             }
 

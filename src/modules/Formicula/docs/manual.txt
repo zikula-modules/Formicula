@@ -16,15 +16,15 @@ Installation
 ------------
 1. Extract the files to your Zikula directory.
 2. Load, initialize and activate the module in the admin section.
-3. During installation, Formicula tries to create a folder formicula_cache containing an
+3. During installation, Formicula tries to create a directory formicula_cache containing an
    index.html and a .htaccess file.
    If this fails (most probably when safemode is set to 'on' in your PHP environment or the zTemp
-   folder is outside your web root), you will be notified and have to create them on your own:
-   a) Create a folder formicula_cache in your temporary folder (most likely zTemp) and make it 
+   directory is outside your web root), you will be notified and have to create them on your own:
+   a) Create a directory formicula_cache in your temporary directory (most likely zTemp) and make it 
       writable for the web server (chmod 777)
    b) Add an empty index.html file (you can copy the one from modules/Formicula if you want).
       although this is not really needed for Apache-based webservers where we use the .htaccess
-      in the zTemp to avoid access to the subfolders, it is needed on webserver who do not
+      in the zTemp to avoid access to the subdirectorys, it is needed on webserver who do not
       support .htaccess.
    c) Create a .htacess in formicula_cache containing the following lines to allow access to the
       images created for the captcha:
@@ -54,7 +54,7 @@ Configuration
 Show xxx: quick configuration enable/disable some fields in the userform. THese fields may be
 (read: surely will be) removed in future versions.
 Send confirmation email to user: Tick this to send an confirmation mail to the user  	
-Folder for uploaded files: Uploaded files get stored here. Make sure this folder is secured with a
+directory for uploaded files: Uploaded files get stored here. Make sure this directory is secured with a
 .htacess file otherwise someone can upload malicious files and execute them!
 Delete file after sending: does what it says when ticked.
 Activate spamcheck: shows a little captcha in the form
@@ -212,6 +212,6 @@ If all these image types are not supported by your server, captchas are deactiva
 case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
 
-Formicula also supports zTemp-folders located outside the websites root folder. In this case
-(when the temp folder points to an absolute path) the image is deliverd by a internal 
+Formicula also supports zTemp-directorys located outside the websites root directory. In this case
+(when the temp directory points to an absolute path) the image is deliverd by a internal 
 function and not linked directly.

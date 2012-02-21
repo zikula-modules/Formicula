@@ -34,11 +34,11 @@ class Formicula_Util
 
             $cachedir = System::getVar('temp') . '/formicula_cache';
             if(!file_exists($cachedir) || !is_writable($cachedir)) {
-                LogUtil::registerStatus(__('formicula_cache folder does not exist in Zikula\'s temporary folder or is not writable - captchas have been disabled'));
+                LogUtil::registerStatus(__('formicula_cache directory does not exist in Zikula\'s temporary directory or is not writable - captchas have been disabled'));
                 ModUtil::setVar('Formicula', 'spamcheck', 0);
             }
             if(!file_exists($cachedir.'/.htaccess')) {
-                LogUtil::registerStatus(__('.htaccess file needed in formicula_cache folder not exist'));
+                LogUtil::registerStatus(__('.htaccess file needed in formicula_cache directory not exist'));
                 ModUtil::setVar('Formicula', 'spamcheck', 0);
             }
         }

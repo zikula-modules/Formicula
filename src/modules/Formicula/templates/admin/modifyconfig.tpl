@@ -40,7 +40,7 @@
         {formcheckbox id="send_user" checked=$coredata.Formicula.send_user}
     </div>
     <div class="z-formrow">
-        {formlabel for="upload_dir" __text='Folder for uploaded file(s)'}
+        {formlabel for="upload_dir" __text='directory for uploaded file(s)'}
         {formtextinput size="40" maxLength="80" id="upload_dir" text=$coredata.Formicula.upload_dir}
     </div>
     <div class="z-formrow">
@@ -59,9 +59,13 @@
     </div>
     <div id="formicula_spamcheck_details">
         <div class="z-formrow">
+            <label>{gt text='Cache directory'}</label>
+            <span>{$cachedir}</span>
+        </div>
+        <div class="z-formrow">
             {formlabel for="excludespamcheck" __text='Do not use spam check in these forms'}
             {formtextinput size="20" maxLength="40" id="excludespamcheck" text=$coredata.Formicula.excludespamcheck}
-        <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"}</div>
+            <em class="z-sub z-formnote">{gt text="Comma separated list of form ids, e.g. embedded forms in pagesetter. The redirect may not work here correctly"}</em>
         </div>
     </div>
 </fieldset>
@@ -76,8 +80,8 @@
         <div class="z-formrow">
             {formlabel for="store_data_forms" __text='Only store submissions from these forms'}
             {formtextinput size="20" maxLength="40" id="store_data_forms" text=$coredata.Formicula.store_data_forms}
+            <em class="z-sub z-formnote">{gt text="Comma separated list of form ids or leave empty for storing all forms."}</em>
         </div>
-        <div class="z-formnote z-informationmsg">{gt text="Comma separated list of form ids or leave empty for storing all forms."}</div>
     </div>
 </fieldset>
 

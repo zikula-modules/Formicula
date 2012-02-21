@@ -39,7 +39,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('spamcheck', 1);
         $this->setVar('excludespamcheck', '');
 
-        $this->setVar('upload_dir', 'ztemp');
+        $this->setVar('upload_dir', 'userdata');
         $this->setVar('delete_file', 1);
 
         $this->setVar('default_form', 0);
@@ -126,7 +126,7 @@ Allow from env=object_is_jpg
                             LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
                         }
                     } else {
-                        LogUtil::registerStatus($this->__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!'));
+                        LogUtil::registerStatus($this->__('The installer could not create the formicula_cache directory, please refer to the manual before using the module!'));
                     }
                 }
             case '2.0':
@@ -260,14 +260,14 @@ Allow from env=object_is_jpg
                 if($res1===false || $res2===false){
                     LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
                 } else {
-                    LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory in Zikula\'s temporary folder with a .htaccess file for security in there.'));
+                    LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory in Zikula\'s temporary directory with a .htaccess file for security in there.'));
                 }
             } else {
-                LogUtil::registerStatus($this->__('The installer could not create the formicula_cache folder, please refer to the manual before using the module!'));
+                LogUtil::registerStatus($this->__('The installer could not create the formicula_cache directory, please refer to the manual before using the module!'));
             }
         } else {
             // tempdir starts with /, so it is an absolute path, probably outside the webroot
-            LogUtil::registerStatus($this->__('The folder \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache folder in this case.'));
+            LogUtil::registerStatus($this->__('The directory \'ztemp\' found outside of the webroot, please consult the manual of how to create the formicula_cache directory in this case.'));
         }
 
     }

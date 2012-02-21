@@ -34,12 +34,12 @@ msgstr ""
 
 #: pnadmin.php:199
 msgid ""
-"formicula_cache folder does not exist in Zikula's temporary folder or is not "
+"formicula_cache directory does not exist in Zikula's temporary directory or is not "
 "writable - captchas have been disabled"
 msgstr ""
 
 #: pnadmin.php:203
-msgid ".htaccess file needed in formicula_cache folder not exist"
+msgid ".htaccess file needed in formicula_cache directory not exist"
 msgstr ""
 
 #: pnadmin.php:239
@@ -93,7 +93,7 @@ msgid "Set form #%1$s with %2$s templates"
 msgstr ""
 
 #: pnincludes/for_admin_modifyconfighandler.class.php:59
-msgid "The webserver cannot write into this folder!"
+msgid "The webserver cannot write into this directory!"
 msgstr ""
 
 #: pnincludes/for_admin_modifyconfighandler.class.php:75
@@ -178,14 +178,14 @@ msgstr ""
 
 #: pninit.php:43 pninit.php:165
 msgid ""
-"The installer could not create the formicula_cache folder, please refer to "
+"The installer could not create the formicula_cache directory, please refer to "
 "the manual before using the module!"
 msgstr ""
 
 #: pninit.php:47
 msgid ""
-"pnTemp folder found outside of the webroot, please consult the manual of how "
-"to create the formicula_cache folder in this case."
+"pnTemp directory found outside of the webroot, please consult the manual of how "
+"to create the formicula_cache directory in this case."
 msgstr ""
 
 #: pninit.php:52 pninit.php:109
@@ -414,7 +414,7 @@ msgid "Send confirmation email to user"
 msgstr ""
 
 #: pntemplates/formicula_admin_modifyconfig.html:35
-msgid "Folder for uploaded files"
+msgid "directory for uploaded files"
 msgstr ""
 
 #: pntemplates/formicula_admin_modifyconfig.html:39
