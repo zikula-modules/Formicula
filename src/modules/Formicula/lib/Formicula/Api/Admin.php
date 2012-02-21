@@ -248,9 +248,16 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         if (SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'view'), 'text' => $this->__('View contacts'), 'class' => 'z-icon-es-view');
             $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'edit', array('cid' => -1)), 'text' => $this->__('Add contact'), 'class' => 'z-icon-es-new');
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'viewsubmits'), 'text' => $this->__('Form submits'), 'class' => 'z-icon-es-view');
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'clearcache'), 'text' => $this->__('Clear captcha image cache'), 'class' => 'z-icon-es-delete');
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'), 'text' => $this->__('Modify configuration'), 'class' => 'z-icon-es-config');
+            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'viewsubmits'), 'text' => $this->__('View form submits'), 'class' => 'z-icon-es-view');
+            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'),
+                             'text' => $this->__('Modify configuration'), 
+                             'class' => 'z-icon-es-config',
+                             'links' => array(
+                                             array('url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'),
+                                                   'text' => $this->__('Modify configuration')),
+                                             array('url' => ModUtil::url('Formicula', 'admin', 'clearcache'),
+                                                   'text' => $this->__('Clear captcha image cache'))
+                                               ));
         }
         return $links;
     }
