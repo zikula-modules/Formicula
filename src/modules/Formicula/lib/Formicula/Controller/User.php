@@ -371,7 +371,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         header("Cache-Control: public");
         header("Content-Description: formicula image");
         header("Content-Disposition: inline; filename=" . DataUtil::formatForDisplay($img) . ";");
-        header("Content-type: image/" . $mimetypes[$parts[1]]);
+        header("Content-type: " . $mimetypes[$parts[1]]);
         header("Content-Transfer-Encoding: binary");
 
         echo $data;
