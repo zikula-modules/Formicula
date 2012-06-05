@@ -150,19 +150,19 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
             foreach ($custom as $k => $custom_field) {
                 $custom_field['mandatory'] = ($custom_field['mandatory'] == 1) ? true : false;
-                
+
                 // get uploaded files
-                if(isset($_FILES['custom'][$k]['data']['tmp_name'])) {
-                    $custom[$k]['data']['error'] = $_FILES['custom'][$k]['data']['error'];
-                    if($custom_field['data']['error'] == 0) {
-                        $custom_field['data']['size'] = $_FILES['custom'][$k]['data']['size'];
-                        $custom_field['data']['type'] = $_FILES['custom'][$k]['data']['type'];
-                        $custom_field['data']['name'] = $_FILES['custom'][$k]['data']['name'];
+                if (isset($_FILES['custom']['tmp_name'][$k]['data'])) {
+                    $custom[$k]['data']['error'] = $_FILES['custom']['error'][$k]['data'];
+                    if ($custom_field['data']['error'] == 0) {
+                        $custom_field['data']['size'] = $_FILES['custom']['size'][$k]['data'];
+                        $custom_field['data']['type'] = $_FILES['custom']['type'][$k]['data'];
+                        $custom_field['data']['name'] = $_FILES['custom']['name'][$k]['data'];
                         $custom_field['upload'] = true;
-                        move_uploaded_file($_FILES['custom'][$k]['data']['tmp_name'], DataUtil::formatForOS($uploaddir.$custom_field['data']['name']));
+                        move_uploaded_file($_FILES['custom']['tmp_name'][$k]['data'], DataUtil::formatForOS($uploaddir . $custom_field['data']['name']));
                     } else {
                         // error - replace the 'data' with an errormessage
-                        $custom_field['data'] = constant("_FOR_UPLOADERROR".$custom_field['data']['error']);
+                        $custom_field['data'] = constant('_FOR_UPLOADERROR' . $custom_field['data']['error']);
                     }
                 } else {
                     $custom_field['upload'] = false;
