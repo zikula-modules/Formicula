@@ -17,6 +17,8 @@ class Formicula_Version extends Zikula_AbstractVersion
     {
         $meta = array();
         $meta['version'] = '3.0.0';
+        $meta['core_min'] = '1.3.0'; // Fixed to 1.3.x range
+        $meta['core_max'] = '1.3.99'; // Fixed to 1.3.x range
         $meta['oldnames']    = array('formicula');
         $meta['description'] = $this->__('Formicula forms module');
         $meta['displayname'] = $this->__('Formicula');
