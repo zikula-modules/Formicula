@@ -167,6 +167,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 } else {
                     $custom_field['upload'] = false;
                 }
+                $custom[$k] = $custom_field;
             }
 
         } else {
