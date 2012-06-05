@@ -102,10 +102,12 @@ class Formicula_Api_User extends Zikula_AbstractApi
 
             // attach all files we have got
             $attachments = array();
-            $uploaddir = ModUtil::getVar('Formicula', 'upload_dir');
-            for($i=0;$i<count($custom);$i++) {
-                if(isset($custom[$i]['data']) && is_array($custom[$i]['data']))  {
-                    $attachments[] = $uploaddir."/".$custom[$i]['data']['name'];
+            $uploaddir = dirname(ZLOADER_PATH) . '/' . ModUtil::getVar('Formicula', 'upload_dir');
+
+            $numFields = count($custom);
+            for ($i = 0; $i < $numFields; $i++) {
+                if (isset($custom[$i]['data']) && is_array($custom[$i]['data']))  {
+                    $attachments[] = $uploaddir . '/' . $custom[$i]['data']['name'];
                     $custom[$i]['data'] = $custom[$i]['data']['name'];
                 }
             }
