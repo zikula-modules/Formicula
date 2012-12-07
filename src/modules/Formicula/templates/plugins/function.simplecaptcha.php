@@ -4,7 +4,7 @@
  * -----------------------------------------
  *
  * @copyright  (c) formicula Development Team
- * @link       https://github.com/landseer/Formicula
+ * @link       https://github.com/zikula-ev/Formicula
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
@@ -74,26 +74,42 @@ function smarty_function_simplecaptcha($params, &$smarty)
         return;
     }
 
+    // x .z. y .w. v
     srand ((double)microtime()*1000000);
     $x = rand(1,10); /* 1 to 10 */
     $y = rand(1,10); /* 1 to 10 */
     $z = rand(0,1);  /* 0=+, 1=- */
+    $v = rand(1,10); /* 1 to 10 */
+    $w = rand(0,1);  /* 0=+, 1=- */
+
+    // turn minus into plus when x=y
     if(($z==1) && ($y==$x)) {
-        // turn minus into plus when x=y
         $z=0;
     }
+
+    // turn minus into plus when y=v
+    if(($w==1) && ($v==$y)) {
+        $w=0;
+    }
+
+    // make sure that x>y if z=1 (minus)
     if(($z==1) && ($y>$x)) {
-        // make sure that x>y if z=1 (minus)
-        $a=$x; $x=$y; $y=$a;
+        $tmp=$x; $x=$y; $y=$tmp;
+    }
+
+    // turn minus into plus when v>x-y or v>x+y
+    if(($w==1) && (($z==1) && ($v>($x-$y))) || (($z==0) && ($v>($x+$y)))) {
+        $w=0;
     }
 
     $m = array('+', '-');
-    SessionUtil::setVar('formicula_captcha', serialize(compact('x', 'y', 'z')));
+    // store the numbers in a session var
+    SessionUtil::setVar('formicula_captcha', serialize(compact('x', 'y', 'z', 'v', 'w')));
 
     // create the text for the image
-    $params['text'] = $x . ' ' . $m[$z] . ' ' . $y . ' =';
+    $params['text'] = $x . ' ' . $m[$z] . ' ' . $y . ' ' . $m[$w] . ' ' . $v . ' =';
 
-    // has params for cache filename
+    // hash the params for cache filename
     $hash = hash('sha256', implode('', $params));
     // create uri of image
     $temp = System::getVar('temp');
@@ -102,6 +118,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
     }
     $imgurl = $temp . 'formicula_cache/' . $hash . $imagetype;
 
+    // create the image if it does not already exist
     if(!file_exists($imgurl)) {
         // we create a larger picture than needed, this makes it looking better at the end
         $multi = 4;

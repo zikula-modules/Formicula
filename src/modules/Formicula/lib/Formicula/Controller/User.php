@@ -4,7 +4,7 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       https://github.com/landseer/Formicula
+ * @link       https://github.com/zikula-ev/Formicula
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components
@@ -237,12 +237,18 @@ class Formicula_Controller_User extends Zikula_AbstractController
             $captcha_ok = false;
             $cdata = @unserialize(SessionUtil::getVar('formicula_captcha'));
             if(is_array($cdata)) {
-                switch($cdata['z']) {
-                    case '0':
-                        $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'])== $captcha);
+                switch($cdata['z'].'-'.$cdata['w']) {
+                    case '0-0':
+                        $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'] + (int)$cdata['v']) == $captcha);
                         break;
-                    case '1':
-                        $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'])== $captcha);
+                    case '0-1':
+                        $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'] - (int)$cdata['v']) == $captcha);
+                        break;
+                    case '1-0':
+                        $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'] + (int)$cdata['v']) == $captcha);
+                        break;
+                    case '1-1':
+                        $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'] - (int)$cdata['v']) == $captcha);
                         break;
                     default:
                     // $captcha_ok is false

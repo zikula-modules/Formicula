@@ -1,4 +1,4 @@
-{include file=forms/2_userheader.html}
+{include file='forms/2_userheader.html'}
 
 {pageaddvar name="javascript" value="javascript/ajax/prototype.js"}
 {pageaddvar name="javascript" value="javascript/ajax/validation.js"}
@@ -8,6 +8,7 @@
     <div>
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="2" />
+        <input type="hidden" name="formname" value="Example more elaborate contact form" />
         <input type="hidden" name="adminformat" value="html" />
         <input type="hidden" name="dataformat" value="array" />
 
@@ -85,7 +86,7 @@
         {if $spamcheck eq 1}
         <p>
             <label for="formicula_captcha">{gt text='Please solve this calculation'} :<span class="mandatory">*</span></label>
-            &nbsp;{simplecaptcha font='arial' size='12' bgcolor='ffffff' fgcolor='000000'} 
+            &nbsp;{simplecaptcha font='quikhand' size='12' bgcolor='ffffff' fgcolor='000000'} 
             <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
             <span class="z-sub">{gt text='(to prevent spam)'}</span>
         </p>
