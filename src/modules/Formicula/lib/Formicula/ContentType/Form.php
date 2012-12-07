@@ -65,9 +65,11 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
         $allContacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
                                      array('form' => $this->form));
         $contacts = array();
-        $contacts[] = array('text' => $this->__('All contacts'), 'value' => '-1');
+        $contacts[] = array('text' => $this->__('All public contacts or form default'), 'value' => '-1');
         foreach ($allContacts as $contact) {
-            $contacts[] = array('text' => $contact['name'], 'value' => $contact['cid']);
+            if ($contact['public']) {
+                $contacts[] = array('text' => $contact['name'], 'value' => $contact['cid']);
+            }
         }
         $this->view->assign('contacts', $contacts);
     }
