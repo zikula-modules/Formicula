@@ -81,7 +81,11 @@ class Formicula_Controller_User extends Zikula_AbstractController
             $userdata = array(
                 'uname' => $uname,
                 'uemail' => $uemail,
-                'comment' => '');
+                'comment' => '',
+                'url' => '',
+                'phone' => '',
+                'company' => '',
+                'location' => '');
         }
         $this->view->assign('custom', $custom);
         $this->view->assign('userdata', $userdata);
@@ -319,7 +323,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                                           'userdata' => $userdata,
                                           'custom'   => $custom,
                                           'form'     => $form,
-                                          'format'   => $userformat )));
+                                          'format'   => $userformat)));
             }
 
             // store the submitted data in the database
