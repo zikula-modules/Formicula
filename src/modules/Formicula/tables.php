@@ -4,7 +4,7 @@
  * -----------------------------------------
  *
  * @copyright  (c) Formicula Development Team
- * @link       https://github.com/landseer/Formicula 
+ * @link       https://github.com/zikula-ev/Formicula 
  * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
  * @author     Frank Schummertz <frank@zikula.org>
  * @package    Third_Party_Components

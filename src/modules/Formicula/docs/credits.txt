@@ -22,6 +22,10 @@
 // Thanks to Carsten Volmer for extensive testing.
 // French translation by Christophe Beaujean (yokav) 
 //
-// Formicula 2.0ff
+// Formicula 2.0
 // frank.schummertz@landseer-stuttgart.de
 // Stylesheet adjustments by Carsten Volmer
+//
+// Formicula 3.0
+// updated for Zikula 1.3
+// Carsten Volmer, Axel Guckelberger, Erik Spaan
