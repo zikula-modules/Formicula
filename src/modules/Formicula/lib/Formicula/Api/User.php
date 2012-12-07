@@ -122,12 +122,15 @@ class Formicula_Api_User extends Zikula_AbstractApi
                     $html = false;
             }
 
+            // subject of the emails can be determined from the form
+            $adminsubject = !empty($userdata['adminsubject']) ? $userdata['adminsubject'] : $sitename." - ".$contact['name'];
+
             $res = ModUtil::apiFunc('Mailer', 'user', 'sendmessage',
                                     array('fromname'    => $userdata['uname'],
                                           'fromaddress' => $userdata['uemail'],
                                           'toname'      => $contact['name'],
                                           'toaddress'   => $contact['email'],
-                                          'subject'     => $sitename." - ".$contact['name'],
+                                          'subject'     => $adminsubject,
                                           'body'        => $body,
                                           'attachments' => $attachments,
                                           'html'        => $html));
@@ -172,7 +175,6 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $render->assign('form', $form);
             $render->assign('contact', $contact);
             $render->assign('userdata', $userdata);
-
             $sitename = System::getVar('sitename');
             $render->assign('sitename', $sitename);
 
@@ -200,9 +202,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
             } else {
                 $frommail = $contact['email'];
             }
-            // check for subject
-            if(!empty($contact['ssubject'])) {
-                $subject = $contact['ssubject'];
+            // check for subject, can be in the form or in the contact
+            if(!empty($contact['ssubject']) || !empty($userdata['usersubject'])) {
+                $subject = !empty($userdata['usersubject']) ? $userdata['usersubject'] : $contact['ssubject'];
                 // replace some placeholders
                 // %s = sitename
                 // %l = slogan
