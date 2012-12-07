@@ -5,10 +5,18 @@
 {gt text='Contact or Theme'} : { $contact.name }
 {gt text='Your Name'} : { $userdata.uname }
 {gt text='Email'} : { $userdata.uemail }
+{if $modvars.Formicula.show_url==1}
 {gt text='Homepage'} : { $userdata.url }
+{/if}
+{if $modvars.Formicula.show_company==1}
 {gt text='Company'} : { $userdata.company }
+{/if}
+{if $modvars.Formicula.show_phone==1}
 {gt text='Phone Number'} : { $userdata.phone }
+{/if}
+{if $modvars.Formicula.show_location==1}
 {gt text='Location'} : { $userdata.location }
+{/if}
 
 {gt text='Comment'}  :
 { $userdata.comment|safetext }

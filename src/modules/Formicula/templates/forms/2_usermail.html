@@ -13,10 +13,18 @@
             {gt text='Contact or Theme'} : {$contact.name}<br />
             {gt text='Your Name'} : {$userdata.uname}<br />
             {gt text='Email'} : {$userdata.uemail}<br />
+            {if $modvars.Formicula.show_url==1}
             {gt text='Homepage'} : {$userdata.url}<br />
+            {/if}
+            {if $modvars.Formicula.show_company==1}
             {gt text='Company'} : {$userdata.company}<br />
+            {/if}
+            {if $modvars.Formicula.show_phone==1}
             {gt text='Phone Number'} : {$userdata.phone}<br />
+            {/if}
+            {if $modvars.Formicula.show_location==1}
             {gt text='Location'} : {$userdata.location}<br />
+            {/if}
             <br />
             {gt text='Comment'} : {$userdata.comment|safehtml|nl2br}<br />
             <br />

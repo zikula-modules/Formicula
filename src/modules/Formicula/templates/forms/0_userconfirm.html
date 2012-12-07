@@ -15,8 +15,7 @@
             <span>{$userdata.uname|safehtml|default:"&nbsp;"}</span>
         </div>
 
-        {modgetvar module=Formicula name=show_company assign=show_company}
-        {if $show_company==1}
+        {if $modvars.Formicula.show_company==1}
         <div class="z-formrow">
             <label>{gt text='Company'}</label>
             <span>{$userdata.company|safehtml|default:"&nbsp;"}</span>
@@ -27,24 +26,21 @@
             <span>{$userdata.uemail|safehtml|default:"&nbsp;"}</span>
         </div>
 
-        {modgetvar module=Formicula name=show_url assign=show_url}
-        {if $show_url==1}
+        {if $modvars.Formicula.show_url==1}
         <div class="z-formrow">
             <label>{gt text='Homepage'}</label>
             <span>{$userdata.url|safehtml|default:"&nbsp;"}</span>
         </div>
         {/if}
 
-        {modgetvar module=Formicula name=show_phone assign=show_phone}
-        {if $show_phone==1}
+        {if $modvars.Formicula.show_phone==1}
         <div class="z-formrow">
             <label>{gt text='Phone Number'}</label>
             <span>{$userdata.phone|safehtml|default:"&nbsp;"}</span>
         </div>
         {/if}
 
-        {modgetvar module=Formicula name=show_location assign=show_location}
-        {if $show_location==1}
+        {if $modvars.Formicula.show_location==1}
         <div class="z-formrow">
             <label>{gt text='Location'}</label>
             <span>{$userdata.location|safehtml|default:"&nbsp;"}</span>
