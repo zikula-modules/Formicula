@@ -52,7 +52,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $contacts = array();
-        $dbtables =DBUtil::getTables();
+        $dbtables = DBUtil::getTables();
         $contactscolumn = $dbtables['formcontacts_column'];
         $orderby = "ORDER BY $contactscolumn[cid]";
 
