@@ -184,6 +184,15 @@ Allow from env=object_is_jpg
                     Content_Installer::updateContentType('Formicula');
                 }
             case '3.0.0':
+                $tempdir = System::getVar('temp');
+                if(StringUtil::right($tempdir, 1) <> '/') {
+                    $tempdir .= '/';
+                }
+                if(is_dir($tempdir . 'formicula_cache')) {
+                    FileUtil::deldir($tempdir . 'formicula_cache');
+                }            
+                LogUtil::registerStatus($this->__('The SimpleCaptcha validation has changed, so the formicula_cache folder containing cached validation images was cleared.'));
+            case '3.0.1':
                 // future upgrades
         }
 
