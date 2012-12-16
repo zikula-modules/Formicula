@@ -10,23 +10,29 @@
             <br />
             {gt text='Thank you for the comments posted from our Website. The sent data is:'}<br />
             <br />
-            {gt text='Contact or Theme'} : {$contact.name}<br />
+            {gt text='Contact'} : {$contact.name}<br />
             {gt text='Your Name'} : {$userdata.uname}<br />
             {gt text='Email'} : {$userdata.uemail}<br />
-            {if $modvars.Formicula.show_url==1}
+            {if $modvars.Formicula.show_url==1 and $userdata.url}
             {gt text='Homepage'} : {$userdata.url}<br />
             {/if}
-            {if $modvars.Formicula.show_company==1}
+            {if $modvars.Formicula.show_company==1 and $userdata.company}
             {gt text='Company'} : {$userdata.company}<br />
             {/if}
-            {if $modvars.Formicula.show_phone==1}
+            {if $modvars.Formicula.show_phone==1 and $userdata.phone}
             {gt text='Phone Number'} : {$userdata.phone}<br />
             {/if}
-            {if $modvars.Formicula.show_location==1}
+            {if $modvars.Formicula.show_location==1 and $userdata.location}
             {gt text='Location'} : {$userdata.location}<br />
             {/if}
             <br />
             {gt text='Comment'} : {$userdata.comment|safehtml|nl2br}<br />
+{* commented out by default 
+            {if $custom.fileupload.data}
+                <br />
+                {$custom.fileupload.name} : {$custom.fileupload.data|safehtml}<br />
+            {/if}
+*}
             <br />
             {gt text='We will respond to your email address as soon as possible.'}<br />
             <br />

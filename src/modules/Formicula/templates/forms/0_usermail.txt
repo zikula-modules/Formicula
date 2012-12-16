@@ -2,24 +2,31 @@
 
 {gt text='Thank you for the comments posted from our Website. The sent data is:'}
 
-{gt text='Contact or Theme'} : { $contact.name }
+{gt text='Contact'} : { $contact.name }
 {gt text='Your Name'} : { $userdata.uname }
 {gt text='Email'} : { $userdata.uemail }
-{if $modvars.Formicula.show_url==1}
+{if $modvars.Formicula.show_url==1 and $userdata.url}
 {gt text='Homepage'} : { $userdata.url }
 {/if}
-{if $modvars.Formicula.show_company==1}
+{if $modvars.Formicula.show_company==1 and $userdata.company}
 {gt text='Company'} : { $userdata.company }
 {/if}
-{if $modvars.Formicula.show_phone==1}
+{if $modvars.Formicula.show_phone==1 and $userdata.phone}
 {gt text='Phone Number'} : { $userdata.phone }
 {/if}
-{if $modvars.Formicula.show_location==1}
+{if $modvars.Formicula.show_location==1 and $userdata.location}
 {gt text='Location'} : { $userdata.location }
 {/if}
 
-{gt text='Comment'}  :
+{gt text='Comment'} :
 { $userdata.comment|safetext }
+{* commented out by default 
+{if $custom.fileupload.data}
+
+{$custom.fileupload.name} : 
+{$custom.fileupload.data|safetext}
+{/if}
+*}
 
 {gt text='We will respond to your email as soon as possible.'}
 

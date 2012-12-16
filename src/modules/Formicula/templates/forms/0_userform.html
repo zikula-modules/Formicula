@@ -18,7 +18,7 @@
 
         <legend>{gt text='Contact our team'}</legend>
         <div class="z-formrow">
-            <label for="cid">{gt text="Contact or Theme"}</label>
+            <label for="cid">{gt text="Contact"}</label>
             <select class="formborder" id="cid" name="cid">
                 {foreach item=contact from=$contacts}
                 {if $contact.public == "1"}
@@ -83,6 +83,15 @@
                 <option value="plain" selected="selected">{gt text="Text"}</option>
             </select>
         </div>
+
+{* commented out by default 
+        <div class="z-formrow">
+            <label for="fileupload">{gt text="Attach a file"}</label>
+            <input type="hidden" name="custom[fileupload][name]" value="{gt text="Attached file"}" />
+            <input type="hidden" name="custom[fileupload][mandatory]" value="0" />
+            <input id="fileupload" type='file' class="formborder2" name='custom[fileupload][data]' size='20' maxlength='16700000' value=''>
+        </div>
+*}
 
         {if $spamcheck eq 1}
         <div class="z-formrow">
