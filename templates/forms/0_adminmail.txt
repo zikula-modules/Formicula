@@ -19,7 +19,7 @@
 {gt text='Location'} : { $userdata.location }
 {/if}
 {if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
-{$custom.fileupload.name} : { $custom.fileupload.data.name }
+{$custom.fileupload.name} : { $custom.fileupload.data }
 {/if}
 
 {gt text='Comment'} :

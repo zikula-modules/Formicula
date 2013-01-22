@@ -17,8 +17,8 @@
     <input type="hidden" name="form" value="3" />
     <input type="hidden" name="formname" value="Example reservation form" />
     <input type="hidden" name="cid" value="1" />
-    <input type="hidden" name="userformat" value="html" />
-    <input type="hidden" name="adminformat" value="html" />
+    <input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />
+    <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
     <input type="hidden" name="dataformat" value="array" />
     
     <p>
@@ -91,12 +91,12 @@
         <span style="float:left; width: 49%;">
             <label>{gt text='Gender'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[gender][name]" value="{gt text='Gender'}" />
-    		<span>
-    			<label class="radio" for="genderMale">{gt text='Male'}</label>
-    			<input type="radio" name="custom[gender][data]" id="genderMale" {if $custom.gender.data eq 'Male'}checked{/if} value="{gt text='Male'}" />
-    			<label class="radio" for="genderFemale">{gt text='Female'}</label>
-    			<input type="radio" class="validate-one-required" name="custom[gender][data]" id="genderFemale" {if $custom.gender.data eq 'Female'}checked{/if} value="{gt text='Female'}" />
-    		</span>
+            <span>
+                <label class="radio" for="genderMale">{gt text='Male'}</label>
+                <input type="radio" name="custom[gender][data]" id="genderMale" {if $custom.gender.data eq 'Male'}checked{/if} value="{gt text='Male'}" />
+                <label class="radio" for="genderFemale">{gt text='Female'}</label>
+                <input type="radio" class="validate-one-required" name="custom[gender][data]" id="genderFemale" {if $custom.gender.data eq 'Female'}checked{/if} value="{gt text='Female'}" />
+            </span>
             <span id="advice-validate-one-required-genderFemale" class="custom-advice" style="display:none"><br />{gt text='Please select one of the above options.'}</span>
         </span>
     </p>
@@ -216,15 +216,15 @@
     
     <script type="text/javascript">
         /* Added a european date format check, see also: http://groups.google.com/group/dexagogo/browse_thread/thread/352f4a8467c85b4c */
-    	Validation.add('validate-date-eu', 'Please use this date format: dd/mm/yyyy, dd-mm-yyyy or dd mm yyyy. For example 17/03/2009 for the 17th of March, 2009.', function(v) {
-    				if(Validation.get('IsEmpty').test(v)) return true;
-    				var regex = /^(\d{2})[\/-\s](\d{2})[\/-\s](\d{4})$/;
-    				if(!regex.test(v)) return false;
-    				var d = new Date(v.replace(regex, '$2/$1/$3'));
-    				return ( parseInt(RegExp.$2, 10) == (1+d.getMonth()) ) && 
-    							(parseInt(RegExp.$1, 10) == d.getDate()) && 
-    							(parseInt(RegExp.$3, 10) == d.getFullYear() );
-    	});
+        Validation.add('validate-date-eu', 'Please use this date format: dd/mm/yyyy, dd-mm-yyyy or dd mm yyyy. For example 17/03/2009 for the 17th of March, 2009.', function(v) {
+                    if(Validation.get('IsEmpty').test(v)) return true;
+                    var regex = /^(\d{2})[\/-\s](\d{2})[\/-\s](\d{4})$/;
+                    if(!regex.test(v)) return false;
+                    var d = new Date(v.replace(regex, '$2/$1/$3'));
+                    return ( parseInt(RegExp.$2, 10) == (1+d.getMonth()) ) && 
+                                (parseInt(RegExp.$1, 10) == d.getDate()) && 
+                                (parseInt(RegExp.$3, 10) == d.getFullYear() );
+        });
         var valid = new Validation('contactform');
     </script>
     
