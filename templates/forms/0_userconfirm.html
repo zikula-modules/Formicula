@@ -45,7 +45,11 @@
 
         <div class="z-formrow">
             <label>{gt text='Comment'}</label>
+			{if $userformat eq 'html'}
+            <div>{$userdata.comment|safehtml|default:"&nbsp;"}</div>
+			{else}
             <div>{$userdata.comment|safehtml|nl2br|default:"&nbsp;"}</div>
+			{/if}
         </div>
 
         {if $modvars.Formicula.show_attachfile==1}
