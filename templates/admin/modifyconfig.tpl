@@ -51,6 +51,18 @@
         {formlabel for="delete_file" __text='Delete uploaded file(s) after sending'}
         {formcheckbox id="delete_file" checked=$modvars.Formicula.delete_file}
     </div>
+    <div class="z-formrow">
+        {formlabel for="default_adminformat" __text='Default admin email format for forms'}
+        {formdropdownlist id='default_adminformat'}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="default_userformat" __text='Default user email format for forms'}
+        {formdropdownlist id='default_userformat'}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="show_userformat" __text='Show user email format selector'}
+        {formcheckbox id="show_userformat" checked=$modvars.Formicula.show_userformat}
+    </div>
 </fieldset>
 
 <fieldset>

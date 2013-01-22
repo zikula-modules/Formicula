@@ -39,6 +39,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('spamcheck', 1);
         $this->setVar('excludespamcheck', '');
 
+        $this->setVar('show_attachfile', 0);
         $this->setVar('upload_dir', 'userdata');
         $this->setVar('delete_file', 1);
 
@@ -46,6 +47,10 @@ class Formicula_Installer extends Zikula_AbstractInstaller
 
         $this->setVar('store_data', 0);
         $this->setVar('store_data_forms', '');
+
+        $this->setVar('show_userformat', 1);
+        $this->setVar('default_userformat', 'plain');
+        $this->setVar('default_adminformat', 'html');
 
         // register handlers
         EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
@@ -178,7 +183,7 @@ Allow from env=object_is_jpg
                 $this->setVar('store_data_forms', '');
                 // register handlers
                 EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
-								HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+                                HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
                 // Call the update method for the Content plugin
                 if (ModUtil::available('Content')) {
                     Content_Installer::updateContentType('Formicula');
@@ -193,8 +198,11 @@ Allow from env=object_is_jpg
                 }            
                 LogUtil::registerStatus($this->__('The SimpleCaptcha validation has changed, so the formicula_cache folder containing cached validation images was cleared.'));
             case '3.0.1':
-                // new checkbox in settings
+                // new config variables
                 $this->setVar('show_attachfile', 0);
+                $this->setVar('show_userformat', 1);
+                $this->setVar('default_userformat', 'plain');
+                $this->setVar('default_adminformat', 'html');
             case '3.0.2':
                 // future upgrades
         }
