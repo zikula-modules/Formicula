@@ -13,7 +13,7 @@
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="0" />
         <input type="hidden" name="formname" value="Simple contact form" />
-        <input type="hidden" name="adminformat" value="html" />
+        <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
         <input type="hidden" name="dataformat" value="array" />
 
         <legend>{gt text='Contact our team'}</legend>
@@ -79,8 +79,8 @@
         <div class="z-formrow">
             <label for="userformat">{gt text="Email Format"}</label>
             <select class="formborder" id="userformat" name="userformat">
-                <option value="html">{gt text="HTML"}</option>
-                <option value="plain" selected="selected">{gt text="Text"}</option>
+				<option value="html"{if $modvars.Formicula.default_userformat eq 'html'} selected="selected"{/if}>{gt text="HTML"}</option>
+				<option value="plain"{if $modvars.Formicula.default_userformat eq 'plain'} selected="selected"{/if}>{gt text="Text"}</option>
             </select>
         </div>
 

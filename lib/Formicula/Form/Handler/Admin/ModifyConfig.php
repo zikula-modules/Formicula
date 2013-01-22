@@ -39,6 +39,20 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             $items[] = array('text' => $this->__f('Form #%1$s that contains %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
         }
         $view->assign('items', $items);
+
+        $view->assign('default_userformatItems', array(
+            array('value' => 'html', 'text' => $this->__('HTML')),
+            array('value' => 'plain', 'text' => $this->__('Text'))
+        ));
+
+        $view->assign('default_adminformatItems', array(
+            array('value' => 'html', 'text' => $this->__('HTML')),
+            array('value' => 'plain', 'text' => $this->__('Text'))
+        ));
+
+        // assign all module vars
+        $this->view->assign($this->getVars());
+
         return true;
     }
 
@@ -78,6 +92,8 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             ModUtil::setVar('Formicula', 'store_data',       $data['store_data']);
             ModUtil::setVar('Formicula', 'store_data_forms', $data['store_data_forms']);
             ModUtil::setVar('Formicula', 'show_attachfile',  $data['show_attachfile']);
+            ModUtil::setVar('Formicula', 'default_userformat', $data['default_userformat']);
+            ModUtil::setVar('Formicula', 'default_adminformat', $data['default_adminformat']);
 
             LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }

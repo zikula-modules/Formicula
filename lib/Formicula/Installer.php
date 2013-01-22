@@ -48,6 +48,9 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('store_data', 0);
         $this->setVar('store_data_forms', '');
 
+        $this->setVar('default_userformat', 'plain');
+        $this->setVar('default_adminformat', 'html');
+
         // register handlers
         EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
@@ -194,8 +197,10 @@ Allow from env=object_is_jpg
                 }            
                 LogUtil::registerStatus($this->__('The SimpleCaptcha validation has changed, so the formicula_cache folder containing cached validation images was cleared.'));
             case '3.0.1':
-                // new checkbox in settings
+                // new config variables
                 $this->setVar('show_attachfile', 0);
+                $this->setVar('default_userformat', 'plain');
+                $this->setVar('default_adminformat', 'html');
             case '3.0.2':
                 // future upgrades
         }
