@@ -51,7 +51,7 @@
         {if $modvars.Formicula.show_attachfile==1}
         <div class="z-formrow">
             <label>{$custom.fileupload.name}</label>
-            <div>{$custom.fileupload.data|safehtml|default:"&nbsp;"}</div>
+            <div>{$custom.fileupload.data.name|safehtml|default:"&nbsp;"}</div>
         </div>
         {/if}
 

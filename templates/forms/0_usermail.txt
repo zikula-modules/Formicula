@@ -23,7 +23,7 @@
 {if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
 
 {$custom.fileupload.name} : 
-{$custom.fileupload.data|safetext}
+{$custom.fileupload.data.name|safetext}
 {/if}
 
 {gt text='We will respond to your email as soon as possible.'}
