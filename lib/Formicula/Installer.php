@@ -39,6 +39,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('spamcheck', 1);
         $this->setVar('excludespamcheck', '');
 
+        $this->setVar('show_attachfile', 0);
         $this->setVar('upload_dir', 'userdata');
         $this->setVar('delete_file', 1);
 
