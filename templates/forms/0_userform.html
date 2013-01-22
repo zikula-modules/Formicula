@@ -8,7 +8,7 @@
     {gt text="Mandatory fields are indicated with a"} <span class="mandatory">*</span>
 </p>
 
-<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post">
+<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post"{if $modvars.Formicula.show_attachfile==1} enctype="multipart/form-data"{/if}>
     <fieldset>
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="0" />
