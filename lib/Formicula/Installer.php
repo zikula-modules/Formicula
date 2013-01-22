@@ -48,6 +48,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('store_data', 0);
         $this->setVar('store_data_forms', '');
 
+        $this->setVar('show_userformat', 1);
         $this->setVar('default_userformat', 'plain');
         $this->setVar('default_adminformat', 'html');
 
@@ -199,6 +200,7 @@ Allow from env=object_is_jpg
             case '3.0.1':
                 // new config variables
                 $this->setVar('show_attachfile', 0);
+                $this->setVar('show_userformat', 1);
                 $this->setVar('default_userformat', 'plain');
                 $this->setVar('default_adminformat', 'html');
             case '3.0.2':

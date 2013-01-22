@@ -14,6 +14,7 @@
         <input type="hidden" name="form" value="0" />
         <input type="hidden" name="formname" value="Simple contact form" />
         <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
+        {if $modvars.Formicula.show_userformat!=1}<input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />{/if}
         <input type="hidden" name="dataformat" value="array" />
 
         <legend>{gt text='Contact our team'}</legend>
@@ -76,6 +77,7 @@
             <p id="advice-required-comment" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
         </div>
 
+        {if $modvars.Formicula.show_userformat==1}
         <div class="z-formrow">
             <label for="userformat">{gt text="Email Format"}</label>
             <select class="formborder" id="userformat" name="userformat">
@@ -83,6 +85,7 @@
 				<option value="plain"{if $modvars.Formicula.default_userformat eq 'plain'} selected="selected"{/if}>{gt text="Text"}</option>
             </select>
         </div>
+        {/if}
 
         {if $modvars.Formicula.show_attachfile==1}
         <div class="z-formrow">

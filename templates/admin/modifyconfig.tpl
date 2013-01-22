@@ -59,6 +59,10 @@
         {formlabel for="default_userformat" __text='Default user email format for forms'}
         {formdropdownlist id='default_userformat'}
     </div>
+    <div class="z-formrow">
+        {formlabel for="show_userformat" __text='Show user email format selector'}
+        {formcheckbox id="show_userformat" checked=$modvars.Formicula.show_userformat}
+    </div>
 </fieldset>
 
 <fieldset>

@@ -10,6 +10,7 @@
         <input type="hidden" name="form" value="2" />
         <input type="hidden" name="formname" value="Example more elaborate contact form" />
         <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
+        {if $modvars.Formicula.show_userformat!=1}<input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />{/if}
         <input type="hidden" name="dataformat" value="array" />
 
         <p>
@@ -75,6 +76,7 @@
         </p>
         <p id="advice-required-comment" class="custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
 
+        {if $modvars.Formicula.show_userformat==1}
         <p>
             <label for="userformat">{gt text="Email Format"}&nbsp;:</label><br />
             <select class="formborder" id="userformat" name="userformat">
@@ -82,6 +84,7 @@
 				<option value="plain"{if $modvars.Formicula.default_userformat eq 'plain'} selected="selected"{/if}>{gt text="Text"}</option>
             </select>
         </p>
+        {/if}
 
         {if $spamcheck eq 1}
         <p>
