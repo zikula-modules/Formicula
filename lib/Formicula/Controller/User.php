@@ -222,9 +222,6 @@ class Formicula_Controller_User extends Zikula_AbstractController
             } while ($missing < 3);
         }
         
-        // remove tags from comment to avoid spam
-        $userdata['comment'] = strip_tags($userdata['comment']);
-
         // check captcha
         $spamcheck = $this->getVar('spamcheck');
         if($spamcheck == 1) {
@@ -304,6 +301,8 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $this->view->setCaching(false);
         $this->view->assign('contact', $contact);
         $this->view->assign('userdata', $userdata);
+        $this->view->assign('userformat', $userformat);
+        $this->view->assign('adminformat', $adminformat);
 
         if(ModUtil::apiFunc('Formicula',
                 'user',
@@ -311,6 +310,13 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 array('userdata'   => $userdata,
                 'custom'     => $custom,
                 'userformat' => $userformat)) == true) {
+
+            $userdata_comment = $userdata['comment'];
+
+            if ($adminformat == 'plain') {
+                // remove tags from comment to avoid spam
+                $userdata['comment'] = strip_tags($userdata_comment);
+            }
             // send the submitted data to the contact(s)
             if(ModUtil::apiFunc('Formicula', 'user', 'sendtoContact',
                                 array('contact'  => $contact,
@@ -321,6 +327,10 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
             }
 
+            if ($userformat == 'plain') {
+                // remove tags from comment to avoid spam
+                $userdata['comment'] = strip_tags($userdata_comment);
+            }
             // send the submitted data as confirmation to the user
             if(($this->getVar('send_user') == 1) && ($userformat <> 'none')) {
                 // we replace the array of data of uploaded files with the filename

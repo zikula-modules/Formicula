@@ -193,6 +193,9 @@ Allow from env=object_is_jpg
                 }            
                 LogUtil::registerStatus($this->__('The SimpleCaptcha validation has changed, so the formicula_cache folder containing cached validation images was cleared.'));
             case '3.0.1':
+                // new checkbox in settings
+                $this->setVar('show_attachfile', 0);
+            case '3.0.2':
                 // future upgrades
         }
 

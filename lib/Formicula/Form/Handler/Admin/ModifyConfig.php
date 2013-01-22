@@ -77,6 +77,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             ModUtil::setVar('Formicula', 'default_form',     $data['default_form']);
             ModUtil::setVar('Formicula', 'store_data',       $data['store_data']);
             ModUtil::setVar('Formicula', 'store_data_forms', $data['store_data_forms']);
+            ModUtil::setVar('Formicula', 'show_attachfile',  $data['show_attachfile']);
 
             LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }

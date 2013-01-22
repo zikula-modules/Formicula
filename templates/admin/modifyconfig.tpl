@@ -40,6 +40,10 @@
         {formcheckbox id="send_user" checked=$modvars.Formicula.send_user}
     </div>
     <div class="z-formrow">
+        {formlabel for="show_attachfile" __text='Show attach file'}
+        {formcheckbox id="show_attachfile" checked=$modvars.Formicula.show_attachfile}
+    </div>
+    <div class="z-formrow">
         {formlabel for="upload_dir" __text='directory for uploaded file(s)'}
         {formtextinput size="40" maxLength="80" id="upload_dir" text=$modvars.Formicula.upload_dir}
     </div>
