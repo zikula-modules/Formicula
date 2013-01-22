@@ -27,12 +27,10 @@
             {/if}
             <br />
             {gt text='Comment'} : {$userdata.comment|safehtml|nl2br}<br />
-{* commented out by default 
-            {if $custom.fileupload.data}
+            {if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
                 <br />
                 {$custom.fileupload.name} : {$custom.fileupload.data|safehtml}<br />
             {/if}
-*}
             <br />
             {gt text='We will respond to your email address as soon as possible.'}<br />
             <br />
