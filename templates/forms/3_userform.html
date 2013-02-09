@@ -217,11 +217,11 @@
     <script type="text/javascript">
         /* Added a european date format check, see also: http://groups.google.com/group/dexagogo/browse_thread/thread/352f4a8467c85b4c */
         Validation.add('validate-date-eu', 'Please use this date format: dd/mm/yyyy, dd-mm-yyyy or dd mm yyyy. For example 17/03/2009 for the 17th of March, 2009.', function(v) {
-                    if(Validation.get('IsEmpty').test(v)) return true;
-                    var regex = /^(\d{2})[\/-\s](\d{2})[\/-\s](\d{4})$/;
-                    if(!regex.test(v)) return false;
+                    if (Validation.get('IsEmpty').test(v)) return true;
+                    var regex = /^(\d{2})[\/\-\s](\d{2})[\/\-\s](\d{4})$/;
+                    if (!regex.test(v)) return false;
                     var d = new Date(v.replace(regex, '$2/$1/$3'));
-                    return ( parseInt(RegExp.$2, 10) == (1+d.getMonth()) ) && 
+                    return (parseInt(RegExp.$2, 10) == (1+d.getMonth())) && 
                                 (parseInt(RegExp.$1, 10) == d.getDate()) && 
                                 (parseInt(RegExp.$3, 10) == d.getFullYear() );
         });
