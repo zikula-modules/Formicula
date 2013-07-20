@@ -23,6 +23,12 @@ class Formicula_Controller_User extends Zikula_AbstractController
      * main entry point for the user
      *
      *@param form int number of form to show
+     *@param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     *    name the contact full name (required)
+     *    sname the contact secure name wich will be send to the submitter (optional)
+     *    email the contact email (required)
+     *    semail the contact email wich will be send to the submiter (optional)
+     *    ssubject the subject of the confirmation mail (optional)
      *@returns view output
      */
     public function main($args=array())
@@ -45,13 +51,28 @@ class Formicula_Controller_User extends Zikula_AbstractController
         // reset captcha
         SessionUtil::delVar('formicula_captcha');
 
-        if ($cid == -1) {
+        $owncontacts = false;
+        if(is_array($args['owncontacts'])) {
+            $contacts = $args['owncontacts'];
+            SessionUtil::setVar('formicula_owncontacts', $args['owncontacts']);
+            $owncontacts = true;
+        } elseif(SessionUtil::getVar('formicula_owncontacts', null) != null) {
+            $contacts = SessionUtil::getVar('formicula_owncontacts');
+            $owncontacts = true;
+        } elseif ($cid == -1) {
             $contacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
                                          array('form' => $form));
         } else {
             $contacts[] = ModUtil::apiFunc('Formicula', 'user', 'getContact',
                                            array('cid'  => $cid,
                                                  'form' => $form));
+        }
+        
+        if($owncontacts == true) {
+            foreach($contacts as $key => $item) {
+                $contacts[$key]['cid'] = $key+1;
+                $contacts[$key]['public'] = 1;
+            }
         }
 
         if (count($contacts) == 0) {
@@ -141,7 +162,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         if(substr($uploaddir, strlen($uploaddir)-1, 1) <> "/") {
             $uploaddir .= "/";
         }
-        if ($dataformat == 'array') {        
+        if ($dataformat == 'array') {
             $userdata = FormUtil::getPassedValue('userdata', (isset($args['userdata'])) ? $args['userdata'] : array(), 'GETPOST');
             $custom   = FormUtil::getPassedValue('custom', (isset($args['custom'])) ? $args['custom'] : array(), 'GETPOST');
             $userdata['uname']    = isset($userdata['uname']) ? $userdata['uname'] : '';
@@ -293,10 +314,17 @@ class Formicula_Controller_User extends Zikula_AbstractController
         // very basic input validation against HTTP response splitting
         $userdata['uemail'] = str_replace(array('\r', '\n', '%0d', '%0a'), '', $userdata['uemail']);
 
-        
-        $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
-                                    array('cid'  => $cid,
-                                          'form' => $form));
+        if(SessionUtil::getVar('formicula_owncontacts', null) != null) {
+            $contacts = SessionUtil::getVar('formicula_owncontacts');
+            $contact = $contacts[$cid-1];
+            SessionUtil::delVar('formicula_owncontacts');
+            $owncontacts = true;
+        } else {
+            $owncontacts = false;
+            $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
+                                        array('cid'  => $cid,
+                                              'form' => $form));
+        }
 
         $this->view->setCaching(false);
         $this->view->assign('contact', $contact);
@@ -344,7 +372,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
             // store the submitted data in the database
             $store_data = $this->getVar('store_data');
-            if ($store_data == 1) {
+            if ($store_data == 1 && $owncontacts == false) {
                 $store_data_forms = $this->getVar('store_data_forms');
                 $store_data_forms_arr = explode(',', $store_data_forms);
                 if (empty($store_data_forms) || (is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr))) {
