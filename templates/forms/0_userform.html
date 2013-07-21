@@ -21,7 +21,7 @@
         <div class="z-formrow">
             <label for="cid">{gt text="Contact"}</label>
             <select class="formborder" id="cid" name="cid">
-                {foreach item=contact from=$contacts}
+                {foreach item='contact' from=$contacts}
                 {if $contact.public == "1"}
                 <option value="{$contact.cid}">{$contact.name}</option>
                 {/if}
