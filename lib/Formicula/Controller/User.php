@@ -23,6 +23,12 @@ class Formicula_Controller_User extends Zikula_AbstractController
      * main entry point for the user
      *
      *@param form int number of form to show
+     *@param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     *    name the contact full name (required)
+     *    sname the contact secure name wich will be send to the submitter (optional)
+     *    email the contact email (required)
+     *    semail the contact email wich will be send to the submiter (optional)
+     *    ssubject the subject of the confirmation mail (optional)
      *@returns view output
      */
     public function main($args=array())
@@ -45,13 +51,40 @@ class Formicula_Controller_User extends Zikula_AbstractController
         // reset captcha
         SessionUtil::delVar('formicula_captcha');
 
-        if ($cid == -1) {
+        $owncontacts = false;
+        $owncontactsuse = FormUtil::getPassedValue('owncontacts', -1, 'GETPOST');
+        if(is_array($args['owncontacts']) && $owncontactsuse != -1) {
+            $contacts = $args['owncontacts'];
+            $id = ModUtil::apiFunc($this->name, 'user', 'addSessionOwncontacts', array('owncontacts' => $args['owncontacts']));
+            SessionUtil::setVar('formicula_owncontactsUse', $id);
+            $owncontacts = true;
+        } elseif(SessionUtil::getVar('formicula_owncontacts', null) != null && $owncontactsuse != -1) {
+            $sessionContacts = SessionUtil::getVar('formicula_owncontacts');
+            $contacts = $sessionContacts[$owncontactsuse];
+            if(!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', array('owncontacts' => $contacts))) {
+                return false;
+            }
+            SessionUtil::setVar('formicula_owncontactsUse', $owncontactsuse);
+            $owncontacts = true;
+        } elseif ($cid == -1) {
             $contacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
                                          array('form' => $form));
         } else {
             $contacts[] = ModUtil::apiFunc('Formicula', 'user', 'getContact',
                                            array('cid'  => $cid,
                                                  'form' => $form));
+        }
+        
+        if($owncontacts == true) {
+            if(!SecurityUtil::checkPermission('Formicula::Owncontacts', "::", ACCESS_COMMENT)) {
+                return LogUtil::registerPermissionError(System::getHomepageUrl());
+            }
+            foreach($contacts as $key => $item) {
+                $contacts[$key]['cid'] = $key+1;
+                $contacts[$key]['public'] = 1;
+            }
+        } else {
+            SessionUtil::delVar('formicula_owncontactsUse');
         }
 
         if (count($contacts) == 0) {
@@ -125,6 +158,10 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $adminformat    =      FormUtil::getPassedValue('adminformat', (isset($args['adminformat'])) ? $args['adminformat'] : 'plain', 'GETPOST');
         $dataformat     =      FormUtil::getPassedValue('dataformat',  (isset($args['dataformat'])) ? $args['dataformat'] : 'plain', 'GETPOST');
         $returntourl    =      FormUtil::getPassedValue('returntourl', (isset($args['returntourl'])) ? $args['returntourl'] : '',  'GETPOST');
+        //get the useowncontacts var
+        $owncontactsuse = SessionUtil::getVar('formicula_owncontactsUse', -1);
+        //generate a returnurl we need if the form has errors
+        $errorreturntourl = ($owncontactsuse == -1) ? ModUtil::url('Formicula', 'user', 'main', array('form' => $form)) : ModUtil::url('Formicula', 'user', 'main', array('form' => $form, 'owncontacts' => $owncontactsuse));
 
         // Confirm security token code
         $this->checkCsrfToken();
@@ -141,7 +178,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         if(substr($uploaddir, strlen($uploaddir)-1, 1) <> "/") {
             $uploaddir .= "/";
         }
-        if ($dataformat == 'array') {        
+        if ($dataformat == 'array') {
             $userdata = FormUtil::getPassedValue('userdata', (isset($args['userdata'])) ? $args['userdata'] : array(), 'GETPOST');
             $custom   = FormUtil::getPassedValue('custom', (isset($args['custom'])) ? $args['custom'] : array(), 'GETPOST');
             $userdata['uname']    = isset($userdata['uname']) ? $userdata['uname'] : '';
@@ -261,7 +298,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 }
                 SessionUtil::setVar('formicula_userdata', serialize($userdata));
                 SessionUtil::setVar('formicula_custom', serialize($custom));
-                return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, ModUtil::url('Formicula', 'user', 'main', $params));
+                return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorreturntourl);
             }
         }
         SessionUtil::delVar('formicula_captcha');
@@ -271,7 +308,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         if ($hookvalidators->hasErrors()) {
             SessionUtil::setVar('formicula_userdata', serialize($userdata));
             SessionUtil::setVar('formicula_custom', serialize($custom));
-            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
+            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorreturntourl);
         }
 
         $params = array('form' => $form);
@@ -286,17 +323,33 @@ class Formicula_Controller_User extends Zikula_AbstractController
             $adminformat = 'plain';
         }
 
-        if(!SecurityUtil::checkPermission('Formicula::', "$form:$cid:", ACCESS_COMMENT)) {
-            return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
-        }
-
         // very basic input validation against HTTP response splitting
         $userdata['uemail'] = str_replace(array('\r', '\n', '%0d', '%0a'), '', $userdata['uemail']);
 
-        
-        $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
-                                    array('cid'  => $cid,
-                                          'form' => $form));
+        if($owncontactsuse != -1 && SessionUtil::getVar('formicula_owncontacts', null) != null) {
+            $sessionContacts = SessionUtil::getVar('formicula_owncontacts');
+            $contacts = $sessionContacts[$owncontactsuse];
+            if(!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', array('owncontacts' => $contacts))) {
+                return $this->redirect($errorreturntourl); 
+            }
+            $contact = $contacts[$cid-1];
+            $owncontacts = true;
+        } else {
+            $owncontacts = false;
+            $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact',
+                                        array('cid'  => $cid,
+                                              'form' => $form));
+        }
+
+        if($owncontacts == true) {
+            if(!SecurityUtil::checkPermission('Formicula::Owncontacts', "::", ACCESS_COMMENT)) {
+                return LogUtil::registerPermissionError($errorreturntourl);
+            }
+        } else {
+            if(!SecurityUtil::checkPermission('Formicula::', "$form:$cid:", ACCESS_COMMENT)) {
+                return LogUtil::registerPermissionError($errorreturntourl);
+            }
+        }
 
         $this->view->setCaching(false);
         $this->view->assign('contact', $contact);
@@ -324,7 +377,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                                       'custom'   => $custom,
                                       'form'     => $form,
                                       'format'   => $adminformat)) == false) {
-                return LogUtil::registerError($this->__('There was an error sending the email.'), null, ModUtil::url('Formicula', 'user', 'main', array('form' => $form)));
+                return LogUtil::registerError($this->__('There was an error sending the email.'), null, $errorreturntourl);
             }
 
             if ($userformat == 'plain') {
@@ -344,7 +397,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
             // store the submitted data in the database
             $store_data = $this->getVar('store_data');
-            if ($store_data == 1) {
+            if ($store_data == 1 && $owncontacts == false) {
                 $store_data_forms = $this->getVar('store_data_forms');
                 $store_data_forms_arr = explode(',', $store_data_forms);
                 if (empty($store_data_forms) || (is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr))) {
