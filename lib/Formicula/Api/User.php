@@ -343,4 +343,62 @@ class Formicula_Api_User extends Zikula_AbstractApi
         }
         return $custom;
     }
+    
+    /**
+     * add owncontacts to the session information and return the id for generating the url
+     *
+     *@param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     *    name the contact full name (required)
+     *    sname the contact secure name wich will be send to the submitter (optional)
+     *    email the contact email (required)
+     *    semail the contact email wich will be send to the submiter (optional)
+     *    ssubject the subject of the confirmation mail (optional)
+     *@return id wich must be appended to the formicula url with the sheme owncontact=id
+     */
+    public function addSessionOwncontacts($args)
+    {
+        if(!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', $args)) {
+            return false;
+        }
+        $owncontacts = SessionUtil::getVar('formicula_owncontacts', array());
+        $tmpid = array_search($args['owncontacts'], $owncontacts);
+        if(!$tmpid) {
+            $id = count($owncontacts);
+            $owncontacts[] = $args['owncontacts'];
+            SessionUtil::setVar('formicula_owncontacts', $owncontacts);
+        } else {
+            $id = $tmpid;
+        }
+        return $id;
+    }
+    
+    /**
+     * validate owncontacts array
+     *
+     *@param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     *    name the contact full name (required)
+     *    sname the contact secure name wich will be send to the submitter (optional)
+     *    email the contact email (required)
+     *    semail the contact email wich will be send to the submiter (optional)
+     *    ssubject the subject of the confirmation mail (optional)
+     *@return true if validated, false if not
+     */
+    public function checkOwncontacts($args)
+    {
+        if(!isset($args['owncontacts'])) {
+            LogUtil::registerError($this->__('You must pass an owncontacts array!'));
+            return false;
+        }
+        foreach($args['owncontacts'] as $item) {
+            if(!isset($item['name'])) {
+                LogUtil::registerError($this->__('You must pass a name for each contact!'));
+                return false;
+            }
+            if(!isset($item['email']) || !filter_var($item['email'], FILTER_VALIDATE_EMAIL)) {
+                LogUtil::registerError($this->__('You must pass a valid mail address for each contact!'));
+                return false;
+            }
+        }
+        return true;
+    }
 }

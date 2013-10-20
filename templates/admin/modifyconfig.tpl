@@ -40,12 +40,28 @@
         {formcheckbox id="send_user" checked=$modvars.Formicula.send_user}
     </div>
     <div class="z-formrow">
+        {formlabel for="show_attachfile" __text='Show attach file'}
+        {formcheckbox id="show_attachfile" checked=$modvars.Formicula.show_attachfile}
+    </div>
+    <div class="z-formrow">
         {formlabel for="upload_dir" __text='directory for uploaded file(s)'}
         {formtextinput size="40" maxLength="80" id="upload_dir" text=$modvars.Formicula.upload_dir}
     </div>
     <div class="z-formrow">
         {formlabel for="delete_file" __text='Delete uploaded file(s) after sending'}
         {formcheckbox id="delete_file" checked=$modvars.Formicula.delete_file}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="default_adminformat" __text='Default admin email format for forms'}
+        {formdropdownlist id='default_adminformat'}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="default_userformat" __text='Default user email format for forms'}
+        {formdropdownlist id='default_userformat'}
+    </div>
+    <div class="z-formrow">
+        {formlabel for="show_userformat" __text='Show user email format selector'}
+        {formcheckbox id="show_userformat" checked=$modvars.Formicula.show_userformat}
     </div>
 </fieldset>
 

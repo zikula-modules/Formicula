@@ -3,6 +3,7 @@
     <head>
         <title>formicula_user_html_email</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <base href="{getbaseurl}" />
     </head>
     <body>
         <p>
@@ -26,13 +27,16 @@
             {gt text='Location'} : {$userdata.location}<br />
             {/if}
             <br />
-            {gt text='Comment'} : {$userdata.comment|safehtml|nl2br}<br />
-{* commented out by default 
-            {if $custom.fileupload.data}
+            {gt text='Comment'} :<br />{strip}
+            {if $userformat eq 'html'}
+            {$userdata.comment|safehtml}<br />
+            {else}
+            {$userdata.comment|safehtml|nl2br}<br />
+            {/if}{/strip}
+            {if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
                 <br />
-                {$custom.fileupload.name} : {$custom.fileupload.data|safehtml}<br />
+                {$custom.fileupload.name} : {$custom.fileupload.data.name}<br />
             {/if}
-*}
             <br />
             {gt text='We will respond to your email address as soon as possible.'}<br />
             <br />

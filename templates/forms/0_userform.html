@@ -8,19 +8,20 @@
     {gt text="Mandatory fields are indicated with a"} <span class="mandatory">*</span>
 </p>
 
-<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post">
+<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post"{if $modvars.Formicula.show_attachfile==1} enctype="multipart/form-data"{/if}>
     <fieldset>
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="0" />
         <input type="hidden" name="formname" value="Simple contact form" />
-        <input type="hidden" name="adminformat" value="html" />
+        <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
+        {if $modvars.Formicula.show_userformat!=1}<input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />{/if}
         <input type="hidden" name="dataformat" value="array" />
 
         <legend>{gt text='Contact our team'}</legend>
         <div class="z-formrow">
             <label for="cid">{gt text="Contact"}</label>
             <select class="formborder" id="cid" name="cid">
-                {foreach item=contact from=$contacts}
+                {foreach item='contact' from=$contacts}
                 {if $contact.public == "1"}
                 <option value="{$contact.cid}">{$contact.name}</option>
                 {/if}
@@ -76,22 +77,24 @@
             <p id="advice-required-comment" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
         </div>
 
+        {if $modvars.Formicula.show_userformat==1}
         <div class="z-formrow">
             <label for="userformat">{gt text="Email Format"}</label>
             <select class="formborder" id="userformat" name="userformat">
-                <option value="html">{gt text="HTML"}</option>
-                <option value="plain" selected="selected">{gt text="Text"}</option>
+                <option value="html"{if $modvars.Formicula.default_userformat eq 'html'} selected="selected"{/if}>{gt text="HTML"}</option>
+                <option value="plain"{if $modvars.Formicula.default_userformat eq 'plain'} selected="selected"{/if}>{gt text="Text"}</option>
             </select>
         </div>
+        {/if}
 
-{* commented out by default 
+        {if $modvars.Formicula.show_attachfile==1}
         <div class="z-formrow">
             <label for="fileupload">{gt text="Attach a file"}</label>
             <input type="hidden" name="custom[fileupload][name]" value="{gt text="Attached file"}" />
             <input type="hidden" name="custom[fileupload][mandatory]" value="0" />
             <input id="fileupload" type='file' class="formborder2" name='custom[fileupload][data]' size='20' maxlength='16700000' value=''>
         </div>
-*}
+        {/if}
 
         {if $spamcheck eq 1}
         <div class="z-formrow">
