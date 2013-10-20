@@ -20,7 +20,7 @@ class Formicula_Version extends Zikula_AbstractVersion
         $meta['core_min'] = '1.3.0'; // Fixed to 1.3.x range
         $meta['core_max'] = '1.3.99'; // Fixed to 1.3.x range
         $meta['oldnames']    = array('formicula');
-        $meta['description'] = $this->__('Formicula forms module');
+        $meta['description'] = $this->__('Template-driven Form mailer');
         $meta['displayname'] = $this->__('Formicula');
         //! module url should be in lowercase without spaces different to displayname
         $meta['url'] = $this->__('formicula');
