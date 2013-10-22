@@ -74,7 +74,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                                            array('cid'  => $cid,
                                                  'form' => $form));
         }
-        
+
         if($owncontacts == true) {
             if(!SecurityUtil::checkPermission('Formicula::Owncontacts', "::", ACCESS_COMMENT)) {
                 return LogUtil::registerPermissionError(System::getHomepageUrl());

@@ -24,7 +24,6 @@ class Formicula_Version extends Zikula_AbstractVersion
         $meta['displayname'] = $this->__('Formicula');
         //! module url should be in lowercase without spaces different to displayname
         $meta['url'] = $this->__('formicula');
-        $meta['core_min'] = '1.3.0'; // requires minimum 1.3.0 or later
         $meta['capabilities'] = array(HookUtil::SUBSCRIBER_CAPABLE => array('enabled' => true));
         $meta['contact'] = 'Frank Schummertz <frank@zikula.org>';
         $meta['securityschema'] = array('Formicula::' => 'form_id:contact_id:' );
