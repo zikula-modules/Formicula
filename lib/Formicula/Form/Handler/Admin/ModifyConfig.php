@@ -52,8 +52,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
 
         // assign all module vars
         $this->view->assign($this->getVars());
-       
-        
+
         return true;
     }
 
