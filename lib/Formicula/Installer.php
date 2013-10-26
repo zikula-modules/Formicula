@@ -51,7 +51,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('show_userformat', 1);
         $this->setVar('default_userformat', 'plain');
         $this->setVar('default_adminformat', 'html');
-
+        
         // register handlers
         EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
@@ -183,7 +183,7 @@ Allow from env=object_is_jpg
                 $this->setVar('store_data_forms', '');
                 // register handlers
                 EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
-                                HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
+                HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
                 // Call the update method for the Content plugin
                 if (ModUtil::available('Content')) {
                     Content_Installer::updateContentType('Formicula');

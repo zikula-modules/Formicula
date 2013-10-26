@@ -95,6 +95,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             ModUtil::setVar('Formicula', 'default_userformat', $data['default_userformat']);
             ModUtil::setVar('Formicula', 'default_adminformat', $data['default_adminformat']);
             ModUtil::setVar('Formicula', 'show_userformat',  $data['show_userformat']);
+ 
 
             LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }
