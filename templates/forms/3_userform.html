@@ -1,8 +1,7 @@
 {include file='forms/3_userheader.html'}
 
-{pageaddvar name="javascript" value="javascript/ajax/prototype.js"}
-{pageaddvar name="javascript" value="javascript/ajax/validation.js"}
-{pageaddvar name="javascript" value="javascript/ajax/effects.js"}
+{pageaddvar name="javascript" value="prototype"}
+{pageaddvar name="javascript" value="validation"}
 
 {* Datepicker http://home.jongsma.org/software/js/datepicker used for date fields *}
 {pageaddvar name='javascript' value='modules/Formicula/javascript/prototype-base-extensions.js'}
@@ -20,7 +19,7 @@
     <input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />
     <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
     <input type="hidden" name="dataformat" value="array" />
-    
+
     <p>
         {gt text="Mandatory fields are indicated with a"}<span class="mandatory">*</span>
     </p>
