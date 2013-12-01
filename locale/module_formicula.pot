@@ -3,145 +3,53 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Zikula 1.x\n"
+"Project-Id-Version: Zikula module Formicula 3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-21 15:17+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-12-01 15:15+0100\n"
+"PO-Revision-Date: 2013-12-01 15:18+0100\n"
+"Last-Translator: Erik Spaan <erik@zikula.nl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
-#: templates/plugins/function.simplecaptcha.php:47 lib/Formicula/Util.php:31
-msgid "no image function available - captcha deactivated"
+#: lib/Formicula/Api/Admin.php:92
+msgid "Error! Creation attempt failed."
 msgstr ""
 
-#: lib/Formicula/Util.php:23
-msgid "Mailer module is not available - unable to send emails!"
+#: lib/Formicula/Api/Admin.php:118 lib/Formicula/Api/Admin.php:231
+msgid "Error! Sorry! Deletion attempt failed."
 msgstr ""
 
-#: lib/Formicula/Util.php:37
-msgid ""
-"formicula_cache directory does not exist in Zikula's temporary directory or "
-"is not writable - captchas have been disabled"
+#: lib/Formicula/Api/Admin.php:158
+msgid "Error! Update attempt failed."
 msgstr ""
 
-#: lib/Formicula/Util.php:41
-msgid ".htaccess file needed in formicula_cache directory not exist"
+#: lib/Formicula/Api/Admin.php:249 templates/admin/view.tpl:4
+msgid "View contacts"
 msgstr ""
 
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:39
-#, php-format
-msgid "Form #%1$s that contains %2$s templates"
+#: lib/Formicula/Api/Admin.php:250 templates/admin/edit.tpl:3
+msgid "Add contact"
 msgstr ""
 
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:44
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:49
-#: templates/forms/2_userform.html:83 templates/forms/0_userform.html:84
-msgid "HTML"
+#: lib/Formicula/Api/Admin.php:251 templates/admin/viewsubmits.tpl:4
+msgid "View form submits"
 msgstr ""
 
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:45
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:50
-#: templates/forms/2_userform.html:84 templates/forms/0_userform.html:85
-msgid "Text"
+#: lib/Formicula/Api/Admin.php:253 lib/Formicula/Api/Admin.php:257
+#: templates/admin/modifyconfig.tpl:5 templates/admin/modifyconfig.tpl:12
+msgid "Modify configuration"
 msgstr ""
 
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:73
-msgid "The webserver cannot write into this directory!"
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:99
-msgid "The configuration has been changed."
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:39
-#: lib/Formicula/Controller/Admin.php:82
-msgid "Unknown Contact"
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:69
-msgid "Error! No contact name."
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:74
-msgid "Error! No email address supplied."
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:83
-#, php-format
-msgid "Error! Incorrect email address [%s] supplied."
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:91
-msgid "Error! Incorrect email address supplied."
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:103
-msgid "Contact created"
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:105
-msgid "Error creating contact!"
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:110
-msgid "Contact info has been updated"
-msgstr ""
-
-#: lib/Formicula/Form/Handler/Admin/Edit.php:112
-msgid "Error updating contact!"
-msgstr ""
-
-#: lib/Formicula/Version.php:23
-msgid "Formicula forms module"
-msgstr ""
-
-#: lib/Formicula/Version.php:24
-msgid "Formicula"
-msgstr ""
-
-#. ! module url should be in lowercase without spaces different to displayname
-#: lib/Formicula/Version.php:26
-msgid "formicula"
-msgstr ""
-
-#: lib/Formicula/Version.php:36
-msgid "Formicula Form Hooks"
-msgstr ""
-
-#: lib/Formicula/Controller/User.php:264
-msgid "The calculation to prevent spam was incorrect. Please try again."
-msgstr ""
-
-#: lib/Formicula/Controller/User.php:274
-msgid ""
-"The validation of the hooked security module was incorrect. Please try again."
-msgstr ""
-
-#: lib/Formicula/Controller/User.php:327
-msgid "There was an error sending the email."
-msgstr ""
-
-#: lib/Formicula/Controller/Admin.php:96
-msgid "Contact has been deleted"
-msgstr ""
-
-#: lib/Formicula/Controller/Admin.php:212
-msgid "Unknown form submit"
-msgstr ""
-
-#: lib/Formicula/Controller/Admin.php:226
-msgid "Form submit has been deleted"
-msgstr ""
-
-#: lib/Formicula/Controller/Admin.php:283
-msgid "The captcha image cache has been cleared"
+#: lib/Formicula/Api/Admin.php:259
+msgid "Clear captcha image cache"
 msgstr ""
 
 #: lib/Formicula/Api/User.php:55
@@ -177,37 +85,134 @@ msgstr ""
 msgid "Error! Upload error."
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:92
-msgid "Error! Creation attempt failed."
+#: lib/Formicula/Api/User.php:389
+msgid "You must pass an owncontacts array!"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:118 lib/Formicula/Api/Admin.php:231
-msgid "Error! Sorry! Deletion attempt failed."
+#: lib/Formicula/Api/User.php:394
+msgid "You must pass a name for each contact!"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:158
-msgid "Error! Update attempt failed."
+#: lib/Formicula/Api/User.php:398
+msgid "You must pass a valid mail address for each contact!"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:249 templates/admin/view.tpl:4
-msgid "View contacts"
+#: lib/Formicula/ContentType/Form.php:24
+msgid "Formicula form"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:250 templates/admin/edit.tpl:3
-msgid "Add contact"
+#: lib/Formicula/ContentType/Form.php:28
+msgid "Display a specific Formicula form"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:251 templates/admin/viewsubmits.tpl:4
-msgid "View form submits"
+#: lib/Formicula/ContentType/Form.php:45 lib/Formicula/ContentType/Form.php:57
+msgid "No form selected"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:253 lib/Formicula/Api/Admin.php:257
-#: templates/admin/modifyconfig.tpl:5 templates/admin/modifyconfig.tpl:12
-msgid "Modify configuration"
+#: lib/Formicula/ContentType/Form.php:51
+#, php-format
+msgid "The Formicula form #%1$s is shown here with only contact %2$s"
 msgstr ""
 
-#: lib/Formicula/Api/Admin.php:259
-msgid "Clear captcha image cache"
+#: lib/Formicula/ContentType/Form.php:53
+#, php-format
+msgid "The Formicula form #%s is shown here with all contacts"
+msgstr ""
+
+#: lib/Formicula/ContentType/Form.php:68
+msgid "All public contacts or form default"
+msgstr ""
+
+#: lib/Formicula/Controller/Admin.php:82
+#: lib/Formicula/Form/Handler/Admin/Edit.php:39
+msgid "Unknown Contact"
+msgstr ""
+
+#: lib/Formicula/Controller/Admin.php:96
+msgid "Contact has been deleted"
+msgstr ""
+
+#: lib/Formicula/Controller/Admin.php:212
+msgid "Unknown form submit"
+msgstr ""
+
+#: lib/Formicula/Controller/Admin.php:226
+msgid "Form submit has been deleted"
+msgstr ""
+
+#: lib/Formicula/Controller/Admin.php:283
+msgid "The captcha image cache has been cleared"
+msgstr ""
+
+#: lib/Formicula/Controller/User.php:301
+msgid "The calculation to prevent spam was incorrect. Please try again."
+msgstr ""
+
+#: lib/Formicula/Controller/User.php:311
+msgid ""
+"The validation of the hooked security module was incorrect. Please try again."
+msgstr ""
+
+#: lib/Formicula/Controller/User.php:380
+msgid "There was an error sending the email."
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:69
+msgid "Error! No contact name."
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:74
+msgid "Error! No email address supplied."
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:83
+#, php-format
+msgid "Error! Incorrect email address [%s] supplied."
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:91
+msgid "Error! Incorrect email address supplied."
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:103
+msgid "Contact created"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:105
+msgid "Error creating contact!"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:110
+msgid "Contact info has been updated"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/Edit.php:112
+msgid "Error updating contact!"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:39
+#, php-format
+msgid "Form #%1$s that contains %2$s templates"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:44
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:49
+#: templates/forms/0_userform.html:84 templates/forms/2_userform.html:83
+msgid "HTML"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:45
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:50
+#: templates/forms/0_userform.html:85 templates/forms/2_userform.html:84
+msgid "Text"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:73
+msgid "The webserver cannot write into this directory!"
+msgstr ""
+
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:99
+msgid "The configuration has been changed."
 msgstr ""
 
 #: lib/Formicula/Installer.php:20 lib/Formicula/Installer.php:80
@@ -274,54 +279,242 @@ msgstr ""
 msgid "Warning! Could not create the default Webmaster contact."
 msgstr ""
 
-#: lib/Formicula/ContentType/Form.php:24
-msgid "Formicula form"
+#: lib/Formicula/Util.php:23
+msgid "Mailer module is not available - unable to send emails!"
 msgstr ""
 
-#: lib/Formicula/ContentType/Form.php:28
-msgid "Display a specific Formicula form"
+#: lib/Formicula/Util.php:31 templates/plugins/function.simplecaptcha.php:47
+msgid "no image function available - captcha deactivated"
 msgstr ""
 
-#: lib/Formicula/ContentType/Form.php:45 lib/Formicula/ContentType/Form.php:57
-msgid "No form selected"
+#: lib/Formicula/Util.php:37
+msgid ""
+"formicula_cache directory does not exist in Zikula's temporary directory or "
+"is not writable - captchas have been disabled"
 msgstr ""
 
-#: lib/Formicula/ContentType/Form.php:51
-#, php-format
-msgid "The Formicula form #%1$s is shown here with only contact %2$s"
+#: lib/Formicula/Util.php:41
+msgid ".htaccess file needed in formicula_cache directory not exist"
 msgstr ""
 
-#: lib/Formicula/ContentType/Form.php:53
-#, php-format
-msgid "The Formicula form #%s is shown here with all contacts"
+#: lib/Formicula/Version.php:23
+msgid "Template-driven Form mailer"
 msgstr ""
 
-#: lib/Formicula/ContentType/Form.php:68
-msgid "All public contacts or form default"
+#: lib/Formicula/Version.php:24
+msgid "Formicula"
 msgstr ""
 
-#: docs/manual.txt:98
+#. ! module url should be in lowercase without spaces different to displayname
+#: lib/Formicula/Version.php:26
+msgid "formicula"
+msgstr ""
+
+#: lib/Formicula/Version.php:36
+msgid "Formicula Form Hooks"
+msgstr ""
+
+#: docs/manual.txt:113
 msgid "Html"
 msgstr ""
 
-#: docs/manual.txt:99
+#: docs/manual.txt:114
 msgid "Plain text"
 msgstr ""
 
-#: docs/manual.txt:156 docs/manual.txt:157
+#: docs/manual.txt:171 docs/manual.txt:172
 msgid "foobar"
 msgstr ""
 
-#: templates/contenttype/form_edit.tpl:2 templates/admin/deletesubmit.tpl:13
-#: templates/admin/viewsubmits.tpl:11 templates/forms/1_adminmail.txt:5
-#: templates/forms/1_adminmail.html:14 templates/forms/0_adminmail.html:14
-#: templates/forms/0_adminmail.txt:5 templates/forms/2_adminmail.txt:5
-#: templates/forms/2_adminmail.html:14
+#: templates/admin/delete.tpl:4 templates/admin/view.tpl:35
+msgid "Delete contact"
+msgstr ""
+
+#: templates/admin/delete.tpl:7
+msgid "Do you really want to delete this contact?"
+msgstr ""
+
+#: templates/admin/delete.tpl:11 templates/admin/deletesubmit.tpl:9
+msgid "Confirmation prompt"
+msgstr ""
+
+#: templates/admin/delete.tpl:15 templates/admin/edit.tpl:18
+msgid "Contact name"
+msgstr ""
+
+#: templates/admin/delete.tpl:19 templates/admin/edit.tpl:22
+#: templates/admin/view.tpl:12 templates/forms/0_adminmail.html:17
+#: templates/forms/0_adminmail.txt:8 templates/forms/0_userconfirm.html:14
+#: templates/forms/0_userform.html:39 templates/forms/0_usermail.html:16
+#: templates/forms/0_usermail.txt:7 templates/forms/1_adminmail.html:17
+#: templates/forms/1_adminmail.txt:8 templates/forms/1_userconfirm.html:34
+#: templates/forms/1_userform.html:98 templates/forms/1_usermail.html:16
+#: templates/forms/1_usermail.txt:7 templates/forms/2_adminmail.html:17
+#: templates/forms/2_adminmail.txt:8 templates/forms/2_userconfirm.html:41
+#: templates/forms/2_userform.html:38 templates/forms/2_usermail.html:16
+#: templates/forms/2_usermail.txt:7 templates/forms/3_adminmail.html:15
+#: templates/forms/3_adminmail.txt:6 templates/forms/3_userconfirm.html:28
+#: templates/forms/3_userform.html:64 templates/forms/3_usermail.html:20
+#: templates/forms/3_usermail.txt:11
+msgid "Email"
+msgstr ""
+
+#: templates/admin/delete.tpl:26 templates/admin/deletesubmit.tpl:30
+msgid "Delete"
+msgstr ""
+
+#: templates/admin/delete.tpl:27 templates/admin/deletesubmit.tpl:31
+msgid "Cancel"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:4 templates/admin/viewsubmits.tpl:28
+msgid "Delete form submit"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:6
+msgid "Do you really want to delete this form submit?"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:13 templates/admin/viewsubmits.tpl:11
+#: templates/contenttype/form_edit.tpl:2 templates/forms/0_adminmail.html:14
+#: templates/forms/0_adminmail.txt:5 templates/forms/1_adminmail.html:14
+#: templates/forms/1_adminmail.txt:5 templates/forms/2_adminmail.html:14
+#: templates/forms/2_adminmail.txt:5
 msgid "Form #"
 msgstr ""
 
-#: templates/contenttype/form_edit.tpl:7
-msgid "Show contact"
+#: templates/admin/deletesubmit.tpl:17 templates/admin/displaysubmit.tpl:14
+#: templates/admin/viewsubmits.tpl:12
+msgid "Contact ID"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:21 templates/admin/displaysubmit.tpl:10
+#: templates/admin/viewsubmits.tpl:13
+msgid "Date"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:25 templates/admin/displaysubmit.tpl:11
+#: templates/admin/view.tpl:11 templates/admin/viewsubmits.tpl:14
+msgid "Name"
+msgstr ""
+
+#: templates/admin/deletesubmit.tpl:26 templates/admin/displaysubmit.tpl:20
+#: templates/admin/viewsubmits.tpl:25
+#, php-format
+msgid "Email: %1$s - UID: %2$s"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:4
+msgid "View submitted form data"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:12
+msgid "IP address"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:13
+msgid "Hostname"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:31 templates/forms/0_adminmail.html:19
+#: templates/forms/0_adminmail.txt:10 templates/forms/0_userconfirm.html:27
+#: templates/forms/0_userform.html:47 templates/forms/0_usermail.html:18
+#: templates/forms/0_usermail.txt:9 templates/forms/1_adminmail.html:18
+#: templates/forms/1_adminmail.txt:9 templates/forms/1_userconfirm.html:43
+#: templates/forms/1_userform.html:91 templates/forms/1_usermail.html:17
+#: templates/forms/1_usermail.txt:8 templates/forms/2_adminmail.html:19
+#: templates/forms/2_adminmail.txt:10 templates/forms/2_userconfirm.html:51
+#: templates/forms/2_userform.html:46 templates/forms/2_usermail.html:18
+#: templates/forms/2_usermail.txt:9
+msgid "Homepage"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:32 templates/forms/0_adminmail.html:22
+#: templates/forms/0_adminmail.txt:13 templates/forms/0_userconfirm.html:20
+#: templates/forms/0_userform.html:62 templates/forms/0_usermail.html:21
+#: templates/forms/0_usermail.txt:12 templates/forms/2_adminmail.html:22
+#: templates/forms/2_adminmail.txt:13 templates/forms/2_userconfirm.html:31
+#: templates/forms/2_userform.html:61 templates/forms/2_usermail.html:21
+#: templates/forms/2_usermail.txt:12
+msgid "Company"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:33 templates/forms/0_adminmail.html:25
+#: templates/forms/0_adminmail.txt:16 templates/forms/0_userconfirm.html:34
+#: templates/forms/0_userform.html:55 templates/forms/0_usermail.html:24
+#: templates/forms/0_usermail.txt:15 templates/forms/1_userform.html:84
+#: templates/forms/1_userform.html:85 templates/forms/2_adminmail.html:25
+#: templates/forms/2_adminmail.txt:16 templates/forms/2_userconfirm.html:62
+#: templates/forms/2_userform.html:54 templates/forms/2_usermail.html:24
+#: templates/forms/2_usermail.txt:15 templates/forms/3_userform.html:70
+#: templates/forms/3_userform.html:71
+msgid "Phone Number"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:34 templates/forms/0_adminmail.html:28
+#: templates/forms/0_adminmail.txt:19 templates/forms/0_userconfirm.html:41
+#: templates/forms/0_userform.html:69 templates/forms/0_usermail.html:27
+#: templates/forms/0_usermail.txt:18 templates/forms/2_adminmail.html:28
+#: templates/forms/2_adminmail.txt:19 templates/forms/2_userconfirm.html:73
+#: templates/forms/2_userform.html:68 templates/forms/2_usermail.html:27
+#: templates/forms/2_usermail.txt:18
+msgid "Location"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:51
+msgid "Custom fields"
+msgstr ""
+
+#: templates/admin/displaysubmit.tpl:67 templates/forms/0_adminmail.html:31
+#: templates/forms/0_adminmail.txt:25 templates/forms/0_userconfirm.html:47
+#: templates/forms/0_userform.html:75 templates/forms/0_usermail.html:30
+#: templates/forms/0_usermail.txt:21 templates/forms/1_adminmail.html:24
+#: templates/forms/1_adminmail.txt:15 templates/forms/1_userconfirm.html:52
+#: templates/forms/1_userform.html:105 templates/forms/1_usermail.html:23
+#: templates/forms/1_usermail.txt:14 templates/forms/2_adminmail.html:31
+#: templates/forms/2_adminmail.txt:22 templates/forms/2_userconfirm.html:83
+#: templates/forms/2_userform.html:74 templates/forms/2_usermail.html:30
+#: templates/forms/2_usermail.txt:21 templates/forms/3_adminmail.html:21
+#: templates/forms/3_adminmail.txt:12 templates/forms/3_userconfirm.html:48
+#: templates/forms/3_userform.html:178 templates/forms/3_usermail.html:26
+#: templates/forms/3_usermail.txt:17
+msgid "Comment"
+msgstr ""
+
+#: templates/admin/edit.tpl:5 templates/admin/view.tpl:32
+msgid "Edit contact"
+msgstr ""
+
+#: templates/admin/edit.tpl:26 templates/admin/view.tpl:13
+msgid "Public"
+msgstr ""
+
+#: templates/admin/edit.tpl:31
+msgid "Use this information in the users confirmation mail"
+msgstr ""
+
+#: templates/admin/edit.tpl:33
+msgid "Sender Email"
+msgstr ""
+
+#: templates/admin/edit.tpl:37
+msgid "Sender Name"
+msgstr ""
+
+#: templates/admin/edit.tpl:41
+msgid "Subject"
+msgstr ""
+
+#: templates/admin/edit.tpl:44
+msgid ""
+"with <ul>    <li>%s = sitename</li>    <li>%l = slogan</li>    <li>%u = site "
+"url</li>    <li>%c = contacts sender name</li>    <li>%n&lt;num&gt; = user "
+"defined field name &lt;num&gt;</li>    <li>%d&lt;num&gt; = user defined "
+"field data &lt;num&gt;</li></ul>"
+msgstr ""
+
+#: templates/admin/edit.tpl:48 templates/admin/modifyconfig.tpl:105
+msgid "Submit"
 msgstr ""
 
 #: templates/admin/modifyconfig.tpl:14
@@ -433,62 +626,8 @@ msgstr ""
 msgid "Comma separated list of form ids or leave empty for storing all forms."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:105 templates/admin/edit.tpl:48
-msgid "Submit"
-msgstr ""
-
-#: templates/admin/delete.tpl:4 templates/admin/view.tpl:35
-msgid "Delete contact"
-msgstr ""
-
-#: templates/admin/delete.tpl:7
-msgid "Do you really want to delete this contact?"
-msgstr ""
-
-#: templates/admin/delete.tpl:11 templates/admin/deletesubmit.tpl:9
-msgid "Confirmation prompt"
-msgstr ""
-
-#: templates/admin/delete.tpl:15 templates/admin/edit.tpl:18
-msgid "Contact name"
-msgstr ""
-
-#: templates/admin/delete.tpl:19 templates/admin/view.tpl:12
-#: templates/admin/edit.tpl:22 templates/forms/1_usermail.html:16
-#: templates/forms/0_usermail.txt:7 templates/forms/0_usermail.html:16
-#: templates/forms/2_userform.html:38 templates/forms/0_userform.html:39
-#: templates/forms/1_adminmail.txt:8 templates/forms/1_userconfirm.html:34
-#: templates/forms/1_adminmail.html:17 templates/forms/3_usermail.txt:11
-#: templates/forms/1_usermail.txt:7 templates/forms/2_userconfirm.html:41
-#: templates/forms/0_userconfirm.html:14 templates/forms/0_adminmail.html:17
-#: templates/forms/3_adminmail.txt:6 templates/forms/3_userconfirm.html:28
-#: templates/forms/3_adminmail.html:15 templates/forms/3_usermail.html:20
-#: templates/forms/0_adminmail.txt:8 templates/forms/2_usermail.txt:7
-#: templates/forms/1_userform.html:98 templates/forms/2_adminmail.txt:8
-#: templates/forms/2_usermail.html:16 templates/forms/2_adminmail.html:17
-#: templates/forms/3_userform.html:64
-msgid "Email"
-msgstr ""
-
-#: templates/admin/delete.tpl:26 templates/admin/deletesubmit.tpl:30
-msgid "Delete"
-msgstr ""
-
-#: templates/admin/delete.tpl:27 templates/admin/deletesubmit.tpl:31
-msgid "Cancel"
-msgstr ""
-
 #: templates/admin/view.tpl:10 templates/admin/viewsubmits.tpl:10
 msgid "ID"
-msgstr ""
-
-#: templates/admin/view.tpl:11 templates/admin/displaysubmit.tpl:11
-#: templates/admin/deletesubmit.tpl:25 templates/admin/viewsubmits.tpl:14
-msgid "Name"
-msgstr ""
-
-#: templates/admin/view.tpl:13 templates/admin/edit.tpl:26
-msgid "Public"
 msgstr ""
 
 #: templates/admin/view.tpl:14 templates/admin/viewsubmits.tpl:15
@@ -504,335 +643,65 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: templates/admin/view.tpl:32 templates/admin/edit.tpl:5
-msgid "Edit contact"
-msgstr ""
-
 #: templates/admin/view.tpl:40 templates/admin/viewsubmits.tpl:32
 msgid "No items found."
-msgstr ""
-
-#: templates/admin/edit.tpl:31
-msgid "Use this information in the users confirmation mail"
-msgstr ""
-
-#: templates/admin/edit.tpl:33
-msgid "Sender Email"
-msgstr ""
-
-#: templates/admin/edit.tpl:37
-msgid "Sender Name"
-msgstr ""
-
-#: templates/admin/edit.tpl:41
-msgid "Subject"
-msgstr ""
-
-#: templates/admin/edit.tpl:44
-msgid ""
-"with <ul>    <li>%s = sitename</li>    <li>%l = slogan</li>    <li>%u = site "
-"url</li>    <li>%c = contacts sender name</li>    <li>%n&lt;num&gt; = user "
-"defined field name &lt;num&gt;</li>    <li>%d&lt;num&gt; = user defined "
-"field data &lt;num&gt;</li></ul>"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:4
-msgid "View submitted form data"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:10 templates/admin/deletesubmit.tpl:21
-#: templates/admin/viewsubmits.tpl:13
-msgid "Date"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:12
-msgid "IP address"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:13
-msgid "Hostname"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:14 templates/admin/deletesubmit.tpl:17
-#: templates/admin/viewsubmits.tpl:12
-msgid "Contact ID"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:20 templates/admin/deletesubmit.tpl:26
-#: templates/admin/viewsubmits.tpl:25
-#, php-format
-msgid "Email: %1$s - UID: %2$s"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:31 templates/forms/1_usermail.html:17
-#: templates/forms/0_usermail.txt:9 templates/forms/0_usermail.html:18
-#: templates/forms/2_userform.html:46 templates/forms/0_userform.html:47
-#: templates/forms/1_adminmail.txt:9 templates/forms/1_userconfirm.html:43
-#: templates/forms/1_adminmail.html:18 templates/forms/1_usermail.txt:8
-#: templates/forms/2_userconfirm.html:51 templates/forms/0_userconfirm.html:27
-#: templates/forms/0_adminmail.html:19 templates/forms/0_adminmail.txt:10
-#: templates/forms/2_usermail.txt:9 templates/forms/1_userform.html:91
-#: templates/forms/2_adminmail.txt:10 templates/forms/2_usermail.html:18
-#: templates/forms/2_adminmail.html:19
-msgid "Homepage"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:32 templates/forms/0_usermail.txt:12
-#: templates/forms/0_usermail.html:21 templates/forms/2_userform.html:61
-#: templates/forms/0_userform.html:62 templates/forms/2_userconfirm.html:31
-#: templates/forms/0_userconfirm.html:20 templates/forms/0_adminmail.html:22
-#: templates/forms/0_adminmail.txt:13 templates/forms/2_usermail.txt:12
-#: templates/forms/2_adminmail.txt:13 templates/forms/2_usermail.html:21
-#: templates/forms/2_adminmail.html:22
-msgid "Company"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:33 templates/forms/0_usermail.txt:15
-#: templates/forms/0_usermail.html:24 templates/forms/2_userform.html:54
-#: templates/forms/0_userform.html:55 templates/forms/2_userconfirm.html:62
-#: templates/forms/0_userconfirm.html:34 templates/forms/0_adminmail.html:25
-#: templates/forms/0_adminmail.txt:16 templates/forms/2_usermail.txt:15
-#: templates/forms/1_userform.html:84 templates/forms/1_userform.html:85
-#: templates/forms/2_adminmail.txt:16 templates/forms/2_usermail.html:24
-#: templates/forms/2_adminmail.html:25 templates/forms/3_userform.html:70
-#: templates/forms/3_userform.html:71
-msgid "Phone Number"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:34 templates/forms/0_usermail.txt:18
-#: templates/forms/0_usermail.html:27 templates/forms/2_userform.html:68
-#: templates/forms/0_userform.html:69 templates/forms/2_userconfirm.html:73
-#: templates/forms/0_userconfirm.html:41 templates/forms/0_adminmail.html:28
-#: templates/forms/0_adminmail.txt:19 templates/forms/2_usermail.txt:18
-#: templates/forms/2_adminmail.txt:19 templates/forms/2_usermail.html:27
-#: templates/forms/2_adminmail.html:28
-msgid "Location"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:51
-msgid "Custom fields"
-msgstr ""
-
-#: templates/admin/displaysubmit.tpl:67 templates/forms/1_usermail.html:23
-#: templates/forms/0_usermail.txt:21 templates/forms/0_usermail.html:30
-#: templates/forms/2_userform.html:74 templates/forms/0_userform.html:75
-#: templates/forms/1_adminmail.txt:15 templates/forms/1_userconfirm.html:52
-#: templates/forms/1_adminmail.html:24 templates/forms/3_usermail.txt:17
-#: templates/forms/1_usermail.txt:14 templates/forms/2_userconfirm.html:83
-#: templates/forms/0_userconfirm.html:47 templates/forms/0_adminmail.html:31
-#: templates/forms/3_adminmail.txt:12 templates/forms/3_userconfirm.html:48
-#: templates/forms/3_adminmail.html:21 templates/forms/3_usermail.html:26
-#: templates/forms/0_adminmail.txt:25 templates/forms/2_usermail.txt:21
-#: templates/forms/1_userform.html:105 templates/forms/2_adminmail.txt:22
-#: templates/forms/2_usermail.html:30 templates/forms/2_adminmail.html:31
-#: templates/forms/3_userform.html:178
-msgid "Comment"
-msgstr ""
-
-#: templates/admin/deletesubmit.tpl:4 templates/admin/viewsubmits.tpl:28
-msgid "Delete form submit"
-msgstr ""
-
-#: templates/admin/deletesubmit.tpl:6
-msgid "Do you really want to delete this form submit?"
 msgstr ""
 
 #: templates/admin/viewsubmits.tpl:27
 msgid "View form submit"
 msgstr ""
 
-#: templates/forms/1_usermail.html:10 templates/forms/0_usermail.txt:1
-#: templates/forms/0_usermail.html:10 templates/forms/1_adminmail.txt:1
-#: templates/forms/1_adminmail.html:10 templates/forms/1_usermail.txt:1
-#: templates/forms/0_adminmail.html:10 templates/forms/3_adminmail.txt:1
-#: templates/forms/3_adminmail.html:10 templates/forms/0_adminmail.txt:1
-#: templates/forms/2_usermail.txt:1 templates/forms/2_adminmail.txt:1
-#: templates/forms/2_usermail.html:10 templates/forms/2_adminmail.html:10
+#: templates/contenttype/form_edit.tpl:7
+msgid "Show contact"
+msgstr ""
+
+#: templates/forms/0_adminmail.html:10 templates/forms/0_adminmail.txt:1
+#: templates/forms/0_usermail.html:10 templates/forms/0_usermail.txt:1
+#: templates/forms/1_adminmail.html:10 templates/forms/1_adminmail.txt:1
+#: templates/forms/1_usermail.html:10 templates/forms/1_usermail.txt:1
+#: templates/forms/2_adminmail.html:10 templates/forms/2_adminmail.txt:1
+#: templates/forms/2_usermail.html:10 templates/forms/2_usermail.txt:1
+#: templates/forms/3_adminmail.html:10 templates/forms/3_adminmail.txt:1
 msgid "Hello,"
 msgstr ""
 
-#: templates/forms/1_usermail.html:12 templates/forms/1_userconfirm.html:4
-#: templates/forms/3_usermail.txt:8 templates/forms/1_usermail.txt:3
-#: templates/forms/2_userconfirm.html:6 templates/forms/3_userconfirm.html:11
-#: templates/forms/3_usermail.html:17
-msgid "This data was sent to us:"
-msgstr ""
-
-#: templates/forms/1_usermail.html:14 templates/forms/2_userform.html:21
-#: templates/forms/1_adminmail.txt:6 templates/forms/1_adminmail.html:15
-#: templates/forms/1_usermail.txt:5 templates/forms/2_userconfirm.html:12
-#: templates/forms/2_usermail.txt:5 templates/forms/2_adminmail.txt:6
-#: templates/forms/2_usermail.html:14 templates/forms/2_adminmail.html:15
-msgid "Contact or Theme"
-msgstr ""
-
-#: templates/forms/1_usermail.html:15 templates/forms/0_usermail.txt:6
-#: templates/forms/0_usermail.html:15 templates/forms/2_userform.html:32
-#: templates/forms/0_userform.html:33 templates/forms/1_adminmail.txt:7
-#: templates/forms/1_userconfirm.html:14 templates/forms/1_adminmail.html:16
-#: templates/forms/3_usermail.txt:10 templates/forms/1_usermail.txt:6
-#: templates/forms/2_userconfirm.html:21 templates/forms/0_userconfirm.html:9
-#: templates/forms/0_adminmail.html:16 templates/forms/3_adminmail.txt:5
-#: templates/forms/3_userconfirm.html:19 templates/forms/3_adminmail.html:14
-#: templates/forms/3_usermail.html:19 templates/forms/0_adminmail.txt:7
-#: templates/forms/2_usermail.txt:6 templates/forms/1_userform.html:32
-#: templates/forms/2_adminmail.txt:7 templates/forms/2_usermail.html:15
-#: templates/forms/2_adminmail.html:16 templates/forms/3_userform.html:31
-msgid "Your Name"
-msgstr ""
-
-#: templates/forms/1_usermail.html:26 templates/forms/1_userconfirm.html:6
-#: templates/forms/1_usermail.txt:17
-msgid "Thanks for applying, we will keep your data strictly confidential"
-msgstr ""
-
-#: templates/forms/1_usermail.html:28 templates/forms/0_usermail.html:41
-#: templates/forms/1_usermail.txt:19
-msgid "We will respond to your email address as soon as possible."
-msgstr ""
-
-#: templates/forms/1_usermail.html:30 templates/forms/0_usermail.txt:31
-#: templates/forms/0_usermail.html:43 templates/forms/3_usermail.txt:22
-#: templates/forms/1_usermail.txt:21 templates/forms/2_usermail.txt:26
-#: templates/forms/2_usermail.html:34
-#, php-format
-msgid "The %s Team"
-msgstr ""
-
-#: templates/forms/0_usermail.txt:3 templates/forms/0_usermail.html:12
-#: templates/forms/2_usermail.txt:3 templates/forms/2_usermail.html:12
-msgid "Thank you for the comments posted from our Website. The sent data is:"
-msgstr ""
-
-#: templates/forms/0_usermail.txt:5 templates/forms/0_usermail.html:14
-#: templates/forms/0_userform.html:22 templates/forms/0_adminmail.html:15
-#: templates/forms/0_adminmail.txt:6
-msgid "Contact"
-msgstr ""
-
-#: templates/forms/0_usermail.txt:29 templates/forms/3_usermail.txt:20
-#: templates/forms/2_usermail.txt:24 templates/forms/2_usermail.html:32
-msgid "We will respond to your email as soon as possible."
-msgstr ""
-
-#: templates/forms/3_userheader.html:3
-msgid "Make a reservation"
-msgstr ""
-
-#: templates/forms/2_userform.html:17 templates/forms/0_userform.html:8
-#: templates/forms/1_userform.html:19 templates/forms/3_userform.html:25
-msgid "Mandatory fields are indicated with a"
-msgstr ""
-
-#: templates/forms/2_userform.html:35 templates/forms/2_userform.html:42
-#: templates/forms/2_userform.html:77 templates/forms/0_userform.html:35
-#: templates/forms/0_userform.html:42 templates/forms/0_userform.html:77
-#: templates/forms/1_userform.html:28 templates/forms/1_userform.html:34
-#: templates/forms/1_userform.html:41 templates/forms/1_userform.html:52
-#: templates/forms/1_userform.html:59 templates/forms/1_userform.html:70
-#: templates/forms/1_userform.html:77 templates/forms/1_userform.html:88
-#: templates/forms/1_userform.html:100 templates/forms/1_userform.html:108
-#: templates/forms/3_userform.html:33 templates/forms/3_userform.html:40
-#: templates/forms/3_userform.html:51 templates/forms/3_userform.html:58
-#: templates/forms/3_userform.html:66 templates/forms/3_userform.html:74
-#: templates/forms/3_userform.html:89 templates/forms/3_userform.html:123
-#: templates/forms/3_userform.html:134 templates/forms/3_userform.html:142
-#: templates/forms/3_userform.html:199
-msgid "This is a mandatory field."
-msgstr ""
-
-#: templates/forms/2_userform.html:41 templates/forms/0_userform.html:41
-#: templates/forms/1_userform.html:101 templates/forms/3_userform.html:67
-msgid "Please enter a valid email address like user@example.com."
-msgstr ""
-
-#: templates/forms/2_userform.html:49 templates/forms/0_userform.html:49
-#: templates/forms/1_userform.html:93
-msgid "Please enter a valid internet address like http://www.example.com."
-msgstr ""
-
-#: templates/forms/2_userform.html:81 templates/forms/0_userform.html:82
-msgid "Email Format"
-msgstr ""
-
-#: templates/forms/2_userform.html:91 templates/forms/0_userform.html:101
-#: templates/forms/1_userform.html:112 templates/forms/3_userform.html:204
-msgid "Please solve this calculation"
-msgstr ""
-
-#: templates/forms/2_userform.html:94 templates/forms/0_userform.html:105
-#: templates/forms/1_userform.html:114 templates/forms/3_userform.html:207
-msgid "(to prevent spam)"
-msgstr ""
-
-#: templates/forms/2_userform.html:101 templates/forms/0_userform.html:124
-#: templates/forms/1_userform.html:121 templates/forms/3_userform.html:214
-msgid "Send"
-msgstr ""
-
-#: templates/forms/0_userform.html:20 templates/forms/0_userheader.html:1
-#: templates/forms/2_userheader.html:3
-msgid "Contact our team"
-msgstr ""
-
-#: templates/forms/0_userform.html:92
-msgid "Attach a file"
-msgstr ""
-
-#: templates/forms/0_userform.html:93
-msgid "Attached file"
-msgstr ""
-
-#: templates/forms/1_adminmail.txt:3 templates/forms/1_adminmail.html:12
 #: templates/forms/0_adminmail.html:12 templates/forms/0_adminmail.txt:3
-#: templates/forms/2_adminmail.txt:3 templates/forms/2_adminmail.html:12
+#: templates/forms/1_adminmail.html:12 templates/forms/1_adminmail.txt:3
+#: templates/forms/2_adminmail.html:12 templates/forms/2_adminmail.txt:3
 msgid ""
 "A visitor of to your web site used the form for contact and sent the "
 "following:"
 msgstr ""
 
-#: templates/forms/1_adminmail.txt:18 templates/forms/1_adminmail.html:27
-#: templates/forms/0_adminmail.html:42 templates/forms/3_adminmail.txt:15
-#: templates/forms/3_adminmail.html:24 templates/forms/0_adminmail.txt:28
-#: templates/forms/2_adminmail.txt:25 templates/forms/2_adminmail.html:33
+#: templates/forms/0_adminmail.html:15 templates/forms/0_adminmail.txt:6
+#: templates/forms/0_userform.html:22 templates/forms/0_usermail.html:14
+#: templates/forms/0_usermail.txt:5
+msgid "Contact"
+msgstr ""
+
+#: templates/forms/0_adminmail.html:16 templates/forms/0_adminmail.txt:7
+#: templates/forms/0_userconfirm.html:9 templates/forms/0_userform.html:33
+#: templates/forms/0_usermail.html:15 templates/forms/0_usermail.txt:6
+#: templates/forms/1_adminmail.html:16 templates/forms/1_adminmail.txt:7
+#: templates/forms/1_userconfirm.html:14 templates/forms/1_userform.html:32
+#: templates/forms/1_usermail.html:15 templates/forms/1_usermail.txt:6
+#: templates/forms/2_adminmail.html:16 templates/forms/2_adminmail.txt:7
+#: templates/forms/2_userconfirm.html:21 templates/forms/2_userform.html:32
+#: templates/forms/2_usermail.html:15 templates/forms/2_usermail.txt:6
+#: templates/forms/3_adminmail.html:14 templates/forms/3_adminmail.txt:5
+#: templates/forms/3_userconfirm.html:19 templates/forms/3_userform.html:31
+#: templates/forms/3_usermail.html:19 templates/forms/3_usermail.txt:10
+msgid "Your Name"
+msgstr ""
+
+#: templates/forms/0_adminmail.html:42 templates/forms/0_adminmail.txt:28
+#: templates/forms/1_adminmail.html:27 templates/forms/1_adminmail.txt:18
+#: templates/forms/2_adminmail.html:33 templates/forms/2_adminmail.txt:25
+#: templates/forms/3_adminmail.html:24 templates/forms/3_adminmail.txt:15
 msgid "The user has the following IP address/hostname: "
 msgstr ""
 
-#: templates/forms/1_userconfirm.html:63 templates/forms/2_userconfirm.html:94
-#: templates/forms/0_userconfirm.html:67 templates/forms/3_userconfirm.html:59
-msgid ""
-"Confirmation of your submission will be emailed to you in a few minutes."
-msgstr ""
-
-#: templates/forms/1_userconfirm.html:65 templates/forms/2_userconfirm.html:96
-#: templates/forms/0_userconfirm.html:69 templates/forms/3_userconfirm.html:61
-msgid "There was an internal error when sending confirmation mail"
-msgstr ""
-
-#: templates/forms/3_usermail.txt:1 templates/forms/3_usermail.html:10
-#, php-format
-msgid "Hello %s,"
-msgstr ""
-
-#: templates/forms/3_usermail.txt:3 templates/forms/3_usermail.html:12
-msgid "Thank you for your reservation."
-msgstr ""
-
-#: templates/forms/3_usermail.txt:5 templates/forms/3_usermail.html:14
-msgid "Kind regards"
-msgstr ""
-
-#: templates/forms/0_usererror.html:4 templates/forms/2_usererror.html:4
-#: templates/forms/1_usererror.html:4 templates/forms/3_usererror.html:4
-msgid "There is an error in your form"
-msgstr ""
-
-#: templates/forms/0_usererror.html:7 templates/forms/2_usererror.html:6
-#: templates/forms/1_usererror.html:6 templates/forms/3_usererror.html:6
-msgid "Back to the contact form"
-msgstr ""
-
-#: templates/forms/2_userconfirm.html:4 templates/forms/0_userconfirm.html:3
+#: templates/forms/0_userconfirm.html:3 templates/forms/2_userconfirm.html:4
 msgid ""
 "Thank you for your questions/comments to our website!<br />We will reply as "
 "soon as possible."
@@ -843,18 +712,133 @@ msgstr ""
 msgid "This data was sent to %s"
 msgstr ""
 
-#: templates/forms/3_adminmail.txt:3 templates/forms/3_adminmail.html:12
+#: templates/forms/0_userconfirm.html:67 templates/forms/1_userconfirm.html:63
+#: templates/forms/2_userconfirm.html:94 templates/forms/3_userconfirm.html:59
 msgid ""
-"A visitor to your website made a new rental request and sent the following:"
+"Confirmation of your submission will be emailed to you in a few minutes."
 msgstr ""
 
-#: templates/forms/1_userheader.html:3
-msgid "Apply online!"
+#: templates/forms/0_userconfirm.html:69 templates/forms/1_userconfirm.html:65
+#: templates/forms/2_userconfirm.html:96 templates/forms/3_userconfirm.html:61
+msgid "There was an internal error when sending confirmation mail"
 msgstr ""
 
-#: templates/forms/3_userconfirm.html:3
+#: templates/forms/0_usererror.html:4 templates/forms/1_usererror.html:4
+#: templates/forms/2_usererror.html:4 templates/forms/3_usererror.html:4
+msgid "There is an error in your form"
+msgstr ""
+
+#: templates/forms/0_usererror.html:7 templates/forms/1_usererror.html:6
+#: templates/forms/2_usererror.html:6 templates/forms/3_usererror.html:6
+msgid "Back to the contact form"
+msgstr ""
+
+#: templates/forms/0_userform.html:8 templates/forms/1_userform.html:19
+#: templates/forms/2_userform.html:17 templates/forms/3_userform.html:25
+msgid "Mandatory fields are indicated with a"
+msgstr ""
+
+#: templates/forms/0_userform.html:20 templates/forms/0_userheader.html:1
+#: templates/forms/0_userheader.html:2 templates/forms/2_userheader.html:2
+#: templates/forms/2_userheader.html:3
+msgid "Contact our team"
+msgstr ""
+
+#: templates/forms/0_userform.html:35 templates/forms/0_userform.html:42
+#: templates/forms/0_userform.html:77 templates/forms/1_userform.html:28
+#: templates/forms/1_userform.html:34 templates/forms/1_userform.html:41
+#: templates/forms/1_userform.html:52 templates/forms/1_userform.html:59
+#: templates/forms/1_userform.html:70 templates/forms/1_userform.html:77
+#: templates/forms/1_userform.html:88 templates/forms/1_userform.html:100
+#: templates/forms/1_userform.html:108 templates/forms/2_userform.html:35
+#: templates/forms/2_userform.html:42 templates/forms/2_userform.html:77
+#: templates/forms/3_userform.html:33 templates/forms/3_userform.html:40
+#: templates/forms/3_userform.html:51 templates/forms/3_userform.html:58
+#: templates/forms/3_userform.html:66 templates/forms/3_userform.html:74
+#: templates/forms/3_userform.html:89 templates/forms/3_userform.html:123
+#: templates/forms/3_userform.html:134 templates/forms/3_userform.html:142
+#: templates/forms/3_userform.html:199
+msgid "This is a mandatory field."
+msgstr ""
+
+#: templates/forms/0_userform.html:41 templates/forms/1_userform.html:101
+#: templates/forms/2_userform.html:41 templates/forms/3_userform.html:67
+msgid "Please enter a valid email address like user@example.com."
+msgstr ""
+
+#: templates/forms/0_userform.html:49 templates/forms/1_userform.html:93
+#: templates/forms/2_userform.html:49
+msgid "Please enter a valid internet address like http://www.example.com."
+msgstr ""
+
+#: templates/forms/0_userform.html:82 templates/forms/2_userform.html:81
+msgid "Email Format"
+msgstr ""
+
+#: templates/forms/0_userform.html:92
+msgid "Attach a file"
+msgstr ""
+
+#: templates/forms/0_userform.html:93
+msgid "Attached file"
+msgstr ""
+
+#: templates/forms/0_userform.html:101 templates/forms/1_userform.html:112
+#: templates/forms/2_userform.html:91 templates/forms/3_userform.html:204
+msgid "Please solve this calculation"
+msgstr ""
+
+#: templates/forms/0_userform.html:105 templates/forms/1_userform.html:114
+#: templates/forms/2_userform.html:94 templates/forms/3_userform.html:207
+msgid "(to prevent spam)"
+msgstr ""
+
+#: templates/forms/0_userform.html:124 templates/forms/1_userform.html:121
+#: templates/forms/2_userform.html:101 templates/forms/3_userform.html:214
+msgid "Send"
+msgstr ""
+
+#: templates/forms/0_usermail.html:12 templates/forms/0_usermail.txt:3
+#: templates/forms/2_usermail.html:12 templates/forms/2_usermail.txt:3
+msgid "Thank you for the comments posted from our Website. The sent data is:"
+msgstr ""
+
+#: templates/forms/0_usermail.html:41 templates/forms/1_usermail.html:28
+#: templates/forms/1_usermail.txt:19
+msgid "We will respond to your email address as soon as possible."
+msgstr ""
+
+#: templates/forms/0_usermail.html:43 templates/forms/0_usermail.txt:31
+#: templates/forms/1_usermail.html:30 templates/forms/1_usermail.txt:21
+#: templates/forms/2_usermail.html:34 templates/forms/2_usermail.txt:26
+#: templates/forms/3_usermail.txt:22
 #, php-format
-msgid "Thank you %s for your reservation."
+msgid "The %s Team"
+msgstr ""
+
+#: templates/forms/0_usermail.txt:29 templates/forms/2_usermail.html:32
+#: templates/forms/2_usermail.txt:24 templates/forms/3_usermail.txt:20
+msgid "We will respond to your email as soon as possible."
+msgstr ""
+
+#: templates/forms/1_adminmail.html:15 templates/forms/1_adminmail.txt:6
+#: templates/forms/1_usermail.html:14 templates/forms/1_usermail.txt:5
+#: templates/forms/2_adminmail.html:15 templates/forms/2_adminmail.txt:6
+#: templates/forms/2_userconfirm.html:12 templates/forms/2_userform.html:21
+#: templates/forms/2_usermail.html:14 templates/forms/2_usermail.txt:5
+msgid "Contact or Theme"
+msgstr ""
+
+#: templates/forms/1_userconfirm.html:4 templates/forms/1_usermail.html:12
+#: templates/forms/1_usermail.txt:3 templates/forms/2_userconfirm.html:6
+#: templates/forms/3_userconfirm.html:11 templates/forms/3_usermail.html:17
+#: templates/forms/3_usermail.txt:8
+msgid "This data was sent to us:"
+msgstr ""
+
+#: templates/forms/1_userconfirm.html:6 templates/forms/1_usermail.html:26
+#: templates/forms/1_usermail.txt:17
+msgid "Thanks for applying, we will keep your data strictly confidential"
 msgstr ""
 
 #: templates/forms/1_userform.html:23 templates/forms/1_userform.html:24
@@ -892,6 +876,24 @@ msgstr ""
 
 #: templates/forms/1_userform.html:73 templates/forms/1_userform.html:74
 msgid "Entry date"
+msgstr ""
+
+#: templates/forms/1_userheader.html:2
+msgid "Apply online"
+msgstr ""
+
+#: templates/forms/1_userheader.html:3
+msgid "Apply online!"
+msgstr ""
+
+#: templates/forms/3_adminmail.html:12 templates/forms/3_adminmail.txt:3
+msgid ""
+"A visitor to your website made a new rental request and sent the following:"
+msgstr ""
+
+#: templates/forms/3_userconfirm.html:3
+#, php-format
+msgid "Thank you %s for your reservation."
 msgstr ""
 
 #: templates/forms/3_userform.html:28
@@ -1013,4 +1015,21 @@ msgstr ""
 
 #: templates/forms/3_userform.html:196
 msgid "Agree with Terms and Conditions"
+msgstr ""
+
+#: templates/forms/3_userheader.html:3
+msgid "Make a reservation"
+msgstr ""
+
+#: templates/forms/3_usermail.html:10 templates/forms/3_usermail.txt:1
+#, php-format
+msgid "Hello %s,"
+msgstr ""
+
+#: templates/forms/3_usermail.html:12 templates/forms/3_usermail.txt:3
+msgid "Thank you for your reservation."
+msgstr ""
+
+#: templates/forms/3_usermail.html:14 templates/forms/3_usermail.txt:5
+msgid "Kind regards"
 msgstr ""
