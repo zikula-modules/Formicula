@@ -36,6 +36,7 @@ Installation
    unreg. users (group)  |  Formicula::  |  .*  |  comment
    This enables unregistered users to use all existing forms. In a default installation
    the users group has a generic comment permission to do the same.
+6. Add a link to your main menu with: {Formicula} (using [Formicula] will not work!)
 6. Add a link to your main menu with: {Formicula:user:main}
    This uses form 0. To call a specific form id use
    index.php?name=Formicula&type=user&func=main&form=<formid>
@@ -141,32 +142,25 @@ You can add as many custom fields to your form as you want.
 This makes it easy to create e.g. an online job application form if needed.
 
 This makes it necessary to send certain information from the form page to the module.
-The custom fields are numbered (# in the following examples), starting at 0.
+The custom fields are numbered in old versions and an associative array in newer versions.
 
 These are:
   
-* custom#name (hidden field) name of the custom field
+* custom[fieldname][name] (hidden field) name of the custom field
   can be used in the confirmation email
   
-* custom#mandatory (hidden field) set to 1 if this is a mandatory field.
+* custom[fieldname][mandatory] (hidden field) set to 1 if this is a mandatory field.
   Formicula checks this and shows an errormessage when this field is not filled
 
-* custom#data (any kind of input field) the data with #=number.
+* custom[fieldname][data] (any kind of input field) the data with fieldname
   the payload
-
-The hidden field numFields for the number of custom fields used is not longer 
-necessary. Just make sure that your custom field numbering consistent. This 
-means 1-2-3-4-5 is ok while 1-2-7-8-9 will not work. Formicula reads all custom
-fields until it finds a gap of three digits. In the second example above this 
-means it reads custom field 1 and 2, fails reading 3,4 and 5 and then stops
-and does not care about others that may have been sent (or not).
 
 Example:
 
-<label class="mandatory" for="custom0data">{gt text='foobar'}</label><br />
-<input type="hidden" name="custom0name" value="{gt text='foobar'}" />
-<input type="hidden" name="custom0mandatory" value="1" />
-<input type="text" name="custom0data" id="custom0data" size="35" maxLength="80" value="" />
+<label class="mandatory" for="foobar">{gt text='foobar'}</label><br />
+<input type="hidden" name="custom[foobar][name]" value="{gt text='foobar'}" />
+<input type="hidden" name="custom[foobar][mandatory]" value="1" />
+<input type="text" name="custom[foobar][data]" id="foobar" size="35" maxLength="80" value="" />
 
 Permissions
 -----------
@@ -184,9 +178,7 @@ all members of the group Users are allowed to use form 1 and write to contact 2 
 Use external information in the forms
 -------------------------------------
 You can use external information in the form by sending them in the url used to call
-the form.
-
-These data are send in an associative array addinfo where the key is the name.
+the form. These data are send in an associative array addinfo where the key is the name.
 
 With
 
@@ -203,7 +195,8 @@ As you can see you can use this to e.g. load data from Pagesetter in the userfor
 Client side input validation
 ----------------------------
 The supplied templates use a prototype.js-based input validation. If you do not want 
-to use this, simply remove the javascript from the templates.
+to use this, simply remove the javascript from the templates. This will be updated to jQuery in
+coming versions.
 
 A detailed explanation how to use this feature can be found at
 http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/

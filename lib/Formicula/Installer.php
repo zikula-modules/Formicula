@@ -139,6 +139,7 @@ Allow from env=object_is_jpg
                 $this->setVar('default_form', 0);
             case '2.2':
                 $modvars = ModUtil::getVar('Formicula');
+				// re-register module variables
                 if ($modvars) {
                     foreach ($modvars as $key => $value) {
                         $this->setVar($key, $value);
@@ -161,15 +162,17 @@ Allow from env=object_is_jpg
                 // drop table prefix
                 $prefix = $this->serviceManager['prefix'];
                 $connection = Doctrine_Manager::getInstance()->getConnection('default');
-                $sqlStatements = array();
-                $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_formcontacts' . " TO `formcontacts`";
-                foreach ($sqlStatements as $sql) {
-                    $stmt = $connection->prepare($sql);
-                    try {
-                        $stmt->execute();
-                    } catch (Exception $e) {
-                    }   
-                }
+				if (!empty($prefix)) {
+					$sqlStatements = array();
+					$sqlStatements[] = 'RENAME TABLE ' . $prefix . '_formcontacts' . " TO `formcontacts`";
+					foreach ($sqlStatements as $sql) {
+						$stmt = $connection->prepare($sql);
+						try {
+							$stmt->execute();
+						} catch (Exception $e) {
+						}   
+					}
+				}
 
                 if (!DBUtil::changeTable('formcontacts')) {
                     return '2.2';
@@ -260,15 +263,14 @@ Allow from env=object_is_jpg
     protected function createTempDir()
     {
         $tempdir = System::getVar('temp');
-        if(StringUtil::left($tempdir, 1) <> '/') {
+        if (StringUtil::left($tempdir, 1) <> '/') {
             // tempdir does not start with a / which means it does not reside outside
             // the webroot, continue
-            if(StringUtil::right($tempdir, 1) <> '/') {
+            if (StringUtil::right($tempdir, 1) <> '/') {
                 $tempdir .= '/';
             }
-            if(FileUtil::mkdirs($tempdir . 'formicula_cache', System::getVar('system.chmod_dir', 0777))) {
-                $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
-                $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+            if (FileUtil::mkdirs($tempdir . 'formicula_cache', System::getVar('system.chmod_dir', 0777))) {
+                $res = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
 Order deny,allow
@@ -277,7 +279,7 @@ Allow from env=object_is_gif
 Allow from env=object_is_png
 Allow from env=object_is_jpg
 ');
-                if($res1===false || $res2===false){
+                if ($res===false) {
                     LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
                 } else {
                     LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory in Zikula\'s temporary directory with a .htaccess file for security in there.'));
