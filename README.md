@@ -9,8 +9,10 @@ a simple captcha for spam protection, javascript form validation and file upload
 
 3.x versions
 ------------
-The 3.x version in the master branch needs Zikula 1.3.x to run with. 3.1.0 will be a version update that brings 
-HTML5 form validation (with webshims lib polyfill fallback for browsers not supporting this) and all jQuery javascript.
+The 3.x version in the master branch needs Zikula 1.3.x to run with. 
+
+3.1.0 will be a version update that brings HTML5 form validation (with webshims lib polyfill fallback for
+browsers not supporting this) and all jQuery javascript.
 
 * More information on HTML5 form validation also in the Zikula Core ticket: https://github.com/zikula/core/issues/1181
 * HTML5 constraint validation: http://www.html5rocks.com/en/tutorials/forms/constraintvalidation/
