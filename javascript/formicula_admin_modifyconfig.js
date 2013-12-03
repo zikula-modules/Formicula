@@ -1,39 +1,23 @@
-/**
- * create the onload function to enable the respective functions
- *
- */
-Event.observe(window, 'load', formicula_modifyconfig_init_check);
-
-function formicula_modifyconfig_init_check() 
-{
-    if ($('formicula_spamcheck_details')) {
-        formicula_spamcheck_init();
+// hide or show fields 
+jQuery(document).ready(function(){
+    if (!jQuery('#spamcheck').prop('checked')) {
+        jQuery('#formicula_spamcheck_details').hide();
     }
-    if ($('formicula_storedata_details')) {
-        formicula_storedata_init();
+    jQuery('#spamcheck').change(function(){
+        if (jQuery('#spamcheck').prop('checked')) {
+            jQuery('#formicula_spamcheck_details').show("slow");
+        } else {
+            jQuery('#formicula_spamcheck_details').hide("slow");
+        }
+    });
+    if (!jQuery('#store_data').prop('checked')) {
+        jQuery('#formicula_storedata_details').hide();
     }
-}
-
-function formicula_spamcheck_init()
-{
-    if ($('spamcheck').checked == false) {
-        $('formicula_spamcheck_details').hide();
-    }
-    $('spamcheck').observe('click', formicula_spamcheck_onchange);
-}
-function formicula_spamcheck_onchange()
-{
-    switchdisplaystate('formicula_spamcheck_details');
-}
-
-function formicula_storedata_init()
-{
-    if ($('store_data').checked == false) {
-        $('formicula_storedata_details').hide();
-    }
-    $('store_data').observe('click', formicula_storedata_onchange);
-}
-function formicula_storedata_onchange()
-{
-    switchdisplaystate('formicula_storedata_details');
-}
+    jQuery('#store_data').change(function(){
+        if (jQuery('#store_data').prop('checked')) {
+            jQuery('#formicula_storedata_details').show("slow");
+        } else {
+            jQuery('#formicula_storedata_details').hide("slow");
+        }
+    });
+}); 
