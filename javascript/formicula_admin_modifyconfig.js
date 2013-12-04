@@ -1,4 +1,4 @@
-﻿// hide or show fields 
+// hide or show fields 
 jQuery(document).ready(function(){
     if (!jQuery('#spamcheck').prop('checked')) {
         jQuery('#formicula_spamcheck_details').hide();
@@ -20,4 +20,4 @@ jQuery(document).ready(function(){
             jQuery('#formicula_storedata_details').hide("slow");
         }
     });
-});
+}); 

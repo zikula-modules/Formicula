@@ -1,4 +1,4 @@
-﻿{pageaddvar name="javascript" value="jquery"}
+{pageaddvar name="javascript" value="jquery"}
 {pageaddvar name='javascript' value='modules/Formicula/javascript/Formicula_admin_modifyconfig.js'}
 
 {adminheader}
