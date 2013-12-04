@@ -1,4 +1,6 @@
-{ajaxheader modname='Formicula' filename='formicula_admin_modifyconfig.js' effects=true}
+﻿{pageaddvar name="javascript" value="jquery"}
+{pageaddvar name='javascript' value='modules/Formicula/javascript/Formicula_admin_modifyconfig.js'}
+
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="config" size="small"}
