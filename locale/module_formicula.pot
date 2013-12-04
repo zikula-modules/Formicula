@@ -5,18 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Zikula module Formicula 3\n"
+"Project-Id-Version: Zikula Module Formicula 3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-01 15:15+0100\n"
-"PO-Revision-Date: 2013-12-01 15:18+0100\n"
+"POT-Creation-Date: 2013-12-04 22:00+0100\n"
+"PO-Revision-Date: 2013-12-04 22:04+0100\n"
 "Last-Translator: Erik Spaan <erik@zikula.nl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: lib/Formicula/Api/Admin.php:92
@@ -44,7 +44,7 @@ msgid "View form submits"
 msgstr ""
 
 #: lib/Formicula/Api/Admin.php:253 lib/Formicula/Api/Admin.php:257
-#: templates/admin/modifyconfig.tpl:5 templates/admin/modifyconfig.tpl:12
+#: templates/admin/modifyconfig.tpl:7 templates/admin/modifyconfig.tpl:14
 msgid "Modify configuration"
 msgstr ""
 
@@ -197,13 +197,13 @@ msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:44
 #: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:49
-#: templates/forms/0_userform.html:84 templates/forms/2_userform.html:83
+#: templates/forms/0_userform.html:79 templates/forms/2_userform.html:78
 msgid "HTML"
 msgstr ""
 
 #: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:45
 #: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:50
-#: templates/forms/0_userform.html:85 templates/forms/2_userform.html:84
+#: templates/forms/0_userform.html:80 templates/forms/2_userform.html:79
 msgid "Text"
 msgstr ""
 
@@ -211,7 +211,7 @@ msgstr ""
 msgid "The webserver cannot write into this directory!"
 msgstr ""
 
-#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:99
+#: lib/Formicula/Form/Handler/Admin/ModifyConfig.php:100
 msgid "The configuration has been changed."
 msgstr ""
 
@@ -219,63 +219,63 @@ msgstr ""
 msgid "The installer could not create the formcontacts table"
 msgstr ""
 
-#: lib/Formicula/Installer.php:24 lib/Formicula/Installer.php:180
+#: lib/Formicula/Installer.php:24 lib/Formicula/Installer.php:183
 msgid "The installer could not create the formsubmits table"
 msgstr ""
 
-#: lib/Formicula/Installer.php:131 lib/Formicula/Installer.php:281
+#: lib/Formicula/Installer.php:131 lib/Formicula/Installer.php:284
 msgid ""
 "The installer could not create formicula_cache/index.html and/or "
 "formicula_cache/.htaccess, please refer to the manual before using the "
 "module!"
 msgstr ""
 
-#: lib/Formicula/Installer.php:134 lib/Formicula/Installer.php:286
+#: lib/Formicula/Installer.php:134 lib/Formicula/Installer.php:289
 msgid ""
 "The installer could not create the formicula_cache directory, please refer "
 "to the manual before using the module!"
 msgstr ""
 
-#: lib/Formicula/Installer.php:156
+#: lib/Formicula/Installer.php:157
 msgid "Error! Could not update table."
 msgstr ""
 
-#: lib/Formicula/Installer.php:199
+#: lib/Formicula/Installer.php:202
 msgid ""
 "The SimpleCaptcha validation has changed, so the formicula_cache folder "
 "containing cached validation images was cleared."
 msgstr ""
 
-#: lib/Formicula/Installer.php:221
+#: lib/Formicula/Installer.php:225
 msgid "The installer could not delete the formcontacts table"
 msgstr ""
 
-#: lib/Formicula/Installer.php:224
+#: lib/Formicula/Installer.php:228
 msgid "The installer could not delete the formsubmits table"
 msgstr ""
 
-#: lib/Formicula/Installer.php:283
+#: lib/Formicula/Installer.php:286
 msgid ""
 "The installer successfully created the formicula_cache directory in Zikula's "
 "temporary directory with a .htaccess file for security in there."
 msgstr ""
 
-#: lib/Formicula/Installer.php:290
+#: lib/Formicula/Installer.php:293
 msgid ""
 "The directory 'ztemp' found outside of the webroot, please consult the "
 "manual of how to create the formicula_cache directory in this case."
 msgstr ""
 
-#: lib/Formicula/Installer.php:301 lib/Formicula/Installer.php:304
+#: lib/Formicula/Installer.php:304 lib/Formicula/Installer.php:307
 msgid "Webmaster"
 msgstr ""
 
-#: lib/Formicula/Installer.php:306
+#: lib/Formicula/Installer.php:309
 #, php-format
 msgid "Email from %s"
 msgstr ""
 
-#: lib/Formicula/Installer.php:310
+#: lib/Formicula/Installer.php:313
 msgid "Warning! Could not create the default Webmaster contact."
 msgstr ""
 
@@ -310,19 +310,19 @@ msgstr ""
 msgid "formicula"
 msgstr ""
 
-#: lib/Formicula/Version.php:36
+#: lib/Formicula/Version.php:35
 msgid "Formicula Form Hooks"
 msgstr ""
 
-#: docs/manual.txt:113
+#: docs/manual.txt:107
 msgid "Html"
 msgstr ""
 
-#: docs/manual.txt:114
+#: docs/manual.txt:108
 msgid "Plain text"
 msgstr ""
 
-#: docs/manual.txt:171 docs/manual.txt:172
+#: docs/manual.txt:158 docs/manual.txt:159
 msgid "foobar"
 msgstr ""
 
@@ -345,16 +345,16 @@ msgstr ""
 #: templates/admin/delete.tpl:19 templates/admin/edit.tpl:22
 #: templates/admin/view.tpl:12 templates/forms/0_adminmail.html:17
 #: templates/forms/0_adminmail.txt:8 templates/forms/0_userconfirm.html:14
-#: templates/forms/0_userform.html:39 templates/forms/0_usermail.html:16
+#: templates/forms/0_userform.html:38 templates/forms/0_usermail.html:16
 #: templates/forms/0_usermail.txt:7 templates/forms/1_adminmail.html:17
 #: templates/forms/1_adminmail.txt:8 templates/forms/1_userconfirm.html:34
-#: templates/forms/1_userform.html:98 templates/forms/1_usermail.html:16
+#: templates/forms/1_userform.html:86 templates/forms/1_usermail.html:16
 #: templates/forms/1_usermail.txt:7 templates/forms/2_adminmail.html:17
 #: templates/forms/2_adminmail.txt:8 templates/forms/2_userconfirm.html:41
-#: templates/forms/2_userform.html:38 templates/forms/2_usermail.html:16
+#: templates/forms/2_userform.html:37 templates/forms/2_usermail.html:16
 #: templates/forms/2_usermail.txt:7 templates/forms/3_adminmail.html:15
 #: templates/forms/3_adminmail.txt:6 templates/forms/3_userconfirm.html:28
-#: templates/forms/3_userform.html:64 templates/forms/3_usermail.html:20
+#: templates/forms/3_userform.html:52 templates/forms/3_usermail.html:20
 #: templates/forms/3_usermail.txt:11
 msgid "Email"
 msgstr ""
@@ -418,45 +418,45 @@ msgstr ""
 
 #: templates/admin/displaysubmit.tpl:31 templates/forms/0_adminmail.html:19
 #: templates/forms/0_adminmail.txt:10 templates/forms/0_userconfirm.html:27
-#: templates/forms/0_userform.html:47 templates/forms/0_usermail.html:18
+#: templates/forms/0_userform.html:44 templates/forms/0_usermail.html:18
 #: templates/forms/0_usermail.txt:9 templates/forms/1_adminmail.html:18
 #: templates/forms/1_adminmail.txt:9 templates/forms/1_userconfirm.html:43
-#: templates/forms/1_userform.html:91 templates/forms/1_usermail.html:17
+#: templates/forms/1_userform.html:80 templates/forms/1_usermail.html:17
 #: templates/forms/1_usermail.txt:8 templates/forms/2_adminmail.html:19
 #: templates/forms/2_adminmail.txt:10 templates/forms/2_userconfirm.html:51
-#: templates/forms/2_userform.html:46 templates/forms/2_usermail.html:18
+#: templates/forms/2_userform.html:43 templates/forms/2_usermail.html:18
 #: templates/forms/2_usermail.txt:9
 msgid "Homepage"
 msgstr ""
 
 #: templates/admin/displaysubmit.tpl:32 templates/forms/0_adminmail.html:22
 #: templates/forms/0_adminmail.txt:13 templates/forms/0_userconfirm.html:20
-#: templates/forms/0_userform.html:62 templates/forms/0_usermail.html:21
+#: templates/forms/0_userform.html:58 templates/forms/0_usermail.html:21
 #: templates/forms/0_usermail.txt:12 templates/forms/2_adminmail.html:22
 #: templates/forms/2_adminmail.txt:13 templates/forms/2_userconfirm.html:31
-#: templates/forms/2_userform.html:61 templates/forms/2_usermail.html:21
+#: templates/forms/2_userform.html:57 templates/forms/2_usermail.html:21
 #: templates/forms/2_usermail.txt:12
 msgid "Company"
 msgstr ""
 
 #: templates/admin/displaysubmit.tpl:33 templates/forms/0_adminmail.html:25
 #: templates/forms/0_adminmail.txt:16 templates/forms/0_userconfirm.html:34
-#: templates/forms/0_userform.html:55 templates/forms/0_usermail.html:24
-#: templates/forms/0_usermail.txt:15 templates/forms/1_userform.html:84
-#: templates/forms/1_userform.html:85 templates/forms/2_adminmail.html:25
+#: templates/forms/0_userform.html:51 templates/forms/0_usermail.html:24
+#: templates/forms/0_usermail.txt:15 templates/forms/1_userform.html:74
+#: templates/forms/1_userform.html:75 templates/forms/2_adminmail.html:25
 #: templates/forms/2_adminmail.txt:16 templates/forms/2_userconfirm.html:62
-#: templates/forms/2_userform.html:54 templates/forms/2_usermail.html:24
-#: templates/forms/2_usermail.txt:15 templates/forms/3_userform.html:70
-#: templates/forms/3_userform.html:71
+#: templates/forms/2_userform.html:50 templates/forms/2_usermail.html:24
+#: templates/forms/2_usermail.txt:15 templates/forms/3_userform.html:56
+#: templates/forms/3_userform.html:57
 msgid "Phone Number"
 msgstr ""
 
 #: templates/admin/displaysubmit.tpl:34 templates/forms/0_adminmail.html:28
 #: templates/forms/0_adminmail.txt:19 templates/forms/0_userconfirm.html:41
-#: templates/forms/0_userform.html:69 templates/forms/0_usermail.html:27
+#: templates/forms/0_userform.html:65 templates/forms/0_usermail.html:27
 #: templates/forms/0_usermail.txt:18 templates/forms/2_adminmail.html:28
 #: templates/forms/2_adminmail.txt:19 templates/forms/2_userconfirm.html:73
-#: templates/forms/2_userform.html:68 templates/forms/2_usermail.html:27
+#: templates/forms/2_userform.html:64 templates/forms/2_usermail.html:27
 #: templates/forms/2_usermail.txt:18
 msgid "Location"
 msgstr ""
@@ -467,16 +467,16 @@ msgstr ""
 
 #: templates/admin/displaysubmit.tpl:67 templates/forms/0_adminmail.html:31
 #: templates/forms/0_adminmail.txt:25 templates/forms/0_userconfirm.html:47
-#: templates/forms/0_userform.html:75 templates/forms/0_usermail.html:30
+#: templates/forms/0_userform.html:71 templates/forms/0_usermail.html:30
 #: templates/forms/0_usermail.txt:21 templates/forms/1_adminmail.html:24
 #: templates/forms/1_adminmail.txt:15 templates/forms/1_userconfirm.html:52
-#: templates/forms/1_userform.html:105 templates/forms/1_usermail.html:23
+#: templates/forms/1_userform.html:91 templates/forms/1_usermail.html:23
 #: templates/forms/1_usermail.txt:14 templates/forms/2_adminmail.html:31
 #: templates/forms/2_adminmail.txt:22 templates/forms/2_userconfirm.html:83
-#: templates/forms/2_userform.html:74 templates/forms/2_usermail.html:30
+#: templates/forms/2_userform.html:70 templates/forms/2_usermail.html:30
 #: templates/forms/2_usermail.txt:21 templates/forms/3_adminmail.html:21
 #: templates/forms/3_adminmail.txt:12 templates/forms/3_userconfirm.html:48
-#: templates/forms/3_userform.html:178 templates/forms/3_usermail.html:26
+#: templates/forms/3_userform.html:147 templates/forms/3_usermail.html:26
 #: templates/forms/3_usermail.txt:17
 msgid "Comment"
 msgstr ""
@@ -513,71 +513,71 @@ msgid ""
 "field data &lt;num&gt;</li></ul>"
 msgstr ""
 
-#: templates/admin/edit.tpl:48 templates/admin/modifyconfig.tpl:105
+#: templates/admin/edit.tpl:48 templates/admin/modifyconfig.tpl:107
 msgid "Submit"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:14
+#: templates/admin/modifyconfig.tpl:16
 msgid "Set the default form"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:16
+#: templates/admin/modifyconfig.tpl:18
 msgid "(used when no form is specified)"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:19
+#: templates/admin/modifyconfig.tpl:21
 msgid "Show phone number"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:23
+#: templates/admin/modifyconfig.tpl:25
 msgid "Show company"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:27
+#: templates/admin/modifyconfig.tpl:29
 msgid "Show URL"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:31
+#: templates/admin/modifyconfig.tpl:33
 msgid "Show location"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:35
+#: templates/admin/modifyconfig.tpl:37
 msgid "Show comments textarea"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:39
+#: templates/admin/modifyconfig.tpl:41
 msgid "Send confirmation email to user"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:43
+#: templates/admin/modifyconfig.tpl:45
 msgid "Show attach file"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:47
+#: templates/admin/modifyconfig.tpl:49
 msgid "directory for uploaded file(s)"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:51
+#: templates/admin/modifyconfig.tpl:53
 msgid "Delete uploaded file(s) after sending"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:55
+#: templates/admin/modifyconfig.tpl:57
 msgid "Default admin email format for forms"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:59
+#: templates/admin/modifyconfig.tpl:61
 msgid "Default user email format for forms"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:63
+#: templates/admin/modifyconfig.tpl:65
 msgid "Show user email format selector"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:69
+#: templates/admin/modifyconfig.tpl:71
 msgid "Spam check settings"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:70
+#: templates/admin/modifyconfig.tpl:72
 msgid ""
 "For your information: There are better spam check modules out there. For "
 "example the Zikula Captcha module which can be hooked to Formicula. If you "
@@ -585,44 +585,44 @@ msgid ""
 "permissions for the Captcha module, too."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:72
+#: templates/admin/modifyconfig.tpl:74
 msgid "Activate simple spam check"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:74
+#: templates/admin/modifyconfig.tpl:76
 msgid ""
 "Make sure you the necessary form fields are available, see the docs for more "
 "information. This option will be turned off by Formicula automatically if no "
 "PHP-functions for creating images are available"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:78
+#: templates/admin/modifyconfig.tpl:80
 msgid "Cache directory"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:82
+#: templates/admin/modifyconfig.tpl:84
 msgid "Do not use spam check in these forms"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:84
+#: templates/admin/modifyconfig.tpl:86
 msgid ""
 "Comma separated list of form ids, e.g. embedded forms in pagesetter. The "
 "redirect may not work here correctly"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:90
+#: templates/admin/modifyconfig.tpl:92
 msgid "Form submits"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:92
+#: templates/admin/modifyconfig.tpl:94
 msgid "Store submitted data in database"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:97
+#: templates/admin/modifyconfig.tpl:99
 msgid "Only store submissions from these forms"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:99
+#: templates/admin/modifyconfig.tpl:101
 msgid "Comma separated list of form ids or leave empty for storing all forms."
 msgstr ""
 
@@ -634,8 +634,8 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
-#: templates/admin/view.tpl:25 templates/forms/3_userform.html:162
-#: templates/forms/3_userform.html:167 templates/forms/3_userform.html:172
+#: templates/admin/view.tpl:25 templates/forms/3_userform.html:131
+#: templates/forms/3_userform.html:136 templates/forms/3_userform.html:141
 msgid "Yes"
 msgstr ""
 
@@ -683,13 +683,13 @@ msgstr ""
 #: templates/forms/0_userconfirm.html:9 templates/forms/0_userform.html:33
 #: templates/forms/0_usermail.html:15 templates/forms/0_usermail.txt:6
 #: templates/forms/1_adminmail.html:16 templates/forms/1_adminmail.txt:7
-#: templates/forms/1_userconfirm.html:14 templates/forms/1_userform.html:32
+#: templates/forms/1_userconfirm.html:14 templates/forms/1_userform.html:31
 #: templates/forms/1_usermail.html:15 templates/forms/1_usermail.txt:6
 #: templates/forms/2_adminmail.html:16 templates/forms/2_adminmail.txt:7
 #: templates/forms/2_userconfirm.html:21 templates/forms/2_userform.html:32
 #: templates/forms/2_usermail.html:15 templates/forms/2_usermail.txt:6
 #: templates/forms/3_adminmail.html:14 templates/forms/3_adminmail.txt:5
-#: templates/forms/3_userconfirm.html:19 templates/forms/3_userform.html:31
+#: templates/forms/3_userconfirm.html:19 templates/forms/3_userform.html:24
 #: templates/forms/3_usermail.html:19 templates/forms/3_usermail.txt:10
 msgid "Your Name"
 msgstr ""
@@ -734,7 +734,7 @@ msgid "Back to the contact form"
 msgstr ""
 
 #: templates/forms/0_userform.html:8 templates/forms/1_userform.html:19
-#: templates/forms/2_userform.html:17 templates/forms/3_userform.html:25
+#: templates/forms/2_userform.html:17 templates/forms/3_userform.html:18
 msgid "Mandatory fields are indicated with a"
 msgstr ""
 
@@ -744,57 +744,35 @@ msgstr ""
 msgid "Contact our team"
 msgstr ""
 
-#: templates/forms/0_userform.html:35 templates/forms/0_userform.html:42
-#: templates/forms/0_userform.html:77 templates/forms/1_userform.html:28
-#: templates/forms/1_userform.html:34 templates/forms/1_userform.html:41
-#: templates/forms/1_userform.html:52 templates/forms/1_userform.html:59
-#: templates/forms/1_userform.html:70 templates/forms/1_userform.html:77
-#: templates/forms/1_userform.html:88 templates/forms/1_userform.html:100
-#: templates/forms/1_userform.html:108 templates/forms/2_userform.html:35
-#: templates/forms/2_userform.html:42 templates/forms/2_userform.html:77
-#: templates/forms/3_userform.html:33 templates/forms/3_userform.html:40
-#: templates/forms/3_userform.html:51 templates/forms/3_userform.html:58
-#: templates/forms/3_userform.html:66 templates/forms/3_userform.html:74
-#: templates/forms/3_userform.html:89 templates/forms/3_userform.html:123
-#: templates/forms/3_userform.html:134 templates/forms/3_userform.html:142
-#: templates/forms/3_userform.html:199
-msgid "This is a mandatory field."
+#: templates/forms/0_userform.html:72 templates/forms/1_userform.html:92
+#: templates/forms/2_userform.html:71 templates/forms/3_userform.html:148
+msgid "Your comments here..."
 msgstr ""
 
-#: templates/forms/0_userform.html:41 templates/forms/1_userform.html:101
-#: templates/forms/2_userform.html:41 templates/forms/3_userform.html:67
-msgid "Please enter a valid email address like user@example.com."
-msgstr ""
-
-#: templates/forms/0_userform.html:49 templates/forms/1_userform.html:93
-#: templates/forms/2_userform.html:49
-msgid "Please enter a valid internet address like http://www.example.com."
-msgstr ""
-
-#: templates/forms/0_userform.html:82 templates/forms/2_userform.html:81
+#: templates/forms/0_userform.html:77 templates/forms/2_userform.html:76
 msgid "Email Format"
 msgstr ""
 
-#: templates/forms/0_userform.html:92
+#: templates/forms/0_userform.html:87
 msgid "Attach a file"
 msgstr ""
 
-#: templates/forms/0_userform.html:93
+#: templates/forms/0_userform.html:88
 msgid "Attached file"
 msgstr ""
 
-#: templates/forms/0_userform.html:101 templates/forms/1_userform.html:112
-#: templates/forms/2_userform.html:91 templates/forms/3_userform.html:204
+#: templates/forms/0_userform.html:96 templates/forms/1_userform.html:97
+#: templates/forms/2_userform.html:86 templates/forms/3_userform.html:173
 msgid "Please solve this calculation"
 msgstr ""
 
-#: templates/forms/0_userform.html:105 templates/forms/1_userform.html:114
-#: templates/forms/2_userform.html:94 templates/forms/3_userform.html:207
+#: templates/forms/0_userform.html:100 templates/forms/1_userform.html:99
+#: templates/forms/2_userform.html:89 templates/forms/3_userform.html:176
 msgid "(to prevent spam)"
 msgstr ""
 
-#: templates/forms/0_userform.html:124 templates/forms/1_userform.html:121
-#: templates/forms/2_userform.html:101 templates/forms/3_userform.html:214
+#: templates/forms/0_userform.html:119 templates/forms/1_userform.html:106
+#: templates/forms/2_userform.html:96 templates/forms/3_userform.html:183
 msgid "Send"
 msgstr ""
 
@@ -845,37 +823,37 @@ msgstr ""
 msgid "Apply as"
 msgstr ""
 
-#: templates/forms/1_userform.html:37 templates/forms/1_userform.html:38
-#: templates/forms/3_userform.html:36 templates/forms/3_userform.html:37
+#: templates/forms/1_userform.html:35 templates/forms/1_userform.html:36
+#: templates/forms/3_userform.html:28 templates/forms/3_userform.html:29
 msgid "Date of birth"
 msgstr ""
 
-#: templates/forms/1_userform.html:42 templates/forms/1_userform.html:78
-#: templates/forms/3_userform.html:41 templates/forms/3_userform.html:135
-#: templates/forms/3_userform.html:143
-msgid "Please enter a valid date."
+#: templates/forms/1_userform.html:38 templates/forms/3_userform.html:113
+#: templates/forms/3_userform.html:119
+msgid "Please enter a valid date (mm/dd/yyyy)."
 msgstr ""
 
-#: templates/forms/1_userform.html:48 templates/forms/1_userform.html:49
-#: templates/forms/3_userform.html:47 templates/forms/3_userform.html:48
+#: templates/forms/1_userform.html:44 templates/forms/1_userform.html:45
+#: templates/forms/3_userform.html:37 templates/forms/3_userform.html:38
 msgid "Street"
 msgstr ""
 
-#: templates/forms/1_userform.html:55 templates/forms/1_userform.html:56
+#: templates/forms/1_userform.html:50 templates/forms/1_userform.html:51
 msgid "Salary"
 msgstr ""
 
-#: templates/forms/1_userform.html:60
-msgid "Please use only numeric characters."
-msgstr ""
-
-#: templates/forms/1_userform.html:66 templates/forms/1_userform.html:67
-#: templates/forms/3_userform.html:54 templates/forms/3_userform.html:55
+#: templates/forms/1_userform.html:59 templates/forms/1_userform.html:60
+#: templates/forms/3_userform.html:43 templates/forms/3_userform.html:44
 msgid "Zip City"
 msgstr ""
 
-#: templates/forms/1_userform.html:73 templates/forms/1_userform.html:74
+#: templates/forms/1_userform.html:65 templates/forms/1_userform.html:66
 msgid "Entry date"
+msgstr ""
+
+#: templates/forms/1_userform.html:87 templates/forms/2_userform.html:38
+#: templates/forms/3_userform.html:53
+msgid "Enter a valid email address"
 msgstr ""
 
 #: templates/forms/1_userheader.html:2
@@ -896,128 +874,120 @@ msgstr ""
 msgid "Thank you %s for your reservation."
 msgstr ""
 
-#: templates/forms/3_userform.html:28
+#: templates/forms/3_userform.html:21
 msgid "Personal Data"
 msgstr ""
 
-#: templates/forms/3_userform.html:77 templates/forms/3_userform.html:78
+#: templates/forms/3_userform.html:62 templates/forms/3_userform.html:63
 msgid "Cell Phone Number"
 msgstr ""
 
-#: templates/forms/3_userform.html:85 templates/forms/3_userform.html:86
+#: templates/forms/3_userform.html:70 templates/forms/3_userform.html:71
 msgid "Identification Card Number"
 msgstr ""
 
-#: templates/forms/3_userform.html:92 templates/forms/3_userform.html:93
+#: templates/forms/3_userform.html:76 templates/forms/3_userform.html:77
 msgid "Gender"
 msgstr ""
 
-#: templates/forms/3_userform.html:95 templates/forms/3_userform.html:96
+#: templates/forms/3_userform.html:79 templates/forms/3_userform.html:80
 msgid "Male"
 msgstr ""
 
-#: templates/forms/3_userform.html:97 templates/forms/3_userform.html:98
+#: templates/forms/3_userform.html:81 templates/forms/3_userform.html:82
 msgid "Female"
 msgstr ""
 
-#: templates/forms/3_userform.html:100
-msgid "Please select one of the above options."
-msgstr ""
-
-#: templates/forms/3_userform.html:104
+#: templates/forms/3_userform.html:87
 msgid "Rental Data"
 msgstr ""
 
-#: templates/forms/3_userform.html:107 templates/forms/3_userform.html:108
+#: templates/forms/3_userform.html:90 templates/forms/3_userform.html:91
 msgid "Type of Vehicle"
 msgstr ""
 
-#: templates/forms/3_userform.html:111 templates/forms/3_userform.html:186
+#: templates/forms/3_userform.html:94 templates/forms/3_userform.html:155
 msgid "- Make a choice -"
 msgstr ""
 
-#: templates/forms/3_userform.html:112
+#: templates/forms/3_userform.html:95
 msgid "Type 1"
 msgstr ""
 
-#: templates/forms/3_userform.html:113
+#: templates/forms/3_userform.html:96
 msgid "Type 2"
 msgstr ""
 
-#: templates/forms/3_userform.html:114
+#: templates/forms/3_userform.html:97
 msgid "Type 3"
 msgstr ""
 
-#: templates/forms/3_userform.html:116
-msgid "Please make a selection."
-msgstr ""
-
-#: templates/forms/3_userform.html:119 templates/forms/3_userform.html:120
+#: templates/forms/3_userform.html:101 templates/forms/3_userform.html:102
 msgid "Number of persons"
 msgstr ""
 
-#: templates/forms/3_userform.html:124
-msgid "Please enter a valid number in this field."
-msgstr ""
-
-#: templates/forms/3_userform.html:130 templates/forms/3_userform.html:131
+#: templates/forms/3_userform.html:110 templates/forms/3_userform.html:111
 msgid "Start of Rental Period"
 msgstr ""
 
-#: templates/forms/3_userform.html:138 templates/forms/3_userform.html:139
+#: templates/forms/3_userform.html:116 templates/forms/3_userform.html:117
 msgid "End of Rental Period"
 msgstr ""
 
-#: templates/forms/3_userform.html:155
+#: templates/forms/3_userform.html:124
 msgid "Included Extras"
 msgstr ""
 
-#: templates/forms/3_userform.html:160 templates/forms/3_userform.html:161
+#: templates/forms/3_userform.html:129 templates/forms/3_userform.html:130
 msgid "Extra 1"
 msgstr ""
 
-#: templates/forms/3_userform.html:165 templates/forms/3_userform.html:166
+#: templates/forms/3_userform.html:134 templates/forms/3_userform.html:135
 msgid "Extra 2"
 msgstr ""
 
-#: templates/forms/3_userform.html:170 templates/forms/3_userform.html:171
+#: templates/forms/3_userform.html:139 templates/forms/3_userform.html:140
 msgid "Extra 3"
 msgstr ""
 
-#: templates/forms/3_userform.html:176
+#: templates/forms/3_userform.html:145
 msgid "Finish and Send"
 msgstr ""
 
-#: templates/forms/3_userform.html:183 templates/forms/3_userform.html:184
+#: templates/forms/3_userform.html:152 templates/forms/3_userform.html:153
 msgid "How did you find us"
 msgstr ""
 
-#: templates/forms/3_userform.html:187
+#: templates/forms/3_userform.html:156
 msgid "Web Location 1"
 msgstr ""
 
-#: templates/forms/3_userform.html:188
+#: templates/forms/3_userform.html:157
 msgid "Web Location 2"
 msgstr ""
 
-#: templates/forms/3_userform.html:189
+#: templates/forms/3_userform.html:158
 msgid "Web Location 3"
 msgstr ""
 
-#: templates/forms/3_userform.html:190
+#: templates/forms/3_userform.html:159
 msgid "Otherwise"
 msgstr ""
 
-#: templates/forms/3_userform.html:195
+#: templates/forms/3_userform.html:164
 #, php-format
 msgid "Yes, I agree with the <a href=\"%s\">Terms and Conditions</a>"
 msgstr ""
 
-#: templates/forms/3_userform.html:196
+#: templates/forms/3_userform.html:165
 msgid "Agree with Terms and Conditions"
 msgstr ""
 
-#: templates/forms/3_userheader.html:3
+#: templates/forms/3_userform.html:168
+msgid "This is a mandatory field."
+msgstr ""
+
+#: templates/forms/3_userheader.html:2 templates/forms/3_userheader.html:3
 msgid "Make a reservation"
 msgstr ""
 
