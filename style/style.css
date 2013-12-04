@@ -62,4 +62,10 @@
   color:red!important;
 }
 
-
+#contactform input.datepicker,
+#contactform2 input.datepicker {
+  background-image: url("../images/calendar.png");
+  background-position: right center;
+  background-repeat: no-repeat;
+  /*padding-right: 18px;*/
+}
