@@ -1,7 +1,5 @@
 Formicula 3.0 user manual
--------------------------
-manual for Formicula >v.2: Frank Schummertz
-     
+-------------------------     
 Formicula supports an infinite number of contact forms with an infinite number 
 of custom fields (ok, infinite as long as you have enough server memory).
 
@@ -123,18 +121,18 @@ This overrides the setting in the configuration.
 
 Standard Fields
 ---------------
-The standard fields to be used in forma are
+The standard fields to be used in forma are under userdata
 
-uname: the users name (mandatory)
-uemail: the users name (mandatory)
-url: the users homepage (optional)
-location, phone, company: these are obvious... (optional)
-comment: normally a textarea for entering free text. Since 0.6 this is not longer 
+userdata[uname]: the users name (mandatory)
+userdata[uemail]: the users name (mandatory)
+userdata[url]: the users homepage (optional)
+userdata[location], userdata[phone], userdata[company]: these are obvious... (optional)
+userdata[comment]: normally a textarea for entering free text. Since 0.6 this is not longer 
 a mandatory field! HTML is stripped from the comments to avoid spam. In addition, the
 comment is send to Zikula's internal censor function. If the result differs from the 
 original comment, the submission is also treated as spam and not sent. This results
 in an error message. 
-captcha: mandatory if spamcheck feature is enabled,see 0_userform.html for an example
+captcha: mandatory if spamcheck feature is enabled, see 0_userform.html for an example
 
 Custom Fields
 -------------
@@ -160,7 +158,7 @@ Example:
 <label class="mandatory" for="foobar">{gt text='foobar'}</label><br />
 <input type="hidden" name="custom[foobar][name]" value="{gt text='foobar'}" />
 <input type="hidden" name="custom[foobar][mandatory]" value="1" />
-<input type="text" name="custom[foobar][data]" id="foobar" size="35" maxLength="80" value="" />
+<input type="text" required name="custom[foobar][data]" id="foobar" size="35" maxLength="80" value="{$custom.foobar.data}" />
 
 Permissions
 -----------
@@ -194,12 +192,7 @@ As you can see you can use this to e.g. load data from Pagesetter in the userfor
 
 Client side input validation
 ----------------------------
-The supplied templates use a prototype.js-based input validation. If you do not want 
-to use this, simply remove the javascript from the templates. This will be updated to jQuery in
-coming versions.
-
-A detailed explanation how to use this feature can be found at
-http://tetlaw.id.au/view/blog/really-easy-field-validation-with-prototype/
+The supplied templates use a html5 input validation with webshims lib polyfill fallback. 
 
 Captcha
 -------
