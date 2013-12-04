@@ -1,7 +1,8 @@
-{include file='forms/0_userheader.html'}
+﻿{include file='forms/0_userheader.html'}
 
-{pageaddvar name="javascript" value="prototype"}
-{pageaddvar name="javascript" value="validation"}
+{pageaddvar name="javascript" value="jquery"}
+{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}
+{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/polyfiller.js'}
 
 <p class="z-informationmsg">
     {gt text="Mandatory fields are indicated with a"} <span class="mandatory">*</span>
@@ -30,22 +31,18 @@
 
         <div class="z-formrow">
             <label for="uname">{gt text="Your Name"}<span class="mandatory">*</span></label>
-            <input type="text" class="formborder required" id="uname" name="userdata[uname]" size="40" maxlength="80" value="{$userdata.uname}" />
-            <p id="advice-required-uname" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
+            <input autofocus required class="formborder" id="uname" name="userdata[uname]" size="40" maxlength="80" value="{$userdata.uname}" />
         </div>
 
         <div class="z-formrow">
             <label for="uemail">{gt text="Email"}<span class="mandatory">*</span></label>
-            <input type="text" class="formborder required validate-email" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
-            <p id="advice-validate-email-uemail" class="z-formnote custom-advice" style="display:none">{gt text='Please enter a valid email address like user@example.com.'}</p>
-            <p id="advice-required-uemail" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
+            <input type="email" required placeholder="name@test.nl" class="formborder" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
         </div>
 
         {if $modvars.Formicula.show_url==1}
         <div class="z-formrow">
             <label for="url">{gt text="Homepage"}</label>
-            <input type="text" class="formborder validate-url" id="url" name="userdata[url]" size="40" maxlength="40" value="{$userdata.url}" />
-            <p id="advice-validate-url-url" class="z-formnote custom-advice" style="display:none">{gt text='Please enter a valid internet address like http://www.example.com.'}</p>
+            <input type="url" placeholder="http://" class="formborder" id="url" name="userdata[url]" size="40" maxlength="40" value="{$userdata.url}" />
         </div>
         {/if}
 
@@ -72,11 +69,10 @@
 
         <div class="z-formrow">
             <label for="comment">{gt text="Comment"}<span class="mandatory">*</span></label>
-            <textarea class="formborder required" rows="6" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
-            <p id="advice-required-comment" class="z-formnote custom-advice" style="display:none">{gt text='This is a mandatory field.'}</p>
+            <textarea required placeholder="{gt text='Your comments here...'}" class="formborder" rows="6" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
         </div>
 
-        {if $modvars.Formicula.show_userformat==1}
+        {if $modvars.Formicula.show_userformat eq 1}
         <div class="z-formrow">
             <label for="userformat">{gt text="Email Format"}</label>
             <select class="formborder" id="userformat" name="userformat">
@@ -86,10 +82,10 @@
         </div>
         {/if}
 
-        {if $modvars.Formicula.show_attachfile==1}
+        {if $modvars.Formicula.show_attachfile eq 1}
         <div class="z-formrow">
             <label for="fileupload">{gt text="Attach a file"}</label>
-            <input type="hidden" name="custom[fileupload][name]" value="{gt text="Attached file"}" />
+            <input type="hidden" name="custom[fileupload][name]" value="{gt text='Attached file'}" />
             <input type="hidden" name="custom[fileupload][mandatory]" value="0" />
             <input id="fileupload" type='file' class="formborder2" name='custom[fileupload][data]' size='20' maxlength='16700000' value=''>
         </div>
@@ -97,10 +93,10 @@
 
         {if $spamcheck eq 1}
         <div class="z-formrow">
-            <label for="formicula_captcha">{gt text='Please solve this calculation'}<span class="mandatory">*</span></label>
+            <label for="Formicula_captcha">{gt text='Please solve this calculation'}<span class="mandatory">*</span></label>
             <span>
                 {simplecaptcha font='quikhand' size='14' bgcolor='ffffff' fgcolor='000000'}
-                <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
+                <input id="Formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
                 <span class="z-sub">{gt text='(to prevent spam)'}</span>
             </span>
         </div>
@@ -108,7 +104,7 @@
 
     </fieldset>
 
-    {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
+    {notifydisplayhooks eventname='Formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
     {foreach from=$hooks key='provider_area' item='hook'}
     {if $hook}
     <fieldset>
@@ -123,7 +119,9 @@
         {button src='button_ok.png' name='submit' value='submit' set='icons/extrasmall' __alt='Send' __title='Send' __text='Send'}
     </div>
 
-    <script type="text/javascript">
-        var valid = new Validation('contactform2');
-    </script>
+	<script type="text/javascript">
+		// call webshims polyfill to get html5 forms validation and other effects into non-html5 browsers
+		jQuery.webshims.activeLang('{{lang}}');
+		jQuery.webshims.polyfill('forms');
+	</script>
 </form>

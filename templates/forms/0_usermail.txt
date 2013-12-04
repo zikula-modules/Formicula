@@ -1,25 +1,25 @@
-{gt text='Hello,'}
+﻿{gt text='Hello,'}
 
 {gt text='Thank you for the comments posted from our Website. The sent data is:'}
 
-{gt text='Contact'} : { $contact.name }
-{gt text='Your Name'} : { $userdata.uname }
-{gt text='Email'} : { $userdata.uemail }
+{gt text='Contact'} :{$contact.name}
+{gt text='Your Name'} :{$userdata.uname}
+{gt text='Email'} :{$userdata.uemail}
 {if $modvars.Formicula.show_url==1 and $userdata.url}
-{gt text='Homepage'} : { $userdata.url }
+{gt text='Homepage'} :{$userdata.url}
 {/if}
 {if $modvars.Formicula.show_company==1 and $userdata.company}
-{gt text='Company'} : { $userdata.company }
+{gt text='Company'} :{$userdata.company}
 {/if}
 {if $modvars.Formicula.show_phone==1 and $userdata.phone}
-{gt text='Phone Number'} : { $userdata.phone }
+{gt text='Phone Number'} :{$userdata.phone}
 {/if}
 {if $modvars.Formicula.show_location==1 and $userdata.location}
-{gt text='Location'} : { $userdata.location }
+{gt text='Location'} :{$userdata.location}
 {/if}
 
 {gt text='Comment'} :
-{ $userdata.comment|safetext }
+{$userdata.comment|safetext}
 {if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
 
 {$custom.fileupload.name} : 

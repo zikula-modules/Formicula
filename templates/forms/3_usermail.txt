@@ -7,15 +7,15 @@
 
 {gt text='This data was sent to us:'}
 
-{gt text='Your Name'} : { $userdata.uname }
-{gt text='Email'} : { $userdata.uemail }
+{gt text='Your Name'} :{$userdata.uname}
+{gt text='Email'} :{$userdata.uemail}
 
-{ foreach item=field from=$custom }
-{ $field.name } : { $field.data }
-{ /foreach }
+{foreach item=field from=$custom}
+{$field.name}:{$field.data}
+{/foreach}
 
 {gt text='Comment'} :
-{ $userdata.comment|safetext }
+{$userdata.comment|safetext}
 
 {gt text='We will respond to your email as soon as possible.'}
 

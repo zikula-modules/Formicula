@@ -1,14 +1,8 @@
-{include file='forms/3_userheader.html'}
+﻿{include file='forms/3_userheader.html'}
 
-{pageaddvar name="javascript" value="prototype"}
-{pageaddvar name="javascript" value="validation"}
-
-{* Datepicker http://home.jongsma.org/software/js/datepicker used for date fields *}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/prototype-base-extensions.js'}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/prototype-date-extensions.js'}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/datepicker.js'}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/datepicker-locale.js'}
-{pageaddvar name='stylesheet' value='modules/Formicula/style/datepicker.css'}
+{pageaddvar name="javascript" value="jquery"}
+{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}
+{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/polyfiller.js'}
 
 <form id="contactform" action="{modurl modname=Formicula type=user func=send}" method="post">
     <div>
@@ -16,8 +10,8 @@
     <input type="hidden" name="form" value="3" />
     <input type="hidden" name="formname" value="Example reservation form" />
     <input type="hidden" name="cid" value="1" />
-    <input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />
     <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
+    <input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />
     <input type="hidden" name="dataformat" value="array" />
 
     <p>
@@ -28,16 +22,13 @@
     <p class="z-clearfix">
         <span style="float:left; width: 49%;">
             <label for="uname">{gt text='Your Name'}<span class="mandatory">*</span></label><br />
-            <input type="text" class="formborder required" name="userdata[uname]" id="uname" size="35" maxlength="80" value="{$userdata.uname}" />
-            <span id="advice-required-uname" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
+            <input type="text" required class="formborder" name="userdata[uname]" id="uname" size="35" maxlength="80" value="{$userdata.uname}" />
         </span>
         <span style="float:left; width: 49%;">
             <label for="dateofbirth">{gt text='Date of birth'} (dd-mm-yyyy)<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[dateofbirth][name]" value="{gt text='Date of birth'}" />
             <input type="hidden" name="custom[dateofbirth][mandatory]" value="1" />
-            <input type="text" class="formborder required validate-date-eu" name="custom[dateofbirth][data]" id="dateofbirth" size="35" maxlength="40" value="{$custom.dateofbirth.data}" />
-            <span id="advice-required-dateofbirth" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
-            <span id="advice-validate-date-eu-dateofbirth" class="custom-advice" style="display:none"><br />{gt text='Please enter a valid date.'}</span>
+            <input type="date" required class="formborder" name="custom[dateofbirth][data]" id="dateofbirth" size="35" maxlength="40" value="{$custom.dateofbirth.data}" />
         </span>
     </p>
     
@@ -46,31 +37,26 @@
             <label for="street">{gt text='Street'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[street][name]" value="{gt text='Street'}" />
             <input type="hidden" name="custom[street][mandatory]" value="1" />
-            <input type="text" class="formborder required" name="custom[street][data]" id="street" size="35" maxlength="70" value="{$custom.street.data}" />
-            <span id="advice-required-street" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
+            <input type="text" required class="formborder" name="custom[street][data]" id="street" size="35" maxlength="70" value="{$custom.street.data}" />
         </span>
         <span style="float:left; width: 49%;">
             <label for="zipcity">{gt text='Zip City'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[zipcity][name]" value="{gt text='Zip City'}" />
             <input type="hidden" name="custom[zipcity][mandatory]" value="1" />
-            <input type="text" class="formborder required" name="custom[zipcity][data]" id="zipcity" size="35" maxlength="70" value="{$custom.zipcity.data}" />
-            <span id="advice-required-zipcity" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
+            <input type="text" required class="formborder" name="custom[zipcity][data]" id="zipcity" size="35" maxlength="70" value="{$custom.zipcity.data}" />
         </span>
     </p>
     
     <p class="z-clearfix">
         <span style="float:left; width: 49%;">
             <label for="uemail">{gt text='Email'}<span class="mandatory">*</span></label><br />
-            <input type="text" class="formborder required validate-email" name="userdata[uemail]" id="uemail" value="{$userdata.uemail}" size="35" maxlength="40" />
-            <span id="advice-required-uemail" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
-            <span id="advice-validate-email-uemail" class="custom-advice" style="display:none"><br />{gt text='Please enter a valid email address like user@example.com.'}</span>
+            <input type="email" placeholder="{gt text='Enter a valid email address'}" class="formborder" name="userdata[uemail]" id="uemail" value="{$userdata.uemail}" size="35" maxlength="40" />
         </span>
         <span style="float:left; width: 20%;">
             <label for="phone">{gt text='Phone Number'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[phone][name]" value="{gt text='Phone Number'}" />
             <input type="hidden" name="custom[phone][mandatory]" value="1" />
-            <input type="text" class="formborder required" name="custom[phone][data]" id="phone" size="12" maxlength="20" value="{$custom.phone.data}" />
-            <span id="advice-required-phone" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
+            <input type="text" required class="formborder" name="custom[phone][data]" id="phone" size="12" maxlength="20" value="{$custom.phone.data}" />
         </span>
         <span style="float:left; width: 20%;">
             <label for="cellphone">{gt text='Cell Phone Number'}</label><br />
@@ -84,19 +70,17 @@
             <label for="idcard">{gt text='Identification Card Number'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[idcard][name]" value="{gt text='Identification Card Number'}" />
             <input type="hidden" name="custom[idcard][mandatory]" value="1" />
-            <input type="text" class="formborder required" name="custom[idcard][data]" id="idcard" size="35" maxlength="70" value="{$custom.idcard.data}" />
-            <span id="advice-required-idcard" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
+            <input type="text" required class="formborder" name="custom[idcard][data]" id="idcard" size="35" maxlength="70" value="{$custom.idcard.data}" />
         </span>
         <span style="float:left; width: 49%;">
             <label>{gt text='Gender'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[gender][name]" value="{gt text='Gender'}" />
             <span>
                 <label class="radio" for="genderMale">{gt text='Male'}</label>
-                <input type="radio" name="custom[gender][data]" id="genderMale" {if $custom.gender.data eq 'Male'}checked{/if} value="{gt text='Male'}" />
+                <input type="radio" required name="custom[gender][data]" id="genderMale" {if $custom.gender.data eq 'Male'}checked{/if} value="{gt text='Male'}" />
                 <label class="radio" for="genderFemale">{gt text='Female'}</label>
                 <input type="radio" class="validate-one-required" name="custom[gender][data]" id="genderFemale" {if $custom.gender.data eq 'Female'}checked{/if} value="{gt text='Female'}" />
             </span>
-            <span id="advice-validate-one-required-genderFemale" class="custom-advice" style="display:none"><br />{gt text='Please select one of the above options.'}</span>
         </span>
     </p>
     
@@ -106,21 +90,18 @@
             <label for="typeofverhicle">{gt text='Type of Vehicle'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[typeofverhicle][name]" value="{gt text='Type of Vehicle'}" />
             <input type="hidden" name="custom[typeofverhicle][mandatory]" value="1" />
-            <select class="formborder required validate-selection" name="custom[typeofverhicle][data]" id="typeofverhicle">
-                <option value="{gt text='- Make a choice -'}">{gt text='- Make a choice -'}</option>
+            <select required class="formborder" name="custom[typeofverhicle][data]" id="typeofverhicle">
+                <option value="">{gt text='- Make a choice -'}</option>
                 <option {if $custom.typeofverhicle.data eq 'Type 1'}selected{/if} value="{gt text='Type 1'}">{gt text='Type 1'}</option>
                 <option {if $custom.typeofverhicle.data eq 'Type 2'}selected{/if} value="{gt text='Type 2'}">{gt text='Type 2'}</option>
                 <option {if $custom.typeofverhicle.data eq 'Type 3'}selected{/if} value="{gt text='Type 3'}">{gt text='Type 3'}</option>
             </select>
-            <span id="advice-validate-selection-typeofverhicle" class="custom-advice" style="display:none"><br />{gt text='Please make a selection.'}</span>
         </span>
         <span style="float:left; width: 49%;">
             <label for="nrofpersons">{gt text='Number of persons'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[nrofpersons][name]" value="{gt text='Number of persons'}" />
             <input type="hidden" name="custom[nrofpersons][mandatory]" value="1" />
-            <input type="text" class="formborder required validate-number" name="custom[nrofpersons][data]" id="nrofpersons" size="35" maxlength="70" value="{$custom.nrofpersons.data}" />
-            <span id="advice-required-nrofpersons" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
-            <span id="advice-validate-number-nrofpersons" class="custom-advice" style="display:none"><br />{gt text='Please enter a valid number in this field.'}</span>
+            <input type="number" required class="formborder" name="custom[nrofpersons][data]" id="nrofpersons" size="35" maxlength="70" value="{$custom.nrofpersons.data}" />
         </span>
     </p>
     
@@ -129,26 +110,15 @@
             <label for="rentalstart">{gt text='Start of Rental Period'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[rentalstart][name]" value="{gt text='Start of Rental Period'}" />
             <input type="hidden" name="custom[rentalstart][mandatory]" value="1" />
-            <input type="text" class="formborder required validate-date-eu datepicker" name="custom[rentalstart][data]" id="rentalstart" size="35" maxlength="40" value="{$custom.rentalstart.data}" />
-            <span id="advice-required-rentalstart" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
-            <span id="advice-validate-date-eu-rentalstart" class="custom-advice" style="display:none"><br />{gt text='Please enter a valid date.'}</span>
+            <input type="text" required pattern="{literal}\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2}){/literal}" title="{gt text='Please enter a valid date (mm/dd/yyyy).'}" class="formborder datepicker" name="custom[rentalstart][data]" id="rentalstart" size="35" maxlength="40" value="{$custom.rentalstart.data}" />
         </span>
         <span style="float:left; width: 49%;">
             <label for="rentalend">{gt text='End of Rental Period'}<span class="mandatory">*</span></label><br />
             <input type="hidden" name="custom[rentalend][name]" value="{gt text='End of Rental Period'}" />
             <input type="hidden" name="custom[rentalend][mandatory]" value="1" />
-            <input type="text" class="formborder required validate-date-eu datepicker" name="custom[rentalend][data]" id="rentalend" size="35" maxlength="40" value="{$custom.rentalend.data}" />
-            <span id="advice-required-rentalend" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
-            <span id="advice-validate-date-eu-rentalend" class="custom-advice" style="display:none"><br />{gt text='Please enter a valid date.'}</span>
+            <input type="text" required pattern="{literal}\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2}){/literal}" title="{gt text='Please enter a valid date (mm/dd/yyyy).'}" class="formborder datepicker" name="custom[rentalend][data]" id="rentalend" size="35" maxlength="40" value="{$custom.rentalend.data}" />
         </span>
     </p>
-    <script type="text/javascript">
-        // <![CDATA[
-        /* Activate the datepicker fields */
-        new Control.DatePicker('rentalstart', {locale: 'en_GB', icon: 'modules/Formicula/images/calendar.png', timePicker: false});
-        new Control.DatePicker('rentalend', {locale: 'en_GB', icon: 'modules/Formicula/images/calendar.png', timePicker: false});
-        // ]]>
-    </script>
     
     <p>
         <strong>{gt text='Included Extras'}</strong>
@@ -175,7 +145,7 @@
     <h3>{gt text='Finish and Send'}</h3>
     <p class="z-clearfix">
         <label for="comment">{gt text='Comment'}</label><br />
-        <textarea class="formborder" rows="4" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
+        <textarea placeholder="{gt text='Your comments here...'}" class="formborder" rows="4" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
     </p>
     
     <p>
@@ -213,19 +183,11 @@
         <input class="z-bt-ok" type="submit" name="submit" value="{gt text="Send"}" />
     </p>
     
-    <script type="text/javascript">
-        /* Added a european date format check, see also: http://groups.google.com/group/dexagogo/browse_thread/thread/352f4a8467c85b4c */
-        Validation.add('validate-date-eu', 'Please use this date format: dd/mm/yyyy, dd-mm-yyyy or dd mm yyyy. For example 17/03/2009 for the 17th of March, 2009.', function(v) {
-                    if (Validation.get('IsEmpty').test(v)) return true;
-                    var regex = /^(\d{2})[\/\-\s](\d{2})[\/\-\s](\d{4})$/;
-                    if (!regex.test(v)) return false;
-                    var d = new Date(v.replace(regex, '$2/$1/$3'));
-                    return (parseInt(RegExp.$2, 10) == (1+d.getMonth())) && 
-                                (parseInt(RegExp.$1, 10) == d.getDate()) && 
-                                (parseInt(RegExp.$3, 10) == d.getFullYear() );
-        });
-        var valid = new Validation('contactform');
-    </script>
-    
+	<script type="text/javascript">
+		// call webshims polyfill to get html5 forms validation and other effects into non-html5 browsers
+		jQuery.webshims.activeLang('{{lang}}');
+		jQuery.webshims.polyfill('forms');
+	</script>
+   
     </div>
 </form>

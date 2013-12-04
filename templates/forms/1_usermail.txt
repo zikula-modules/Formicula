@@ -1,18 +1,18 @@
- {gt text='Hello,'}
+﻿ {gt text='Hello,'}
 
 {gt text='This data was sent to us:'}
 
-{gt text='Contact or Theme'} : { $contact.name }
-{gt text='Your Name'} : { $userdata.uname }
-{gt text='Email'} : { $userdata.uemail }
-{gt text='Homepage'} : { $userdata.url }
+{gt text='Contact or Theme'} :{$contact.name}
+{gt text='Your Name'} :{$userdata.uname}
+{gt text='Email'} :{$userdata.uemail}
+{gt text='Homepage'} :{$userdata.url}
 
-{ foreach item=field from=$custom }
-{ $field.name } : { $field.data }
-{ /foreach }
+{foreach item=field from=$custom}
+{$field.name}:{$field.data}
+{/foreach}
 
 {gt text='Comment'} :
-{ $userdata.comment|safetext }
+{$userdata.comment|safetext}
 
 {gt text='Thanks for applying, we will keep your data strictly confidential'}
 
