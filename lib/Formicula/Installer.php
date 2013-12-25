@@ -275,14 +275,16 @@ Allow from env=object_is_jpeg
                 $res = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+SetEnvIf Request_URI "\.jpeg$" object_is_jpeg=jpeg
 Order deny,allow
 Deny from all
 Allow from env=object_is_gif
 Allow from env=object_is_png
 Allow from env=object_is_jpg
+Allow from env=object_is_jpeg
 ');
                 if ($res===false) {
-                    LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
+                    LogUtil::registerStatus($this->__('The installer could not create formicula_cache/.htaccess, please refer to the manual before using the module!'));
                 } else {
                     LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory in Zikula\'s temporary directory with a .htaccess file for security in there.'));
                 }
