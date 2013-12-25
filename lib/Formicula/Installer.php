@@ -117,18 +117,19 @@ class Formicula_Installer extends Zikula_AbstractInstaller
                 }
                 if (!is_dir($tempdir . 'formicula_cache')) {
                     if (FileUtil::mkdirs($tempdir . 'formicula_cache')) {
-                        $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
-                        $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+                        $res = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+SetEnvIf Request_URI "\.jpeg$" object_is_jpeg=jpeg
 Order deny,allow
 Deny from all
 Allow from env=object_is_gif
 Allow from env=object_is_png
 Allow from env=object_is_jpg
+Allow from env=object_is_jpeg
 ');
-                        if ($res1===false || $res2===false){
-                            LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
+                        if ($res===false){
+                            LogUtil::registerStatus($this->__('The installer could not create formicula_cache/.htaccess, please refer to the manual before using the module!'));
                         }
                     } else {
                         LogUtil::registerStatus($this->__('The installer could not create the formicula_cache directory, please refer to the manual before using the module!'));
