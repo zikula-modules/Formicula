@@ -1,4 +1,4 @@
-﻿{gt text='Hello,'}
+{gt text='Hello,'}
 
 <{gt text='A visitor of to your web site used the form for contact and sent the following:'}
 

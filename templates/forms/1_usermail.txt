@@ -1,4 +1,4 @@
-﻿ {gt text='Hello,'}
+ {gt text='Hello,'}
 
 {gt text='This data was sent to us:'}
 
