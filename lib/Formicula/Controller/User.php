@@ -128,7 +128,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $this->view->assign('contacts', $contacts);
         $this->view->assign('addinfo', $addinfo);
         $this->view->assign('spamcheck', $spamcheck);
-        return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form.'_userform.html');
+        return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form.'_userform.tpl');
     }
 
     /**
@@ -410,10 +410,10 @@ class Formicula_Controller_User extends Zikula_AbstractController
             }
 
             $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
-            return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_userconfirm.html");
+            return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_userconfirm.tpl");
         } else {
             $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
-            return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usererror.html");
+            return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usererror.tpl");
         }
     }
 

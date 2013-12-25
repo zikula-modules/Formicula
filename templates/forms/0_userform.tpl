@@ -1,4 +1,4 @@
-{include file='forms/0_userheader.html'}
+{include file='forms/0_userheader.tpl'}
 
 {pageaddvar name="javascript" value="jquery"}
 {pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}
@@ -36,7 +36,7 @@
 
         <div class="z-formrow">
             <label for="uemail">{gt text="Email"}<span class="mandatory">*</span></label>
-            <input type="email" required placeholder="name@test.nl" class="formborder" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
+            <input type="email" required placeholder="{gt text='Enter a valid email address'}" class="formborder" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
         </div>
 
         {if $modvars.Formicula.show_url==1}

@@ -1,4 +1,4 @@
-{include file='forms/2_userheader.html'}
+{include file='forms/2_userheader.tpl'}
 
 <p class="z-center">
     {gt text='Thank you for your questions/comments to our website!<br />We will reply as soon as possible.'}

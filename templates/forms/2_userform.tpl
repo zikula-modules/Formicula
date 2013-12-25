@@ -1,4 +1,4 @@
-{include file='forms/2_userheader.html'}
+{include file='forms/2_userheader.tpl'}
 
 {pageaddvar name="javascript" value="jquery"}
 {pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}

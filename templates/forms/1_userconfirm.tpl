@@ -1,14 +1,9 @@
-{include file='forms/3_userheader.html'}
-
-<p>{gt text='Thank you %s for your reservation.' tag1=$userdata.uname|safehtml}<p/>
-<p>{gt text='An email with the filled in data will be sent to our and your email address (%s). We will reply 
-as soon as possible.' tag1=$userdata.uemail|safehtml}</p>
-<p>{$sitename}</p>
-
-<hr />
+{include file='forms/1_userheader.tpl'}
 
 <div style="text-align: center;">
     {gt text='This data was sent to us:'}
+    <br /><br />
+    {gt text='Thanks for applying, we will keep your data strictly confidential'}
     <br /><br />
 </div>
 
@@ -23,15 +18,6 @@ as soon as possible.' tag1=$userdata.uemail|safehtml}</p>
         </td>
     </tr>
 
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Email'}&nbsp;:
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.uemail|safehtml}
-        </td>
-    </tr>
-
     {foreach item=field from=$custom}
     <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
@@ -42,6 +28,24 @@ as soon as possible.' tag1=$userdata.uemail|safehtml}</p>
         </td>
     </tr>
     {/foreach}
+
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            {gt text='Email'}&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            {$userdata.uemail|safehtml}
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
+            {gt text='Homepage'}&nbsp;:
+        </td>
+        <td style="width: 50%; text-align:left; padding-left: 50px;">
+            {$userdata.url|safehtml}
+        </td>
+    </tr>
 
     <tr>
         <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
@@ -61,4 +65,4 @@ as soon as possible.' tag1=$userdata.uemail|safehtml}</p>
 {gt text='There was an internal error when sending confirmation mail'}
 {/if}
 
-{include file='forms/3_userfooter.html'}
+{include file='forms/1_userfooter.html'}

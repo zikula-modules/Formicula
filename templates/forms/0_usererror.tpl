@@ -1,4 +1,4 @@
-{include file=forms/0_userheader.html}
+{include file='forms/0_userheader.tpl'}
 
 <p class="z-errormsg">
     {gt text='There is an error in your form'}

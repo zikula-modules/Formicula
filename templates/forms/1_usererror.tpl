@@ -1,4 +1,4 @@
-{include file=forms/1_userheader.html}
+{include file='forms/1_userheader.tpl'}
 
 <p align='center'>
 {gt text='There is an error in your form'}
