@@ -88,7 +88,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $obj = DBUtil::insertObject($args, 'formcontacts', 'cid');
-        if($obj == false) {
+        if ($obj == false) {
             return LogUtil::registerError(__('Error! Creation attempt failed.'));
         }
         $this->callHooks('item', 'create', $obj['cid']);
@@ -114,7 +114,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $res = DBUtil::deleteObjectByID ('formcontacts', (int)$args['cid'], 'cid');
-        if($res==false) {
+        if ($res==false) {
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
 
@@ -154,7 +154,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $res = DBUtil::updateObject($args, 'formcontacts', '', 'cid');
-        if($res == false) {
+        if ($res == false) {
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
         }
         $this->callHooks('item', 'update', $args['cid']);
@@ -227,7 +227,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $res = DBUtil::deleteObjectByID ('formsubmits', (int)$args['sid'], 'sid');
-        if($res==false) {
+        if ($res==false) {
             return LogUtil::registerError($this->__('Error! Sorry! Deletion attempt failed.'));
         }
 

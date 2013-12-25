@@ -26,7 +26,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
                 if ($parts[0] == 'formicula') {
                     continue;
                 }
-                if( !isset($sets_found[$parts[0]])) {
+                if ( !isset($sets_found[$parts[0]])) {
                     $sets_found[$parts[0]] = 0;
                 }
                 $sets_found[$parts[0]]++;
@@ -68,7 +68,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
                 return false;
             }
             $data = $view->getValues();
-            if(!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
+            if (!empty($data['upload_dir']) && !is_writable($data['upload_dir'])) {
                 $ifield = & $view->getPluginById('upload_dir');
                 $ifield->setError(DataUtil::formatForDisplay($this->__('The webserver cannot write into this directory!')));
                 return false;

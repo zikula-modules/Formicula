@@ -19,13 +19,13 @@ class Formicula_Util
      */
     public static function envcheck()
     {
-        if(!ModUtil::available('Mailer')) {
+        if (!ModUtil::available('Mailer')) {
             LogUtil::registerError(__('Mailer module is not available - unable to send emails!'));
         }
 
-        if(ModUtil::getVar('Formicula', 'spamcheck') <> 0) {
+        if (ModUtil::getVar('Formicula', 'spamcheck') <> 0) {
             $freetype = function_exists('imagettfbbox');
-            if(!$freetype || ( !(imagetypes() && IMG_PNG)
+            if (!$freetype || ( !(imagetypes() && IMG_PNG)
                             && !(imagetypes() && IMG_JPG)
                             && !(imagetypes() && IMG_GIF)) ) {
                 LogUtil::registerStatus(__('no image function available - captcha deactivated'));
@@ -33,11 +33,11 @@ class Formicula_Util
             }
 
             $cachedir = System::getVar('temp') . '/formicula_cache';
-            if(!file_exists($cachedir) || !is_writable($cachedir)) {
+            if (!file_exists($cachedir) || !is_writable($cachedir)) {
                 LogUtil::registerStatus(__('formicula_cache directory does not exist in Zikula\'s temporary directory or is not writable - captchas have been disabled'));
                 ModUtil::setVar('Formicula', 'spamcheck', 0);
             }
-            if(!file_exists($cachedir.'/.htaccess')) {
+            if (!file_exists($cachedir.'/.htaccess')) {
                 LogUtil::registerStatus(__('.htaccess file needed in formicula_cache directory not exist'));
                 ModUtil::setVar('Formicula', 'spamcheck', 0);
             }

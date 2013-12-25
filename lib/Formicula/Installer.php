@@ -83,7 +83,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
 
                 // migrate contacts from config var to table
                 $contacts = $this->getVar('contacts');
-                if( @unserialize( $contacts ) != "" ) {
+                if (@unserialize( $contacts ) != "") {
                     $contacts_array = unserialize( $contacts );
                 } else {
                     $contacts_array = array();
@@ -112,11 +112,11 @@ class Formicula_Installer extends Zikula_AbstractInstaller
             case '1.1':
 
                 $tempdir = System::getVar('temp');
-                if(StringUtil::right($tempdir, 1) <> '/') {
+                if (StringUtil::right($tempdir, 1) <> '/') {
                     $tempdir .= '/';
                 }
-                if(!is_dir($tempdir . 'formicula_cache')) {
-                    if(FileUtil::mkdirs($tempdir . 'formicula_cache')) {
+                if (!is_dir($tempdir . 'formicula_cache')) {
+                    if (FileUtil::mkdirs($tempdir . 'formicula_cache')) {
                         $res1 = FileUtil::writeFile($tempdir . 'formicula_cache/index.html');
                         $res2 = FileUtil::writeFile($tempdir . 'formicula_cache/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
@@ -127,7 +127,7 @@ Allow from env=object_is_gif
 Allow from env=object_is_png
 Allow from env=object_is_jpg
 ');
-                        if($res1===false || $res2===false){
+                        if ($res1===false || $res2===false){
                             LogUtil::registerStatus($this->__('The installer could not create formicula_cache/index.html and/or formicula_cache/.htaccess, please refer to the manual before using the module!'));
                         }
                     } else {
@@ -193,10 +193,10 @@ Allow from env=object_is_jpg
                 }
             case '3.0.0':
                 $tempdir = System::getVar('temp');
-                if(StringUtil::right($tempdir, 1) <> '/') {
+                if (StringUtil::right($tempdir, 1) <> '/') {
                     $tempdir .= '/';
                 }
-                if(is_dir($tempdir . 'formicula_cache')) {
+                if (is_dir($tempdir . 'formicula_cache')) {
                     FileUtil::deldir($tempdir . 'formicula_cache');
                 }            
                 LogUtil::registerStatus($this->__('The SimpleCaptcha validation has changed, so the formicula_cache folder containing cached validation images was cleared.'));
@@ -229,10 +229,10 @@ Allow from env=object_is_jpg
         }
 
         $tempdir = System::getVar('temp');
-        if(StringUtil::right($tempdir, 1) <> '/') {
+        if (StringUtil::right($tempdir, 1) <> '/') {
             $tempdir .= '/';
         }
-        if(is_dir($tempdir . 'formicula_cache')) {
+        if (is_dir($tempdir . 'formicula_cache')) {
             FileUtil::deldir($tempdir . 'formicula_cache');
         }
 

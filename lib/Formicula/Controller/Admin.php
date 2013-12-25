@@ -264,7 +264,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
 
         // clear the image cache
         $temp = System::getVar('temp');
-        if(StringUtil::right($temp, 1) <> '/') {
+        if (StringUtil::right($temp, 1) <> '/') {
             $temp .= '/';
         }
         $path = $temp . 'formicula_cache/';

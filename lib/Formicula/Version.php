@@ -26,7 +26,8 @@ class Formicula_Version extends Zikula_AbstractVersion
         $meta['url'] = $this->__('formicula');
         $meta['capabilities'] = array(HookUtil::SUBSCRIBER_CAPABLE => array('enabled' => true));
         $meta['contact'] = 'Frank Schummertz <frank@zikula.org>';
-        $meta['securityschema'] = array('Formicula::' => 'form_id:contact_id:' );
+        $meta['securityschema'] = array('Formicula::' => 'form_id:contact_id:',
+            'Formicula::Owncontacts' => 'form_id::');
         return $meta;
     }
 

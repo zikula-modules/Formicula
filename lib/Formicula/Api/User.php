@@ -30,7 +30,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $args['form'] = 0;
         }
 
-        if(!SecurityUtil::checkPermission('Formicula::', $args['form'] . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
+        if (!SecurityUtil::checkPermission('Formicula::', $args['form'] . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
             return LogUtil::registerPermissionError();
         }
 
@@ -88,7 +88,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $form     = DataUtil::formatForOS($args['form']);
         $format   = $args['format'];
 
-        if(ModUtil::available('Mailer')) {
+        if (ModUtil::available('Mailer')) {
             $render = Zikula_View::getInstance('Formicula', false, null, true);
             $ip = getenv('REMOTE_ADDR');
             $render->assign('host', gethostbyaddr($ip));
@@ -135,7 +135,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
                                           'attachments' => $attachments,
                                           'html'        => $html));
 
-            if(ModUtil::getVar('Formicula', 'delete_file') == 1) {
+            if (ModUtil::getVar('Formicula', 'delete_file') == 1) {
                 foreach($attachments as $attachment) {
                     unlink($attachment);
                 }
@@ -167,7 +167,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $form     = DataUtil::formatForOS($args['form']);
         $format   = $args['format'];
 
-        if(ModUtil::available('Mailer')) {
+        if (ModUtil::available('Mailer')) {
             $render = Zikula_View::getInstance('Formicula', false, null, true);
             $ip = getenv('REMOTE_ADDR');
             $render->assign('host', gethostbyaddr($ip));
@@ -191,19 +191,19 @@ class Formicula_Api_User extends Zikula_AbstractApi
             }
 
             // check for sender name
-            if(!empty($contact['sname'])) {
+            if (!empty($contact['sname'])) {
                 $fromname = $contact['sname'];
             } else {
                 $fromname = $sitename . ' - ' . DataUtil::formatForDisplay($this->__('Contact form'));
             }
             // check for sender email
-            if(!empty($contact['semail'])) {
+            if (!empty($contact['semail'])) {
                 $frommail = $contact['semail'];
             } else {
                 $frommail = $contact['email'];
             }
             // check for subject, can be in the form or in the contact
-            if(!empty($contact['ssubject']) || !empty($userdata['usersubject'])) {
+            if (!empty($contact['ssubject']) || !empty($userdata['usersubject'])) {
                 $subject = !empty($userdata['usersubject']) ? $userdata['usersubject'] : $contact['ssubject'];
                 // replace some placeholders
                 // %s = sitename
@@ -309,11 +309,11 @@ class Formicula_Api_User extends Zikula_AbstractApi
         }
 
         foreach($custom as $field) {
-            if(isset($field['mandatory']) && $field['mandatory']) {
-                if(!is_array($field['data']) && (empty($field['data']))) {
+            if (isset($field['mandatory']) && $field['mandatory']) {
+                if (!is_array($field['data']) && (empty($field['data']))) {
                     $ok = LogUtil::registerError($this->__('Error! Mandatory field:' . DataUtil::formatForDisplay($field['name'])));
                 }
-                if(($field['upload'] == true) && ($field['data']['size'] == 0)) {
+                if (($field['upload'] == true) && ($field['data']['size'] == 0)) {
                     $ok = LogUtil::registerError($this->__('Error! Upload error.'));
                 }
             }
@@ -331,10 +331,10 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function removeUploadInformation($args)
     {
-        if(isset($args['custom']) && is_array($args['custom'])) {
+        if (isset($args['custom']) && is_array($args['custom'])) {
             $custom = $args['custom'];
             for($i=0;$i<count($custom);$i++) {
-                if(isset($custom[$i]['upload']) && $custom[$i]['upload'] == true) {
+                if (isset($custom[$i]['upload']) && $custom[$i]['upload'] == true) {
                     $custom[$i]['data'] = $custom[$i]['data']['name'];
                 }
             }
@@ -357,12 +357,12 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function addSessionOwncontacts($args)
     {
-        if(!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', $args)) {
+        if (!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', $args)) {
             return false;
         }
         $owncontacts = SessionUtil::getVar('formicula_owncontacts', array());
         $tmpid = array_search($args['owncontacts'], $owncontacts);
-        if(!$tmpid) {
+        if (!$tmpid) {
             $id = count($owncontacts);
             $owncontacts[] = $args['owncontacts'];
             SessionUtil::setVar('formicula_owncontacts', $owncontacts);
@@ -385,16 +385,16 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function checkOwncontacts($args)
     {
-        if(!isset($args['owncontacts'])) {
+        if (!isset($args['owncontacts'])) {
             LogUtil::registerError($this->__('You must pass an owncontacts array!'));
             return false;
         }
         foreach($args['owncontacts'] as $item) {
-            if(!isset($item['name'])) {
+            if (!isset($item['name'])) {
                 LogUtil::registerError($this->__('You must pass a name for each contact!'));
                 return false;
             }
-            if(!isset($item['email']) || !filter_var($item['email'], FILTER_VALIDATE_EMAIL)) {
+            if (!isset($item['email']) || !filter_var($item['email'], FILTER_VALIDATE_EMAIL)) {
                 LogUtil::registerError($this->__('You must pass a valid mail address for each contact!'));
                 return false;
             }

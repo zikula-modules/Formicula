@@ -22,7 +22,7 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
         $view->caching = false;
         $view->add_core_data();
 
-        if(($this->cid==-1) ) {
+        if (($this->cid==-1) ) {
             $mode = 'create';
             $contact = array('cid'      => -1,
                              'name'     => '',
@@ -64,12 +64,12 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
             $data['name'] = $data['cname'];
 
             // no deletion, further checks needed
-            if(empty($data['cname'])) {
+            if (empty($data['cname'])) {
                 $ifield = & $view->getPluginById('cname');
                 $ifield->setError(DataUtil::formatForDisplay($this->__('Error! No contact name.')));
                 $ok = false;
             }
-            if(empty($data['email'])) {
+            if (empty($data['email'])) {
                 $ifield = & $view->getPluginById('email');
                 $ifield->setError(DataUtil::formatForDisplay($this->__('Error! No email address supplied.')));
                 $ok = false;
@@ -86,26 +86,26 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
                     }
                 }
             }
-            if(!empty($data['semail']) && !System::varValidate($data['semail'], 'email')) {
+            if (!empty($data['semail']) && !System::varValidate($data['semail'], 'email')) {
                 $ifield = & $view->getPluginById('semail');
                 $ifield->setError(DataUtil::formatForDisplay($this->__('Error! Incorrect email address supplied.')));
                 $ok = false;
             }
 
-            if(!$ok) {
+            if (!$ok) {
                 return false;
             }
 
             // The API function is called
-            if($data['cid'] == -1) {
-                if(ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data) <> false) {
+            if ($data['cid'] == -1) {
+                if (ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data) <> false) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact created'));
                 } else {
                     LogUtil::registerError($this->__('Error creating contact!'));
                 }
             } else {
-                if(ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data) <> false) {
+                if (ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data) <> false) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact info has been updated'));
                 } else {
