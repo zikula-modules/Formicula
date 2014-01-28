@@ -60,4 +60,4 @@
 {gt text='There was an internal error when sending confirmation mail'}
 {/if}
 
-{include file='forms/3_userfooter.html'}
+{include file='forms/3_userfooter.tpl'}

@@ -70,4 +70,4 @@
     {/if}
 </p>
 
-{include file='forms/0_userfooter.html'}
+{include file='forms/0_userfooter.tpl'}
