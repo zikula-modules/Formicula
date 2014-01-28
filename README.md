@@ -3,9 +3,8 @@ Formicula Zikula Module
 
 A template-driven form mailer for Zikula. 
 Formicula is a highly configurable contact mailer solution for Zikula Application Framework. 
-You can create any kind of contact form with any number contact fields by changing some pnRender-templates. 
-Forms can be controlled by permissions. It also supports multiple, permission controlled recipients, configurable notification emails, 
-a simple captcha for spam protection, javascript form validation and file uploads.
+You can create any kind of contact form with any number contact fields by changing Render templates.
+Forms can be controlled by permissions. It also supports multiple, permission controlled recipients, configurable notification emails, a simple captcha for spam protection, hooks to the Captcha module, javascript form validation and file uploads.
 
 3.x versions
 ------------
