@@ -104,7 +104,7 @@
 
     </fieldset>
 
-    {notifydisplayhooks eventname='Formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
+    {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
     {foreach from=$hooks key='provider_area' item='hook'}
     {if $hook}
     <fieldset>
