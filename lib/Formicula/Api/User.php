@@ -106,7 +106,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
 
             foreach ($custom as $k => $customField) {
                 if (isset($customField['data']) && is_array($customField['data']))  {
-                    $attachments[] = $uploaddir . '/' . $customField['data']['name'];
+                    if ($customField['data']['name']) {
+                        $attachments[] = $uploaddir . '/' . $customField['data']['name'];
+                    }
                     $custom[$k]['data'] = $customField['data']['name'];
                 }
             }
@@ -137,7 +139,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
 
             if (ModUtil::getVar('Formicula', 'delete_file') == 1) {
                 foreach($attachments as $attachment) {
-                    unlink($attachment);
+                    if (file_exists($attachment) && is_file($attachment)) {
+                        unlink($attachment);
+                    }
                 }
             }
 
