@@ -3,7 +3,7 @@
     <head>
         <title>{gt text='Contact our team'}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <base href="{getbaseurl}" />
+        <base href="{$baseurl}" />
     </head>
     <body>
         <p>
