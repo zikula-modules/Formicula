@@ -34,7 +34,7 @@ function Formicula_tables()
                                                 'name'     => "C(40) NOTNULL DEFAULT ''",
                                                 'email'    => "C(80) NOTNULL DEFAULT ''",
                                                 'public'   => "I1 NOTNULL DEFAULT  0",
-                                                'sname'    => "C(40) NOTNULL DEFAULT ''",
+                                                'sname'    => "C(80) NOTNULL DEFAULT ''",
                                                 'semail'   => "C(80) NOTNULL DEFAULT ''",
                                                 'ssubject' => "C(80) NOTNULL DEFAULT ''");
 
