@@ -303,13 +303,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
                 $ok = LogUtil::registerError($this->__('Error! No or incorrect email address supplied.'));
             }
 
-            if (!isset($userdata['uname']) || empty($userdata['uname']) || ($userdata['uname'] != DataUtil::censor($userdata['uname']))) {
+            if (!isset($userdata['uname']) || empty($userdata['uname'])) {
                 $ok = LogUtil::registerError($this->__('Error! No or invalid username given.'));
             }
-        }
-
-        if ($userdata['comment'] != DataUtil::censor($userdata['comment'])) {
-            $ok = LogUtil::registerError($this->__('Error! No or invalid comment supplied (no HTML!).'));
         }
 
         foreach($custom as $field) {
