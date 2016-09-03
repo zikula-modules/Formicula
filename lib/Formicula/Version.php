@@ -16,7 +16,7 @@ class Formicula_Version extends Zikula_AbstractVersion
     public function getMetaData()
     {
         $meta = array();
-        $meta['version'] = '3.1.1';
+        $meta['version'] = '3.1.2';
         $meta['core_min'] = '1.3.0'; // Fixed to 1.3.x range
         $meta['core_max'] = '1.4.99'; // Fixed to 1.4.x range
         $meta['oldnames']    = array('formicula');
@@ -26,8 +26,11 @@ class Formicula_Version extends Zikula_AbstractVersion
         $meta['url'] = $this->__('formicula');
         $meta['capabilities'] = array(HookUtil::SUBSCRIBER_CAPABLE => array('enabled' => true));
         $meta['contact'] = 'Frank Schummertz <frank@zikula.org>';
-        $meta['securityschema'] = array('Formicula::' => 'form_id:contact_id:',
-            'Formicula::Owncontacts' => 'form_id::');
+        $meta['securityschema'] = array(
+            'Formicula::' => 'form_id:contact_id:',
+            'Formicula::Owncontacts' => 'form_id::'
+        );
+
         return $meta;
     }
 
@@ -38,5 +41,4 @@ class Formicula_Version extends Zikula_AbstractVersion
         $bundle->addEvent('validate_edit', 'formicula.ui_hooks.forms.validate_edit');
         $this->registerHookSubscriberBundle($bundle);
     }
-
 }

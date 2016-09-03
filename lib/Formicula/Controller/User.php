@@ -22,14 +22,14 @@ class Formicula_Controller_User extends Zikula_AbstractController
      * main
      * main entry point for the user
      *
-     *@param form int number of form to show
-     *@param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     * @param form int number of form to show
+     * @param owncontacts array of own contacts to replace with the standard. The array can contain the following values
      *    name the contact full name (required)
      *    sname the contact secure name wich will be send to the submitter (optional)
      *    email the contact email (required)
      *    semail the contact email wich will be send to the submiter (optional)
      *    ssubject the subject of the confirmation mail (optional)
-     *@returns view output
+     * @return view output
      */
     public function main($args=array())
     {
@@ -120,34 +120,37 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 'company' => '',
                 'location' => '');
         }
-        $this->view->assign('custom', $custom);
-        $this->view->assign('userdata', $userdata);
+
+        $this->view->assign('custom', $custom)
+                   ->assign('userdata', $userdata)
         // for bw compatibility also provide uname and uemail
-        $this->view->assign('uname', $uname);
-        $this->view->assign('uemail', $uemail);
-        $this->view->assign('contacts', $contacts);
-        $this->view->assign('addinfo', $addinfo);
-        $this->view->assign('spamcheck', $spamcheck);
+                   ->assign('uname', $uname)
+                   ->assign('uemail', $uemail)
+                   ->assign('contacts', $contacts)
+                   ->assign('addinfo', $addinfo)
+                   ->assign('spamcheck', $spamcheck);
+
         return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form.'_userform.tpl');
     }
 
     /**
      * send
      * sends the mail to the contact and, if configured, to the user and dbase
-     *@param cid         int contact id
-     *@param form        int form id
-     *@param userformat  string email format for user, either 'plain' (default) or 'html'
-     *@param adminformat string email format for admin, either 'plain' (default) or 'html'
-     *@param dataformat  string form fields format, either 'plain' (default) or 'array'
-     *@param formdata    array  forms fields in array format if configured in dataformat
-     *@param uname       string users name
-     *@param uemail      string users email
-     *@param url         string users homepage
-     *@param phone       string users phone
-     *@param company     string users company
-     *@param location    string users location
-     *@param comment     string users comment
-     *@returns view output
+     *
+     * @param cid         int contact id
+     * @param form        int form id
+     * @param userformat  string email format for user, either 'plain' (default) or 'html'
+     * @param adminformat string email format for admin, either 'plain' (default) or 'html'
+     * @param dataformat  string form fields format, either 'plain' (default) or 'array'
+     * @param formdata    array  forms fields in array format if configured in dataformat
+     * @param uname       string users name
+     * @param uemail      string users email
+     * @param url         string users homepage
+     * @param phone       string users phone
+     * @param company     string users company
+     * @param location    string users location
+     * @param comment     string users comment
+     * @return view output
      */
     public function send($args=array())
     {
@@ -210,7 +213,6 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 }
                 $custom[$k] = $custom_field;
             }
-
         } else {
             $userdata['uname']    = FormUtil::getPassedValue('uname',     (isset($args['uname'])) ? $args['uname'] : '', 'GETPOST');
             $userdata['uemail']   = FormUtil::getPassedValue('uemail',    (isset($args['uemail'])) ? $args['uemail'] : '',  'GETPOST');
@@ -267,7 +269,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 $spamcheck = 0;
             }
         }
-        if ($spamcheck==1) {
+        if ($spamcheck == 1) {
             $captcha_ok = false;
             $cdata = @unserialize(SessionUtil::getVar('formicula_captcha'));
             if (is_array($cdata)) {
@@ -289,7 +291,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 }
             }
 
-            if ($captcha_ok==false) {
+            if ($captcha_ok == false) {
                 SessionUtil::delVar('formicula_captcha');
                 // todo: append params to $returntourl and redirect, see ticket #44
                 $params = array('form' => $form);
@@ -298,6 +300,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
                 }
                 SessionUtil::setVar('formicula_userdata', serialize($userdata));
                 SessionUtil::setVar('formicula_custom', serialize($custom));
+
                 return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorreturntourl);
             }
         }
@@ -308,6 +311,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
         if ($hookvalidators->hasErrors()) {
             SessionUtil::setVar('formicula_userdata', serialize($userdata));
             SessionUtil::setVar('formicula_custom', serialize($custom));
+
             return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorreturntourl);
         }
 
@@ -357,12 +361,12 @@ class Formicula_Controller_User extends Zikula_AbstractController
         $this->view->assign('userformat', $userformat);
         $this->view->assign('adminformat', $adminformat);
 
-        if (ModUtil::apiFunc('Formicula',
-                'user',
-                'checkArguments',
-                array('userdata'   => $userdata,
-                'custom'     => $custom,
-                'userformat' => $userformat)) == true) {
+        if (ModUtil::apiFunc('Formicula', 'user', 'checkArguments',
+                array(
+                    'userdata'   => $userdata,
+                    'custom'     => $custom,
+                    'userformat' => $userformat)
+                ) == true) {
 
             $userdata_comment = $userdata['comment'];
 
@@ -420,8 +424,9 @@ class Formicula_Controller_User extends Zikula_AbstractController
     /**
      * getimage
      * returns an image for the captcha even if zTemp is located outside of the webroot
-     *@param img  string the image filename
-     *@returns image output
+     *
+     * @param img  string the image filename
+     * @return image output
      */
     public function getimage()
     {

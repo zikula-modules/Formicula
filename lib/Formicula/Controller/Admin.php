@@ -22,8 +22,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * main
      * main entry point for configuration
      *
-     *@param none
-     *@returns view output
+     * @return view output
      */
     public function main()
     {
@@ -34,8 +33,8 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * edit
      * editing existing and adding new contacts
      *
-     *@param cid int contact id, -1 for new contacts
-     *@returns view output
+     * @param cid int contact id, -1 for new contacts
+     * @return view output
      */
     public function edit()
     {
@@ -59,9 +58,9 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * When called for the first time its produces an "Are you sure?" page. If the admin
      * clicks on OK, confirmation is set and the function deletes the entry
      *
-     *@param cid int contact id
-     *@param confirmation string any value
-     *@returns view output on error or forwards to view()
+     * @param cid int contact id
+     * @param confirmation string any value
+     * @return view output on error or forwards to view()
      */
     public function delete()
     {
@@ -103,8 +102,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * view
      * show list of contacts
      *
-     *@param none
-     *@returns view output
+     * @return view output
      */
     public function view()
     {
@@ -122,19 +120,23 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
         foreach ($allcontacts as $contact) {
             $cid = $contact['cid'];
             if (SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_EDIT)) {
-                $allowedcontact = array('cid'        => $contact['cid'],
-                                        'name'       => $contact['name'],
-                                        'email'      => $contact['email'],
-                                        'public'     => $contact['public'],
-                                        'sname'      => $contact['sname'],
-                                        'semail'     => $contact['semail'],
-                                        'ssubject'   => $contact['ssubject'],
-                                        'acc_edit'   => true,
-                                        'acc_delete' => SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_DELETE));
+                $allowedcontact = array(
+                    'cid'        => $contact['cid'],
+                    'name'       => $contact['name'],
+                    'email'      => $contact['email'],
+                    'public'     => $contact['public'],
+                    'sname'      => $contact['sname'],
+                    'semail'     => $contact['semail'],
+                    'ssubject'   => $contact['ssubject'],
+                    'acc_edit'   => true,
+                    'acc_delete' => SecurityUtil::checkPermission('Formicula::', ":$cid:", ACCESS_DELETE)
+                );
                 array_push($allowedcontacts, $allowedcontact);
             }
         }
+
         $this->view->assign('contacts', $allowedcontacts);
+
         return $this->view->fetch('admin/view.tpl');
     }
 
@@ -142,8 +144,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * view
      * show list of contacts
      *
-     *@param none
-     *@returns view output
+     * @return view output
      */
     public function viewsubmits()
     {
@@ -164,8 +165,8 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * displaysubmit
      * show a specific form submission
      *
-     *@param sid int formsubmit id
-     *@returns view output
+     * @param sid int formsubmit id
+     * @return view output
      */
     public function displaysubmit()
     {
@@ -191,9 +192,9 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * When called for the first time its produces an "Are you sure?" page. If the admin
      * clicks on OK, confirmation is set and the function deletes the entry
      *
-     *@param cid int contact id
-     *@param confirmation string any value
-     *@returns view output on error or forwards to view()
+     * @param cid int contact id
+     * @param confirmation string any value
+     * @return view output on error or forwards to view()
      */
     public function deletesubmit()
     {
@@ -233,8 +234,7 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
      * modifyconfig
      * main entry point for configuration of module behaviour
      *
-     *@param none
-     *@returns view output
+     * @return view output
      */
     public function modifyconfig()
     {
@@ -254,7 +254,6 @@ class Formicula_Controller_Admin extends Zikula_AbstractController
 
     /**
      * clear image cache
-     *
      */
     public function clearcache()
     {

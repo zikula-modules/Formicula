@@ -22,15 +22,17 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
         $view->caching = false;
         $view->add_core_data();
 
-        if (($this->cid==-1) ) {
+        if ($this->cid == -1) {
             $mode = 'create';
-            $contact = array('cid'      => -1,
-                             'name'     => '',
-                             'email'    => '',
-                             'public'   => 1,
-                             'semail'   => '',
-                             'sname'    => '',
-                             'ssubject' => '');
+            $contact = array(
+                'cid'      => -1,
+                'name'     => '',
+                'email'    => '',
+                'public'   => 1,
+                'semail'   => '',
+                'sname'    => '',
+                'ssubject' => ''
+            );
         } else {
             $mode = 'edit';
             $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact',
@@ -53,6 +55,7 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError(ModUtil::url('Formicula', 'admin', 'main'));
         }
+
         if ($args['commandName'] == 'submit') {
             $ok = $view->isValid();
 
@@ -76,8 +79,8 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
             } else {
                 // email addresses can be a comma seperated string, split and check seperately.
                 $data['email'] = preg_replace('/\s*/m', '', $data['email']); // remove spaces
-                $aMail = explode("," , $data['email']);
-                for ($i=0; $i<count($aMail); $i++) {
+                $aMail = explode(',', $data['email']);
+                for ($i = 0; $i < count($aMail); $i++) {
                     if (!System::varValidate($aMail[$i], 'email')) {
                         $ifield = & $view->getPluginById('email');
                         $ifield->setError(DataUtil::formatForDisplay($this->__f('Error! Incorrect email address [%s] supplied.', $aMail[$i])));
@@ -98,23 +101,22 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
 
             // The API function is called
             if ($data['cid'] == -1) {
-                if (ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data) <> false) {
+                if (ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data) != false) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact created'));
                 } else {
                     LogUtil::registerError($this->__('Error creating contact!'));
                 }
             } else {
-                if (ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data) <> false) {
+                if (ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data) != false) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact info has been updated'));
                 } else {
                     LogUtil::registerError($this->__('Error updating contact!'));
                 }
             }
-
         }
+
         return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
     }
-
 }

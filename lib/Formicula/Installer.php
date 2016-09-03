@@ -51,7 +51,9 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('show_userformat', 1);
         $this->setVar('default_userformat', 'html');
         $this->setVar('default_adminformat', 'html');
-        
+
+        $this->setVar('use_contacts_as_sender', 1);
+
         // register handlers
         EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
@@ -140,7 +142,7 @@ Allow from env=object_is_jpeg
                 $this->setVar('default_form', 0);
             case '2.2':
                 $modvars = ModUtil::getVar('Formicula');
-				// re-register module variables
+                // re-register module variables
                 if ($modvars) {
                     foreach ($modvars as $key => $value) {
                         $this->setVar($key, $value);
@@ -163,17 +165,17 @@ Allow from env=object_is_jpeg
                 // drop table prefix
                 $prefix = $this->serviceManager['prefix'];
                 $connection = Doctrine_Manager::getInstance()->getConnection('default');
-				if (!empty($prefix)) {
-					$sqlStatements = array();
-					$sqlStatements[] = 'RENAME TABLE ' . $prefix . '_formcontacts' . " TO `formcontacts`";
-					foreach ($sqlStatements as $sql) {
-						$stmt = $connection->prepare($sql);
-						try {
-							$stmt->execute();
-						} catch (Exception $e) {
-						}   
-					}
-				}
+                if (!empty($prefix)) {
+                    $sqlStatements = array();
+                    $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_formcontacts' . " TO `formcontacts`";
+                    foreach ($sqlStatements as $sql) {
+                        $stmt = $connection->prepare($sql);
+                        try {
+                            $stmt->execute();
+                        } catch (Exception $e) {
+                        }   
+                    }
+                }
 
                 if (!DBUtil::changeTable('formcontacts')) {
                     return '2.2';
@@ -209,6 +211,9 @@ Allow from env=object_is_jpeg
                 $this->setVar('default_adminformat', 'html');
             case '3.0.2':
             case '3.1.0':
+            case '3.1.1':
+                $this->setVar('use_contacts_as_sender', 1);
+            case '3.1.2':
                 // future upgrades
         }
 
@@ -258,7 +263,6 @@ Allow from env=object_is_jpeg
         return $oldToNew;
     }
 
-
 // -----------------------------------------------------------------------
 // Create default data for a new install
 // -----------------------------------------------------------------------
@@ -283,7 +287,7 @@ Allow from env=object_is_png
 Allow from env=object_is_jpg
 Allow from env=object_is_jpeg
 ');
-                if ($res===false) {
+                if (false === $res) {
                     LogUtil::registerStatus($this->__('The installer could not create formicula_cache/.htaccess, please refer to the manual before using the module!'));
                 } else {
                     LogUtil::registerStatus($this->__('The installer successfully created the formicula_cache directory in Zikula\'s temporary directory with a .htaccess file for security in there.'));

@@ -17,6 +17,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
     {
         $view->caching = false;
         $view->add_core_data();
+
         // scan the tempaltes flder for installed forms
         $files = FileUtil::getFiles('modules/Formicula/templates/forms/', false, true, null, false);
         $sets_found = array();
@@ -32,8 +33,10 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
                 $sets_found[$parts[0]]++;
             }
         }
+
         $cachedir = System::getVar('temp') . '/formicula_cache';
         $view->assign('cachedir', $cachedir);
+
         $items = array();
         foreach ($sets_found as $formid => $files) {
             $items[] = array('text' => $this->__f('Form #%1$s that contains %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
@@ -63,6 +66,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
         if (!SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
             return LogUtil::registerPermissionError(System::getHomepageUrl());
         }
+
         if ($args['commandName'] == 'submit') {
             if (!$view->isValid()) {
                 return false;
@@ -95,11 +99,11 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
             ModUtil::setVar('Formicula', 'default_userformat', $data['default_userformat']);
             ModUtil::setVar('Formicula', 'default_adminformat', $data['default_adminformat']);
             ModUtil::setVar('Formicula', 'show_userformat',  $data['show_userformat']);
- 
+            ModUtil::setVar('Formicula', 'use_contacts_as_sender',  $data['show_userformat']);
 
             LogUtil::registerStatus($this->__('The configuration has been changed.'));
         }
+
         return true;
     }
-
 }

@@ -17,8 +17,8 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * getContact
      * reads a single contact by id
      *
-     *@param cid int contact id
-     *@returns array with contact information
+     * @param cid int contact id
+     * @return array with contact information
      */
     public function getContact($args)
     {
@@ -33,6 +33,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $contact = DBUtil::selectObjectByID('formcontacts', $args['cid'], 'cid');
+
         return $contact;
     }
 
@@ -40,8 +41,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * readContacts
      * reads the contact list and returns it as array
      *
-     *@param none
-     *@returns array with contact information
+     * @return array with contact information
      */
     public function readContacts()
     {
@@ -66,13 +66,13 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * createContact
      * creates a new contact
      *
-     *@param name  string name of the contact
-     *@param email string email address
-     *@param public int 0/1 to indicate if address is for public use
-     *@param sname string use this as senders name in confirmation mails
-     *@param semail string use this as senders email address in confirmation mails
-     *@param ssubject string use this as subject in confirmation mails
-     *@returns boolean
+     * @param name  string name of the contact
+     * @param email string email address
+     * @param public int 0/1 to indicate if address is for public use
+     * @param sname string use this as senders name in confirmation mails
+     * @param semail string use this as senders email address in confirmation mails
+     * @param ssubject string use this as subject in confirmation mails
+     * @return boolean
      */
     public function createContact($args)
     {
@@ -92,6 +92,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError(__('Error! Creation attempt failed.'));
         }
         $this->callHooks('item', 'create', $obj['cid']);
+
         return $obj['cid'];
     }
 
@@ -99,8 +100,8 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * deleteContact
      * deletes a contact.
      *
-     *@param cid int contact id
-     *@returns boolean
+     * @param cid int contact id
+     * @return boolean
      */
     public function deleteContact($args)
     {
@@ -130,10 +131,10 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * updateContact
      * updates a contact
      *
-     *@param cid int contact id
-     *@param name string name of the contact
-     *@param email string email address
-     *@returns boolean
+     * @param cid int contact id
+     * @param name string name of the contact
+     * @param email string email address
+     * @return boolean
      */
     public function updateContact($args)
     {
@@ -158,6 +159,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('Error! Update attempt failed.'));
         }
         $this->callHooks('item', 'update', $args['cid']);
+
         return $args['cid'];
     }
 
@@ -166,8 +168,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * getFormSubmits
      * reads the form submit list and returns it as array
      *
-     *@param none
-     *@returns array with form submits information
+     * @return array with form submits information
      */
     public function getFormSubmits()
     {
@@ -190,8 +191,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * getFormSubmits
      * reads the form submit list and returns it as array
      *
-     *@param none
-     *@returns array with form submits information
+     * @return array with form submits information
      */
     public function getFormSubmit($args)
     {
@@ -205,6 +205,7 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
         }
 
         $submit = DBUtil::selectObjectByID('formsubmits', $args['sid'], 'sid');
+
         return $submit;
     }
 
@@ -212,8 +213,8 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
      * deleteSubmit
      * deletes a form submit.
      *
-     *@param sid int contact id
-     *@returns boolean
+     * @param sid int contact id
+     * @return boolean
      */
     public function deleteSubmit($args)
     {
@@ -239,26 +240,44 @@ class Formicula_Api_Admin extends Zikula_AbstractApi
     /**
      * get available admin panel links
      *
-     * @author Mark West
      * @return array array of admin links
      */
     public function getlinks()
     {
         $links = array();
         if (SecurityUtil::checkPermission('Formicula::', '::', ACCESS_ADMIN)) {
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'view'), 'text' => $this->__('View contacts'), 'class' => 'z-icon-es-view');
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'edit', array('cid' => -1)), 'text' => $this->__('Add contact'), 'class' => 'z-icon-es-new');
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'viewsubmits'), 'text' => $this->__('View form submits'), 'class' => 'z-icon-es-view');
-            $links[] = array('url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'),
-                             'text' => $this->__('Modify configuration'), 
-                             'class' => 'z-icon-es-config',
-                             'links' => array(
-                                             array('url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'),
-                                                   'text' => $this->__('Modify configuration')),
-                                             array('url' => ModUtil::url('Formicula', 'admin', 'clearcache'),
-                                                   'text' => $this->__('Clear captcha image cache'))
-                                               ));
+            $links[] = array(
+                'url' => ModUtil::url('Formicula', 'admin', 'view'),
+                'text' => $this->__('View contacts'),
+                'class' => 'z-icon-es-view'
+            );
+            $links[] = array(
+                'url' => ModUtil::url('Formicula', 'admin', 'edit', array('cid' => -1)),
+                'text' => $this->__('Add contact'),
+                'class' => 'z-icon-es-new'
+            );
+            $links[] = array(
+                'url' => ModUtil::url('Formicula', 'admin', 'viewsubmits'),
+                'text' => $this->__('View form submits'),
+                'class' => 'z-icon-es-view'
+            );
+            $links[] = array(
+                'url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'),
+                'text' => $this->__('Modify configuration'), 
+                'class' => 'z-icon-es-config',
+                'links' => array(
+                    array(
+                        'url' => ModUtil::url('Formicula', 'admin', 'modifyconfig'),
+                        'text' => $this->__('Modify configuration')
+                    ),
+                    array(
+                        'url' => ModUtil::url('Formicula', 'admin', 'clearcache'),
+                        'text' => $this->__('Clear captcha image cache')
+                    )
+                )
+            );
         }
+
         return $links;
     }
 }
