@@ -53,7 +53,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
 
         $owncontacts = false;
         $owncontactsuse = FormUtil::getPassedValue('owncontacts', -1, 'GETPOST');
-        if (is_array($args['owncontacts']) && $owncontactsuse != -1) {
+        if (isset($args['owncontacts']) && is_array($args['owncontacts']) && $owncontactsuse != -1) {
             $contacts = $args['owncontacts'];
             $id = ModUtil::apiFunc($this->name, 'user', 'addSessionOwncontacts', array('owncontacts' => $args['owncontacts']));
             SessionUtil::setVar('formicula_owncontactsUse', $id);
