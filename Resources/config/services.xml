@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="zikula_formicula_module.container.link_container.class">Zikula\FormiculaModule\Container\LinkContainer</parameter>
+    </parameters>
+    <services>
+        <service id="zikula_formicula_module.container.link_container" class="%zikula_formicula_module.container.link_container.class%">
+            <argument type="service" id="translator.default" />
+            <argument type="service" id="jms_i18n_routing.router" />
+            <argument type="service" id="zikula_permissions_module.api.permission" />
+            <tag name="zikula.link_container"/>
+        </service>
+    </services>
+</container>

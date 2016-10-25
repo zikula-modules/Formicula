@@ -1,0 +1,3 @@
+zikulaformiculamodule:
+    resource: "@ZikulaFormiculaModule/Controller"
+    type:     annotation
