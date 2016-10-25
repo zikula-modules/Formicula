@@ -83,18 +83,18 @@ The owncontacts array should contain the following values (per item) in both cas
 Templates
 ---------
 Everything you want to do with the form is handled in the templates.
-Store them in Resources/views/Forms/
+Store them in Resources/views/Form/
 The '#' at the beginning of the template designates the number of form.
 
 The templates for the forms are named as follows:
 
-The form with the input fields:  #_userform.html.twig
-The page with the confirmation after submitting the data:  #_userconfirm.html.twig
-The page with error messages after submitting data:  #_usererror.html.twig
-The user's confirmation mail in text format:  #_usermail.txt.twig
-The user's confirmation mail in html format:  #_usermail.html.twig
-The admin mail in text format:  #_adminmail.txt.twig
-The admin mail in html format:  #_adminmail.html.twig
+The form with the input fields:  #/userForm.html.twig
+The page with the confirmation after submitting the data:  #/userConfirm.html.twig
+The page with error messages after submitting data:  #/userError.html.twig
+The user's confirmation mail in text format:  #/userMail.txt.twig
+The user's confirmation mail in html format:  #/userMail.html.twig
+The admin mail in text format:  #/adminMail.txt.twig
+The admin mail in html format:  #/adminMail.html.twig
 This is the email that the admin gets after the user sends submits the userform.
 
 Note: the email format can be chosen by using a dropdown like
