@@ -51,12 +51,13 @@ class ConfigController extends AbstractController
         $modVars = $variableApi->getAll('ZikulaFormiculaModule');
 
         // scan the templates folder for installed forms
-        $templateDirectory = 
+        // TODO determine actual module folder dynamically
+        $templateDirectory = 'modules/Zikula/FormiculaModule/Resources/views/Form/';
         $formChoices = []
         $finder = new Finder();
         $finder2 = new Finder();
 
-        foreach ($finder->directories()->in('modules/Zikula/FormiculaModule/Resources/views/Form/') as $directory) {
+        foreach ($finder->directories()->in($templateFolder) as $directory) {
             $finder2->files()->in($directory->getRealPath());
             $formNumber = $directory->getFilename();
             $formChoices[$this->__f('Form #%1$s containing %2$s templates', [ '%1$s': $formNumber, '%2$s': count($finder2) ])] = $formNumber;
