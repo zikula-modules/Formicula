@@ -9,16 +9,24 @@
  * file that was distributed with this source code.
  */
 
-class Formicula_Controller_User extends Zikula_AbstractController
-{
-    public function postInitialize()
-    {
-        $this->view->setCaching(false)->add_core_data();
-    }
+namespace Zikula\FormiculaModule\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Zikula\Core\Controller\AbstractController;
+use Zikula\ThemeModule\Engine\Annotation\Theme;
+
+/**
+ * Class UserController
+ */
+class UserController extends AbstractController
+{
     /**
-     * main
-     * main entry point for the user
+     * Main entry point for the user.
      *
      * @param form int number of form to show
      * @param owncontacts array of own contacts to replace with the standard. The array can contain the following values
@@ -29,7 +37,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
      *    ssubject the subject of the confirmation mail (optional)
      * @return view output
      */
-    public function main($args = [])
+    public function indexAction(Request $request)
     {
         $default_form = $this->getVar('default_form', 0);
         $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : $default_form, 'GETPOST');
@@ -150,7 +158,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
      * @param comment     string users comment
      * @return view output
      */
-    public function send($args = [])
+    public function sendAction(Request $request)
     {
         $form           = (int)FormUtil::getPassedValue('form',        (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
         $cid            = (int)FormUtil::getPassedValue('cid',         (isset($args['cid'])) ? $args['cid'] : 0,  'GETPOST');
@@ -434,7 +442,7 @@ class Formicula_Controller_User extends Zikula_AbstractController
      * @param img  string the image filename
      * @return image output
      */
-    public function getimage()
+    public function getImageAction(Request $request)
     {
         $img = FormUtil::getPassedValue('img', '', 'GET');
 

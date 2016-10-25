@@ -7,11 +7,11 @@
             $('#formiculaSpamCheckDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_enablespamcheck').prop('checked'));
         });
 
-        if (!$('#zikulaformiculamodule_config_storesubmitdata').prop('checked')) {
+        if (!$('#zikulaformiculamodule_config_storesubmissiondata').prop('checked')) {
             $('#formiculaDataStorageDetails').addClass('hidden');
         }
-        $('#zikulaformiculamodule_config_storesubmitdata').change(function(){
-            $('#formiculaDataStorageDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_storesubmitdata').prop('checked'));
+        $('#zikulaformiculamodule_config_storesubmissiondata').change(function(){
+            $('#formiculaDataStorageDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_storesubmissiondata').prop('checked'));
         });
     });
 })(jQuery)

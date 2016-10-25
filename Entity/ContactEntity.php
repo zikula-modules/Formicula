@@ -173,7 +173,7 @@ class ContactEntity extends EntityAccess
      *
      * @return boolean the contact's public flag
      */
-    public function getPublic()
+    public function isPublic()
     {
         return $this->public;
     }

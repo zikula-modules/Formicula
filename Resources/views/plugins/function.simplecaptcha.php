@@ -172,7 +172,7 @@ function smarty_function_simplecaptcha($params, &$smarty)
     // is outside the webservers root. In this case we have to use a function to show the image instead
     // of loading the image directly
     if (StringUtil::left(System::getVar('temp'), 1) == '/') {
-        return '<img src="' . DataUtil::formatForDisplay(ModUtil::url('Formicula', 'user', 'getimage', ['img' => $hash . $imageType], null, null, true)) . '" alt="' . $this->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
+        return '<img src="' . DataUtil::formatForDisplay(ModUtil::url('Formicula', 'user', 'getImage', ['img' => $hash . $imageType], null, null, true)) . '" alt="' . $this->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
     }
 
     return '<img src="' . $imagePath . '" alt="' . $this->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';

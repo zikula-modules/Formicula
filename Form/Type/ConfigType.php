@@ -114,11 +114,11 @@ class ConfigType extends AbstractType
                 'max_length' => 40,
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for using the spam check in all forms.')
             ])
-            ->add('storeSubmitData', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('storeSubmissionData', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                 'label' => $translator->__('Store submitted data in database'),
                 'required' => false
             ])
-            ->add('storeSubmitDataForms', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('storeSubmissionDataForms', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Only store submissions from these forms'),
                 'required' => false,
                 'max_length' => 40,

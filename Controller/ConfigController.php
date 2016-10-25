@@ -51,7 +51,7 @@ class ConfigController extends AbstractController
         $modVars = $variableApi->getAll('ZikulaFormiculaModule');
 
         // scan the templates folder for installed forms
-        // TODO determine actual module folder dynamically
+        // TODO determine actual module folder dynamically -> look at abstract module and abstract bundle
         $templateDirectory = 'modules/Zikula/FormiculaModule/Resources/views/Form/';
         $formChoices = []
         $finder = new Finder();
@@ -79,7 +79,7 @@ class ConfigController extends AbstractController
                 } else {
                     // remove spaces in the comma separated forms lists
                     $formData['excludeSpamCheck'] = preg_replace('/\s*/m', '', $formData['excludeSpamCheck']);
-                    $formData['storeSubmitDataForms'] = preg_replace('/\s*/m', '', $formData['storeSubmitDataForms']);
+                    $formData['storeSubmissionDataForms'] = preg_replace('/\s*/m', '', $formData['storeSubmissionDataForms']);
 
                     $this->setVars($formData);
 

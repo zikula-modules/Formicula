@@ -78,19 +78,19 @@ class LinkContainer implements LinkContainerInterface
         }
 
         $links[] = [
-            'url' => $this->router->generate('zikulaformiculamodule_admin_view'),
+            'url' => $this->router->generate('zikulaformiculamodule_contact_view'),
             'text' => $this->translator->__('View contacts'),
-            'class' => 'table'
+            'class' => 'group'
         ];
         $links[] = [
-            'url' => $this->router->generate('zikulaformiculamodule_admin_edit', ['cid' => -1]),
+            'url' => $this->router->generate('zikulaformiculamodule_contact_edit', ['cid' => -1]),
             'text' => $this->translator->__('Add contact'),
-            'class' => 'plus'
+            'class' => 'user-plus'
         ];
         $links[] = [
-            'url' => $this->router->generate('zikulaformiculamodule_admin_viewsubmits'),
+            'url' => $this->router->generate('zikulaformiculamodule_submission_view'),
             'text' => $this->translator->__('View form submits'),
-            'class' => 'table'
+            'class' => 'envelope-open'
         ];
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_config_config'),

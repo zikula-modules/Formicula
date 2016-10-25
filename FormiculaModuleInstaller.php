@@ -82,8 +82,8 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             'enableSpamCheck' => true,
             'excludeSpamCheck' => '',
 
-            'storeSubmitData' => false,
-            'storeSubmitDataForms' => ''
+            'storeSubmissionData' => false,
+            'storeSubmissionDataForms' => ''
         ]);
 
         // install subscriber hook

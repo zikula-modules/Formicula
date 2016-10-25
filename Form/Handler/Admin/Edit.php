@@ -114,6 +114,6 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
             }
         }
 
-        return System::redirect(ModUtil::url('Formicula', 'admin', 'main'));
+        return System::redirect(ModUtil::url('Formicula', 'contact', 'view'));
     }
 }
