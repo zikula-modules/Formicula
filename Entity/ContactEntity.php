@@ -185,7 +185,9 @@ class ContactEntity extends EntityAccess
      */
     public function setPublic($public)
     {
-        $this->public = $public;
+        if (is_bool($public)) {
+            $this->public = $public;
+        }
     }
 
     /**
