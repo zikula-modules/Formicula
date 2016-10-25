@@ -1,17 +1,17 @@
 (function($) {
     $(document).ready(function(){
-        if (!$('#spamcheck').prop('checked')) {
-            $('#formicula_spamcheck_details').addClass('hidden');
+        if (!$('#zikulaformiculamodule_config_enablespamcheck').prop('checked')) {
+            $('#formiculaSpamCheckDetails').addClass('hidden');
         }
-        $('#spamcheck').change(function() {
-            $('#formicula_spamcheck_details').toggleClass('hidden', !$('#spamcheck').prop('checked'));
+        $('#zikulaformiculamodule_config_enablespamcheck').change(function() {
+            $('#formiculaSpamCheckDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_enablespamcheck').prop('checked'));
         });
 
-        if (!$('#store_data').prop('checked')) {
-            $('#formicula_storedata_details').addClass('hidden');
+        if (!$('#zikulaformiculamodule_config_storesubmitdata').prop('checked')) {
+            $('#formiculaDataStorageDetails').addClass('hidden');
         }
-        $('#store_data').change(function(){
-            $('#formicula_storedata_details').toggleClass('hidden', !$('#store_data').prop('checked'));
+        $('#zikulaformiculamodule_config_storesubmitdata').change(function(){
+            $('#formiculaDataStorageDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_storesubmitdata').prop('checked'));
         });
     });
 })(jQuery)

@@ -23,7 +23,7 @@
             "displayname": "Formicula",
             "url": "formicula",
             "capabilities": {
-                "admin": {"route": "zikulaformiculamodule_config_config"},
+                "admin": {"route": "zikulaformiculamodule_contact_view"},
                 "user": {"route": "zikulaformiculamodule_user_index"},
                 "hook_subscriber": {"class": "Zikula\\FormiculaModule\\Container\\HookContainer"}
             },

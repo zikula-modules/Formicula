@@ -11,6 +11,8 @@
 
 namespace Zikula\FormiculaModule;
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Zikula\Core\AbstractExtensionInstaller;
 use Zikula\FormiculaModule\Entity\ContactEntity;
 
@@ -60,29 +62,28 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         $this->createCacheDirectory();
 
         $this->setVars([
+            'defaultForm' => 0,
             'showPhone' => true,
             'showCompany' => true,
             'showUrl' => true,
             'showLocation' => true,
             'showComment' => true,
-            'sendUser' => true,
-            'spamCheck' => true,
+
+            'showFileAttachment' => false,
+            'uploadDirectory' => 'userdata',
+            'deleteUploadedFiles' => true,
+
+            'sendConfirmationToUser' => true,
+            'defaultAdminFormat' => 'html',
+            'defaultUserFormat' => 'html',
+            'showUserFormat' => true,
+            'useContactsAsSender' => true,
+
+            'enableSpamCheck' => true,
             'excludeSpamCheck' => '',
 
-            'showAttachFile' => false,
-            'uploadDirectory' => 'userdata',
-            'deleteFile' => true,
-
-            'defaultForm' => 0,
-
-            'storeData' => false,
-            'storeDataForms' => '',
-
-            'showUserFormat' => true,
-            'defaultUserFormat' => 'html',
-            'defaultAdminFormat' => 'html',
-
-            'useContactsAsSender' => true
+            'storeSubmitData' => false,
+            'storeSubmitDataForms' => ''
         ]);
 
         // install subscriber hook
@@ -154,7 +155,12 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
 
         $cacheDirectory = $this->getCacheDirectory();
         if (is_dir($cacheDirectory)) {
-            FileUtil::deldir($cacheDirectory);
+            $fs = new Filesystem();
+            try {
+                $fs->remove($cacheDirectory);
+            } catch (IOExceptionInterface $e) {
+                $this->addFlash('error', $this->__f('An error occurred while removing the cache directory at %s.', ['%s' => $e->getPath()]));
+            }
         }
 
         // Remove module variables
@@ -185,8 +191,16 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
     private function createCacheDirectory()
     {
         $cacheDirectory = $this->getCacheDirectory();
-        if (FileUtil::mkdirs($cacheDirectory, 0777)) {
-            $res = FileUtil::writeFile($cacheDirectory . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+        $fs = new Filesystem();
+        try {
+            $fs->mkdir($cacheDirectory);
+            $fs->chmod($cacheDirectory, 0777);
+        } catch (IOExceptionInterface $e) {
+            $this->addFlash('error', $this->__f('An error occurred while creating the cache directory at %s.', ['%s' => $e->getPath()]));
+        }
+
+        try {
+            $fs->dumpFile($cacheDirectory . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
 SetEnvIf Request_URI "\.jpeg$" object_is_jpeg=jpeg
@@ -197,13 +211,9 @@ Allow from env=object_is_png
 Allow from env=object_is_jpg
 Allow from env=object_is_jpeg
 ');
-            if (false === $res) {
-                $this->addFlash('status', $this->__f('Could not create .htaccess file in %s, please refer to the manual before using the module!', ['%s': $cacheDirectory]));
-            } else {
-                $this->addFlash('status', $this->__('Successfully created the cache directory with a .htaccess file for security in there.'));
-            }
-        } else {
-            $this->addFlash('status', $this->__f('Could not create the %s directory, please refer to the manual before using the module!', ['%s' => $cacheDirectory]));
+            $this->addFlash('status', $this->__('Successfully created the cache directory with a .htaccess file in it.'));
+        } catch (IOExceptionInterface $e) {
+            $this->addFlash('error', $this->__f('Could not create .htaccess file in %s, please refer to the manual before using the module!', ['%s': $e->getPath()]));
         }
     }
 
