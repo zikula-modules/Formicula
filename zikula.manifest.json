@@ -1,0 +1,29 @@
+{
+    "vendor": {
+        "title": "Zikula",
+        "url": "https://github.com/zikula-ev/",
+        "logo": ""
+    },
+    "extension": {
+        "name": "Formicula",
+        "url": "https://github.com/zikula-ev/Formicula",
+        "icon": ""
+    },
+    "version": {
+        "semver": "4.0.0",
+        "compatibility": ">=1.4.3 <2.0",
+        "composerpath": "composer.json",
+        "description": "Template-driven form mailer.",
+        "keywords": [
+        ]
+    },
+    "urls": {
+        "version": "",
+        "docs": "",
+        "demo": "",
+        "download": "https://github.com/zikula-ev/Formicula/releases",
+        "issues": "https://github.com/zikula-ev/Formicula/issues"
+    },
+    "dependencies": [
+    ]
+}

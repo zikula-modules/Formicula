@@ -1,14 +1,12 @@
 <?php
-/**
- * formicula - the contact mailer for Zikula
- * -----------------------------------------
+
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
@@ -31,78 +29,85 @@ function smarty_function_simplecaptcha($params, &$smarty)
      // check which image types are supported
     $freetype = function_exists('imagettfbbox');
     if ($freetype && (imagetypes() && IMG_PNG)) {
-        $imagetype = '.png';
-        $createimagefunction = 'imagepng';
+        $imageType = '.png';
+        $createImageFunction = 'imagepng';
     } elseif ($freetype && (imagetypes() && IMG_JPG)) {
-        $imagetype = '.jpg';
-        $createimagefunction = 'imagejpeg';
+        $imageType = '.jpg';
+        $createImageFunction = 'imagejpeg';
     } elseif ($freetype && (imagetypes() && IMG_GIF)) {
-        $imagetype = '.gif';
-        $createimagefunction = 'imagegif';
+        $imageType = '.gif';
+        $createImageFunction = 'imagegif';
     } else {
         // no image functions available
         ModUtil::setVar('Formicula', 'spamcheck', 0);
         if (SecurityUtil::checkPermission('Formicula::', '.*', ACCESS_ADMIN)) {
             // admin permission, show error messages
             return $this->__('no image function available - captcha deactivated');
-        } else {
-            // return silently
-            return;
         }
+
+        // return silently
+        return;
     }
 
     // catch wrong input
     if (empty($params['font'])) {
         $smarty->trigger_error("simplecaptcha: missing 'font' parameter");
+
         return;
     }
     $params['font'] = DataUtil::formatForOS('modules/Formicula/images/' . $params['font'] . '.ttf');
     if (!file_exists($params['font']) || !is_readable($params['font'])) {
         $smarty->trigger_error('simplecaptcha: missing font ' . DataUtil::formatForDisplay($params['font']));
+
         return;
     }
     if (empty($params['size'])) {
         $smarty->trigger_error("simplecaptcha: missing 'size' parameter");
+
         return;
     }
     if (empty($params['bgcolor'])) {
         $smarty->trigger_error("simplecaptcha: missing 'bgcolor' parameter");
+
         return;
     }
     if (empty($params['fgcolor'])) {
         $smarty->trigger_error("simplecaptcha: missing 'fgcolor' parameter");
+
         return;
     }
 
     // x .z. y .w. v
     srand ((double)microtime()*1000000);
-    $x = rand(1,10); /* 1 to 10 */
-    $y = rand(1,10); /* 1 to 10 */
-    $z = rand(0,1);  /* 0=+, 1=- */
-    $v = rand(1,10); /* 1 to 10 */
-    $w = rand(0,1);  /* 0=+, 1=- */
+    $x = rand(1, 10);
+    $y = rand(1, 10);
+    $z = rand(0, 1);  /* 0=+, 1=- */
+    $v = rand(1, 10);
+    $w = rand(0, 1);  /* 0=+, 1=- */
 
     // turn minus into plus when x=y
-    if (($z==1) && ($y==$x)) {
-        $z=0;
+    if ($z == 1 && $y == $x) {
+        $z = 0;
     }
 
     // turn minus into plus when y=v
-    if (($w==1) && ($v==$y)) {
-        $w=0;
+    if ($w == 1 && $v == $y) {
+        $w = 0;
     }
 
     // make sure that x>y if z=1 (minus)
-    if (($z==1) && ($y>$x)) {
-        $tmp=$x; $x=$y; $y=$tmp;
+    if ($z == 1 && $y > $x) {
+        $tmp = $x;
+        $x = $y;
+        $y = $tmp;
     }
 
     // turn minus into plus when v>x-y or v>x+y
-    if (($w==1) && (($z==1) && ($v>($x-$y))) || (($z==0) && ($v>($x+$y)))) {
-        $w=0;
+    if ($w == 1 && ($z == 1 && $v > ($x - $y)) || ($z == 0 && $v > ($x + $y))) {
+        $w = 0;
     }
 
-    $m = array('+', '-');
+    $m = ['+', '-'];
     // store the numbers in a session var
     SessionUtil::setVar('formicula_captcha', serialize(compact('x', 'y', 'z', 'v', 'w')));
 
@@ -116,10 +121,10 @@ function smarty_function_simplecaptcha($params, &$smarty)
     if (StringUtil::right($temp, 1) <> '/') {
         $temp .= '/';
     }
-    $imgurl = $temp . 'formicula_cache/' . $hash . $imagetype;
+    $imagePath = $temp . 'formicula_cache/' . $hash . $imageType;
 
     // create the image if it does not already exist
-    if (!file_exists($imgurl)) {
+    if (!file_exists($imagePath)) {
         // we create a larger picture than needed, this makes it looking better at the end
         $multi = 4;
         // get the textsize in the image
@@ -141,9 +146,9 @@ function smarty_function_simplecaptcha($params, &$smarty)
         imagettftext ($im, $params['size'] * $multi, 0, $box['left'], $box['top'], $fgcolor, $params['font'], $params['text']);
 
         // resize the image now
-        $finalwidth  = round($box['width'] / $multi);
-        $finalheight = round($box['height'] / $multi);
-        $ds = imagecreatetruecolor ($finalwidth, $finalheight);
+        $finalWidth  = round($box['width'] / $multi);
+        $finalHeight = round($box['height'] / $multi);
+        $ds = imagecreatetruecolor ($finalWidth, $finalHeight);
 
         $bgcolor2 = fromhex($ds,$params['bgcolor']);
         imageFill($ds, 0, 0, $bgcolor2);
@@ -153,30 +158,31 @@ function smarty_function_simplecaptcha($params, &$smarty)
         ImageColorTransparent($ds, $bgcolor);
 
         // write the file
-        $createimagefunction($ds, $imgurl);
+        $createImageFunction($ds, $imagePath);
         ImageDestroy ($im);
         ImageDestroy ($ds);
     } else {
         // file already exists, calculate image size
-        $imgdata = getimagesize($imgurl);
-        $finalwidth  = $imgdata[0];
-        $finalheight = $imgdata[1];
+        $imageData = getimagesize($imagePath);
+        $finalWidth  = $imageData[0];
+        $finalHeight = $imageData[1];
     }
 
     // If the imgurl starts with / we assume that ztemp is pointing to an absolute path which
     // is outside the webservers root. In this case we have to use a function to show the image instead
     // of loading the image directly
     if (StringUtil::left(System::getVar('temp'), 1) == '/') {
-        return '<img src="' . DataUtil::formatForDisplay(ModUtil::url('Formicula', 'user', 'getimage', array('img' => $hash . $imagetype), null, null, true)) . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
-    } else {
-        return '<img src="' . $imgurl . '" alt="" width="' . $finalwidth . '" height="' . $finalheight .'" />';
+        return '<img src="' . DataUtil::formatForDisplay(ModUtil::url('Formicula', 'user', 'getimage', ['img' => $hash . $imageType], null, null, true)) . '" alt="' . $this->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
     }
+
+    return '<img src="' . $imagePath . '" alt="' . $this->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
 }
 
 // get the rgb values form the hex color value
 if (!function_exists('fromhex')) {
     function fromhex($image,$string) {
         sscanf($string, "%2x%2x%2x", $red, $green, $blue);
+
         return ImageColorAllocate($image, $red, $green, $blue);
     }
 }

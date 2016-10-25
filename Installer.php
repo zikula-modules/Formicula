@@ -1,14 +1,12 @@
 <?php
-/**
- * Formicula - the contact mailer for Zikula
- * -----------------------------------------
+
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) Formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 class Formicula_Installer extends Zikula_AbstractInstaller
@@ -17,11 +15,11 @@ class Formicula_Installer extends Zikula_AbstractInstaller
     {
         // create the formicula table with the contacts
         if (!DBUtil::createTable('formcontacts')) {
-            return LogUtil::registerError($this->__('The installer could not create the formcontacts table'));
+            return LogUtil::registerError($this->__('Could not create the formcontacts table'));
         }
         // create the formicula table for storing submits
         if (!DBUtil::createTable('formsubmits')) {
-            return LogUtil::registerError($this->__('The installer could not create the formsubmits table'));
+            return LogUtil::registerError($this->__('Could not create the formsubmits table'));
         }
 
         // create the default data for the Formicula module
@@ -55,7 +53,7 @@ class Formicula_Installer extends Zikula_AbstractInstaller
         $this->setVar('use_contacts_as_sender', 1);
 
         // register handlers
-        EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
+        EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', ['Formicula_Handlers', 'getTypes']);
         HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
 
         // Initialisation successful
@@ -85,22 +83,23 @@ class Formicula_Installer extends Zikula_AbstractInstaller
 
                 // migrate contacts from config var to table
                 $contacts = $this->getVar('contacts');
-                if (@unserialize( $contacts ) != "") {
-                    $contacts_array = unserialize( $contacts );
+                if (@unserialize($contacts) != '') {
+                    $contacts_array = unserialize($contacts);
                 } else {
-                    $contacts_array = array();
+                    $contacts_array = [];
                 }
                 foreach ($contacts_array as $contact) {
                     $name  = DataUtil::formatForStore($contact['name']);
                     $email = DataUtil::formatForStore($contact['email']);
-                    ModUtil::apiFunc('formicula', 'admin', 'createContact',
-                                     array('name'    => $name,
-                                          'email'    => $email,
-                                          'public'   => 1,
-                                          'sname'    => '',
-                                          'semail'   => '',
-                                          'ssubject' => ''));
-                    }
+                    ModUtil::apiFunc('formicula', 'admin', 'createContact', [
+                        'name'    => $name,
+                        'email'    => $email,
+                        'public'   => 1,
+                        'sname'    => '',
+                        'semail'   => '',
+                        'ssubject' => ''
+                    ]);
+                }
                 $this->delVar('contacts');
                 $this->delVar('version');
             case '0.5':
@@ -153,20 +152,17 @@ Allow from env=object_is_jpeg
                 // Update permission strings for uppercase module name
                 $tables  = DBUtil::getTables();
                 $grperms = $tables['group_perms_column'];
-                $sqls   = array();
-                $sqls[] = "UPDATE $tables[group_perms] SET $grperms[component] = 'Formicula::' WHERE $grperms[component] = 'formicula::'";
-                foreach ($sqls as $sql) {
-                    if (!DBUtil::executeSQL($sql)) {
-                        LogUtil::registerError($this->__('Error! Could not update table.'));
-                        return '2.2';
-                    }
+                $sql = "UPDATE $tables[group_perms] SET $grperms[component] = 'Formicula::' WHERE $grperms[component] = 'formicula::'";
+                if (!DBUtil::executeSQL($sql)) {
+                    LogUtil::registerError($this->__('Error! Could not update table.'));
+                    return '2.2';
                 }
 
                 // drop table prefix
                 $prefix = $this->serviceManager['prefix'];
                 $connection = Doctrine_Manager::getInstance()->getConnection('default');
                 if (!empty($prefix)) {
-                    $sqlStatements = array();
+                    $sqlStatements = [];
                     $sqlStatements[] = 'RENAME TABLE ' . $prefix . '_formcontacts' . " TO `formcontacts`";
                     foreach ($sqlStatements as $sql) {
                         $stmt = $connection->prepare($sql);
@@ -188,7 +184,7 @@ Allow from env=object_is_jpeg
                 $this->setVar('store_data', 0);
                 $this->setVar('store_data_forms', '');
                 // register handlers
-                EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', array('Formicula_Handlers', 'getTypes'));
+                EventUtil::registerPersistentModuleHandler('Formicula', 'module.content.gettypes', ['Formicula_Handlers', 'getTypes']);
                 HookUtil::registerSubscriberBundles($this->version->getHookSubscriberBundles());
                 // Call the update method for the Content plugin
                 if (ModUtil::available('Content')) {
@@ -257,9 +253,10 @@ Allow from env=object_is_jpeg
 // -----------------------------------------------------------------------
     public static function LegacyContentTypeMap()
     {
-        $oldToNew = array(
+        $oldToNew = [
             'form' => 'Form'
-        );
+        ];
+
         return $oldToNew;
     }
 
@@ -308,12 +305,14 @@ Allow from env=object_is_jpeg
     protected function defaultdata()
     {
         // create a contact for the webmaster
-        $contact = array('name'     => $this->__('Webmaster'),
-                         'email'    => System::getVar('adminmail'),
-                         'public'   => 1,
-                         'sname'    => $this->__('Webmaster'),
-                         'semail'   => System::getVar('adminmail'),
-                         'ssubject' => $this->__('Email from %s'));
+        $contact = [
+            'name'     => $this->__('Webmaster'),
+            'email'    => System::getVar('adminmail'),
+            'public'   => 1,
+            'sname'    => $this->__('Webmaster'),
+            'semail'   => System::getVar('adminmail'),
+            'ssubject' => $this->__('Email from %s')
+        ];
 
         // Insert the default contact
         if (!($obj = DBUtil::insertObject($contact, 'formcontacts'))) {

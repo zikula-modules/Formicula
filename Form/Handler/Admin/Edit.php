@@ -1,14 +1,12 @@
 <?php
-/**
- * Formicula - the contact mailer for Zikula
- * -----------------------------------------
+
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) Formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
@@ -24,7 +22,7 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
 
         if ($this->cid == -1) {
             $mode = 'create';
-            $contact = array(
+            $contact = [
                 'cid'      => -1,
                 'name'     => '',
                 'email'    => '',
@@ -32,18 +30,17 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
                 'semail'   => '',
                 'sname'    => '',
                 'ssubject' => ''
-            );
+            ];
         } else {
             $mode = 'edit';
-            $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact',
-                                        array('cid' => $this->cid));
-            if ($contact == false) {
+            $contact = ModUtil::apiFunc('Formicula', 'admin', 'getContact', ['cid' => $this->cid]);
+            if (false === $contact) {
                 return LogUtil::registerError($this->__('Unknown Contact'), null, ModUtil::url('Formicula', 'admin', 'main'));
             }
         }
 
-        $view->assign('mode', $mode);
-        $view->assign('contact', $contact);
+        $view->assign('mode', $mode)
+             ->assign('contact', $contact);
 
         return true;
     }
@@ -101,14 +98,14 @@ class Formicula_Form_Handler_Admin_Edit extends Zikula_Form_AbstractHandler
 
             // The API function is called
             if ($data['cid'] == -1) {
-                if (ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data) != false) {
+                if (false !== ModUtil::apiFunc('Formicula', 'admin', 'createContact', $data)) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact created'));
                 } else {
                     LogUtil::registerError($this->__('Error creating contact!'));
                 }
             } else {
-                if (ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data) != false) {
+                if (false !== ModUtil::apiFunc('Formicula', 'admin', 'updateContact', $data)) {
                     // Success
                     LogUtil::registerStatus($this->__('Contact info has been updated'));
                 } else {

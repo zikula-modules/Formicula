@@ -1,14 +1,12 @@
 <?php
-/**
- * Formicula - the contact mailer for Zikula
- * -----------------------------------------
+
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) Formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
@@ -43,7 +41,7 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
                 $this->contact = -1;
             }
             PageUtil::addVar('stylesheet', ThemeUtil::getModuleStylesheet('Formicula'));
-            $form = ModUtil::func('Formicula', 'user', 'main', array('form' => (int)$this->form, 'cid' => $this->contact));
+            $form = ModUtil::func('Formicula', 'user', 'main', ['form' => (int)$this->form, 'cid' => $this->contact]);
 
             return $form;
         }
@@ -55,7 +53,7 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
     {
         if (isset($this->form)) {
             if ($this->contact > 0) {
-                $output = '<p>' . $this->__f('The Formicula form #%1$s is shown here with only contact %2$s', array($this->form, $this->contact)) . '</p>';
+                $output = '<p>' . $this->__f('The Formicula form #%1$s is shown here with only contact %2$s', [$this->form, $this->contact)] . '</p>';
             } else {
                 $output = '<p>' . $this->__f('The Formicula form #%s is shown here with all contacts', $this->form) . '</p>';
             }
@@ -68,25 +66,27 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
 
     public function getDefaultData()
     {
-        return array('form' => 0, 'contact' => -1);
+        return [
+            'form' => 0,
+            'contact' => -1
+        ];
     }
 
     public function startEditing()
     {
-        $allContacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts',
-                                     array('form' => $this->form));
-        $contacts = array();
-        $contacts[] = array(
+        $allContacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts', ['form' => $this->form]);
+        $contacts = [];
+        $contacts[] = [
             'text' => $this->__('All public contacts or form default'),
             'value' => '-1'
-        );
+        ];
 
         foreach ($allContacts as $contact) {
             if ($contact['public']) {
-                $contacts[] = array(
+                $contacts[] = [
                     'text' => $contact['name'],
                     'value' => $contact['cid']
-                );
+                ];
             }
         }
 

@@ -1,14 +1,12 @@
 <?php
-/**
- * Formicula - the contact mailer for Zikula
- * -----------------------------------------
+
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) Formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHandler
@@ -20,7 +18,7 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
 
         // scan the tempaltes flder for installed forms
         $files = FileUtil::getFiles('modules/Formicula/templates/forms/', false, true, null, false);
-        $sets_found = array();
+        $sets_found = [];
         foreach ($files as $file) {
             $parts = explode('_', $file);
             if (is_array($parts) && count($parts) > 1) {
@@ -37,21 +35,27 @@ class Formicula_Form_Handler_Admin_ModifyConfig extends Zikula_Form_AbstractHand
         $cachedir = System::getVar('temp') . '/formicula_cache';
         $view->assign('cachedir', $cachedir);
 
-        $items = array();
+        $items = [];
         foreach ($sets_found as $formid => $files) {
-            $items[] = array('text' => $this->__f('Form #%1$s that contains %2$s templates', array('formid'=> $formid, 'files' => $files)), 'value' => $formid);
+            $items[] = [
+                'text' => $this->__f('Form #%1$s that contains %2$s templates', [
+                    'formid' => $formid,
+                    'files' => $files
+                ]),
+                'value' => $formid
+            ];
         }
         $view->assign('items', $items);
 
-        $view->assign('default_userformatItems', array(
-            array('value' => 'html', 'text' => $this->__('HTML')),
-            array('value' => 'plain', 'text' => $this->__('Text'))
-        ));
+        $view->assign('default_userformatItems', [
+            ['value' => 'html', 'text' => $this->__('HTML')],
+            ['value' => 'plain', 'text' => $this->__('Text')]
+        ]);
 
-        $view->assign('default_adminformatItems', array(
-            array('value' => 'html', 'text' => $this->__('HTML')),
-            array('value' => 'plain', 'text' => $this->__('Text'))
-        ));
+        $view->assign('default_adminformatItems', [
+            ['value' => 'html', 'text' => $this->__('HTML')],
+            ['value' => 'plain', 'text' => $this->__('Text')]
+        ]);
 
         // assign all module vars
         $this->view->assign($this->getVars());

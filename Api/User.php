@@ -1,14 +1,12 @@
 <?php
-/**
- * Formicula - the contact mailer for Zikula
- * -----------------------------------------
+
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) Formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 class Formicula_Api_User extends Zikula_AbstractApi
@@ -49,25 +47,25 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function readValidContacts($args)
     {
-        $allcontacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
+        $allContacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
-        if ($allcontacts == false) {
+        if (false === $allContacts) {
             return LogUtil::registerError($this->__('Error! No contacts defined.'));
         }
 
         // Put items into result array.  Note that each item is checked
         // individually to ensure that the user is allowed access to it before it
         // is added to the results array
-        $validcontacts = array();
-        foreach($allcontacts as $contact) {
+        $visibleContacts = [];
+        foreach($allContacts as $contact) {
             if (SecurityUtil::checkPermission('Formicula::', $args['form'] . ':.*:', ACCESS_COMMENT)) {
-                $validcontacts[] = $contact;
+                $visibleContacts[] = $contact;
             }
         }
 
         // Return the contacts
-        return $validcontacts;
+        return $visibleContacts;
     }
 
     /**
@@ -89,28 +87,25 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $form     = DataUtil::formatForOS($args['form']);
         $format   = $args['format'];
 
-        $mailerModule = 'Mailer';
+        $mailerModule = 'ZikulaMailerModule';
         if (!ModUtil::available($mailerModule)) {
-            $mailerModule = 'ZikulaMailerModule';
-            if (!ModUtil::available($mailerModule)) {
-                // no mailer module - error!
-                return false;
-            }
+            // no mailer module - error!
+            return false;
         }
 
-        $render = Zikula_View::getInstance('Formicula', false, null, true);
-        $ip = getenv('REMOTE_ADDR');
-        $render->assign('host', gethostbyaddr($ip));
-        $render->assign('ip', $ip);
-        $render->assign('form', $form);
-        $render->assign('contact', $contact);
-        $render->assign('userdata', $userdata);
-
         $sitename = System::getVar('sitename');
-        $render->assign('sitename', $sitename);
+        $ip = getenv('REMOTE_ADDR');
+
+        $view = Zikula_View::getInstance('Formicula', false, null, true);
+        $view->assign('host', gethostbyaddr($ip))
+             ->assign('ip', $ip)
+             ->assign('form', $form)
+             ->assign('contact', $contact)
+             ->assign('userdata', $userdata)
+             ->assign('sitename', $sitename);
 
         // attach all files we have got
-        $attachments = array();
+        $attachments = [];
         $uploaddir = dirname(ZLOADER_PATH) . '/' . ModUtil::getVar('Formicula', 'upload_dir');
 
         foreach ($custom as $k => $customField) {
@@ -121,22 +116,22 @@ class Formicula_Api_User extends Zikula_AbstractApi
                 $custom[$k]['data'] = $customField['data']['name'];
             }
         }
-        $render->assign('custom', $custom);
+        $view->assign('custom', $custom);
 
-        switch($format) {
+        switch ($format) {
             case 'html' :
-                $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form."_adminmail.tpl");
+                $body = $view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_adminmail.tpl");
                 $html = true;
                 break;
             default:
-                $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form."_adminmail.txt");
+                $body = $view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_adminmail.txt");
                 $html = false;
         }
 
         // subject of the emails can be determined from the form
         $adminsubject = !empty($userdata['adminsubject']) ? $userdata['adminsubject'] : $sitename." - ".$contact['name'];
 
-        $mailArgs = array(
+        $mailArgs = [
             'fromname'    => $userdata['uname'],
             'toname'      => $contact['name'],
             'toaddress'   => $contact['email'],
@@ -144,23 +139,23 @@ class Formicula_Api_User extends Zikula_AbstractApi
             'body'        => $body,
             'attachments' => $attachments,
             'html'        => $html
-        );
+        ];
 
         if (ModUtil::getVar('Formicula', 'use_contacts_as_sender', 1) == 1) {
             $mailArgs['fromaddress'] = $userdata['uemail'];
         }
 
-        $res = ModUtil::apiFunc($mailerModule, 'user', 'sendmessage', $mailArgs);
+        $result = ModUtil::apiFunc($mailerModule, 'user', 'sendmessage', $mailArgs);
 
         if (ModUtil::getVar('Formicula', 'delete_file') == 1) {
-            foreach($attachments as $attachment) {
+            foreach ($attachments as $attachment) {
                 if (file_exists($attachment) && is_file($attachment)) {
                     unlink($attachment);
                 }
             }
         }
 
-        return $res;
+        return $result;
     }
 
     /**
@@ -182,34 +177,31 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $form     = DataUtil::formatForOS($args['form']);
         $format   = $args['format'];
 
-        $mailerModule = 'Mailer';
+        $mailerModule = 'ZikulaMailerModule';
         if (!ModUtil::available($mailerModule)) {
-            $mailerModule = 'ZikulaMailerModule';
-            if (!ModUtil::available($mailerModule)) {
-                // no mailer module - error!
-                return false;
-            }
+            // no mailer module - error!
+            return false;
         }
 
-        $render = Zikula_View::getInstance('Formicula', false, null, true);
-        $ip = getenv('REMOTE_ADDR');
-        $render->assign('host', gethostbyaddr($ip));
-        $render->assign('ip', $ip);
-        $render->assign('form', $form);
-        $render->assign('contact', $contact);
-        $render->assign('userdata', $userdata);
         $sitename = System::getVar('sitename');
-        $render->assign('sitename', $sitename);
+        $ip = getenv('REMOTE_ADDR');
 
-        $render->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
+        $view = Zikula_View::getInstance('Formicula', false, null, true);
+        $view->assign('host', gethostbyaddr($ip))
+             ->assign('ip', $ip)
+             ->assign('form', $form)
+             ->assign('contact', $contact)
+             ->assign('userdata', $userdata)
+             ->assign('sitename', $sitename)
+             ->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', ['custom' => $custom]));
 
-        switch($format) {
+        switch ($format) {
             case 'html' :
-                $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form . '_usermail.tpl');
+                $body = $view->fetch('forms' . DIRECTORY_SEPARATOR . $form . '_usermail.tpl');
                 $html = true;
                 break;
             default:
-                $body = $render->fetch('forms' . DIRECTORY_SEPARATOR . $form . '_usermail.txt');
+                $body = $view->fetch('forms' . DIRECTORY_SEPARATOR . $form . '_usermail.txt');
                 $html = false;
         }
 
@@ -225,6 +217,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         } else {
             $frommail = $contact['email'];
         }
+
         // check for subject, can be in the form or in the contact
         if (!empty($contact['ssubject']) || !empty($userdata['usersubject'])) {
             $subject = !empty($userdata['usersubject']) ? $userdata['usersubject'] : $contact['ssubject'];
@@ -239,22 +232,22 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $subject = str_replace('%l', DataUtil::formatForDisplay(System::getVar('slogan')), $subject);
             $subject = str_replace('%u', System::getBaseUrl(), $subject);
             $subject = str_replace('%c', DataUtil::formatForDisplay($contact['sname']), $subject);
-            foreach($custom as $num => $customdata) {
+            foreach ($custom as $num => $customdata) {
                 $subject = str_replace('%n' . $num, $customdata['name'], $subject);
                 $subject = str_replace('%d' . $num, $customdata['data'], $subject);
             }
         } else {
-            $subject = $sitename." - ".$contact['name'];
+            $subject = $sitename . ' - ' . $contact['name'];
         }
 
-        $mailArgs = array(
+        $mailArgs = [
             'fromname'    => $fromname,
             'toname'      => $userdata['uname'],
             'toaddress'   => $userdata['uemail'],
             'subject'     => $subject,
             'body'        => $body,
             'html'        => $html
-        );
+        ];
 
         if (ModUtil::getVar('Formicula', 'use_contacts_as_sender', 1) == 1) {
             $mailArgs['fromaddress'] = $frommail;
@@ -289,7 +282,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $formsubmit['url'] = $userdata['url'];
         $formsubmit['location'] = $userdata['location'];
         $formsubmit['comment'] = $userdata['comment'];
-        $customarray = array();
+        $customarray = [];
         foreach ($custom as $customdata) {
             $customarray[$customdata['name']] = $customdata['data'];
         }
@@ -356,13 +349,15 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function removeUploadInformation($args)
     {
-        $custom = array();
-        if (isset($args['custom']) && is_array($args['custom'])) {
-            $custom = $args['custom'];
-            for ($i = 0; $i < count($custom); $i++) {
-                if (isset($custom[$i]['upload']) && $custom[$i]['upload'] == true) {
-                    $custom[$i]['data'] = $custom[$i]['data']['name'];
-                }
+        $custom = [];
+        if (!isset($args['custom']) || !is_array($args['custom'])) {
+            return $custom;
+        }
+
+        $custom = $args['custom'];
+        for ($i = 0; $i < count($custom); $i++) {
+            if (isset($custom[$i]['upload']) && $custom[$i]['upload'] == true) {
+                $custom[$i]['data'] = $custom[$i]['data']['name'];
             }
         }
 
@@ -385,12 +380,13 @@ class Formicula_Api_User extends Zikula_AbstractApi
         if (!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', $args)) {
             return false;
         }
-        $owncontacts = SessionUtil::getVar('formicula_owncontacts', array());
-        $tmpid = array_search($args['owncontacts'], $owncontacts);
+
+        $ownContacts = SessionUtil::getVar('formicula_owncontacts', []);
+        $tmpid = array_search($args['owncontacts'], $ownContacts);
         if (!$tmpid) {
-            $id = count($owncontacts);
-            $owncontacts[] = $args['owncontacts'];
-            SessionUtil::setVar('formicula_owncontacts', $owncontacts);
+            $id = count($ownContacts);
+            $ownContacts[] = $args['owncontacts'];
+            SessionUtil::setVar('formicula_owncontacts', $ownContacts);
         } else {
             $id = $tmpid;
         }

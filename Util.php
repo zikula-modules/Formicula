@@ -1,16 +1,14 @@
 <?php
 
-/**
- * Formicula - the contact mailer for Zikula
- * -----------------------------------------
+/*
+ * This file is part of the Formicula package.
  *
- * @copyright  (c) Formicula Development Team
- * @link       https://github.com/zikula-ev/Formicula
- * @license    GNU/GPL - http://www.gnu.org/copyleft/gpl.html
- * @author     Frank Schummertz <frank@zikula.org>
- * @package    Third_Party_Components
- * @subpackage Formicula
+ * Copyright Formicula Development Team
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 class Formicula_Util
 {
     /**
@@ -19,17 +17,17 @@ class Formicula_Util
      */
     public static function envcheck()
     {
-        if (!ModUtil::available('Mailer') && !ModUtil::available('ZikulaMailerModule')) {
+        if (!ModUtil::available('ZikulaMailerModule')) {
             LogUtil::registerError(__('Mailer module is not available - unable to send emails!'));
         }
 
-        if (ModUtil::getVar('Formicula', 'spamcheck') == 0) {
+        if (ModUtil::getVar('Formicula', 'spamcheck', 1) == 0) {
             return true;
         }
 
         if (!function_exists('imagettfbbox') || ( !(imagetypes() && IMG_PNG)
-                        && !(imagetypes() && IMG_JPG)
-                        && !(imagetypes() && IMG_GIF)) ) {
+                && !(imagetypes() && IMG_JPG)
+                && !(imagetypes() && IMG_GIF)) ) {
             LogUtil::registerStatus(__('no image function available - captcha deactivated'));
             ModUtil::setVar('Formicula', 'spamcheck', 0);
         }
