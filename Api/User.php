@@ -28,7 +28,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $args['form'] = 0;
         }
 
-        if (!SecurityUtil::checkPermission('Formicula::', $args['form'] . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
+        if (!SecurityUtil::checkPermission('ZikulaFormiculaModule::', $args['form'] . ':' . $args['cid'] . ':', ACCESS_COMMENT)) {
             return LogUtil::registerPermissionError();
         }
 
@@ -47,7 +47,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function readValidContacts($args)
     {
-        $allContacts = ModUtil::apiFunc('Formicula', 'admin', 'readContacts');
+        $allContacts = ModUtil::apiFunc('ZikulaFormiculaModule', 'admin', 'readContacts');
         // Check for an error with the database code, and if so set an appropriate
         // error message and return
         if (false === $allContacts) {
@@ -59,7 +59,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         // is added to the results array
         $visibleContacts = [];
         foreach($allContacts as $contact) {
-            if (SecurityUtil::checkPermission('Formicula::', $args['form'] . ':.*:', ACCESS_COMMENT)) {
+            if (SecurityUtil::checkPermission('ZikulaFormiculaModule::', $args['form'] . ':.*:', ACCESS_COMMENT)) {
                 $visibleContacts[] = $contact;
             }
         }
@@ -96,7 +96,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $sitename = System::getVar('sitename');
         $ipAddress = getenv('REMOTE_ADDR');
 
-        $view = Zikula_View::getInstance('Formicula', false, null, true);
+        $view = Zikula_View::getInstance('ZikulaFormiculaModule', false, null, true);
         $view->assign('hostName', gethostbyaddr($ipAddress))
              ->assign('ipAddress', $ipAddress)
              ->assign('form', $form)
@@ -106,7 +106,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
 
         // attach all files we have got
         $attachments = [];
-        $uploaddir = dirname(ZLOADER_PATH) . '/' . ModUtil::getVar('Formicula', 'upload_dir');
+        $uploaddir = dirname(ZLOADER_PATH) . '/' . ModUtil::getVar('ZikulaFormiculaModule', 'uploadDirectory');
 
         foreach ($customFields as $k => $customField) {
             if (isset($customField['data']) && is_array($customField['data']))  {
@@ -141,13 +141,13 @@ class Formicula_Api_User extends Zikula_AbstractApi
             'html'        => $html
         ];
 
-        if (ModUtil::getVar('Formicula', 'use_contacts_as_sender', 1) == 1) {
+        if (true === ModUtil::getVar('ZikulaFormiculaModule', 'useContactsAsSender', true)) {
             $mailArgs['fromaddress'] = $userdata['uemail'];
         }
 
         $result = ModUtil::apiFunc($mailerModule, 'user', 'sendmessage', $mailArgs);
 
-        if (ModUtil::getVar('Formicula', 'delete_file') == 1) {
+        if (true === ModUtil::getVar('ZikulaFormiculaModule', 'deleteUploadedFiles', true)) {
             foreach ($attachments as $attachment) {
                 if (file_exists($attachment) && is_file($attachment)) {
                     unlink($attachment);
@@ -186,14 +186,14 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $sitename = System::getVar('sitename');
         $ipAddress = getenv('REMOTE_ADDR');
 
-        $view = Zikula_View::getInstance('Formicula', false, null, true);
+        $view = Zikula_View::getInstance('ZikulaFormiculaModule', false, null, true);
         $view->assign('hostName', gethostbyaddr($ipAddress))
              ->assign('ipAddress', $ipAddress)
              ->assign('form', $form)
              ->assign('contact', $contact)
              ->assign('userdata', $userdata)
              ->assign('siteName', $sitename)
-             ->assign('customFields', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', ['customFields' => $customFields]));
+             ->assign('customFields', ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'removeUploadInformation', ['customFields' => $customFields]));
 
         switch ($format) {
             case 'html' :
@@ -249,7 +249,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             'html'        => $html
         ];
 
-        if (ModUtil::getVar('Formicula', 'use_contacts_as_sender', 1) == 1) {
+        if (true === ModUtil::getVar('ZikulaFormiculaModule', 'useContactsAsSender', true)) {
             $mailArgs['fromaddress'] = $frommail;
         }
 
@@ -270,8 +270,8 @@ class Formicula_Api_User extends Zikula_AbstractApi
     {
         $userdata = $args['userdata'];
         $contact  = $args['contact'];
-        $customFields   = $args['customFields'];
-        $form     = DataUtil::formatForOS($args['form']);
+        $customFields = $args['customFields'];
+        $form = DataUtil::formatForOS($args['form']);
 
         $formsubmit['form'] = $form;
         $formsubmit['cid'] = $contact['cid'];
@@ -309,8 +309,8 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function checkArguments($args)
     {
-        $userdata   = $args['userdata'];
-        $customFields     = $args['customFields'];
+        $userdata = $args['userdata'];
+        $customFields = $args['customFields'];
         $userformat = $args['userformat'];
 
         $ok = true;
@@ -377,16 +377,16 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function addSessionOwncontacts($args)
     {
-        if (!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', $args)) {
+        if (!ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'checkOwncontacts', $args)) {
             return false;
         }
 
-        $ownContacts = SessionUtil::getVar('formicula_owncontacts', []);
+        $ownContacts = SessionUtil::getVar('formiculaOwnContacts', []);
         $tmpid = array_search($args['owncontacts'], $ownContacts);
         if (!$tmpid) {
             $id = count($ownContacts);
             $ownContacts[] = $args['owncontacts'];
-            SessionUtil::setVar('formicula_owncontacts', $ownContacts);
+            SessionUtil::setVar('formiculaOwnContacts', $ownContacts);
         } else {
             $id = $tmpid;
         }
@@ -411,7 +411,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             return LogUtil::registerError($this->__('You must pass an owncontacts array!'));
         }
 
-        foreach($args['owncontacts'] as $item) {
+        foreach ($args['owncontacts'] as $item) {
             if (!isset($item['name'])) {
                 return LogUtil::registerError($this->__('You must pass a name for each contact!'));
             }

@@ -46,7 +46,7 @@ class ContactController extends AbstractController
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_checker')->check();
+        $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $allContacts = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->findBy([], ['cid' => 'ASC']);
 
@@ -88,7 +88,7 @@ class ContactController extends AbstractController
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_checker')->check();
+        $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $entityManager = $this->get('doctrine')->getManager();
         $contactId = $request->query->getDigits('cid', -1);
@@ -174,7 +174,7 @@ class ContactController extends AbstractController
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_checker')->check();
+        $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $entityManager = $this->get('doctrine')->getManager();
         $contactId = $request->query->getDigits('cid', -1);

@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\ExtensionsModule\Api\VariableApi;
 
-class EnvironmentChecker
+class EnvironmentHelper
 {
     /**
      * @var KernelInterface

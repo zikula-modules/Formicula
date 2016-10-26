@@ -4,7 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
         <parameter key="zikula_formicula_module.container.link_container.class">Zikula\FormiculaModule\Container\LinkContainer</parameter>
-        <parameter key="zikula_formicula_module.helper.environment_checker.class">Zikula\FormiculaModule\Helper\EnvironmentChecker</parameter>
+        <parameter key="twig.extension.zikula_formicula_module.class">Zikula\FormiculaModule\Twig\TwigExtension</parameter>
+        <parameter key="zikula_formicula_module.helper.environment_helper.class">Zikula\FormiculaModule\Helper\EnvironmentHelper</parameter>
+        <parameter key="zikula_formicula_module.helper.captcha_helper.class">Zikula\FormiculaModule\Helper\CaptchaHelper</parameter>
     </parameters>
     <services>
         <service id="zikula_formicula_module.container.link_container" class="%zikula_formicula_module.container.link_container.class%">
@@ -13,7 +15,17 @@
             <argument type="service" id="zikula_permissions_module.api.permission" />
             <tag name="zikula.link_container"/>
         </service>
-        <service id="zikula_formicula_module.helper.environment_checker" class="%zikula_formicula_module.helper.environment_checker.class%" lazy="true">
+        <service id="twig.extension.zikula_formicula_module" class="%twig.extension.zikula_formicula_module.class%" public="false">
+            <argument type="service" id="zikula_formicula_module.helper.captcha_helper" />
+            <tag name="twig.extension" />
+        </service>
+        <service id="zikula_formicula_module.helper.captcha_helper" class="%zikula_formicula_module.helper.captcha_helper.class%" lazy="true">
+            <argument type="service" id="translator.default" />
+            <argument type="service" id="zikula_extensions_module.api.variable" />
+            <argument type="service" id="zikula_permissions_module.api.permission" />
+            <argument type="service" id="zikula_formicula_module.helper.environment_helper" />
+        </service>
+        <service id="zikula_formicula_module.helper.environment_helper" class="%zikula_formicula_module.helper.environment_helper.class%" lazy="true">
             <argument type="service" id="kernel" />
             <argument type="service" id="translator.default" />
             <argument type="service" id="zikula_extensions_module.api.variable" />

@@ -45,7 +45,7 @@ class SubmissionController extends AbstractController
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_checker')->check();
+        $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $submissions = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\SubmissionEntity')->findBy([], ['sid' => 'DESC']);
 
@@ -73,7 +73,7 @@ class SubmissionController extends AbstractController
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_checker')->check();
+        $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $submissionId = $request->query->getDigits('sid', -1);
         $submission = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\SubmissionEntity')->find($submissionId);
@@ -107,7 +107,7 @@ class SubmissionController extends AbstractController
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_checker')->check();
+        $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $entityManager = $this->get('doctrine')->getManager();
         $submissionId = $request->query->getDigits('sid', -1);

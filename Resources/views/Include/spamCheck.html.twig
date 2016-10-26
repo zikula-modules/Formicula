@@ -1,0 +1,13 @@
+{% if getModVar('ZikulaFormiculaModule', 'enableSpamCheck') %}
+    <div class="form-group">
+        <label for="formiculaMath" class="control-label required col-sm-3">{{ __('Please solve this calculation') }}</label>
+        <div class="col-sm-9">
+            {{ zikulaformiculamodule_simpleCaptcha() }}
+            {# example for custom arguments:
+                zikulaformiculamodule_simpleCaptcha(font='arial', size=20, bgColour='ffffff', fgColour='0000ff')
+            #}
+            <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
+            <span class="help-block">{{ __('(to prevent spam)') }}</span>
+        </div>
+    </div>
+{% endif %}

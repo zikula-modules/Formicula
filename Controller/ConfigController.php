@@ -44,8 +44,8 @@ class ConfigController extends AbstractController
         }
 
         // check necessary environment
-        $environmentChecker = $this->get('zikula_formicula_module.helper.environment_checker');
-        $environmentChecker->check();
+        $environmentHelper = $this->get('zikula_formicula_module.helper.environment_helper');
+        $environmentHelper->check();
 
         $variableApi = $this->get('zikula_extensions_module.api.variable');
         $modVars = $variableApi->getAll('ZikulaFormiculaModule');
@@ -92,7 +92,7 @@ class ConfigController extends AbstractController
 
         $templateParameters = array_merge($modVars, [
             'form' => $form->createView(),
-            'cacheDirectory' => $environmentChecker->getCacheDirectory()
+            'cacheDirectory' => $environmentHelper->getCacheDirectory()
         ]);
 
         return $templateParameters;
@@ -115,7 +115,7 @@ class ConfigController extends AbstractController
             throw new AccessDeniedException();
         }
 
-        $cacheDirectory = $this->get('zikula_formicula_module.helper.environment_checker')->getCacheDirectory();
+        $cacheDirectory = $this->get('zikula_formicula_module.helper.environment_helper')->getCacheDirectory();
         $finder = new Finder();
         foreach ($finder->files()->in($cacheDirectory) as $file) {
             $fileName = $file->getFilename();

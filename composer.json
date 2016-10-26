@@ -29,7 +29,7 @@
             },
             "securityschema": {
                 "ZikulaFormiculaModule::": "Form ID:Contact ID:",
-                "ZikulaFormiculaModule::Owncontacts": "Form ID::"
+                "ZikulaFormiculaModule::OwnContacts": "Form ID::"
             }
         }
     }

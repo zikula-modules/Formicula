@@ -1,31 +1,26 @@
 {{ include('@ZikulaFormiculaModule/Form/0/userHeader.html.twig') }}
-
-{pageaddvar name="javascript" value="jquery"}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/polyfiller.js'}
+{{ polyfill() }}
 
 <p class="z-informationmsg">
     {gt text="Mandatory fields are indicated with a"} <span class="mandatory">*</span>
 </p>
 
-<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post"{if $modvars.Formicula.show_attachfile==1} enctype="multipart/form-data"{/if}>
+<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post"{% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') %} enctype="multipart/form-data"{% endif %}>
     <fieldset>
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="0" />
         <input type="hidden" name="formname" value="Simple contact form" />
         <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
-        {if $modvars.Formicula.show_userformat!=1}<input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />{/if}
+        {% if not getModVar('ZikulaFormiculaModule', 'showUserFormat') %}<input type="hidden" name="userFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultUserFormat') }}" />{% endif %}
         <input type="hidden" name="dataformat" value="array" />
 
         <legend>{gt text='Contact our team'}</legend>
         <div class="z-formrow">
             <label for="cid">{gt text="Contact"}</label>
             <select class="formborder" id="cid" name="cid">
-                {foreach item='contact' from=$contacts}
-                {if $contact.public == "1"}
-                <option value="{$contact.cid}">{$contact.name}</option>
-                {/if}
-                {/foreach}
+                {% for contact in contacts if public %}
+                    <option value="{{ contact.cid }}">{{ contact.name }}</option>
+                {% endfor %}
             </select>
         </div>
 
@@ -91,17 +86,7 @@
         </div>
         {% endif %}
 
-        {if $spamcheck eq 1}
-        <div class="z-formrow">
-            <label for="Formicula_captcha">{gt text='Please solve this calculation'}<span class="mandatory">*</span></label>
-            <span>
-                {simplecaptcha font='quikhand' size='14' bgcolor='ffffff' fgcolor='000000'}
-                <input id="Formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
-                <span class="z-sub">{gt text='(to prevent spam)'}</span>
-            </span>
-        </div>
-        {/if}
-
+        {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
     </fieldset>
 
     {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
@@ -118,12 +103,6 @@
     <div class="z-formbuttons z-buttons">
         {button src='button_ok.png' name='submit' value='submit' set='icons/extrasmall' __alt='Send' __title='Send' __text='Send'}
     </div>
-
-	<script type="text/javascript">
-		// call webshims polyfill to get html5 forms validation and other effects into non-html5 browsers
-		jQuery.webshims.activeLang('{{lang}}');
-		jQuery.webshims.polyfill('forms');
-	</script>
 </form>
 
 {{ include('@ZikulaFormiculaModule/Form/0/userFooter.html.twig') }}

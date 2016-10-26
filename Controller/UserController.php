@@ -55,23 +55,23 @@ class UserController extends AbstractController
         $addinfo  = FormUtil::getPassedValue('addinfo',  (isset($args['addinfo'])) ? $args['addinfo'] : [],  'GETPOST');
 
         // reset captcha
-        SessionUtil::delVar('formicula_captcha');
+        SessionUtil::delVar('formiculaCaptcha');
 
-        $owncontacts = false;
-        $owncontactsuse = FormUtil::getPassedValue('owncontacts', -1, 'GETPOST');
-        if (isset($args['owncontacts']) && is_array($args['owncontacts']) && $owncontactsuse != -1) {
-            $contacts = $args['owncontacts'];
-            $id = ModUtil::apiFunc($this->name, 'user', 'addSessionOwncontacts', ['owncontacts' => $args['owncontacts']]);
-            SessionUtil::setVar('formicula_owncontactsUse', $id);
-            $owncontacts = true;
-        } elseif (null !== SessionUtil::getVar('formicula_owncontacts', null) && $owncontactsuse != -1) {
-            $sessionContacts = SessionUtil::getVar('formicula_owncontacts');
-            $contacts = $sessionContacts[$owncontactsuse];
-            if (!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', ['owncontacts' => $contacts])) {
+        $ownContacts = false;
+        $ownContactsUse = FormUtil::getPassedValue('ownContacts', -1, 'GETPOST');
+        if (isset($args['ownContacts']) && is_array($args['ownContacts']) && $ownContactsUse != -1) {
+            $contacts = $args['ownContacts'];
+            $id = ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'addSessionOwncontacts', ['ownContacts' => $args['ownContacts']]);
+            SessionUtil::setVar('formiculaOwnContactsUse', $id);
+            $ownContacts = true;
+        } elseif (null !== SessionUtil::getVar('formiculaOwnContacts', null) && $ownContactsUse != -1) {
+            $sessionContacts = SessionUtil::getVar('formiculaOwnContacts');
+            $contacts = $sessionContacts[$ownContactsUse];
+            if (!ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'checkOwncontacts', ['ownContacts' => $contacts])) {
                 return false;
             }
-            SessionUtil::setVar('formicula_owncontactsUse', $owncontactsuse);
-            $owncontacts = true;
+            SessionUtil::setVar('formiculaOwnContactsUse', $ownContactsUse);
+            $ownContacts = true;
         } elseif ($cid == -1) {
             $contacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts', ['form' => $form]);
         } else {
@@ -81,8 +81,8 @@ class UserController extends AbstractController
             ]);
         }
 
-        if (true === $owncontacts) {
-            if (!SecurityUtil::checkPermission('Formicula::Owncontacts', "$form::", ACCESS_COMMENT)) {
+        if (true === $ownContacts) {
+            if (!SecurityUtil::checkPermission('Formicula::OwnContacts', "$form::", ACCESS_COMMENT)) {
                 return LogUtil::registerPermissionError(System::getHomepageUrl());
             }
             foreach ($contacts as $key => $item) {
@@ -90,7 +90,7 @@ class UserController extends AbstractController
                 $contacts[$key]['public'] = 1;
             }
         } else {
-            SessionUtil::delVar('formicula_owncontactsUse');
+            SessionUtil::delVar('formiculaOwnContactsUse');
         }
 
         if (count($contacts) == 0) {
@@ -167,12 +167,12 @@ class UserController extends AbstractController
         $adminFormat    =      FormUtil::getPassedValue('adminFormat', (isset($args['adminFormat'])) ? $args['adminFormat'] : 'plain', 'GETPOST');
         $dataformat     =      FormUtil::getPassedValue('dataformat',  (isset($args['dataformat'])) ? $args['dataformat'] : 'plain', 'GETPOST');
         $returntourl    =      FormUtil::getPassedValue('returntourl', (isset($args['returntourl'])) ? $args['returntourl'] : '',  'GETPOST');
-        //get the useowncontacts var
-        $owncontactsuse = SessionUtil::getVar('formicula_owncontactsUse', -1);
+        //get the useOwnContacts var
+        $ownContactsUse = SessionUtil::getVar('formiculaOwnContactsUse', -1);
         //generate a returnurl we need if the form has errors
-        $errorreturntourl = $owncontactsuse == -1
+        $errorReturnUrl = $ownContactsUse == -1
             ? ModUtil::url('Formicula', 'user', 'main', ['form' => $form])
-            : ModUtil::url('Formicula', 'user', 'main', ['form' => $form, 'owncontacts' => $owncontactsuse])
+            : ModUtil::url('Formicula', 'user', 'main', ['form' => $form, 'ownContacts' => $ownContactsUse])
         ;
 
         // Confirm security token code
@@ -280,20 +280,20 @@ class UserController extends AbstractController
         }
         if ($spamcheck == 1) {
             $captcha_ok = false;
-            $cdata = @unserialize(SessionUtil::getVar('formicula_captcha'));
-            if (is_array($cdata)) {
-                switch ($cdata['z'] . '-' . $cdata['w']) {
+            $operands = @unserialize(SessionUtil::getVar('formiculaCaptcha'));
+            if (is_array($operands)) {
+                switch ($operands['z'] . '-' . $operands['w']) {
                     case '0-0':
-                        $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'] + (int)$cdata['v']) == $captcha);
+                        $captcha_ok = (((int)$operands['x'] + (int)$operands['y'] + (int)$operands['v']) == $captcha);
                         break;
                     case '0-1':
-                        $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'] - (int)$cdata['v']) == $captcha);
+                        $captcha_ok = (((int)$operands['x'] + (int)$operands['y'] - (int)$operands['v']) == $captcha);
                         break;
                     case '1-0':
-                        $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'] + (int)$cdata['v']) == $captcha);
+                        $captcha_ok = (((int)$operands['x'] - (int)$operands['y'] + (int)$operands['v']) == $captcha);
                         break;
                     case '1-1':
-                        $captcha_ok = (((int)$cdata['x'] - (int)$cdata['y'] - (int)$cdata['v']) == $captcha);
+                        $captcha_ok = (((int)$operands['x'] - (int)$operands['y'] - (int)$operands['v']) == $captcha);
                         break;
                     default:
                     // $captcha_ok is false
@@ -301,7 +301,7 @@ class UserController extends AbstractController
             }
 
             if ($captcha_ok == false) {
-                SessionUtil::delVar('formicula_captcha');
+                SessionUtil::delVar('formiculaCaptcha');
                 // todo: append params to $returntourl and redirect, see ticket #44
                 $params = ['form' => $form];
                 if (is_array($addinfo) && count($addinfo) > 0) {
@@ -310,10 +310,10 @@ class UserController extends AbstractController
                 SessionUtil::setVar('formicula_userData', serialize($userData));
                 SessionUtil::setVar('formicula_customFields', serialize($customFields));
 
-                return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorreturntourl);
+                return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorReturnUrl);
             }
         }
-        SessionUtil::delVar('formicula_captcha');
+        SessionUtil::delVar('formiculaCaptcha');
 
         // Check hooked modules for validation
         $hookvalidators = $this->notifyHooks(new Zikula_ValidationHook('formicula.ui_hooks.forms.validate_edit', new Zikula_Hook_ValidationProviders()))->getValidators();
@@ -321,7 +321,7 @@ class UserController extends AbstractController
             SessionUtil::setVar('formicula_userData', serialize($userData));
             SessionUtil::setVar('formicula_customFields', serialize($customFields));
 
-            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorreturntourl);
+            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorReturnUrl);
         }
 
         $params = ['form' => $form];
@@ -339,29 +339,29 @@ class UserController extends AbstractController
         // very basic input validation against HTTP response splitting
         $userData['uemail'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $userData['uemail']);
 
-        if ($owncontactsuse != -1 && SessionUtil::getVar('formicula_owncontacts', null) != null) {
-            $sessionContacts = SessionUtil::getVar('formicula_owncontacts');
-            $contacts = $sessionContacts[$owncontactsuse];
-            if (!ModUtil::apiFunc($this->name, 'user', 'checkOwncontacts', ['owncontacts' => $contacts])) {
-                return $this->redirect($errorreturntourl); 
+        if ($ownContactsUse != -1 && SessionUtil::getVar('formiculaOwnContacts', null) != null) {
+            $sessionContacts = SessionUtil::getVar('formiculaOwnContacts');
+            $contacts = $sessionContacts[$ownContactsUse];
+            if (!ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'checkOwncontacts', ['ownContacts' => $contacts])) {
+                return $this->redirect($errorReturnUrl); 
             }
             $contact = $contacts[$cid-1];
-            $owncontacts = true;
+            $ownContacts = true;
         } else {
-            $owncontacts = false;
+            $ownContacts = false;
             $contact = ModUtil::apiFunc('Formicula', 'user', 'getContact', [
                 'cid'  => $cid,
                 'form' => $form
             ]);
         }
 
-        if (true === $owncontacts) {
+        if (true === $ownContacts) {
             if (!SecurityUtil::checkPermission('Formicula::Owncontacts', "$form::", ACCESS_COMMENT)) {
-                return LogUtil::registerPermissionError($errorreturntourl);
+                return LogUtil::registerPermissionError($errorReturnUrl);
             }
         } else {
             if (!SecurityUtil::checkPermission('Formicula::', "$form:$cid:", ACCESS_COMMENT)) {
-                return LogUtil::registerPermissionError($errorreturntourl);
+                return LogUtil::registerPermissionError($errorReturnUrl);
             }
         }
 
@@ -391,7 +391,7 @@ class UserController extends AbstractController
                     'form'         => $form,
                     'format'       => $adminFormat
             ]) == false) {
-                return LogUtil::registerError($this->__('There was an error sending the email.'), null, $errorreturntourl);
+                return LogUtil::registerError($this->__('There was an error sending the email.'), null, $errorReturnUrl);
             }
 
             if ($userFormat == 'plain') {
@@ -412,7 +412,7 @@ class UserController extends AbstractController
 
             // store the submitted data in the database
             $store_data = $this->getVar('store_data');
-            if ($store_data == 1 && $owncontacts == false) {
+            if ($store_data == 1 && false === $ownContacts) {
                 $store_data_forms = $this->getVar('store_data_forms');
                 $store_data_forms_arr = explode(',', $store_data_forms);
                 if (empty($store_data_forms) || (is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr))) {
@@ -433,43 +433,5 @@ class UserController extends AbstractController
 
             return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usererror.tpl");
         }
-    }
-
-    /**
-     * getimage
-     * returns an image for the captcha even if zTemp is located outside of the webroot
-     *
-     * @param img  string the image filename
-     * @return image output
-     */
-    public function getImageAction(Request $request)
-    {
-        $img = FormUtil::getPassedValue('img', '', 'GET');
-
-        $temp = System::getVar('temp');
-        if (StringUtil::right($temp, 1) != '/') {
-            $temp .= '/';
-        }
-        $imgfile = $temp . 'formicula_cache/' . DataUtil::formatForStore($img);
-        $parts = explode('.', $img);
-        $data = file_get_contents($imgfile);
-
-        $mimetypes = [
-            'png' => 'image/png',
-            'jpg' => 'image/jpeg',
-            'gif' => 'image/gif'
-        ];
-
-        header('Pragma: public');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Cache-Control: public');
-        header('Content-Description: Formicula image');
-        header('Content-Disposition: inline; filename=' . DataUtil::formatForDisplay($img) . ';');
-        header('Content-type: ' . $mimetypes[$parts[1]]);
-        header('Content-Transfer-Encoding: binary');
-
-        echo $data;
-        exit;
     }
 }

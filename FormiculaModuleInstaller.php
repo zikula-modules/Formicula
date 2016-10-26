@@ -80,8 +80,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             'useContactsAsSender' => true,
 
             'enableSpamCheck' => true,
-            'excludeSpamCheck' => '',
-
             'storeSubmissionData' => false,
             'storeSubmissionDataForms' => ''
         ]);

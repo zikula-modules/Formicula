@@ -1,8 +1,5 @@
 {{ include('@ZikulaFormiculaModule/Form/2/userHeader.html.twig') }}
-
-{pageaddvar name="javascript" value="jquery"}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}
-{pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/polyfiller.js'}
+{{ polyfill() }}
 
 <form id="contactform" action="{modurl modname=Formicula type=user func=send}" method="post">
     <div>
@@ -81,27 +78,13 @@
         </p>
         {/if}
 
-        {if $spamcheck eq 1}
-        <p>
-            <label for="formicula_captcha">{gt text='Please solve this calculation'} :<span class="mandatory">*</span></label>
-            &nbsp;{simplecaptcha font='quikhand' size='14' bgcolor='ffffff' fgcolor='000000'} 
-            <input id="formicula_captcha" name="captcha" type="text" size="5" maxlength="5" value="" />
-            <span class="z-sub">{gt text='(to prevent spam)'}</span>
-        </p>
-        {/if}
+        {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
 
         {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null}
 
         <p class="z-buttons">
             <input class="z-bt-ok" type="submit" name="submit" value="{gt text="Send"}" />
         </p>
-
-        <script type="text/javascript">
-            // call webshims polyfill to get html5 forms validation and other effects into non-html5 browsers
-            jQuery.webshims.activeLang('{{lang}}');
-            jQuery.webshims.polyfill('forms');
-        </script>
-
     </div>
 </form>
 
