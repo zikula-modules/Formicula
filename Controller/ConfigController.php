@@ -51,8 +51,7 @@ class ConfigController extends AbstractController
         $modVars = $variableApi->getAll('ZikulaFormiculaModule');
 
         // scan the templates folder for installed forms
-        // TODO determine actual module folder dynamically -> look at abstract module and abstract bundle
-        $templateDirectory = 'modules/Zikula/FormiculaModule/Resources/views/Form/';
+        $templateDirectory = __DIR__ . '/../Resources/views/Form/';
         $formChoices = []
         $finder = new Finder();
         $finder2 = new Finder();

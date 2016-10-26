@@ -38,8 +38,8 @@ class ContactEntity extends EntityAccess
      * The contact name
      *
      * @Assert\NotBlank()
-     * @Assert\Length(max = 40)
-     * @ORM\Column(type="string", length=40)
+     * @Assert\Length(max = 100)
+     * @ORM\Column(type="string", length=100)
      * @var string $name
      */
     private $name;
@@ -48,9 +48,8 @@ class ContactEntity extends EntityAccess
      * The email address
      *
      * @Assert\NotBlank()
-     * @Assert\Length(max = 80)
-     * @Assert\Email()
-     * @ORM\Column(type="string", length=80)
+     * @Assert\Length(max = 200)
+     * @ORM\Column(type="string", length=200)
      * @var string $email
      */
     private $email;
@@ -68,8 +67,8 @@ class ContactEntity extends EntityAccess
      * The sender name for replying
      *
      * @Assert\NotBlank()
-     * @Assert\Length(max = 80)
-     * @ORM\Column(type="string", length=80)
+     * @Assert\Length(max = 100)
+     * @ORM\Column(type="string", length=100)
      * @var string $senderName
      */
     private $senderName;
@@ -78,9 +77,9 @@ class ContactEntity extends EntityAccess
      * The sender email address for replying
      *
      * @Assert\NotBlank()
-     * @Assert\Length(max = 80)
+     * @Assert\Length(max = 100)
      * @Assert\Email()
-     * @ORM\Column(type="string", length=80)
+     * @ORM\Column(type="string", length=100)
      * @var string $senderEmail
      */
     private $senderEmail;
@@ -89,8 +88,8 @@ class ContactEntity extends EntityAccess
      * The subject for replying
      *
      * @Assert\NotBlank()
-     * @Assert\Length(max = 80)
-     * @ORM\Column(type="string", length=80)
+     * @Assert\Length(max = 150)
+     * @ORM\Column(type="string", length=150)
      * @var string $sendingSubject
      */
     private $sendingSubject;

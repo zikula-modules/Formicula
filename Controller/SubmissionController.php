@@ -109,32 +109,36 @@ class SubmissionController extends AbstractController
         // check necessary environment
         $this->get('zikula_formicula_module.helper.environment_checker')->check();
 
+        $entityManager = $this->get('doctrine')->getManager();
         $submissionId = $request->query->getDigits('sid', -1);
-        $confirmation = $request->request->get('confirmation', '');
 
-        $submission = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', ['sid' => $submissionId]);
+        $submission = $entityManager->getRepository('Zikula\FormiculaModule\Entity\SubmissionEntity')->find($submissionId);
         if (false === $submission) {
             $this->addFlash('error', $this->__('Form submission could not be found.'));
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
 
-        // Check for confirmation.
-        if (!empty($confirmation)) {
-            // Confirm security token code
-            $this->checkCsrfToken();        
+        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\DeleteSubmissionType', $submission, [
+            'translator' => $this->get('translator.default')
+        ]);
 
-            $entityManager = $this->get('doctrine')->getManager();
-            $entityManager->remove($submission);
-            $entityManager->flush();
-
-            // Success
-            $this->addFlash('status', $this->__('Form submission has been deleted.'));
+        if ($form->handleRequest($request)->isValid()) {
+            if ($form->get('delete')->isClicked()) {
+                $submission = $form->getData();
+                $entityManager->remove($submission);
+                $entityManager->flush();
+                $this->addFlash('status', $this->__('Done! Submission deleted.'));
+            }
+            if ($form->get('cancel')->isClicked()) {
+                $this->addFlash('status', $this->__('Operation cancelled.'));
+            }
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
 
         return [
+            'form' => $form->createView(),
             'submission' => $submission
         ];
     }
