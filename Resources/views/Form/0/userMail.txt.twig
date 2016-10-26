@@ -1,31 +1,35 @@
-{gt text='Hello,'}
+{{ __f('Hello %s!', { '%s': userData.uname }) }}
 
-{gt text='Thank you for the comments posted from our Website. The sent data is:'}
+{{ __('Thank you for the comments posted from our website. The sent data is:') }}
 
-{gt text='Contact'} :{$contact.name}
-{gt text='Your Name'} :{$userdata.uname}
-{gt text='Email'} :{$userdata.uemail}
-{if $modvars.Formicula.show_url==1 and $userdata.url}
-{gt text='Homepage'} :{$userdata.url}
-{/if}
-{if $modvars.Formicula.show_company==1 and $userdata.company}
-{gt text='Company'} :{$userdata.company}
-{/if}
-{if $modvars.Formicula.show_phone==1 and $userdata.phone}
-{gt text='Phone Number'} :{$userdata.phone}
-{/if}
-{if $modvars.Formicula.show_location==1 and $userdata.location}
-{gt text='Location'} :{$userdata.location}
-{/if}
+{{ __('Your Name') }}: {{ userData.uname }}
+{% if getModVar('ZikulaFormiculaModule', 'showCompany') and userData.company %}
+{{ __('Company') }}: {{ userData.company }}
+{% endif %}
+{{ __('Email') }}: {{ userData.uemail }}
+{% if getModVar('ZikulaFormiculaModule', 'showPhone') and userData.phone %}
+{{ __('Phone number') }}: {{ userData.phone }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showUrl') and userData.url %}
+{{ __('Website') }}: {{ userData.url }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showLocation') and userData.location %}
+{{ __('Location') }}: {{ userData.location }}
+{% endif %}
 
-{gt text='Comment'} :
-{$userdata.comment|safetext}
-{if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
+{% for field in customFields %}
+{{ field.name }}: {{ field.data }}
+{% endfor %}
+{% if getModVar('ZikulaFormiculaModule', 'showComment') and userData.comment %}
 
-{$custom.fileupload.name} : 
-{$custom.fileupload.data.name|safetext}
-{/if}
+{{ __('Comment') }}:
+{{ userData.comment }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') and customFields.fileUpload.data %}
 
-{gt text='We will respond to your email as soon as possible.'}
+{{ customFields.fileUpload.name }}: {{ customFields.fileUpload.data.name }}
+{% endif %}
 
-{gt text="The %s Team" tag1=$sitename comment="%s will be replaced with the sitename"}
+{{ __('We will respond to your email address as soon as possible.') }}
+
+{{ __f('The %s team', { '%s': siteName }) }}

@@ -1,4 +1,4 @@
-{include file='forms/0_userheader.tpl'}
+{{ include('@ZikulaFormiculaModule/Form/0/userHeader.html.twig') }}
 
 {pageaddvar name="javascript" value="jquery"}
 {pageaddvar name='javascript' value='modules/Formicula/javascript/js-webshim/minified/extras/modernizr-custom.js'}
@@ -82,14 +82,14 @@
         </div>
         {/if}
 
-        {if $modvars.Formicula.show_attachfile eq 1}
+        {% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') %}
         <div class="z-formrow">
-            <label for="fileupload">{gt text="Attach a file"}</label>
-            <input type="hidden" name="custom[fileupload][name]" value="{gt text='Attached file'}" />
-            <input type="hidden" name="custom[fileupload][mandatory]" value="0" />
-            <input id="fileupload" type='file' class="formborder2" name='custom[fileupload][data]' size='20' maxlength='16700000' value=''>
+            <label for="fileUpload">{gt text="Attach a file"}</label>
+            <input type="hidden" name="custom[fileUpload][name]" value="{gt text='Attached file'}" />
+            <input type="hidden" name="custom[fileUpload][mandatory]" value="0" />
+            <input id="fileUpload" type="file" class="formborder2" name="custom[fileUpload][data]" size="20" maxlength="16700000" value="" />
         </div>
-        {/if}
+        {% endif %}
 
         {if $spamcheck eq 1}
         <div class="z-formrow">
@@ -126,4 +126,4 @@
 	</script>
 </form>
 
-{include file='forms/0_userfooter.tpl'}
+{{ include('@ZikulaFormiculaModule/Form/0/userFooter.html.twig') }}

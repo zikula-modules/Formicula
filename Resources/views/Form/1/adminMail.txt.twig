@@ -1,18 +1,31 @@
-{gt text='Hello,'}
+{{ __('Hello!') }}
 
-<{gt text='A visitor of to your web site used the form for contact and sent the following:'}
+{{ __('A visitor of to your web site used the form for contact and sent the following:') }}
 
-{gt text='Form #'} :{$form}
-{gt text='Contact or Theme'} :{$contact.name}
-{gt text='Your Name'} :{$userdata.uname}
-{gt text='Email'} :{$userdata.uemail}
-{gt text='Homepage'} :{$userdata.url}
+{{ __('Form #') }}: {{ form }}
+{{ __('Contact') }}: {{ contact.name }}
+{{ __('Name') }}: {{ userData.uname }}
+{% if getModVar('ZikulaFormiculaModule', 'showCompany') and userData.company %}
+{{ __('Company') }}: {{ userData.company }}
+{% endif %}
+{{ __('Email') }}: {{ userData.uemail }}
+{% if getModVar('ZikulaFormiculaModule', 'showPhone') and userData.phone %}
+{{ __('Phone number') }}: {{ userData.phone }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showUrl') and userData.url %}
+{{ __('Website') }}: {{ userData.url }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showLocation') and userData.location %}
+{{ __('Location') }}: {{ userData.location }}
+{% endif %}
 
-{foreach item=field from=$custom}
-{$field.name}:{$field.data}
-{/foreach}
+{% for field in customFields %}
+{{ field.name }}: {{ field.data }}
+{% endfor %}
+{% if getModVar('ZikulaFormiculaModule', 'showComment') and userData.comment %}
 
-{gt text='Comment'} :
-{$userdata.comment|safetext}
+{{ __('Comment') }}:
+{{ userData.comment }}
+{% endif %}
 
-{gt text='The user has the following IP address/hostname: '}{$ip}/{$host}
+{{ __('The user has the following IP address/hostname:') }} {{ ipAddress }} / {{ hostName }}

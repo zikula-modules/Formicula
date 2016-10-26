@@ -36,12 +36,12 @@ class ConfigType extends AbstractType
                 'multiple' => false,
                 'help' => $translator->__('This form is used when no form is specified.')
             ])
-            ->add('showPhone', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
-                'label' => $translator->__('Show phone number'),
-                'required' => false
-            ])
             ->add('showCompany', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                 'label' => $translator->__('Show company'),
+                'required' => false
+            ])
+            ->add('showPhone', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+                'label' => $translator->__('Show phone number'),
                 'required' => false
             ])
             ->add('showUrl', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [

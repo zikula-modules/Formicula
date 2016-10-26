@@ -1,10 +1,10 @@
-{include file='forms/3_userheader.tpl'}
+{{ include('@ZikulaFormiculaModule/Form/3/userHeader.html.twig') }}
 
-<p align='center'>
-    {gt text='There is an error in your form'}
+<p class="alert alert-danger">
+    {{ __('There is an error in your input.') }}
     <br /><br />
-    <a href="javascript:history.back(-1)">{gt text='Back to the contact form'}</a>
+    <a href="javascript:history.back(-1)">{{ __('Go back to the form') }}</a>
     <br /><br />
 </p>
 
-{include file='forms/3_userfooter.tpl'}
+{{ include('@ZikulaFormiculaModule/Form/3/userFooter.html.twig') }}

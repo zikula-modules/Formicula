@@ -1,37 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
     <head>
-        <title>formicula_admin_html_email</title>
+        <title>{{ __('New contact') }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <base href="{$baseurl}" />
+        <base href="{{ pagevars.homepath|e }}" />
     </head>
     <body>
-        <p>
-            {gt text='Hello,'}<br />
-            <br />
-            {gt text='A visitor of to your web site used the form for contact and sent the following:'} <br />
-            <br />
-            {gt text='Form #'} : {$form}<br />
-            {gt text='Contact or Theme'} : {$contact.name}<br />
-            {gt text='Your Name'} : {$userdata.uname}<br />
-            {gt text='Email'} : {$userdata.uemail}<br />
-            {if $modvars.Formicula.show_url==1}
-            {gt text='Homepage'} : {$userdata.url}<br />
-            {/if}
-            {if $modvars.Formicula.show_company==1}
-            {gt text='Company'} : {$userdata.company}<br />
-            {/if}
-            {if $modvars.Formicula.show_phone==1}
-            {gt text='Phone Number'} : {$userdata.phone}<br />
-            {/if}
-            {if $modvars.Formicula.show_location==1}
-            {gt text='Location'} : {$userdata.location}<br />
-            {/if}
-            <br />
-            {gt text='Comment'} : {$userdata.comment|safehtml|nl2br} <br />
-            <br />
-            {gt text='The user has the following IP address/hostname: '} {$ip} / {$host} <br />
-            <br />
-        </p>
+{{ include('@ZikulaFormiculaModule/Form/2/adminMail.txt.twig')|nl2br }}
     </body>
 </html>

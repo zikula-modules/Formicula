@@ -1,22 +1,33 @@
- {gt text='Hello,'}
+{{ __f('Hello %s!', { '%s': userData.uname }) }}
 
-{gt text='This data was sent to us:'}
+{{ __('This data was sent to us:') }}
 
-{gt text='Contact or Theme'} :{$contact.name}
-{gt text='Your Name'} :{$userdata.uname}
-{gt text='Email'} :{$userdata.uemail}
-{gt text='Homepage'} :{$userdata.url}
+{{ __('Your name') }}: {{ userData.uname }}
+{% if getModVar('ZikulaFormiculaModule', 'showCompany') and userData.company %}
+{{ __('Company') }}: {{ userData.company }}
+{% endif %}
+{{ __('Email') }}: {{ userData.uemail }}
+{% if getModVar('ZikulaFormiculaModule', 'showPhone') and userData.phone %}
+{{ __('Phone number') }}: {{ userData.phone }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showUrl') and userData.url %}
+{{ __('Website') }}: {{ userData.url }}
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showLocation') and userData.location %}
+{{ __('Location') }}: {{ userData.location }}
+{% endif %}
 
-{foreach item=field from=$custom}
-{$field.name}:{$field.data}
-{/foreach}
+{% for field in customFields %}
+{{ field.name }}: {{ field.data }}
+{% endfor %}
+{% if getModVar('ZikulaFormiculaModule', 'showComment') and userData.comment %}
 
-{gt text='Comment'} :
-{$userdata.comment|safetext}
+{{ __('Comment') }}:
+{{ userData.comment }}
+{% endif %}
 
-{gt text='Thanks for applying, we will keep your data strictly confidential'}
+{{ __('Thanks for applying, we will keep your data strictly confidential.') }}
 
-{gt text='We will respond to your email address as soon as possible.'}
+{{ __('We will respond to your email address as soon as possible.') }}
 
-{gt text="The %s Team" tag1=$sitename comment="%s will be replaced with the sitename"}
-
+{{ __f('The %s team', { '%s': siteName }) }}

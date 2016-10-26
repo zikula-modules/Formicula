@@ -1,99 +1,81 @@
-{include file='forms/2_userheader.tpl'}
+{{ include('@ZikulaFormiculaModule/Form/2/userHeader.html.twig') }}
 
-<p class="z-center">
-    {gt text='Thank you for your questions/comments to our website!<br />We will reply as soon as possible.'}
-    <br /><br />
-    {gt text='This data was sent to us:'}
+<p class="alert alert-info">
+    {{ __('Thank you for your questions/comments to our website!') }}<br />
+    {{ __('We will reply as soon as possible.') }}
 </p>
+<p>{{ __('This data was sent to us:') }}</p>
 
-<table width="80%">
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Contact or Theme'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$contact.name|safehtml}
-        </td>
-    </tr>
-
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Your Name'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.uname|safehtml}
-        </td>
-    </tr>
-
-    {if $modvars.Formicula.show_company==1}
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Company'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.company|safehtml}
-        </td>
-    </tr>
-    {/if}
-
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Email'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.uemail|safehtml}
-        </td>
-    </tr>
-
-    {if $modvars.Formicula.show_url==1}
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Homepage'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.url|safehtml}
-        </td>
-    </tr>
-    {/if}
-
-    {if $modvars.Formicula.show_phone==1}
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Phone Number'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.phone|safehtml}
-        </td>
-    </tr>
-    {/if}
-
-    {if $modvars.Formicula.show_location==1}
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Location'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.location|safehtml}
-        </td>
-    </tr>
-    {/if}
-
-    <tr>
-        <td style="width: 50%; font-weight:bold; text-align:right; padding-right: 50px;">
-            {gt text='Comment'}
-        </td>
-        <td style="width: 50%; text-align:left; padding-left: 50px;">
-            {$userdata.comment|safehtml|nl2br}
-        </td>
-    </tr>
-
+<table class="table table-bordered table-striped">
+    <caption>{{ __('This data was sent to us:') }}</caption>
+    <colgroup>
+        <col id="cField" style="width: 50%" />
+        <col id="cValue" style="width: 50%" />
+    </colgroup>
+    <thead>
+        <th id="hField" scope="col">{{ __('Field') }}</th>
+        <th id="hValue" scope="col">{{ __('Value') }}</th>
+    </thead>
+    <tbody>
+        <tr>
+            <th headers="hField" id="hName" scope="row">{{ __('Your name') }}</th>
+            <td headers="hValue hName">{{ userData.uname }}</span>
+        </tr>
+{% if getModVar('ZikulaFormiculaModule', 'showCompany') and userData.company %}
+        <tr>
+            <th headers="hField" id="hCompany" scope="row">{{ __('Company') }}</th>
+            <td headers="hValue hCompany">{{ userData.company }}</span>
+        </tr>
+{% endif %}
+        <tr>
+            <th headers="hField" id="hEmail" scope="row">{{ __('Email') }}</th>
+            <td headers="hValue hEmail">{{ userData.uemail }}</span>
+        </tr>
+{% if getModVar('ZikulaFormiculaModule', 'showPhone') and userData.phone %}
+        <tr>
+            <th headers="hField" id="hPhone" scope="row">{{ __('Phone number') }}</th>
+            <td headers="hValue hPhone">{{ userData.phone }}</span>
+        </tr>
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showUrl') and userData.url %}
+        <tr>
+            <th headers="hField" id="hUrl" scope="row">{{ __('Website') }}</th>
+            <td headers="hValue hUrl">{{ userData.url }}</span>
+        </tr>
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showLocation') and userData.location %}
+        <tr>
+            <th headers="hField" id="hLocation" scope="row">{{ __('Location') }}</th>
+            <td headers="hValue hLocation">{{ userData.location }}</span>
+        </tr>
+{% endif %}
+{% for field in customFields %}
+        <tr>
+            <th headers="hField" id="hCustom{{ field.name }}" scope="row">{{ field.name }}</th>
+            <td headers="hValue hCustom{{ field.name }}">{{ field.data }}</span>
+        </tr>
+{% endfor %}
+{% if getModVar('ZikulaFormiculaModule', 'showComment') and userData.comment %}
+        <tr>
+            <th headers="hField" id="hComment" scope="row">{{ __('Comment') }}</th>
+            <td headers="hValue hComment">{{ userFormat == 'html' ? userData.location : userData.location|nl2br }}</span>
+        </tr>
+{% endif %}
+{% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') %}
+        <tr>
+            <th headers="hField" id="hAttachment" scope="row">{{ customFields.fileUpload.name }}</th>
+            <td headers="hValue hAttachment">{{ customFields.fileUpload.data.name }}</span>
+        </tr>
+{% endif %}
+    </tbody>
 </table>
 
-<br />
-{if $sendtouser==true}
-{gt text='Confirmation of your submission will be emailed to you in a few minutes.'}
-{else}
-{gt text='There was an internal error when sending confirmation mail'}
-{/if}
+<p class="alert alert-{{ sentToUser ? 'success' : 'danger' }}">
+    {% if sentToUser %}
+    {{ __('Confirmation of your submission will be emailed to you in a few minutes.') }}
+    {% else %}
+    {{ __('There was an internal error when sending confirmation mail to you.') }}
+    {% endif %}
+</p>
 
-{include file='forms/2_userfooter.tpl'}
+{{ include('@ZikulaFormiculaModule/Form/2/userFooter.html.twig') }}

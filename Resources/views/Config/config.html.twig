@@ -3,6 +3,7 @@
     'ZikulaFormExtensionBundle:Form:bootstrap_3_zikula_admin_layout.html.twig',
     'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
 ] %}
+{{ polyfill() }}
 {{ adminHeader() }}
 <div class="container-fluid">
     <div class="row">
@@ -18,8 +19,8 @@
         <fieldset>
             <legend>{{ __('General settings') }}</legend>
             {{ form_row(form.defaultForm) }}
-            {{ form_row(form.showPhone) }}
             {{ form_row(form.showCompany) }}
+            {{ form_row(form.showPhone) }}
             {{ form_row(form.showUrl) }}
             {{ form_row(form.showLocation) }}
             {{ form_row(form.showComment) }}

@@ -63,8 +63,8 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
 
         $this->setVars([
             'defaultForm' => 0,
-            'showPhone' => true,
             'showCompany' => true,
+            'showPhone' => true,
             'showUrl' => true,
             'showLocation' => true,
             'showComment' => true,

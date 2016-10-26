@@ -1,46 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
     <head>
-        <title>formicula_admin_html_email</title>
+        <title>{{ __('New contact') }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <base href="{$baseurl}" />
+        <base href="{{ pagevars.homepath|e }}" />
     </head>
     <body>
-        <p>
-            {gt text='Hello,'}<br />
-            <br />
-            {gt text='A visitor of to your web site used the form for contact and sent the following:'} <br />
-            <br />
-            {gt text='Form #'} : {$form}<br />
-            {gt text='Contact'} : {$contact.name}<br />
-            {gt text='Your Name'} : {$userdata.uname}<br />
-            {gt text='Email'} : {$userdata.uemail}<br />
-            {if $modvars.Formicula.show_url==1 and $userdata.url}
-            {gt text='Homepage'} : {$userdata.url}<br />
-            {/if}
-            {if $modvars.Formicula.show_company==1 and $userdata.company}
-            {gt text='Company'} : {$userdata.company}<br />
-            {/if}
-            {if $modvars.Formicula.show_phone==1 and $userdata.phone}
-            {gt text='Phone Number'} : {$userdata.phone}<br />
-            {/if}
-            {if $modvars.Formicula.show_location==1 and $userdata.location}
-            {gt text='Location'} : {$userdata.location}<br />
-            {/if}
-            <br />
-            {gt text='Comment'} :<br />{strip}
-            {if $adminformat eq 'html'}
-            {$userdata.comment|safehtml}<br />
-            {else}
-            {$userdata.comment|safehtml|nl2br}<br />
-            {/if}{/strip}
-            {if $modvars.Formicula.show_attachfile==1 and $custom.fileupload.data}
-                <br />
-                {$custom.fileupload.name} : {$custom.fileupload.data}<br />
-            {/if}
-            <br />
-            {gt text='The user has the following IP address/hostname: '} {$ip} / {$host} <br />
-            <br />
-        </p>
+{{ include('@ZikulaFormiculaModule/Form/0/adminMail.txt.twig')|nl2br }}
     </body>
 </html>

@@ -74,7 +74,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
      *
      * @param userdata array with user submitted data
      * @param contact array of contact information (single contact)
-     * @param custom array of custom fields information
+     * @param customFields array of custom fields information
      * @param form int form id
      * @param format   string email format, either 'plain' or 'html'
      * @return boolean
@@ -83,7 +83,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
     {
         $userdata = $args['userdata'];
         $contact  = $args['contact'];
-        $custom   = $args['custom'];
+        $customFields   = $args['customFields'];
         $form     = DataUtil::formatForOS($args['form']);
         $format   = $args['format'];
 
@@ -94,29 +94,29 @@ class Formicula_Api_User extends Zikula_AbstractApi
         }
 
         $sitename = System::getVar('sitename');
-        $ip = getenv('REMOTE_ADDR');
+        $ipAddress = getenv('REMOTE_ADDR');
 
         $view = Zikula_View::getInstance('Formicula', false, null, true);
-        $view->assign('host', gethostbyaddr($ip))
-             ->assign('ip', $ip)
+        $view->assign('hostName', gethostbyaddr($ipAddress))
+             ->assign('ipAddress', $ipAddress)
              ->assign('form', $form)
              ->assign('contact', $contact)
              ->assign('userdata', $userdata)
-             ->assign('sitename', $sitename);
+             ->assign('siteName', $sitename);
 
         // attach all files we have got
         $attachments = [];
         $uploaddir = dirname(ZLOADER_PATH) . '/' . ModUtil::getVar('Formicula', 'upload_dir');
 
-        foreach ($custom as $k => $customField) {
+        foreach ($customFields as $k => $customField) {
             if (isset($customField['data']) && is_array($customField['data']))  {
                 if ($customField['data']['name']) {
                     $attachments[] = $uploaddir . '/' . $customField['data']['name'];
                 }
-                $custom[$k]['data'] = $customField['data']['name'];
+                $customFields[$k]['data'] = $customField['data']['name'];
             }
         }
-        $view->assign('custom', $custom);
+        $view->assign('customFields', $customFields);
 
         switch ($format) {
             case 'html' :
@@ -164,7 +164,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
      *
      * @param userdata array with user submitted data
      * @param contact  array with contact data
-     * @param custom   array of custom fields information
+     * @param customFields   array of custom fields information
      * @param form     int form id
      * @param format   string email format, either 'plain' or 'html'
      * @return boolean
@@ -173,7 +173,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
     {
         $userdata = $args['userdata'];
         $contact  = $args['contact'];
-        $custom   = $args['custom'];
+        $customFields   = $args['customFields'];
         $form     = DataUtil::formatForOS($args['form']);
         $format   = $args['format'];
 
@@ -184,16 +184,16 @@ class Formicula_Api_User extends Zikula_AbstractApi
         }
 
         $sitename = System::getVar('sitename');
-        $ip = getenv('REMOTE_ADDR');
+        $ipAddress = getenv('REMOTE_ADDR');
 
         $view = Zikula_View::getInstance('Formicula', false, null, true);
-        $view->assign('host', gethostbyaddr($ip))
-             ->assign('ip', $ip)
+        $view->assign('hostName', gethostbyaddr($ipAddress))
+             ->assign('ipAddress', $ipAddress)
              ->assign('form', $form)
              ->assign('contact', $contact)
              ->assign('userdata', $userdata)
-             ->assign('sitename', $sitename)
-             ->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', ['custom' => $custom]));
+             ->assign('siteName', $sitename)
+             ->assign('customFields', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', ['customFields' => $customFields]));
 
         switch ($format) {
             case 'html' :
@@ -232,9 +232,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
             $subject = str_replace('%l', DataUtil::formatForDisplay(System::getVar('slogan')), $subject);
             $subject = str_replace('%u', System::getBaseUrl(), $subject);
             $subject = str_replace('%c', DataUtil::formatForDisplay($contact['sname']), $subject);
-            foreach ($custom as $num => $customdata) {
-                $subject = str_replace('%n' . $num, $customdata['name'], $subject);
-                $subject = str_replace('%d' . $num, $customdata['data'], $subject);
+            foreach ($customFields as $num => $customField) {
+                $subject = str_replace('%n' . $num, $customField['name'], $subject);
+                $subject = str_replace('%d' . $num, $customField['data'], $subject);
             }
         } else {
             $subject = $sitename . ' - ' . $contact['name'];
@@ -262,7 +262,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
      *
      * @param userdata array with user submitted data
      * @param contact  array with contact data
-     * @param custom   array of custom fields information
+     * @param customFields   array of custom fields information
      * @param form     int form id
      * @return boolean
      */
@@ -270,7 +270,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
     {
         $userdata = $args['userdata'];
         $contact  = $args['contact'];
-        $custom   = $args['custom'];
+        $customFields   = $args['customFields'];
         $form     = DataUtil::formatForOS($args['form']);
 
         $formsubmit['form'] = $form;
@@ -282,14 +282,14 @@ class Formicula_Api_User extends Zikula_AbstractApi
         $formsubmit['url'] = $userdata['url'];
         $formsubmit['location'] = $userdata['location'];
         $formsubmit['comment'] = $userdata['comment'];
-        $customarray = [];
-        foreach ($custom as $customdata) {
-            $customarray[$customdata['name']] = $customdata['data'];
+        $customArray = [];
+        foreach ($customFields as $customField) {
+            $customArray[$customField['name']] = $customField['data'];
         }
-        $formsubmit['customdata'] = serialize($customarray);
-        $ip = getenv('REMOTE_ADDR');
-        $formsubmit['ip'] = $ip;
-        $formsubmit['host'] = gethostbyaddr($ip);
+        $formsubmit['customData'] = $customArray;
+        $ipAddress = getenv('REMOTE_ADDR');
+        $formsubmit['ipAddress'] = $ipAddress;
+        $formsubmit['hostName'] = gethostbyaddr($ipAddress);
 
         if (!($obj = DBUtil::insertObject($formsubmit, 'formsubmits', 'sid'))) {
             return LogUtil::registerError($this->__f('Error! Could not store data submitted by form %s.', $form));
@@ -303,14 +303,14 @@ class Formicula_Api_User extends Zikula_AbstractApi
      * checks if mandatory arguments are correct
      *
      * @param userdata array with user submitted data, we are interested in uemail, uname and comment here
-     * @param custom array with custom data
+     * @param customFields array with custom data
      * @param userformat string format of users email for relaxed checking if userformat=none
      * @return boolean
      */
     public function checkArguments($args)
     {
         $userdata   = $args['userdata'];
-        $custom     = $args['custom'];
+        $customFields     = $args['customFields'];
         $userformat = $args['userformat'];
 
         $ok = true;
@@ -325,7 +325,7 @@ class Formicula_Api_User extends Zikula_AbstractApi
             }
         }
 
-        foreach($custom as $field) {
+        foreach ($customFields as $field) {
             if (isset($field['mandatory']) && $field['mandatory']) {
                 if (!is_array($field['data']) && (empty($field['data']))) {
                     $ok = LogUtil::registerError($this->__('Error! Mandatory field:' . DataUtil::formatForDisplay($field['name'])));
@@ -344,24 +344,24 @@ class Formicula_Api_User extends Zikula_AbstractApi
      * replaces the information about uploaded files with the filename so that we can use it in the
      * templates
      *
-     * @param custom array of custom fields
+     * @param customFields array of custom fields
      * @return cleaned custom array
      */
     public function removeUploadInformation($args)
     {
-        $custom = [];
-        if (!isset($args['custom']) || !is_array($args['custom'])) {
-            return $custom;
+        $customFields = [];
+        if (!isset($args['customFields']) || !is_array($args['customFields'])) {
+            return $customFields;
         }
 
-        $custom = $args['custom'];
-        for ($i = 0; $i < count($custom); $i++) {
-            if (isset($custom[$i]['upload']) && $custom[$i]['upload'] == true) {
-                $custom[$i]['data'] = $custom[$i]['data']['name'];
+        $customFields = $args['customFields'];
+        foreach ($customFields as $k => $customField) {
+            if (isset($customField['upload']) && $customField['upload'] == true) {
+                $customFields[$k]['data'] = $customFields[$k]['data']['name'];
             }
         }
 
-        return $custom;
+        return $customFields;
     }
     
     /**

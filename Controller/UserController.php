@@ -43,9 +43,9 @@ class UserController extends AbstractController
         $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : $default_form, 'GETPOST');
         $cid  = (int)FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
-        $custom = unserialize(SessionUtil::getVar('formicula_custom'));
+        $customFields = unserialize(SessionUtil::getVar('formicula_customFields'));
         $userdata = unserialize(SessionUtil::getVar('formicula_userdata'));
-        SessionUtil::delVar('formicula_custom');
+        SessionUtil::delVar('formicula_customFields');
         SessionUtil::delVar('formicula_userdata');
         
         // get submitted information - will be passed to the template
@@ -115,8 +115,8 @@ class UserController extends AbstractController
         }
 
         $this->view->add_core_data()->setCaching(false);
-        if (empty($userdata)) {
-            $userdata = [
+        if (empty($userData)) {
+            $userData = [
                 'uname' => $uname,
                 'uemail' => $uemail,
                 'comment' => '',
@@ -127,8 +127,8 @@ class UserController extends AbstractController
             ];
         }
 
-        $this->view->assign('custom', $custom)
-                   ->assign('userdata', $userdata)
+        $this->view->assign('customFields', $customFields)
+                   ->assign('userData', $userData)
         // for BC also provide uname and uemail
                    ->assign('uname', $uname)
                    ->assign('uemail', $uemail)
@@ -145,8 +145,8 @@ class UserController extends AbstractController
      *
      * @param cid         int contact id
      * @param form        int form id
-     * @param userformat  string email format for user, either 'plain' (default) or 'html'
-     * @param adminformat string email format for admin, either 'plain' (default) or 'html'
+     * @param userFormat  string email format for user, either 'plain' (default) or 'html'
+     * @param adminFormat string email format for admin, either 'plain' (default) or 'html'
      * @param dataformat  string form fields format, either 'plain' (default) or 'array'
      * @param formdata    array  forms fields in array format if configured in dataformat
      * @param uname       string users name
@@ -163,8 +163,8 @@ class UserController extends AbstractController
         $form           = (int)FormUtil::getPassedValue('form',        (isset($args['form'])) ? $args['form'] : 0, 'GETPOST');
         $cid            = (int)FormUtil::getPassedValue('cid',         (isset($args['cid'])) ? $args['cid'] : 0,  'GETPOST');
         $captcha        = (int)FormUtil::getPassedValue('captcha',     (isset($args['captcha'])) ? $args['captcha'] : 0, 'GETPOST');
-        $userformat     =      FormUtil::getPassedValue('userformat',  (isset($args['userformat'])) ? $args['userformat'] : 'plain',  'GETPOST');
-        $adminformat    =      FormUtil::getPassedValue('adminformat', (isset($args['adminformat'])) ? $args['adminformat'] : 'plain', 'GETPOST');
+        $userFormat     =      FormUtil::getPassedValue('userFormat',  (isset($args['userFormat'])) ? $args['userFormat'] : 'plain',  'GETPOST');
+        $adminFormat    =      FormUtil::getPassedValue('adminFormat', (isset($args['adminFormat'])) ? $args['adminFormat'] : 'plain', 'GETPOST');
         $dataformat     =      FormUtil::getPassedValue('dataformat',  (isset($args['dataformat'])) ? $args['dataformat'] : 'plain', 'GETPOST');
         $returntourl    =      FormUtil::getPassedValue('returntourl', (isset($args['returntourl'])) ? $args['returntourl'] : '',  'GETPOST');
         //get the useowncontacts var
@@ -182,8 +182,8 @@ class UserController extends AbstractController
             return System::redirect(System::getHomepageUrl());
         }
         
-        $userdata = [];
-        $custom = [];
+        $userData = [];
+        $customFields = [];
         // Upload directory
         $uploaddir = $this->getVar('upload_dir');
         // check if it ends with / or we add one
@@ -191,74 +191,74 @@ class UserController extends AbstractController
             $uploaddir .= "/";
         }
         if ($dataformat == 'array') {
-            $userdata = FormUtil::getPassedValue('userdata', (isset($args['userdata'])) ? $args['userdata'] : [], 'GETPOST');
-            $custom   = FormUtil::getPassedValue('custom', (isset($args['custom'])) ? $args['custom'] : [], 'GETPOST');
-            $userdata['uname']    = isset($userdata['uname']) ? $userdata['uname'] : '';
-            $userdata['uemail']   = isset($userdata['uemail']) ? $userdata['uemail'] : '';
-            $userdata['url']      = isset($userdata['url']) ? $userdata['url'] : '';
-            $userdata['phone']    = isset($userdata['phone']) ? $userdata['phone'] : '';
-            $userdata['company']  = isset($userdata['company']) ? $userdata['company'] : '';
-            $userdata['location'] = isset($userdata['location']) ? $userdata['location'] : '';
-            $userdata['comment']  = isset($userdata['comment']) ? $userdata['comment'] : '';
+            $userData = FormUtil::getPassedValue('userData', (isset($args['userData'])) ? $args['userData'] : [], 'GETPOST');
+            $customFields   = FormUtil::getPassedValue('custom', (isset($args['custom'])) ? $args['custom'] : [], 'GETPOST');
+            $userData['uname']    = isset($userData['uname']) ? $userData['uname'] : '';
+            $userData['uemail']   = isset($userData['uemail']) ? $userData['uemail'] : '';
+            $userData['url']      = isset($userData['url']) ? $userData['url'] : '';
+            $userData['phone']    = isset($userData['phone']) ? $userData['phone'] : '';
+            $userData['company']  = isset($userData['company']) ? $userData['company'] : '';
+            $userData['location'] = isset($userData['location']) ? $userData['location'] : '';
+            $userData['comment']  = isset($userData['comment']) ? $userData['comment'] : '';
 
-            foreach ($custom as $k => $custom_field) {
-                $custom_field['mandatory'] = ($custom_field['mandatory'] == 1) ? true : false;
+            foreach ($customFields as $k => $customField) {
+                $customField['mandatory'] = ($customField['mandatory'] == 1) ? true : false;
 
                 // get uploaded files
                 if (isset($_FILES['custom']['tmp_name'][$k]['data'])) {
-                    $custom[$k]['data']['error'] = $_FILES['custom']['error'][$k]['data'];
-                    if ($custom_field['data']['error'] == 0) {
-                        $custom_field['data']['size'] = $_FILES['custom']['size'][$k]['data'];
-                        $custom_field['data']['type'] = $_FILES['custom']['type'][$k]['data'];
-                        $custom_field['data']['name'] = $_FILES['custom']['name'][$k]['data'];
-                        $custom_field['upload'] = true;
-                        move_uploaded_file($_FILES['custom']['tmp_name'][$k]['data'], DataUtil::formatForOS($uploaddir . $custom_field['data']['name']));
+                    $customFields[$k]['data']['error'] = $_FILES['custom']['error'][$k]['data'];
+                    if ($customField['data']['error'] == 0) {
+                        $customField['data']['size'] = $_FILES['custom']['size'][$k]['data'];
+                        $customField['data']['type'] = $_FILES['custom']['type'][$k]['data'];
+                        $customField['data']['name'] = $_FILES['custom']['name'][$k]['data'];
+                        $customField['upload'] = true;
+                        move_uploaded_file($_FILES['custom']['tmp_name'][$k]['data'], DataUtil::formatForOS($uploaddir . $customField['data']['name']));
                     } else {
                         // error - replace the 'data' with an errormessage
-                        $custom_field['data'] = constant('_FOR_UPLOADERROR' . $custom_field['data']['error']);
+                        $customField['data'] = constant('_FOR_UPLOADERROR' . $customField['data']['error']);
                     }
                 } else {
-                    $custom_field['upload'] = false;
+                    $customField['upload'] = false;
                 }
-                $custom[$k] = $custom_field;
+                $customFields[$k] = $customField;
             }
         } else {
-            $userdata['uname']    = FormUtil::getPassedValue('uname',     (isset($args['uname'])) ? $args['uname'] : '', 'GETPOST');
-            $userdata['uemail']   = FormUtil::getPassedValue('uemail',    (isset($args['uemail'])) ? $args['uemail'] : '',  'GETPOST');
-            $userdata['url']      = FormUtil::getPassedValue('url',       (isset($args['url'])) ? $args['url'] : '', 'GETPOST');
-            $userdata['phone']    = FormUtil::getPassedValue('phone',     (isset($args['phone'])) ? $args['phone'] : '',  'GETPOST');
-            $userdata['company']  = FormUtil::getPassedValue('company',   (isset($args['company'])) ? $args['company'] : '', 'GETPOST');
-            $userdata['location'] = FormUtil::getPassedValue('location',  (isset($args['location'])) ? $args['location'] : '',  'GETPOST');
-            $userdata['comment']  = FormUtil::getPassedValue('comment',   (isset($args['comment'])) ? $args['comment'] : '', 'GETPOST');
+            $userData['uname']    = FormUtil::getPassedValue('uname',     (isset($args['uname'])) ? $args['uname'] : '', 'GETPOST');
+            $userData['uemail']   = FormUtil::getPassedValue('uemail',    (isset($args['uemail'])) ? $args['uemail'] : '',  'GETPOST');
+            $userData['url']      = FormUtil::getPassedValue('url',       (isset($args['url'])) ? $args['url'] : '', 'GETPOST');
+            $userData['phone']    = FormUtil::getPassedValue('phone',     (isset($args['phone'])) ? $args['phone'] : '',  'GETPOST');
+            $userData['company']  = FormUtil::getPassedValue('company',   (isset($args['company'])) ? $args['company'] : '', 'GETPOST');
+            $userData['location'] = FormUtil::getPassedValue('location',  (isset($args['location'])) ? $args['location'] : '',  'GETPOST');
+            $userData['comment']  = FormUtil::getPassedValue('comment',   (isset($args['comment'])) ? $args['comment'] : '', 'GETPOST');
 
             // we read custom fields until we find three missing indices in a row
             $i = 0;
             $missing = 0;
             do {
-                $custom[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name', null, 'POST');
-                if ($custom[$i]['name'] == null) {
+                $customFields[$i]['name'] = FormUtil::getPassedValue('custom'.$i.'name', null, 'POST');
+                if ($customFields[$i]['name'] == null) {
                     // increase the number of missing indices and clear this custom var
                     $missing++;
-                    unset($custom[$i]);
+                    unset($customFields[$i]);
                 } else {
-                    $custom[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
+                    $customFields[$i]['mandatory'] = (FormUtil::getPassedValue('custom'.$i.'mandatory') == 1) ? true : false;
     
                     // get uploaded files
                     if (isset($_FILES['custom'.$i.'data']['tmp_name'])) {
-                        $custom[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
-                        if ($custom[$i]['data']['error'] == 0) {
-                            $custom[$i]['data']['size']     = $_FILES['custom'.$i.'data']['size'];
-                            $custom[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
-                            $custom[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
-                            $custom[$i]['upload'] = true;
-                            move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], DataUtil::formatForOS($uploaddir.$custom[$i]['data']['name']));
+                        $customFields[$i]['data']['error'] = $_FILES['custom'.$i.'data']['error'];
+                        if ($customFields[$i]['data']['error'] == 0) {
+                            $customFields[$i]['data']['size']     = $_FILES['custom'.$i.'data']['size'];
+                            $customFields[$i]['data']['type']     = $_FILES['custom'.$i.'data']['type'];
+                            $customFields[$i]['data']['name']     = $_FILES['custom'.$i.'data']['name'];
+                            $customFields[$i]['upload'] = true;
+                            move_uploaded_file($_FILES['custom'.$i.'data']['tmp_name'], DataUtil::formatForOS($uploaddir.$customFields[$i]['data']['name']));
                         } else {
                             // error - replace the 'data' with an errormessage
-                            $custom[$i]['data'] = constant("_FOR_UPLOADERROR".$custom[$i]['data']['error']);
+                            $customFields[$i]['data'] = constant("_FOR_UPLOADERROR".$customFields[$i]['data']['error']);
                         }
                     } else {
-                        $custom[$i]['data'] = FormUtil::getPassedValue('custom'.$i.'data');
-                        $custom[$i]['upload'] = false;
+                        $customFields[$i]['data'] = FormUtil::getPassedValue('custom'.$i.'data');
+                        $customFields[$i]['upload'] = false;
                     }
                     // reset the errorcounter if an existing field is found
                     $missing = 0;
@@ -282,7 +282,7 @@ class UserController extends AbstractController
             $captcha_ok = false;
             $cdata = @unserialize(SessionUtil::getVar('formicula_captcha'));
             if (is_array($cdata)) {
-                switch($cdata['z'].'-'.$cdata['w']) {
+                switch ($cdata['z'] . '-' . $cdata['w']) {
                     case '0-0':
                         $captcha_ok = (((int)$cdata['x'] + (int)$cdata['y'] + (int)$cdata['v']) == $captcha);
                         break;
@@ -307,8 +307,8 @@ class UserController extends AbstractController
                 if (is_array($addinfo) && count($addinfo) > 0) {
                     $params['addinfo'] = $addinfo;
                 }
-                SessionUtil::setVar('formicula_userdata', serialize($userdata));
-                SessionUtil::setVar('formicula_custom', serialize($custom));
+                SessionUtil::setVar('formicula_userData', serialize($userData));
+                SessionUtil::setVar('formicula_customFields', serialize($customFields));
 
                 return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorreturntourl);
             }
@@ -318,8 +318,8 @@ class UserController extends AbstractController
         // Check hooked modules for validation
         $hookvalidators = $this->notifyHooks(new Zikula_ValidationHook('formicula.ui_hooks.forms.validate_edit', new Zikula_Hook_ValidationProviders()))->getValidators();
         if ($hookvalidators->hasErrors()) {
-            SessionUtil::setVar('formicula_userdata', serialize($userdata));
-            SessionUtil::setVar('formicula_custom', serialize($custom));
+            SessionUtil::setVar('formicula_userData', serialize($userData));
+            SessionUtil::setVar('formicula_customFields', serialize($customFields));
 
             return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorreturntourl);
         }
@@ -329,15 +329,15 @@ class UserController extends AbstractController
             $params['addinfo'] = $addinfo;
         }
 
-        if (empty($userformat) || !in_array($userformat, ['plain', 'html', 'none'])) {
-            $userformat = 'plain';
+        if (empty($userFormat) || !in_array($userFormat, ['plain', 'html', 'none'])) {
+            $userFormat = 'plain';
         }
-        if (empty($adminformat) || !in_array($adminformat, ['plain', 'html'])) {
-            $adminformat = 'plain';
+        if (empty($adminFormat) || !in_array($adminFormat, ['plain', 'html'])) {
+            $adminFormat = 'plain';
         }
 
         // very basic input validation against HTTP response splitting
-        $userdata['uemail'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $userdata['uemail']);
+        $userData['uemail'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $userData['uemail']);
 
         if ($owncontactsuse != -1 && SessionUtil::getVar('formicula_owncontacts', null) != null) {
             $sessionContacts = SessionUtil::getVar('formicula_owncontacts');
@@ -367,46 +367,46 @@ class UserController extends AbstractController
 
         $this->view->setCaching(false);
         $this->view->assign('contact', $contact)
-                   ->assign('userdata', $userdata)
-                   ->assign('userformat', $userformat)
-                   ->assign('adminformat', $adminformat);
+                   ->assign('userData', $userData)
+                   ->assign('userFormat', $userFormat)
+                   ->assign('adminFormat', $adminFormat);
 
         if (ModUtil::apiFunc('Formicula', 'user', 'checkArguments', [
-            'userdata'   => $userdata,
-            'custom'     => $custom,
-            'userformat' => $userformat
+            'userData'     => $userData,
+            'customFields' => $customFields,
+            'userFormat'   => $userFormat
         ]) == true) {
 
-            $userdata_comment = $userdata['comment'];
+            $userDataComment = $userData['comment'];
 
-            if ($adminformat == 'plain') {
+            if ($adminFormat == 'plain') {
                 // remove tags from comment to avoid spam
-                $userdata['comment'] = strip_tags($userdata_comment);
+                $userData['comment'] = strip_tags($userDataComment);
             }
             // send the submitted data to the contact(s)
             if (ModUtil::apiFunc('Formicula', 'user', 'sendtoContact', [
-                    'contact'  => $contact,
-                    'userdata' => $userdata,
-                    'custom'   => $custom,
-                    'form'     => $form,
-                    'format'   => $adminformat
+                    'contact'      => $contact,
+                    'userData'     => $userData,
+                    'customFields' => $customFields,
+                    'form'         => $form,
+                    'format'       => $adminFormat
             ]) == false) {
                 return LogUtil::registerError($this->__('There was an error sending the email.'), null, $errorreturntourl);
             }
 
-            if ($userformat == 'plain') {
+            if ($userFormat == 'plain') {
                 // remove tags from comment to avoid spam
-                $userdata['comment'] = strip_tags($userdata_comment);
+                $userData['comment'] = strip_tags($userDataComment);
             }
             // send the submitted data as confirmation to the user
-            if ($this->getVar('send_user') == 1 && $userformat != 'none') {
+            if ($this->getVar('send_user') == 1 && $userFormat != 'none') {
                 // we replace the array of data of uploaded files with the filename
-                $this->view->assign('sendtouser', ModUtil::apiFunc('Formicula', 'user', 'sendtoUser', [
-                    'contact'  => $contact,
-                    'userdata' => $userdata,
-                    'custom'   => $custom,
-                    'form'     => $form,
-                    'format'   => $userformat
+                $this->view->assign('sentToUser', ModUtil::apiFunc('Formicula', 'user', 'sendtoUser', [
+                    'contact'      => $contact,
+                    'userData'     => $userData,
+                    'customFields' => $customFields,
+                    'form'         => $form,
+                    'format'       => $userFormat
                 ]));
             }
 
@@ -417,19 +417,19 @@ class UserController extends AbstractController
                 $store_data_forms_arr = explode(',', $store_data_forms);
                 if (empty($store_data_forms) || (is_array($store_data_forms_arr) && in_array($form, $store_data_forms_arr))) {
                     ModUtil::apiFunc('Formicula', 'user', 'storeInDatabase', [
-                        'contact'  => $contact,
-                        'userdata' => $userdata,
-                        'custom'   => $custom,
-                        'form'     => $form
+                        'contact'      => $contact,
+                        'userData'     => $userData,
+                        'customFields' => $customFields,
+                        'form'         => $form
                     ]);
                 }
             }
 
-            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
+            $this->view->assign('customFields', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('customFields' => $customFields)));
 
             return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_userconfirm.tpl");
         } else {
-            $this->view->assign('custom', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('custom' => $custom)));
+            $this->view->assign('customFields', ModUtil::apiFunc('Formicula', 'user', 'removeUploadInformation', array('customFields' => $customFields)));
 
             return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form."_usererror.tpl");
         }
