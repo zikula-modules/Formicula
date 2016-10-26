@@ -17,11 +17,9 @@
         <p>
             <label for="cid">{gt text="Contact or Theme"}&nbsp;:</label><br />
             <select class="formborder" id="cid" name="cid">
-                {foreach item=contact from=$contacts}
-                {if $contact.public == "1"}
-                <option value="{$contact.cid}">{$contact.name}</option>
-                {/if}
-                {/foreach}
+                {% for contact in contacts if public %}
+                    <option value="{{ contact.cid }}">{{ contact.name }}</option>
+                {% endfor %}
             </select>
         </p>
 
@@ -78,7 +76,9 @@
         </p>
         {/if}
 
-        {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+        {% if enableSpamCheck %}
+            {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+        {% endif %}
 
         {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null}
 

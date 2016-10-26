@@ -43,10 +43,10 @@ class UserController extends AbstractController
         $form = (int)FormUtil::getPassedValue('form', (isset($args['form'])) ? $args['form'] : $default_form, 'GETPOST');
         $cid  = (int)FormUtil::getPassedValue('cid',  (isset($args['cid'])) ? $args['cid'] : -1,  'GETPOST');
 
-        $customFields = unserialize(SessionUtil::getVar('formicula_customFields'));
-        $userdata = unserialize(SessionUtil::getVar('formicula_userdata'));
-        SessionUtil::delVar('formicula_customFields');
-        SessionUtil::delVar('formicula_userdata');
+        $customFields = unserialize(SessionUtil::getVar('formiculaCustomFields'));
+        $userdata = unserialize(SessionUtil::getVar('formiculaUserData'));
+        SessionUtil::delVar('formiculaCustomFields');
+        SessionUtil::delVar('formiculaUserData');
         
         // get submitted information - will be passed to the template
         // addinfo is an array:
@@ -105,14 +105,7 @@ class UserController extends AbstractController
             $uemail = UserUtil::getVar('email');
         }
 
-        $spamcheck = $this->getVar('spamcheck');
-        if ($spamcheck == 1) {
-            // Split the list of formids to exclude from spam checking into an array
-            $excludespamcheck = explode(',', $this->getVar('excludespamcheck'));
-            if (is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
-                $spamcheck = 0;
-            }
-        }
+        $enableSpamCheck = $this->get('zikula_formicula_module.helper.captcha_helper')->isSpamCheckEnabled($form);
 
         $this->view->add_core_data()->setCaching(false);
         if (empty($userData)) {
@@ -129,12 +122,9 @@ class UserController extends AbstractController
 
         $this->view->assign('customFields', $customFields)
                    ->assign('userData', $userData)
-        // for BC also provide uname and uemail
-                   ->assign('uname', $uname)
-                   ->assign('uemail', $uemail)
                    ->assign('contacts', $contacts)
                    ->assign('addinfo', $addinfo)
-                   ->assign('spamcheck', $spamcheck);
+                   ->assign('enableSpamCheck', $enableSpamCheck);
 
         return $this->view->fetch('forms' . DIRECTORY_SEPARATOR . $form.'_userform.tpl');
     }
@@ -271,44 +261,19 @@ class UserController extends AbstractController
         }
         
         // check captcha
-        $spamcheck = $this->getVar('spamcheck');
-        if ($spamcheck == 1) {
-            $excludespamcheck = explode(',', $this->getVar('excludespamcheck'));
-            if (is_array($excludespamcheck) && array_key_exists($form, array_flip($excludespamcheck))) {
-                $spamcheck = 0;
-            }
-        }
-        if ($spamcheck == 1) {
-            $captcha_ok = false;
+        $captchaHelper = $this->get('zikula_formicula_module.helper.captcha_helper');
+        $enableSpamCheck = $captchaHelper->isSpamCheckEnabled($form);
+        if ($enableSpamCheck) {
             $operands = @unserialize(SessionUtil::getVar('formiculaCaptcha'));
-            if (is_array($operands)) {
-                switch ($operands['z'] . '-' . $operands['w']) {
-                    case '0-0':
-                        $captcha_ok = (((int)$operands['x'] + (int)$operands['y'] + (int)$operands['v']) == $captcha);
-                        break;
-                    case '0-1':
-                        $captcha_ok = (((int)$operands['x'] + (int)$operands['y'] - (int)$operands['v']) == $captcha);
-                        break;
-                    case '1-0':
-                        $captcha_ok = (((int)$operands['x'] - (int)$operands['y'] + (int)$operands['v']) == $captcha);
-                        break;
-                    case '1-1':
-                        $captcha_ok = (((int)$operands['x'] - (int)$operands['y'] - (int)$operands['v']) == $captcha);
-                        break;
-                    default:
-                    // $captcha_ok is false
-                }
-            }
-
-            if ($captcha_ok == false) {
+            $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
+            if (false === $captchaValid) {
                 SessionUtil::delVar('formiculaCaptcha');
-                // todo: append params to $returntourl and redirect, see ticket #44
                 $params = ['form' => $form];
                 if (is_array($addinfo) && count($addinfo) > 0) {
                     $params['addinfo'] = $addinfo;
                 }
-                SessionUtil::setVar('formicula_userData', serialize($userData));
-                SessionUtil::setVar('formicula_customFields', serialize($customFields));
+                SessionUtil::setVar('formiculaUserData', serialize($userData));
+                SessionUtil::setVar('formiculaCustomFields', serialize($customFields));
 
                 return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorReturnUrl);
             }
@@ -318,8 +283,8 @@ class UserController extends AbstractController
         // Check hooked modules for validation
         $hookvalidators = $this->notifyHooks(new Zikula_ValidationHook('formicula.ui_hooks.forms.validate_edit', new Zikula_Hook_ValidationProviders()))->getValidators();
         if ($hookvalidators->hasErrors()) {
-            SessionUtil::setVar('formicula_userData', serialize($userData));
-            SessionUtil::setVar('formicula_customFields', serialize($customFields));
+            SessionUtil::setVar('formiculaUserData', serialize($userData));
+            SessionUtil::setVar('formiculaCustomFields', serialize($customFields));
 
             return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorReturnUrl);
         }

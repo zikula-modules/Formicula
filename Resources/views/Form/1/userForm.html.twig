@@ -89,7 +89,9 @@
     <textarea required placeholder="{gt text='Your comments here...'}" class="formborder" rows="10" cols="45" name="userdata[comment]" id="comment">{$userdata.comment}</textarea>
 </p>
 
-{{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+{% if enableSpamCheck %}
+    {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+{% endif %}
 
 {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null}
 

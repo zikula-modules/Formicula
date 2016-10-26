@@ -165,7 +165,9 @@
         <span id="advice-required-termsconditions" class="custom-advice" style="display:none"><br />{gt text='This is a mandatory field.'}</span>
     </p>
 
-    {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+    {% if enableSpamCheck %}
+        {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+    {% endif %}
 
     {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null}
     

@@ -55,6 +55,65 @@ class CaptchaHelper
     }
 
     /**
+     * Determines whether the spam check is active for a certain form.
+     *
+     * @param integer $form The form number
+     *
+     * @return boolean Whether the spam check is active or not
+     */
+    public function isSpamCheckEnabled($form = 0)
+    {
+        $enableSpamCheck = $this->variableApi->get('ZikulaFormiculaModule', 'enableSpamCheck', true);
+        if ($enableSpamCheck) {
+            $excludeSpamCheck = explode(',', $this->variableApi->get('ZikulaFormiculaModule', 'excludeSpamCheck', ''));
+            if (is_array($excludeSpamCheck) && array_key_exists($form, array_flip($excludeSpamCheck))) {
+                $enableSpamCheck = false;
+            }
+        }
+
+        return $enableSpamCheck;
+    }
+
+    /**
+     * Determines whether the given captcha code is correct or not.
+     *
+     * @param array   $operands The exercise operands
+     * @param integer $captcha  The captcha code entered by the user
+     *
+     * @return boolean Whether the captcha is correct or not
+     */
+    public function isCaptchaValid(array $operands = [], $captcha = 0)
+    {
+        $captchaValid = false;
+        if (!is_array($operands)) {
+            return $captchaValid;
+        }
+
+        $op1 = (int)$operands['x'];
+        $op2 = (int)$operands['y'];
+        $op3 = (int)$operands['v'];
+
+        switch ($operands['z'] . '-' . $operands['w']) {
+            case '0-0':
+                $captchaValid = ($op1 + $op2 + $op3 == $captcha);
+                break;
+            case '0-1':
+                $captchaValid = ($op1 + $op2 - $op3 == $captcha);
+                break;
+            case '1-0':
+                $captchaValid = ($op1 - $op2 + $op3 == $captcha);
+                break;
+            case '1-1':
+                $captchaValid = ($op1 - $op2 - $op3 == $captcha);
+                break;
+            default:
+                // $captchaValid is false
+        }
+
+        return $captchaValid;
+    }
+
+    /**
      * Creates a captcha image and returns it's markup code.
      *
      * based on imagetext (c) guite.de which is

@@ -365,9 +365,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
     }
     
     /**
-     * add owncontacts to the session information and return the id for generating the url
+     * add ownContacts to the session information and return the id for generating the url
      *
-     * @param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     * @param ownContacts array of own contacts to replace with the standard. The array can contain the following values
      *    name the contact full name (required)
      *    sname the contact secure name wich will be send to the submitter (optional)
      *    email the contact email (required)
@@ -375,17 +375,17 @@ class Formicula_Api_User extends Zikula_AbstractApi
      *    ssubject the subject of the confirmation mail (optional)
      * @return id wich must be appended to the formicula url with the sheme owncontact=id
      */
-    public function addSessionOwncontacts($args)
+    public function addSessionOwnContacts($args)
     {
         if (!ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'checkOwncontacts', $args)) {
             return false;
         }
 
         $ownContacts = SessionUtil::getVar('formiculaOwnContacts', []);
-        $tmpid = array_search($args['owncontacts'], $ownContacts);
+        $tmpid = array_search($args['ownContacts'], $ownContacts);
         if (!$tmpid) {
             $id = count($ownContacts);
-            $ownContacts[] = $args['owncontacts'];
+            $ownContacts[] = $args['ownContacts'];
             SessionUtil::setVar('formiculaOwnContacts', $ownContacts);
         } else {
             $id = $tmpid;
@@ -395,9 +395,9 @@ class Formicula_Api_User extends Zikula_AbstractApi
     }
     
     /**
-     * validate owncontacts array
+     * validate ownContacts array
      *
-     * @param owncontacts array of own contacts to replace with the standard. The array can contain the following values
+     * @param ownContacts array of own contacts to replace with the standard. The array can contain the following values
      *    name the contact full name (required)
      *    sname the contact secure name wich will be send to the submitter (optional)
      *    email the contact email (required)
@@ -407,11 +407,11 @@ class Formicula_Api_User extends Zikula_AbstractApi
      */
     public function checkOwncontacts($args)
     {
-        if (!isset($args['owncontacts'])) {
-            return LogUtil::registerError($this->__('You must pass an owncontacts array!'));
+        if (!isset($args['ownContacts'])) {
+            return LogUtil::registerError($this->__('You must pass an ownContacts array!'));
         }
 
-        foreach ($args['owncontacts'] as $item) {
+        foreach ($args['ownContacts'] as $item) {
             if (!isset($item['name'])) {
                 return LogUtil::registerError($this->__('You must pass a name for each contact!'));
             }
