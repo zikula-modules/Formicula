@@ -20,7 +20,7 @@ use Zikula\Core\Doctrine\EntityAccess;
  * Form submit entity class.
  *
  * @ORM\Entity(repositoryClass="Zikula\FormiculaModule\Entity\Repository\SubmitRepository")
- * @ORM\Table(name="formsubmits")
+ * @ORM\Table(name="formicula_submission")
  */
 class SubmitEntity extends EntityAccess
 {
@@ -55,19 +55,19 @@ class SubmitEntity extends EntityAccess
      *
      * @Assert\NotBlank()
      * @Assert\Ip()
-     * @ORM\Column(name="ip", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @var string $ipAddress
      */
     private $ipAddress;
 
     /**
-     * The host
+     * The host name
      *
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
-     * @var string $host
+     * @var string $hostName
      */
-    private $host;
+    private $hostName;
 
     /**
      * The name
@@ -91,7 +91,7 @@ class SubmitEntity extends EntityAccess
     /**
      * The phone number
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @var string $phoneNumber
      */
     private $phoneNumber;
@@ -169,7 +169,7 @@ class SubmitEntity extends EntityAccess
         $this->form = 0;
         $this->cid = 0;
         $this->ipAddress = '';
-        $this->host = '';
+        $this->hostName = '';
         $this->name = '';
         $this->email = '';
         $this->phoneNumber = '';
@@ -260,23 +260,23 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the host of the submit.
+     * Gets the host name of the submit.
      *
-     * @return string the submit's host
+     * @return string the submit's host name
      */
-    public function getHost()
+    public function getHostName()
     {
-        return $this->host;
+        return $this->hostName;
     }
 
     /**
-     * Sets the host for the submit.
+     * Sets the host name for the submit.
      *
-     * @param string $host the submit's host
+     * @param string $hostName the submit's host name
      */
-    public function setHost($host)
+    public function setHostName($hostName)
     {
-        $this->host = $host;
+        $this->hostName = $hostName;
     }
 
     /**

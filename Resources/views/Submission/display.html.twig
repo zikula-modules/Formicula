@@ -1,84 +1,97 @@
-{adminheader}
-<div class="z-admin-content-pagetitle">
-    {icon type="display" size="small"}
-    <h3>{gt text="View submitted form data"}</h3>
-</div>
-
-<table class="z-admintable">
+{{ adminHeader() }}
+<h3>
+    <span class="fa fa-eye"></span>
+    {{ __('View submitted form data') }}
+    {{ pageSetVar('title', __('View submitted form data')) }}
+</h3>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col id="cDate" />
+        <col id="cName" />
+        <col id="cIpAddress" />
+        <col id="cHostName" />
+        <col id="cContactId" />
+    </colgroup>
     <thead>
         <tr>
-            <th>{gt text='Date'}</th>
-            <th>{gt text='Name'}</th>
-            <th>{gt text='IP address'}</th>
-            <th>{gt text='Hostname'}</th>
-            <th>{gt text='Contact ID'}</th>
+            <th id="hDate" scope="col">{{ __('Date') }}</th>
+            <th id="hName" scope="col">{{ __('Name') }}</th>
+            <th id="hIpAddress" scope="col">{{ __('IP address') }}</th>
+            <th id="hHostName" scope="col">{{ __('Hostname') }}</th>
+            <th id="hContactId" scope="col">{{ __('Contact ID') }}</th>
         </tr>
     </thead>
     <tbody>
-        <tr class="z-odd">
-            <td>{$submit.cr_date|dateformat:'datetimebrief'}</td>
-            <td><a href="#" class="tooltips" title="{gt text='Email: %1$s - UID: %2$s' tag1=$submit.email|safetext tag2=$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
-            <td>{$submit.ip|safetext}</td>
-            <td>{$submit.host|safetext}</td>
-            <td>{$submit.cid|safetext}</td>
+        <tr>
+            <td headers="hDate">{{ submission.createdDate|localizeddate('short', 'short') }}</td>
+            <td headers="hName"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', { '%1$s': submission.email, '%2$s': submission.createdUserId }) }}">{{ submission.name }}</a></td>
+            <td headers="hIpAddress">{{ submission.ipAddress }}</td>
+            <td headers="hHostName">{{ submission.hostName }}</td>
+            <td headers="hContactId">{{ submission.cid }}</td>
         </tr>
     </tbody>
 </table>
-
-<table class="z-admintable">
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col id="cUrl" />
+        <col id="cCompany" />
+        <col id="cPhoneNumber" />
+        <col id="cLocation" />
+    </colgroup>
     <thead>
         <tr>
-            <th>{gt text='Homepage'}</th>
-            <th>{gt text='Company'}</th>
-            <th>{gt text='Phone Number'}</th>
-            <th>{gt text='Location'}</th>
+            <th id="hUrl" scope="col">{{ __('Website') }}</th>
+            <th id="hCompany" scope="col">{{ __('Company') }}</th>
+            <th id="hPhoneNumber" scope="col">{{ __('Phone number') }}</th>
+            <th id="hLocation" scope="col">{{ __('Location') }}</th>
         </tr>
     </thead>
     <tbody>
-        <tr class="z-odd">
-            <td><a href="{$submit.url|safetext}">{$submit.url|safetext}</a></td>
-            <td>{$submit.company|safetext}</td>
-            <td>{$submit.phone|safetext}</td>
-            <td>{$submit.location|safetext}</td>
-        </tr>
-    </tbody>
-</table>
-
-{if $submit.customdata}
-<table class="z-admintable">
-    <thead>
         <tr>
-            <th>{gt text='Custom fields'}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {foreach item=field key=k from=$submit.customdata}
-        <tr class="{cycle values="z-odd,z-even" name=submits}">
-            <td>{$k} : {$field|safetext}</td>
-        </tr>
-        {/foreach}
-    </tbody>
-</table>
-{/if}
-
-<table class="z-admintable">
-    <thead>
-        <tr>
-            <th>{gt text='Comment'}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="z-odd">
-            <td>{$submit.comment|safehtml|nl2br}</td>
+            <td headers="hUrl">{if submission.url ne ''}<a href="{{ submission.url }}" title="{{ __('Visit website') }}" target="_blank">{{ submission.url }}</a>{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hCompany">{% if submission.company ne '' %}{{ submission.company }}{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hPhoneNumber">{% if submission.phoneNumber ne '' %}{{ submission.phoneNumber }}{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hLocation">{% if submission.location ne '' %}{{ submission.location }}{% else %}{{ __('None') }}{% endif %}</td>
         </tr>
     </tbody>
 </table>
-
-
-
-{adminfooter}
-<script type="text/javascript">
-    // <![CDATA[
-    Zikula.UI.Tooltips($$('.tooltips'));
-    // ]]>
-</script>
+{% if submission.customData|length > 0 %}
+    <table class="table table-bordered table-striped">
+        <caption>{{ __('Custom fields') }}</caption>
+        <colgroup>
+            <col id="cCustomFields" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hCustomFieldName" scope="col">{{ __('Name') }}</th>
+                <th id="hCustomFieldValue" scope="col">{{ __('Value') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in submission.customData %}
+                <tr>
+                    <td headers="hCustomFieldName">{{ key }}</td>
+                    <td headers="hCustomFieldValue">{{ value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% if submission.comment ne '' %}
+    <table class="table table-bordered table-striped">
+        <colgroup>
+            <col id="cComment" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th id="hComment" scope="col">{{ __('Comment') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td headers="hComment">{{ submission.comment|safeHtml|nl2br }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endif %}
+{{ adminFooter() }}

@@ -20,7 +20,7 @@ use Zikula\Core\Doctrine\EntityAccess;
  * Form contact entity class.
  *
  * @ORM\Entity(repositoryClass="Zikula\FormiculaModule\Entity\Repository\ContactRepository")
- * @ORM\Table(name="formcontacts")
+ * @ORM\Table(name="formicula_contact")
  */
 class ContactEntity extends EntityAccess
 {
@@ -69,7 +69,7 @@ class ContactEntity extends EntityAccess
      *
      * @Assert\NotBlank()
      * @Assert\Length(max = 80)
-     * @ORM\Column(name="sname", type="string", length=80)
+     * @ORM\Column(type="string", length=80)
      * @var string $senderName
      */
     private $senderName;
@@ -80,7 +80,7 @@ class ContactEntity extends EntityAccess
      * @Assert\NotBlank()
      * @Assert\Length(max = 80)
      * @Assert\Email()
-     * @ORM\Column(name="semail", type="string", length=80)
+     * @ORM\Column(type="string", length=80)
      * @var string $senderEmail
      */
     private $senderEmail;
@@ -90,7 +90,7 @@ class ContactEntity extends EntityAccess
      *
      * @Assert\NotBlank()
      * @Assert\Length(max = 80)
-     * @ORM\Column(name="ssubject", type="string", length=80)
+     * @ORM\Column(type="string", length=80)
      * @var string $sendingSubject
      */
     private $sendingSubject;

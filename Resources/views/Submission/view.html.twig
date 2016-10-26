@@ -1,42 +1,46 @@
-{adminheader}
-<div class="z-admin-content-pagetitle">
-    {icon type="view" size="small"}
-    <h3>{gt text="View form submits"}</h3>
-</div>
-
-<table class="z-admintable">
+{{ adminHeader() }}
+<h3>
+    <span class="fa fa-envelope-open"></span>
+    {{ __('View form submissions') }}
+    {{ pageSetVar('title', __('View form submissions')) }}
+</h3>
+<table class="table table-bordered table-striped">
+    <colgroup>
+        <col id="cId" />
+        <col id="cForm" />
+        <col id="cContactId" />
+        <col id="cDate" />
+        <col id="cName" />
+        <col id="cActions" />
+    </colgroup>
     <thead>
         <tr>
-            <th>{gt text='ID'}</th>
-            <th>{gt text='Form #'}</th>
-            <th>{gt text='Contact ID'}</th>
-            <th>{gt text='Date'}</th>
-            <th>{gt text='Name'}</th>
-            <th class="z-right">{gt text='Options'}</th>
+            <th id="hId" scope="col">{{ __('ID') }}</th>
+            <th id="hForm" scope="col">{{ __('Form #') }}</th>
+            <th id="hContactId" scope="col">{{ __('Contact ID') }}</th>
+            <th id="hDate" scope="col">{{ __('Date') }}</th>
+            <th id="hName" scope="col">{{ __('Name') }}</th>
+            <th id="hActions" scope="col" class="text-right nowrap">{{ __('Actions') }}</th>
         </tr>
     </thead>
     <tbody>
-        {foreach item=submit from=$formsubmits}
-        <tr class="{cycle values="z-odd,z-even" name=submits}">
-            <td>{$submit.sid|safetext}</td>
-            <td>{$submit.form|safetext}</td>
-            <td>{$submit.cid|safetext}</td>
-            <td>{$submit.cr_date|dateformat:'datetimebrief'}</td>
-            <td><a href="#" class="tooltips" title="{gt text='Email: %1$s - UID: %2$s' tag1=$submit.email|safetext tag2=$submit.cr_uid|safetext}">{$submit.name|safetext}</a></td>
-            <td class="z-right">
-                <a href="{modurl modname=Formicula type=admin func=displaysubmit sid=$submit.sid}" class="tooltips" title="{gt text="View form submit"}">{img src="14_layer_visible.png" modname="core" set="icons/extrasmall" __alt="View form submit" }</a>
-                <a href="{modurl modname=Formicula type=admin func=deletesubmit sid=$submit.sid}" class="tooltips" title="{gt text="Delete form submit"}">{img src="14_layer_deletelayer.png" modname="core" set="icons/extrasmall" __alt="Delete form submit" }</a>
-            </td>
-        </tr>
-        {foreachelse}
-        <tr class="z-admintableempty"><td colspan="6">{gt text="No items found."}</td></tr>
-        {/foreach}
+        {% for submission in submissions %}
+            <tr>
+                <td headers="hId">{{ submission.sid }}</td>
+                <td headers="hForm">{{ submission.form }}</td>
+                <td headers="hContactId">{{ submission.cid }}</td>
+                <td headers="hDate">{{ submission.createdDate|localizeddate('short', 'short') }}</td>
+                <td headers="hName"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', { '%1$s': submission.email, '%2$s': submission.createdUserId }) }}">{{ submission.name }}</a></td>
+                <td headers="hActions" class="text-right nowrap">
+                    <a href="{{ path('zikulaformiculamodule_submission_display', { sid: submission.sid }) }}" class="fa fa-eye tooltips" title="{{ __('View form submission') }}">{{ __('View form submission') }}</a>
+                    <a href="{{ path('zikulaformiculamodule_submission_delete', { sid: submission.sid }) }}" class="fa fa-trash tooltips" title="{{ __('Delete form submission') }}">{{ __('Delete form submission') }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">{{ __('No submissions found.') }}</td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
-
-{adminfooter}
-<script type="text/javascript">
-// <![CDATA[
-    Zikula.UI.Tooltips($$('.tooltips'));
-// ]]>
-</script>
+{{ adminFooter() }}

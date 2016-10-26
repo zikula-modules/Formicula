@@ -47,7 +47,7 @@ class SubmissionController extends AbstractController
         // check necessary environment
         $this->get('zikula_formicula_module.helper.environment_checker')->check();
 
-        $submissions = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmits');
+        $submissions = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\SubmissionEntity')->findBy([], ['sid' => 'DESC']);
 
         return [
             'submissions' => $submissions
@@ -76,8 +76,12 @@ class SubmissionController extends AbstractController
         $this->get('zikula_formicula_module.helper.environment_checker')->check();
 
         $submissionId = $request->query->getDigits('sid', -1);
+        $submission = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\SubmissionEntity')->find($submissionId);
+        if (false === $submission) {
+            $this->addFlash('error', $this->__('Form submission could not be found.'));
 
-        $submission = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', ['sid' => $submissionId]);
+            return $this->redirectToRoute('zikulaformiculamodule_submission_view');
+        }
 
         return [
             'submission' => $submission
@@ -108,9 +112,9 @@ class SubmissionController extends AbstractController
         $submissionId = $request->query->getDigits('sid', -1);
         $confirmation = $request->request->get('confirmation', '');
 
-        $submit = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', ['sid' => $submissionId]);
-        if (false === $submit) {
-            $this->addFlash('error', $this->__('Unknown form submission'));
+        $submission = ModUtil::apiFunc('Formicula', 'admin', 'getFormSubmit', ['sid' => $submissionId]);
+        if (false === $submission) {
+            $this->addFlash('error', $this->__('Form submission could not be found.'));
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
@@ -120,16 +124,18 @@ class SubmissionController extends AbstractController
             // Confirm security token code
             $this->checkCsrfToken();        
 
-            if (ModUtil::apiFunc('Formicula', 'admin', 'deleteSubmit', ['sid' => $submissionId])) {
-                // Success
-                $this->addFlash('status', $this->__('Form submit has been deleted'));
-            }
+            $entityManager = $this->get('doctrine')->getManager();
+            $entityManager->remove($submission);
+            $entityManager->flush();
+
+            // Success
+            $this->addFlash('status', $this->__('Form submission has been deleted.'));
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
 
         return [
-            'submission' => $submit
+            'submission' => $submission
         ];
     }
 }
