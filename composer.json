@@ -28,8 +28,7 @@
                 "hook_subscriber": {"class": "Zikula\\FormiculaModule\\Container\\HookContainer"}
             },
             "securityschema": {
-                "ZikulaFormiculaModule::": "Form ID:Contact ID:",
-                "ZikulaFormiculaModule::OwnContacts": "Form ID::"
+                "ZikulaFormiculaModule::": "Form ID:Contact ID:"
             }
         }
     }

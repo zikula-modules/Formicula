@@ -3,13 +3,11 @@
 
 <form id="contactform" action="{modurl modname=Formicula type=user func=send}" method="post">
     <div>
-    <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
-    <input type="hidden" name="form" value="3" />
-    <input type="hidden" name="formname" value="Example reservation form" />
-    <input type="hidden" name="cid" value="1" />
-    <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
-    <input type="hidden" name="userformat" value="{$modvars.Formicula.default_userformat}" />
-    <input type="hidden" name="dataformat" value="array" />
+        <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
+        <input type="hidden" name="form" value="3" />
+        <input type="hidden" name="cid" value="1" />
+        <input type="hidden" name="adminFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultAdminFormat', 'html') }}" />
+        {% if not getModVar('ZikulaFormiculaModule', 'showUserFormat') %}<input type="hidden" name="userFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultUserFormat', 'html') }}" />{% endif %}
 
     <p>
         {gt text="Mandatory fields are indicated with a"}<span class="mandatory">*</span>

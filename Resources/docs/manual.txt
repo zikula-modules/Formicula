@@ -63,22 +63,6 @@ Subject: enter a static subject or use these placeholders:
     * %c = contact name
     * %n<num> = user defined field name <num>
     * %d<num> = user defined field data <num>
- 
-Using own contacts
-------------------
-It is possible to pass own contacts to formicula instead using the formicula database.
-To do this by a link you have to call the addSessionOwnContacts function in the User-API.
-This function will return you an integer wich you should append with the index 'ownContacts'
-to the URL pointing to Formicula.
-If you want to embed your form you can pass the ownContacts directly to the form by adding
-the ownContacts array to your arguments array.
-
-The ownContacts array should contain the following values (per item) in both cases:
-    * name the contact full name (required)
-    * sname the contact secure name wich will be send to the submitter (optional)
-    * email the contact email (required)
-    * semail the contact email wich will be send to the submiter (optional)
-    * ssubject the subject of the confirmation mail (optional) 
 
 Templates
 ---------

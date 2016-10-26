@@ -9,10 +9,8 @@
     <fieldset>
         <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
         <input type="hidden" name="form" value="0" />
-        <input type="hidden" name="formname" value="Simple contact form" />
-        <input type="hidden" name="adminformat" value="{$modvars.Formicula.default_adminformat}" />
-        {% if not getModVar('ZikulaFormiculaModule', 'showUserFormat') %}<input type="hidden" name="userFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultUserFormat') }}" />{% endif %}
-        <input type="hidden" name="dataformat" value="array" />
+        <input type="hidden" name="adminFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultAdminFormat', 'html') }}" />
+        {% if not getModVar('ZikulaFormiculaModule', 'showUserFormat') %}<input type="hidden" name="userFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultUserFormat', 'html') }}" />{% endif %}
 
         <legend>{gt text='Contact our team'}</legend>
         <div class="z-formrow">
