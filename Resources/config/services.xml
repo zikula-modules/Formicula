@@ -5,6 +5,7 @@
     <parameters>
         <parameter key="zikula_formicula_module.container.link_container.class">Zikula\FormiculaModule\Container\LinkContainer</parameter>
         <parameter key="twig.extension.zikula_formicula_module.class">Zikula\FormiculaModule\Twig\TwigExtension</parameter>
+        <parameter key="zikula_formicula_module.listener.third_party_listener.class">Zikula\FormiculaModule\Listener\ThirdPartyListener</parameter>
         <parameter key="zikula_formicula_module.helper.environment_helper.class">Zikula\FormiculaModule\Helper\EnvironmentHelper</parameter>
         <parameter key="zikula_formicula_module.helper.captcha_helper.class">Zikula\FormiculaModule\Helper\CaptchaHelper</parameter>
     </parameters>
@@ -18,6 +19,9 @@
         <service id="twig.extension.zikula_formicula_module" class="%twig.extension.zikula_formicula_module.class%" public="false">
             <argument type="service" id="zikula_formicula_module.helper.captcha_helper" />
             <tag name="twig.extension" />
+        </service>
+        <service id="zikula_formicula_module.listener.third_party_listener" class="%zikula_formicula_module.listener.third_party_listener.class%">
+            <tag name="kernel.event_subscriber" />
         </service>
         <service id="zikula_formicula_module.helper.captcha_helper" class="%zikula_formicula_module.helper.captcha_helper.class%" lazy="true">
             <argument type="service" id="translator.default" />

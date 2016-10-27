@@ -9,6 +9,11 @@
  * file that was distributed with this source code.
  */
 
+use DataUtil;
+use ServiceUtil;
+use Symfony\Component\HttpKernel\Controller\ControllerReference;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+
 /**
  * Content plugin class for displaying forms
  */
@@ -40,10 +45,15 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
             if (!isset($this->contact)) {
                 $this->contact = -1;
             }
-            PageUtil::addVar('stylesheet', ThemeUtil::getModuleStylesheet('Formicula'));
-            $form = ModUtil::func('Formicula', 'user', 'main', ['form' => (int)$this->form, 'cid' => $this->contact]);
 
-            return $form;
+            $fragmentHandler = new FragmentHandler(ServiceUtil::get('request_stack'));
+
+            $ref = new ControllerReference('ZikulaFormiculaModule:User:index', [], [
+                'form' => (int)$this->form,
+                'cid' => $this->contact
+            ]);
+
+            return $fragmentHandler->render($ref, 'inline', []);
         }
 
         return DataUtil::formatForDisplay($this->__('No form selected'));
@@ -74,20 +84,23 @@ class Formicula_ContentType_Form extends Content_AbstractContentType
 
     public function startEditing()
     {
-        $allContacts = ModUtil::apiFunc('Formicula', 'user', 'readValidContacts', ['form' => $this->form]);
+        $allContacts = ServiceUtil::get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->findBy([], ['name' => 'ASC']);
         $contacts = [];
         $contacts[] = [
             'text' => $this->__('All public contacts or form default'),
             'value' => '-1'
         ];
 
+        // only use public contacts
         foreach ($allContacts as $contact) {
-            if ($contact['public']) {
-                $contacts[] = [
-                    'text' => $contact['name'],
-                    'value' => $contact['cid']
-                ];
+            if (!$contact->isPublic()) {
+                continue;
             }
+
+            $contacts[] = [
+                'text' => $contact->getName(),
+                'value' => $contact->getCid()
+            ];
         }
 
         $this->view->assign('contacts', $contacts);
