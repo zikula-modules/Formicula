@@ -38,7 +38,7 @@ class UserSubmissionType extends AbstractType
         $builder
             ->add('cid', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'label' => $translator->__('Contact'),
-                'choices' => $option['contactChoices'],
+                'choices' => $options['contactChoices'],
                 'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => false
@@ -96,8 +96,7 @@ class UserSubmissionType extends AbstractType
                 ],
                 'choices_as_values' => true,
                 'expanded' => false,
-                'multiple' => false,
-                'help' => $translator->__('This form is used when no form is specified.')
+                'multiple' => false
             ]);
         }
         if ($modVars['showComment']) {
@@ -114,8 +113,8 @@ class UserSubmissionType extends AbstractType
                 'required' => false
             ]);
         }
-        $builder->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-            'submit' => $translator->__('Send'),
+        $builder->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            'label' => $translator->__('Send'),
             'icon' => 'fa-check',
             'attr' => [
                 'class' => 'btn btn-success'

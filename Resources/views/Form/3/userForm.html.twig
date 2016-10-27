@@ -117,18 +117,20 @@
 
             <h3>{{ __('Included extras') }}</h3>
             <div class="form-group">
-                <label class="checkbox-inline">
-                    <input type="hidden" name="custom[extra1][name]" value="{{ __('Extra 1') }}" />
-                    <input type="checkbox" id="extra1" name="custom[extra1][data]"{% if customFields.extra1.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 1') }}
-                </label>
-                <label class="checkbox-inline">
-                    <input type="hidden" name="custom[extra2][name]" value="{{ __('Extra 2') }}" />
-                    <input type="checkbox" id="extra2" name="custom[extra2][data]"{% if customFields.extra2.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 2') }}
-                </label>
-                <label class="checkbox-inline">
-                    <input type="hidden" name="custom[extra3][name]" value="{{ __('Extra 3') }}" />
-                    <input type="checkbox" id="extra3" name="custom[extra3][data]"{% if customFields.extra3.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 3') }}
-                </label>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <label class="checkbox-inline">
+                        <input type="hidden" name="custom[extra1][name]" value="{{ __('Extra 1') }}" />
+                        <input type="checkbox" id="extra1" name="custom[extra1][data]"{% if customFields.extra1.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 1') }}
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="hidden" name="custom[extra2][name]" value="{{ __('Extra 2') }}" />
+                        <input type="checkbox" id="extra2" name="custom[extra2][data]"{% if customFields.extra2.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 2') }}
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="hidden" name="custom[extra3][name]" value="{{ __('Extra 3') }}" />
+                        <input type="checkbox" id="extra3" name="custom[extra3][data]"{% if customFields.extra3.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 3') }}
+                    </label>
+                </div>
             </div>
 
             <h3>{{ __('Finish and send') }}</h3>
@@ -156,13 +158,15 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="hidden" name="custom[termsAndConditions][name]" value="{{ __('Agree with terms and conditions') }}" />
-                <input type="hidden" name="custom[termsAndConditions][mandatory]" value="1" />
-                <div class="checkbox">
-                    <label class="required">
-                        <input type="checkbox" id="termsAndConditions" name="custom[termsAndConditions][data]" value="{{ __('Yes') }}"{% if customFields.termsAndConditions.data|default == __('Yes') %} checked="checked"{% endif %} />
-                        {{ __f('Yes, I agree with the <a href="%s">Terms and Conditions</a>', { '%s': 'terms-and-conditions.html' })|raw }}
-                    </label>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input type="hidden" name="custom[termsAndConditions][name]" value="{{ __('Agree with terms and conditions') }}" />
+                    <input type="hidden" name="custom[termsAndConditions][mandatory]" value="1" />
+                    <div class="checkbox">
+                        <label class="required">
+                            <input type="checkbox" id="termsAndConditions" name="custom[termsAndConditions][data]" value="{{ __('Yes') }}"{% if customFields.termsAndConditions.data|default == __('Yes') %} checked="checked"{% endif %} />
+                            {{ __f('Yes, I agree with the <a href="%s">Terms and Conditions</a>', { '%s': 'terms-and-conditions.html' })|raw }}
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -201,4 +205,4 @@
         })(jQuery)
     </script>
 {% endset %}
-{{ pageAddVar('footer', customScript }}
+{{ pageAddVar('footer', customScript) }}

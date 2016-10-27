@@ -52,14 +52,14 @@ class ConfigController extends AbstractController
 
         // scan the templates folder for installed forms
         $templateDirectory = __DIR__ . '/../Resources/views/Form/';
-        $formChoices = []
+        $formChoices = [];
         $finder = new Finder();
-        $finder2 = new Finder();
 
-        foreach ($finder->directories()->in($templateFolder) as $directory) {
+        foreach ($finder->directories()->in($templateDirectory)->sortByName() as $directory) {
+            $finder2 = new Finder();
             $finder2->files()->in($directory->getRealPath());
             $formNumber = $directory->getFilename();
-            $formChoices[$this->__f('Form #%1$s containing %2$s templates', [ '%1$s': $formNumber, '%2$s': count($finder2) ])] = $formNumber;
+            $formChoices[$this->__f('Form #%1$s containing %2$s templates', [ '%1$s' => $formNumber, '%2$s' => count($finder2) ])] = $formNumber;
         }
 
         $form = $this->createForm('Zikula\FormiculaModule\Form\Type\ConfigType',

@@ -212,7 +212,7 @@ Allow from env=object_is_jpeg
 ');
             $this->addFlash('status', $this->__('Successfully created the cache directory with a .htaccess file in it.'));
         } catch (IOExceptionInterface $e) {
-            $this->addFlash('error', $this->__f('Could not create .htaccess file in %s, please refer to the manual before using the module!', ['%s': $e->getPath()]));
+            $this->addFlash('error', $this->__f('Could not create .htaccess file in %s, please refer to the manual before using the module!', ['%s' => $e->getPath()]));
         }
     }
 

@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="row">
         <h3>
-            <span class="fa fa-{{ mode == 'create' ? 'plus' : 'pencil' }}"></span>
+            <span class="fa fa-{{ mode == 'create' ? 'user-plus' : 'pencil' }}"></span>
             {{ mode == 'create' ? __('Add contact') : __('Edit contact') }}
             {{ pageSetVar('title', mode == 'create' ? __('Add contact') : __('Edit contact')) }}
         </h3>

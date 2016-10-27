@@ -33,4 +33,11 @@ class ThirdPartyListener implements EventSubscriberInterface
         $types = $event->getSubject();
         $types->add('Formicula_ContentType_Form');
     }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            'module.content.gettypes' => 'contentGetTypes'
+        ];
+    }
 }

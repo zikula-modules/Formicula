@@ -92,7 +92,7 @@ class UserController extends AbstractController
         $userName = '';
         $emailAddress = '';
         if ($currentUserApi->isLoggedIn()) {
-            $userName = $currentUserApi->get('name') != '' ? $currentUserApi->get('name') : $currentUserApi->get('uname');
+            $userName = \UserUtil::getVar('name') != '' ? \UserUtil::getVar('name') : $currentUserApi->get('uname');
             $emailAddress = $currentUserApi->get('email');
         }
 
@@ -106,7 +106,7 @@ class UserController extends AbstractController
         ];
         foreach (['company', 'phone', 'url', 'location', 'comment'] as $fieldName) {
             if ($modVars['show' . ucfirst($fieldName)]) {
-                $formData[$fieldName] = isset($userData[$fieldName]) ? $userData[$fieldName] : ''
+                $formData[$fieldName] = isset($userData[$fieldName]) ? $userData[$fieldName] : '';
             }
         }
 
@@ -162,7 +162,7 @@ class UserController extends AbstractController
 
             $hasError = false;
 
-            if ($modVars['showFileAttachment'] && isset($userData['fileUpload']) {
+            if ($modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
                 $userData['fileUpload'] = $this->handleUpload($userData['fileUpload']);
                 if (!$userData['fileUpload']) {
                     $hasError = true;
@@ -183,7 +183,7 @@ class UserController extends AbstractController
                 $isMandatory = isset($customField['mandatory']) && $customField['mandatory'] == 1 ? true : false;
                 $customFields[$key]['mandatory'] = $isMandatory;
                 if ($isMandatory && !is_array($customField['data']) && empty($customField['data'])) {
-                    $this->addFlash('error', $this->__f('Error! No value given for mandatory field "%s".', ['%s': $customField['name']])));
+                    $this->addFlash('error', $this->__f('Error! No value given for mandatory field "%s".', ['%s' => $customField['name']]));
                 }
             }
 
@@ -277,7 +277,7 @@ class UserController extends AbstractController
             'enableSpamCheck' => $enableSpamCheck
         ];
 
-        return $this->render('Form/' . $form . '/userForm.html.twig', $templateParameters);
+        return $this->render('@ZikulaFormiculaModule/Form/' . $formId . '/userForm.html.twig', $templateParameters);
     }
 
     /**
@@ -377,7 +377,7 @@ class UserController extends AbstractController
              'form' => $formId,
              'contact' => $contact,
              'userData' => $userData,
-             'customFields' => $customFields
+             'customFields' => $customFields,
              'siteName' => $siteName,
              'modVars' => $modVars
         ];
@@ -400,7 +400,7 @@ class UserController extends AbstractController
         $attachments = [];
         if ($mailType == 'contact' && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
             // add file attachment
-            $uploadDirectory = realpath($variableApi->get('ZikulaFormiculaModule', 'uploadDirectory', 'userdata');
+            $uploadDirectory = realpath($variableApi->get('ZikulaFormiculaModule', 'uploadDirectory', 'userdata'));
             $attachments[] = $uploadDirectory . '/' . $userData['fileUpload'];
         }
 

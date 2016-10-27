@@ -12,6 +12,7 @@
 namespace Zikula\FormiculaModule\Helper;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\ExtensionsModule\Api\VariableApi;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
@@ -40,6 +41,11 @@ class CaptchaHelper
     private $environmentHelper;
 
     /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @var SessionInterface
      */
     private $session;
@@ -51,14 +57,22 @@ class CaptchaHelper
      * @param VariableApi         $variableApi       VariableApi service instance
      * @param PermissionApi       $permissionApi     PermissionApi service instance
      * @param EnvironmentHelper   $environmentHelper EnvironmentHelper service instance
+     * @param RouterInterface     $router            RouterInterface service instance
      * @param SessionInterface    $session           SessionInterface service instance
      */
-    public function __construct(TranslatorInterface $translator, VariableApi $variableApi, PermissionApi $permissionApi, EnvironmentHelper $environmentHelper, SessionInterface $session)
-    {
+    public function __construct(
+        TranslatorInterface $translator,
+        VariableApi $variableApi,
+        PermissionApi $permissionApi,
+        EnvironmentHelper $environmentHelper,
+        RouterInterface $router,
+        SessionInterface $session
+    ) {
         $this->translator = $translator;
         $this->variableApi = $variableApi;
         $this->permissionApi = $permissionApi;
         $this->environmentHelper = $environmentHelper;
+        $this->router = $router;
         $this->session = $session;
     }
 
@@ -164,7 +178,7 @@ class CaptchaHelper
             return '';
         }
 
-        $fontPath = \DataUtil::formatForOS(__DIR__ . '/../Resources/public/fonts/' . $font . '.ttf');
+        $fontPath = $this->getFontPath($font);
         if (!file_exists($fontPath) || !is_readable($fontPath)) {
             return '';
         }
@@ -179,7 +193,7 @@ class CaptchaHelper
         $exerciseText = $operands['x'] . ' ' . $m[$operands['z']] . ' ' . $operands['y'] . ' ' . $m[$operands['w']] . ' ' . $operands['v'] . ' =';
 
         // hash the params for cache filename
-        $hash = hash('sha256', $font . $size . $bgColour . $fgColour . $exerciseText));
+        $hash = hash('sha256', $font . $size . $bgColour . $fgColour . $exerciseText);
         // create uri of image
         $cacheDirectory = $this->environmentHelper->getCacheDirectory();
         $imagePath = $cacheDirectory . '/' . $hash . $imageType;
@@ -189,7 +203,7 @@ class CaptchaHelper
             // we create a larger picture than needed, this makes it looking better at the end
             $multi = 4;
             // get the textsize in the image
-            $bbox = imagettfbbox ($size * $multi, 0, $font, $exerciseText);
+            $bbox = imagettfbbox ($size * $multi, 0, $fontPath, $exerciseText);
             $xcorr = 0 - $bbox[6]; // northwest X
             $ycorr = 0 - $bbox[7]; // northwest Y
             $box['left'] = $bbox[6] + $xcorr;
@@ -204,7 +218,7 @@ class CaptchaHelper
             $fgcolor = $this->hexToRgb($im, $fgColour);
 
             // add the text to the image
-            imagettftext ($im, $size * $multi, 0, $box['left'], $box['top'], $fgcolor, $font, $exerciseText);
+            imagettftext($im, $size * $multi, 0, $box['left'], $box['top'], $fgcolor, $fontPath, $exerciseText);
 
             // resize the image now
             $finalWidth  = round($box['width'] / $multi);
@@ -229,7 +243,32 @@ class CaptchaHelper
             $finalHeight = $imageData[1];
         }
 
-        return '<img src="' . $imagePath . '" alt="' . $this->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
+        return '<img src="' . $this->router->generate('home') . $imagePath . '" alt="' . $this->translator->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
+    }
+
+    /**
+     * Returns the path to a given font.
+     *
+     * @param string $font Name of font to use
+     *
+     * @return string Path to the font file
+     */
+    private function getFontPath($font)
+    {
+        $absoluteModulePathParts = explode('/', str_replace('/Helper', '', __DIR__));
+        $relativeModulePathParts = [];
+        $moduleRootFound = false;
+        foreach ($absoluteModulePathParts as $folder) {
+            if ($folder == 'modules') {
+                $moduleRootFound = true;
+            }
+            if ($moduleRootFound) {
+                $relativeModulePathParts[] = $folder;
+            }
+        }
+        $fontPath = implode('/', $relativeModulePathParts) . '/Resources/public/fonts/' . $font . '.ttf';
+
+        return $fontPath;
     }
 
     /**

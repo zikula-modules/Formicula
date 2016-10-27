@@ -80,32 +80,32 @@ class LinkContainer implements LinkContainerInterface
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_contact_view'),
             'text' => $this->translator->__('View contacts'),
-            'class' => 'group'
+            'icon' => 'group'
         ];
         $links[] = [
-            'url' => $this->router->generate('zikulaformiculamodule_contact_edit', ['cid' => -1]),
+            'url' => $this->router->generate('zikulaformiculamodule_contact_edit'),
             'text' => $this->translator->__('Add contact'),
-            'class' => 'user-plus'
+            'icon' => 'user-plus'
         ];
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_submission_view'),
-            'text' => $this->translator->__('View form submits'),
-            'class' => 'envelope-open'
+            'text' => $this->translator->__('View submissions'),
+            'icon' => 'envelope'
         ];
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_config_config'),
             'text' => $this->translator->__('Settings'), 
-            'class' => 'wrench',
+            'icon' => 'wrench',
             'links' => [
                 [
                     'url' => $this->router->generate('zikulaformiculamodule_config_config'),
                     'text' => $this->translator->__('Settings'), 
-                    'class' => 'wrench'
+                    'icon' => 'wrench'
                 ],
                 [
                     'url' => $this->router->generate('zikulaformiculamodule_config_clearcache'),
                     'text' => $this->translator->__('Clear captcha image cache'), 
-                    'class' => 'eraser'
+                    'icon' => 'eraser'
                 ]
             ]
         ];

@@ -91,9 +91,9 @@ class ContactController extends AbstractController
         $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $entityManager = $this->get('doctrine')->getManager();
-        $contactId = $request->query->getDigits('cid', -1);
+        $contactId = $request->query->getDigits('cid', 0);
 
-        if ($contactId == -1) {
+        if ($contactId < 1) {
             $mode = 'create';
             $contact = new ContactEntity();
             $contact->setPublic(true);
@@ -177,7 +177,7 @@ class ContactController extends AbstractController
         $this->get('zikula_formicula_module.helper.environment_helper')->check();
 
         $entityManager = $this->get('doctrine')->getManager();
-        $contactId = $request->query->getDigits('cid', -1);
+        $contactId = $request->query->getDigits('cid', 0);
 
         $contact = $entityManager->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
         if (false === $contact) {
