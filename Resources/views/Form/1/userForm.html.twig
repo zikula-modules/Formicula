@@ -1,103 +1,124 @@
 {{ include('@ZikulaFormiculaModule/Form/1/userHeader.html.twig') }}
+{% form_theme form with [
+    'ZikulaFormExtensionBundle:Form:bootstrap_3_zikula_admin_layout.html.twig',
+    'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+] %}
 {{ polyfill() }}
 
-<form id="contactform" action="{modurl modname=Formicula type=user func=send}" method="post">
-<div>
-    <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
-    <input type="hidden" name="form" value="1" />
-    <input type="hidden" name="adminFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultAdminFormat', 'html') }}" />
-    {% if not getModVar('ZikulaFormiculaModule', 'showUserFormat') %}<input type="hidden" name="userFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultUserFormat', 'html') }}" />{% endif %}
-    <input type="hidden" name="numFields" value="7" />
-    <input type="hidden" name="cid" value="1" />
+<div class="container-fluid">
+    <div class="row">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-<p>
-    {gt text="Mandatory fields are indicated with a"}<span class="mandatory">*</span>
-</p>
+        <p class="alert alert-info">{{ __('Mandatory fields are indicated with an asterisk.') }}</p>
 
-<p>
-    <label for="apply_as">{gt text='Apply as'}<span class="mandatory">*</span></label><br />
-    <input type="hidden" name="custom[apply_as][name]" value="{gt text='Apply as'}" />
-    <input type="hidden" name="custom[apply_as][mandatory]" value="1" />
-    <input type="text" required class="formborder" name="custom[apply_as][data]" id="apply_as" size="35" maxlength="80" value="{$custom.apply_as.data}" />
-</p>
+        <fieldset>
+            <legend>{{ __('Apply online') }}</legend>
+            {{ form_row(form.form) }}
+            {{ form_row(form.adminFormat) }}
+            {% if modVars.sendConfirmationToUser and not modVars.showUserFormat %}
+                {{ form_row(form.userFormat) }}
+            {% endif %}
+            <div class="hidden">
+                {{ form_row(form.cid) }}
+            </div>
+            <div class="form-group">
+                <label for="applyAs" class="control-label required col-sm-3">{{ __('Apply as') }}</label>
+                <div class="col-sm-9">
+                    <input type="hidden" name="custom[applyAs][name]" value="{{ __('Apply as') }}" />
+                    <input type="hidden" name="custom[applyAs][mandatory]" value="1" />
+                    <input type="text" id="applyAs" name="custom[applyAs][data]" maxlength="80" value="{{ customFields.applyAs.data|default }}" required="required" class="form-control" />
+                </div>
+            </div>
+            {{ form_row(form.name) }}
+            <div class="form-group">
+                <label for="dateOfBirth" class="control-label required col-sm-3">{{ __('Date of birth') }}</label>
+                <div class="col-sm-9">
+                    <input type="hidden" name="custom[dateOfBirth][name]" value="{{ __('Date of birth') }}" />
+                    <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
+                    <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
+                </div>
+            </div>
+            {% if modVars.showCompany %}
+                {{ form_row(form.company) }}
+            {% endif %}
+            {{ form_row(form.emailAddress) }}
+            {% if modVars.showLocation %}
+                <div class="form-group">
+                    <label for="street" class="control-label required col-sm-3">{{ __('Street') }}</label>
+                    <div class="col-sm-9">
+                        <input type="hidden" name="custom[street][name]" value="{{ __('Street') }}" />
+                        <input type="hidden" name="custom[street][mandatory]" value="1" />
+                        <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default }}" required="required" class="form-control" />
+                    </div>
+                </div>
+                {{ form_row(form.location, { label: __('Zip City') }) }}
+            {% endif %}
+            <div class="form-group">
+                <label for="salary" class="control-label required col-sm-3">{{ __('Desired salary') }}</label>
+                <div class="col-sm-9">
+                    <input type="hidden" name="custom[salary][name]" value="{{ __('Desired salary') }}" />
+                    <input type="hidden" name="custom[salary][mandatory]" value="1" />
+                    <input type="number" id="salary" name="custom[salary][data]" maxlength="40" value="{{ customFields.salary.data|default }}" required="required" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="entryDate" class="control-label required col-sm-3">{{ __('Entry date') }}</label>
+                <div class="col-sm-9">
+                    <input type="hidden" name="custom[entryDate][name]" value="{{ __('Entry date') }}" />
+                    <input type="hidden" name="custom[entryDate][mandatory]" value="1" />
+                    <input type="number" id="entryDate" name="custom[entryDate][data]" maxlength="40" value="{{ customFields.entryDate.data|default }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-]\d{4}" class="form-control" />
+                </div>
+            </div>
+            {% if modVars.showPhone %}
+                {{ form_row(form.phone) }}
+            {% endif %}
+            {% if modVars.showUrl %}
+                {{ form_row(form.url) }}
+            {% endif %}
+            {% if modVars.showComment %}
+                {{ form_row(form.comment) }}
+            {% endif %}
+            {% if modVars.sendConfirmationToUser and modVars.showUserFormat %}
+                {{ form_row(form.userFormat) }}
+            {% endif %}
+            {% if modVars.showFileAttachment %}
+                {{ form_row(form.fileUpload) }}
+            {% endif %}
 
-<p style="clear: left;">
-    <span style="float:left; width: 49%;">
-        <label for="uname">{gt text='Your Name'}<span class="mandatory">*</span></label><br />
-        <input type="text" required class="formborder" name="userdata[uname]" id="uname" size="35" maxlength="80" value="{$userdata.uname}" />
-    </span>
-    <span style="float:left; width: 49%;">
-        <label for="dateofbirth">{gt text='Date of birth'}<span class="mandatory">*</span></label><br />
-        <input type="hidden" name="custom[dateofbirth][name]" value="{gt text='Date of birth'}" />
-        <input type="hidden" name="custom[dateofbirth][mandatory]" value="1" />
-        <input type="text" required pattern="{literal}\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2}){/literal}" title="{gt text='Please enter a valid date (mm/dd/yyyy).'}" class="formborder" name="custom[dateofbirth][data]" id="dateofbirth" size="35" maxlength="40" value="{$custom.dateofbirth.data}" />
-    </span>
-</p>
+            {% if enableSpamCheck %}
+                {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+            {% endif %}
+        </fieldset>
 
-<p style="clear: left;">
-    <span style="float:left; width: 49%;">
-        <label for="street">{gt text='Street'}<span class="mandatory">*</span></label><br />
-        <input type="hidden" name="custom[street][name]" value="{gt text='Street'}" />
-        <input type="hidden" name="custom[street][mandatory]" value="1" />
-        <input type="text" required class="formborder" name="custom[street][data]" id="street" size="35" maxlength="40" value="{$custom.street.data}" />
-    </span>
-    <span style="float:left; width: 49%;">
-        <label for="salary">{gt text='Salary'}<span class="mandatory">*</span></label><br />
-        <input type="hidden" name="custom[salary][name]" value="{gt text='Salary'}" />
-        <input type="hidden" name="custom[salary][mandatory]" value="1" />
-        <input type="number" required class="formborder" name="custom[salary][data]" id="salary" size="35" maxlength="40" value="{$custom.salary.data}" />
-    </span>
-</p>
+        {% set hooks = notifyDisplayHooks(eventName='formicula.ui_hooks.forms.form_edit') %}
+        {% for providerArea, hook in hooks if hook %}
+            <fieldset>
+                <div class="help-block">
+                    {{ hook }}
+                </div>
+            </fieldset>
+        {% endfor %}
 
-<p style="clear: left;">
-    <span style="float:left; width: 49%;">
-        <label for="zipcity">{gt text='Zip City'}<span class="mandatory">*</span></label><br />
-        <input type="hidden" name="custom[zipcity][name]" value="{gt text='Zip City'}" />
-        <input type="hidden" name="custom[zipcity][mandatory]" value="1" />
-        <input type="text" required class="formborder" name="custom[zipcity][data]" id="zipcity" size="35" maxlength="40" value="{$custom.zipcity.data}" />
-    </span>
-    <span style="float:left; width: 49%;">
-        <label for="entrydate">{gt text='Entry date'}<span class="mandatory">*</span></label><br />
-        <input type="hidden" name="custom[entrydate][name]" value="{gt text='Entry date'}" />
-        <input type="hidden" name="custom[entrydate][mandatory]" value="1" />
-        <input type="text" required pattern="{literal}\d{1,2}[/-]\d{1,2}[/-]\d{4}{/literal}" class="formborder" name="custom[entrydate][data]" id="entrydate" size="35" maxlength="40" value="{$custom.entrydate.data}" />
-    </span>
-</p>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.submit) }}
+            </div>
+        </div>
 
-<p style="clear: left;">
-    <span style="float:left; width: 49%;">
-        <label for="phonenr">{gt text='Phone Number'}<span class="mandatory">*</span></label><br />
-        <input type="hidden" name="custom[phonenr][name]" value="{gt text='Phone Number'}" />
-        <input type="hidden" name="custom[phonenr][mandatory]" value="1" />
-        <input type="text" required class="formborder" name="custom[phonenr][data]" id="phonenr" size="35" maxlength="40" value="{$custom.phonenr.data}" />
-    </span>
-    <span style="float:left; width: 49%;">
-        <label for="url">{gt text='Homepage'}</label><br />
-        <input type='url' placeholder="http://" class="formborder" name="userdata[url]" id="url" value="{$userdata.url}" size="35" maxlength="40" />
-    </span>
-</p>
-
-<p style="clear: left; width: 49%;">
-    <label for="uemail">{gt text='Email'}<span class="mandatory">*</span></label><br />
-    <input type="email" required placeholder="{gt text='Enter a valid email address'}" class="formborder" name="userdata[uemail]" id="uemail" value="{$userdata.uemail}" size="35" maxlength="40" />
-</p>
-
-<p style="clear: left;">
-    <label for="comment">{gt text='Comment'}<span class="mandatory">*</span></label><br />
-    <textarea required placeholder="{gt text='Your comments here...'}" class="formborder" rows="10" cols="45" name="userdata[comment]" id="comment">{$userdata.comment}</textarea>
-</p>
-
-{% if enableSpamCheck %}
-    {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
-{% endif %}
-
-{notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null}
-
-<p class="z-buttons">
-    <input class="z-bt-ok" type="submit" name="submit" value="{gt text="Send"}" />
-</p>
-
+        {{ form_end(form) }}
+    </div>
 </div>
-</form>
 
 {{ include('@ZikulaFormiculaModule/Form/1/userFooter.html.twig') }}
+
+{% set customScript %}
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                $('#zikulaformiculamodule_usersubmission_cid').val('1');
+            });
+        })(jQuery)
+    </script>
+{% endset %}
+{{ pageAddVar('footer', customScript }}

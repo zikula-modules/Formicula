@@ -12,13 +12,17 @@
 namespace Zikula\FormiculaModule\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
-use Zikula\ThemeModule\Engine\Annotation\Theme;
+use Zikula\Core\Hook\ValidationHook;
+use Zikula\Core\Hook\ValidationProviders;
+use Zikula\FormiculaModule\Entity\ContactEntity;
+use Zikula\FormiculaModule\Entity\SubmissionEntity;
 
 /**
  * Class UserController
@@ -36,262 +40,409 @@ class UserController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = (int)FormUtil::getPassedValue('form', $this->getVar('defaultForm', 0), 'GET');
-        $contactId = (int)FormUtil::getPassedValue('cid', -1, 'GET');
+        $formId = $request->query->getDigits('form', $this->getVar('defaultForm', 0));
+        $contactId = $request->query->getDigits('cid', 0);
 
-        $customFields = unserialize(SessionUtil::getVar('formiculaCustomFields'));
-        $userdata = unserialize(SessionUtil::getVar('formiculaUserData'));
-        SessionUtil::delVar('formiculaCustomFields');
-        SessionUtil::delVar('formiculaUserData');
-        
-        // get submitted information - will be passed to the template
-        // addinfo is an array:
-        // addinfo[name1] = value1
-        // addinfo[name2] = value2
-        $addinfo = FormUtil::getPassedValue('addinfo', [], 'GET');
-
-        // reset captcha
-        SessionUtil::delVar('formiculaCaptcha');
+        $session = $this->get('session');
+        $variableApi = $this->get('zikula_extensions_module.api.variable');
+        $modVars = $variableApi->getAll('ZikulaFormiculaModule');
 
         $contacts = [];
-        if ($contactId == -1) {
-            $contacts = ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'readValidContacts', ['form' => $form]);
+        $contactChoices = [];
+        if ($contactId < 1) {
+            $allContacts = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->findBy([], ['cid' => 'ASC']);
+
+            // only use those contacts where we have the necessary rights for
+            foreach ($allContacts as $contact) {
+                $contactId = $contact->getCid();
+                if (!$this->hasPermission('ZikulaFormiculaModule::', $formId . ':' . $contactId . ':', ACCESS_COMMENT)) {
+                    continue;
+                }
+
+                $contacts[] = $contact;
+            }
         } else {
-            if (!$this->hasPermission('ZikulaFormiculaModule::', $form . ':' . $contactId . ':', ACCESS_COMMENT)) {
+            if (!$this->hasPermission('ZikulaFormiculaModule::', $formId . ':' . $contactId . ':', ACCESS_COMMENT)) {
                 throw new AccessDeniedException();
             }
-
             $contacts[] = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
         }
-
         if (count($contacts) == 0) {
             throw new AccessDeniedException();
         }
+        foreach ($contacts as $contact) {
+            if ($contact->isPublic()) {
+                $contactChoices[$contact['name']] = $contact['cid'];
+            }
+        }
+
+        $userData = [];
+        $customFields = [];
+        if ($session->has('formiculaUserData')) {
+            $userData = unserialize($session->get('formiculaUserData'));
+            $session->del('formiculaUserData');
+        }
+        if ($session->has('formiculaCustomFields')) {
+            $customFields = unserialize($session->get('formiculaCustomFields'));
+            $session->del('formiculaCustomFields');
+        }
 
         // default user values with an empty form
-        $uname = '';
-        $uemail = '';
-        if (UserUtil::isLoggedIn()) {
-            $uname = UserUtil::getVar('name') != '' ? UserUtil::getVar('name') : UserUtil::getVar('uname');
-            $uemail = UserUtil::getVar('email');
+        $currentUserApi = $this->get('zikula_users_module.current_user');
+        $userName = '';
+        $emailAddress = '';
+        if ($currentUserApi->isLoggedIn()) {
+            $userName = $currentUserApi->get('name') != '' ? $currentUserApi->get('name') : $currentUserApi->get('uname');
+            $emailAddress = $currentUserApi->get('email');
         }
 
-        $enableSpamCheck = $this->get('zikula_formicula_module.helper.captcha_helper')->isSpamCheckEnabled($form);
+        $formData = [
+            'form' => $formId,
+            'adminFormat' => $modVars['defaultAdminFormat'],
+            'userFormat' => $modVars['defaultUserFormat'],
+            'cid' => $contact->getCid(),
+            'name' => isset($userData['name']) ? $userData['name'] : $userName,
+            'emailAddress' => isset($userData['emailAddress']) ? $userData['emailAddress'] : $emailAddress
+        ];
+        foreach (['company', 'phone', 'url', 'location', 'comment'] as $fieldName) {
+            if ($modVars['show' . ucfirst($fieldName)]) {
+                $formData[$fieldName] = isset($userData[$fieldName]) ? $userData[$fieldName] : ''
+            }
+        }
 
-        if (empty($userData)) {
-            $userData = [
-                'uname' => $uname,
-                'uemail' => $uemail,
-                'comment' => '',
-                'url' => '',
-                'phone' => '',
-                'company' => '',
-                'location' => ''
+        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\UserSubmissionType',
+            $formData, [
+                'translator' => $this->get('translator.default'),
+                'modVars' => $modVars,
+                'contactChoices' => $contactChoices
+            ]
+        );
+
+        // get additionally provided information - will be passed to the template
+        // addinfo is an array: [name1 => value1, name2 => value2]
+        $addInfo = $request->query->get('addinfo', []);
+
+        // prepare captcha
+        $captchaHelper = $this->get('zikula_formicula_module.helper.captcha_helper');
+        $enableSpamCheck = $captchaHelper->isSpamCheckEnabled($formId);
+        if ($enableSpamCheck && $session->has('formiculaCaptcha')) {
+            // reset captcha
+            $session->del('formiculaCaptcha');
+        }
+
+        if ($form->handleRequest($request)->isValid() && $form->get('submit')->isClicked()) {
+            $formData = $form->getData();
+
+            // very basic input validation against HTTP response splitting
+            $formData['emailAddress'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $formData['emailAddress']);
+
+            $formid = $formData['form'];
+            $contactId = $formData['cid'];
+            if (empty($contactId) || empty($formId) || !$this->hasPermission('ZikulaFormiculaModule::', "$formId:$contactId:", ACCESS_COMMENT)) {
+                throw new AccessDeniedException();
+            }
+
+            // generate a return url we need if the form has errors
+            $returnUrl = $request->request->get('returntourl', $this->get('router')->generate('zikulaformiculamodule_user_index', ['form' => $formId]));
+
+            $contact = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
+            if (null === $contact) {
+                $this->addFlash('error', $this->__('Contact could not be found.'));
+
+                return $this->redirect($returnUrl);
+            }
+
+            $userData = [];
+            foreach ($formData as $fieldName => $value) {
+                if (in_array($fieldName, ['form', 'adminFormat', 'userFormat', 'cid'])) {
+                    continue;
+                }
+                $userData[$fieldName] = $value;
+            }
+
+            $hasError = false;
+
+            if ($modVars['showFileAttachment'] && isset($userData['fileUpload']) {
+                $userData['fileUpload'] = $this->handleUpload($userData['fileUpload']);
+                if (!$userData['fileUpload']) {
+                    $hasError = true;
+                }
+            }
+
+            if (!isset($userData['name']) || empty($userData['name'])) {
+                $this->addFlash('error', $this->__('Error! No or invalid name given.'));
+                $hasError = true;
+            }
+            if (!isset($userData['emailAddress']) || false === filter_var($userData['emailAddress'], FILTER_VALIDATE_EMAIL)) {
+                $this->addFlash('error', $this->__('Error! No or incorrect email address supplied.'));
+                $hasError = true;
+            }
+
+            $customFields = $request->request->get('custom', []);
+            foreach ($customFields as $key => $customField) {
+                $isMandatory = isset($customField['mandatory']) && $customField['mandatory'] == 1 ? true : false;
+                $customFields[$key]['mandatory'] = $isMandatory;
+                if ($isMandatory && !is_array($customField['data']) && empty($customField['data'])) {
+                    $this->addFlash('error', $this->__f('Error! No value given for mandatory field "%s".', ['%s': $customField['name']])));
+                }
+            }
+
+            // check captcha
+            if ($enableSpamCheck) {
+                $captcha = (int)$request->request->getDigits('captcha', 0);
+                $operands = @unserialize($session->get('formiculaCaptcha'));
+                $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
+                if (false === $captchaValid) {
+                    $this->addFlash('error', $this->__('The calculation to prevent spam was incorrect. Please try again.'));
+                    $hasError = true;
+                }
+            }
+            $session->del('formiculaCaptcha');
+
+            // Check hooked modules for validation
+            $validationHook = new ValidationHook(new ValidationProviders());
+            $validators = $this->dispatchHooks('formicula.ui_hooks.forms.validate_edit', $validationHook)->getValidators();
+            if ($validators->hasErrors()) {
+                $this->addFlash('error', $this->__('The validation of the hooked security module was incorrect. Please try again.'));
+                $hasError = true;
+            }
+
+            $templateParameters = [
+                'modVars' => $modVars,
+                'contact' => $contact,
+                'userData' => $userData,
+                'customFields' => $customFields
             ];
+
+            if ($hasError) {
+                $session->set('formiculaUserData', serialize($userData));
+                $session->set('formiculaCustomFields', serialize($customFields));
+
+                return $this->render('Form/' . $formId . '/userError.html.twig', $templateParameters);
+            }
+
+            // send emails
+            $sentToAdmin = $this->sendMail($contact, $formId, $userData, $customFields, $formData['adminFormat'], 'admin');
+            $sentToUser = true;
+            if ($modVars['sendConfirmationToUser'] && $formData['userFormat'] != 'none') {
+                $sentToUser = $this->sendMail($contact, $formId, $userData, $customFields, $formData['userFormat'], 'user');
+            }
+
+            $templateParameters['sentToUser'] = $sentToUser;
+
+            // store the submitted data in the database
+            if (true === $this->getVar('storeSubmissionData', false)) {
+                $storeSubmissionDataForms = $this->getVar('storeSubmissionDataForms', '');
+                $storeSubmissionDataFormsArray = explode(',', $storeSubmissionDataForms);
+                if (empty($storeSubmissionDataForms) || (is_array($storeSubmissionDataFormsArray) && in_array($formId, $storeSubmissionDataFormsArray))) {
+                    $submisssion = new SubmissionEntity();
+                    $submisssion->setForm($formId);
+                    $submisssion->setSid($contact->getCid());
+                    $ipAddress = $request->getClientIp();
+                    $submisssion->setIpAddress($ipAddress);
+                    $submisssion->setHostName(gethostbyaddr($ipAddress));
+                    $submisssion->setName($userData['name']);
+                    $submisssion->setEmail($userData['emailAddress']);
+                    foreach (['company', 'phone', 'url', 'location', 'comment'] as $fieldName) {
+                        if (isset($userData[$fieldName])) {
+                            $submisssion[$fieldName] = $userData[$fieldName];
+                        }
+                    }
+                    foreach ($customFields as $customField) {
+                        $submission->addCustomData($customField['name'], $customField['data']);
+                    }
+                    if (isset($userData['fileUpload'])) {
+                        $submission->addCustomData('fileUpload', $userData['fileUpload']);
+                    }
+
+                    try {
+                        $entityManager = $this->get('doctrine')->getManager();
+                        $entityManager->persist($submission);
+                        $entityManager->flush();
+                    } catch (Exception $e) {
+                        $this->addFlash('error', $this->__('Error! Could not store your submission into the database.') . ' ' . $e->getMessage());
+                    }
+                }
+            }
+
+            return $this->render('Form/' . $formId . '/userConfirm.html.twig', $templateParameters);
         }
 
+        // show the form
         $templateParameters = [
+            'modVars' => $modVars,
+            'form' => $form->createView(),
             'customFields' => $customFields,
-            'userData' => $userData,
-            'contacts' => $contacts,
-            'addinfo' => $addinfo,
+            'addInfo' => $addInfo,
             'enableSpamCheck' => $enableSpamCheck
         ];
 
-        $this->view->assign($templateParameters);
-
-        return $this->view->fetch('Form/' . $form . '/userForm.html.twig');
+        return $this->render('Form/' . $form . '/userForm.html.twig', $templateParameters);
     }
 
     /**
-     * Sends the mail to the contact and, if configured, to the user.
+     * Processes a possible file upload.
      *
-     * @Route("/send")
+     * @param UploadedFile $file The uploaded file
      *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return RedirectResponse
+     * @return string Name of uploaded file or empty string on failure
      */
-    public function sendAction(Request $request)
+    private function handleUpload(UploadedFile $file)
     {
-        $form = (int)FormUtil::getPassedValue('form', $this->getVar('defaultForm', 0), 'POST');
-        $contactId = (int)FormUtil::getPassedValue('cid', 0, 'POST');
-        $captcha = (int)FormUtil::getPassedValue('captcha', 0, 'POST');
-        $userFormat = FormUtil::getPassedValue('userFormat', $this->getVar('defaultUserFormat', 'html'),  'POST');
-        $adminFormat = FormUtil::getPassedValue('adminFormat', $this->getVar('defaultAdminFormat', 'html'), 'POST');
-        $errorReturnUrl = FormUtil::getPassedValue('returntourl', '',  'POST');
-
-        if (!$this->hasPermission('ZikulaFormiculaModule::', "$form:$contactId:", ACCESS_COMMENT)) {
-            throw new AccessDeniedException();
-        }
-
-        if ($errorReturnUrl == '') {
-            // generate a returnurl we need if the form has errors
-            $errorReturnUrl = ModUtil::url('ZikulaFormiculaModule', 'user', 'main', ['form' => $form]);
-        }
-
-        // Confirm security token code
-        $this->checkCsrfToken();
-
-        if (empty($contactId) && empty($form)) {
-            return System::redirect(System::getHomepageUrl());
-        }
-        
-        $userData = [];
-        $customFields = [];
-        // Upload directory
+        // Get path to upload directory
         $uploadDirectory = $this->getVar('uploadDirectory', 'userdata');
         // check if it ends with / or we add one
         if (substr($uploadDirectory, -1) != '/') {
             $uploadDirectory .= '/';
         }
 
-        $userData = FormUtil::getPassedValue('userData', (isset($args['userData'])) ? $args['userData'] : [], 'GETPOST');
-        $customFields   = FormUtil::getPassedValue('custom', (isset($args['custom'])) ? $args['custom'] : [], 'GETPOST');
-        $userData['uname']    = isset($userData['uname']) ? $userData['uname'] : '';
-        $userData['uemail']   = isset($userData['uemail']) ? $userData['uemail'] : '';
-        $userData['url']      = isset($userData['url']) ? $userData['url'] : '';
-        $userData['phone']    = isset($userData['phone']) ? $userData['phone'] : '';
-        $userData['company']  = isset($userData['company']) ? $userData['company'] : '';
-        $userData['location'] = isset($userData['location']) ? $userData['location'] : '';
-        $userData['comment']  = isset($userData['comment']) ? $userData['comment'] : '';
+        $fileName = $file->getClientOriginalName();
+        try {
+            $file = $file->getData()->move($uploadDirectory, $fileName);
+        } catch (FileException $e) {
+            $this->addFlash('error', $e->getMessage());
 
-        foreach ($customFields as $k => $customField) {
-            $customField['mandatory'] = ($customField['mandatory'] == 1) ? true : false;
+            return '';
+        }
 
-            // get uploaded files
-            if (isset($_FILES['custom']['tmp_name'][$k]['data'])) {
-                $customFields[$k]['data']['error'] = $_FILES['custom']['error'][$k]['data'];
-                if ($customField['data']['error'] == 0) {
-                    $customField['data']['size'] = $_FILES['custom']['size'][$k]['data'];
-                    $customField['data']['type'] = $_FILES['custom']['type'][$k]['data'];
-                    $customField['data']['name'] = $_FILES['custom']['name'][$k]['data'];
-                    $customField['upload'] = true;
-                    move_uploaded_file($_FILES['custom']['tmp_name'][$k]['data'], DataUtil::formatForOS($uploadDirectory . $customField['data']['name']));
-                } else {
-                    // error - replace the 'data' with an errormessage
-                    $customField['data'] = constant('_FOR_UPLOADERROR' . $customField['data']['error']);
+        return $fileName;
+    }
+
+    /**
+     * Sends mails to the contact and, if configured, to the user.
+     *
+     * @param ContactEntity $contact      The contact entity
+     * @param integer       $formId       The form number
+     * @param array         $userData     Input for base fields
+     * @param array         $customFields Input for additional fields
+     * @param string        $format       Email format to user
+     * @param string        $mailType     Type of mail to send (admin or user)
+     *
+     * @return boolean True if mail was successfully sent, false otherwise
+     */
+    private function sendMail(ContactEntity $contact, $formId, array $userData = [], array $customFields = [], $format = 'html', $mailType = '')
+    {
+        if (null === $this->get('kernel')->getModule('ZikulaMailerModule')) {
+            // no mailer module - error!
+            return false;
+        }
+
+        $mailData = $userData;
+        if ($format == 'plain') {
+            // remove tags from comment to avoid spam
+            $mailData['comment'] = strip_tags($mailData['comment']);
+        }
+
+        $formId = \DataUtil::formatForOS($formId);
+        $variableApi = $this->get('zikula_extensions_module.api.variable');
+        $modVars = $variableApi->getAll('ZikulaFormiculaModule');
+        $siteName = $variableApi->get('ZConfig', 'sitename');
+        $adminMail = $variableApi->get('ZConfig', 'adminmail');
+        $ipAddress = $request->getClientIp();
+
+        // determine subject
+        if ($mailType == 'admin') {
+            // subject of the emails can be determined from the form
+            $subject = isset($userData['adminSubject']) && !empty($userData['adminSubject']) ? $userData['adminSubject'] : $siteName . ' - ' . $contact['name'];
+        } elseif ($mailType == 'user') {
+            // check for subject, can be in the form or in the contact
+            if (!empty($contact->getSendingSubject()) || !empty($userData['userSubject'])) {
+                $subject = !empty($userData['userSubject']) ? $userData['userSubject'] : $contact->getSendingSubject();
+                // replace some placeholders
+                // %s = sitename
+                // %l = slogan
+                // %u = site url
+                // %c = contact name
+                // %n<num> = user defined field name <num>
+                // %d<num> = user defined field data <num>
+                $subject = str_replace('%s', \DataUtil::formatForDisplay($siteName), $subject);
+                $subject = str_replace('%l', \DataUtil::formatForDisplay($variableApi->get('ZConfig', 'slogan')), $subject);
+                $subject = str_replace('%u', \System::getBaseUrl(), $subject);
+                $subject = str_replace('%c', \DataUtil::formatForDisplay($contact->getSenderName()), $subject);
+                $i = 0;
+                foreach ($customFields as $fieldName => $customField) {
+                    $i++;
+                    $subject = str_replace('%n' . $i, $customField['name'], $subject);
+                    $subject = str_replace('%d' . $i, $customField['data'], $subject);
                 }
             } else {
-                $customField['upload'] = false;
-            }
-            $customFields[$k] = $customField;
-        }
-        
-        // check captcha
-        $captchaHelper = $this->get('zikula_formicula_module.helper.captcha_helper');
-        $enableSpamCheck = $captchaHelper->isSpamCheckEnabled($form);
-        if ($enableSpamCheck) {
-            $operands = @unserialize(SessionUtil::getVar('formiculaCaptcha'));
-            $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
-            if (false === $captchaValid) {
-                SessionUtil::delVar('formiculaCaptcha');
-                $params = ['form' => $form];
-                if (is_array($addinfo) && count($addinfo) > 0) {
-                    $params['addinfo'] = $addinfo;
-                }
-                SessionUtil::setVar('formiculaUserData', serialize($userData));
-                SessionUtil::setVar('formiculaCustomFields', serialize($customFields));
-
-                return LogUtil::registerError($this->__('The calculation to prevent spam was incorrect. Please try again.'), null, $errorReturnUrl);
+                $subject = $siteName . ' - ' . $contact->getName();
             }
         }
-        SessionUtil::delVar('formiculaCaptcha');
 
-        // Check hooked modules for validation
-        $hookvalidators = $this->notifyHooks(new Zikula_ValidationHook('formicula.ui_hooks.forms.validate_edit', new Zikula_Hook_ValidationProviders()))->getValidators();
-        if ($hookvalidators->hasErrors()) {
-            SessionUtil::setVar('formiculaUserData', serialize($userData));
-            SessionUtil::setVar('formiculaCustomFields', serialize($customFields));
-
-            return LogUtil::registerError($this->__('The validation of the hooked security module was incorrect. Please try again.'), null, $errorReturnUrl);
-        }
-
-        $params = ['form' => $form];
-        if (isset($addinfo) && is_array($addinfo) && count($addinfo) > 0) {
-            $params['addinfo'] = $addinfo;
-        }
-
-        if (empty($userFormat) || !in_array($userFormat, ['plain', 'html', 'none'])) {
-            $userFormat = 'plain';
-        }
-        if (empty($adminFormat) || !in_array($adminFormat, ['plain', 'html'])) {
-            $adminFormat = 'plain';
-        }
-
-        // very basic input validation against HTTP response splitting
-        $userData['uemail'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $userData['uemail']);
-
-        $contact = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
-
+        // determine body
         $templateParameters = [
-            'contact' => $contact,
-            'userData' => $userData,
-            'userFormat' => $userFormat,
-            'adminFormat' => $adminFormat
+             'ipAddress' => $ipAddress,
+             'hostName' => gethostbyaddr($ipAddress),
+             'form' => $formId,
+             'contact' => $contact,
+             'userData' => $userData,
+             'customFields' => $customFields
+             'siteName' => $siteName,
+             'modVars' => $modVars
         ];
-        $this->view->assign($templateParameters);
 
-        $argumentsValid = ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'checkArguments', [
-            'userData'     => $userData,
-            'customFields' => $customFields,
-            'userFormat'   => $userFormat
-        ]);
+        $bodyTemplateHtml = 'Form/' . $formId . '/' . $mailType . '.html.twig';
+        $bodyTemplateText = 'Form/' . $formId . '/' . $mailType . '.html.twig';
+        $bodyHtml = $this->renderView($bodyTemplateHtml, $templateParameters);
+        $bodyText = $this->renderView($bodyTemplateText, $templateParameters);
 
-        if (true === $argumentsValid) {
-            $userDataComment = $userData['comment'];
+        $body = '';
+        $altBody = '';
+        if ($format == 'text') {
+            $body = $bodyText;
+        } elseif ($format == 'html') {
+            $body = $bodyHtml;
+            $altBody = $bodyText;
+        }
 
-            if ($adminFormat == 'plain') {
-                // remove tags from comment to avoid spam
-                $userData['comment'] = strip_tags($userDataComment);
-            }
-            // send the submitted data to the contact(s)
-            if (ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'sendtoContact', [
-                    'contact'      => $contact,
-                    'userData'     => $userData,
-                    'customFields' => $customFields,
-                    'form'         => $form,
-                    'format'       => $adminFormat
-            ]) == false) {
-                return LogUtil::registerError($this->__('There was an error sending the email.'), null, $errorReturnUrl);
-            }
+        // add possible attachment to admin mail
+        $attachments = [];
+        if ($mailType == 'contact' && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
+            // add file attachment
+            $uploadDirectory = realpath($variableApi->get('ZikulaFormiculaModule', 'uploadDirectory', 'userdata');
+            $attachments[] = $uploadDirectory . '/' . $userData['fileUpload'];
+        }
 
-            if ($userFormat == 'plain') {
-                // remove tags from comment to avoid spam
-                $userData['comment'] = strip_tags($userDataComment);
-            }
-            // send the submitted data as confirmation to the user
-            if ($this->getVar('send_user') == 1 && $userFormat != 'none') {
-                // we replace the array of data of uploaded files with the filename
-                $this->view->assign('sentToUser', ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'sendtoUser', [
-                    'contact'      => $contact,
-                    'userData'     => $userData,
-                    'customFields' => $customFields,
-                    'form'         => $form,
-                    'format'       => $userFormat
-                ]));
-            }
+        // create new message instance
+        /** @var Swift_Message */
+        $message = Swift_Message::newInstance();
 
-            // store the submitted data in the database
-            if (true === $this->getVar('storeSubmissionData', false)) {
-                $storeSubmissionDataForms = $this->getVar('storeSubmissionDataForms', '');
-                $storeSubmissionDataFormsArray = explode(',', $storeSubmissionDataForms);
-                if (empty($storeSubmissionDataForms) || (is_array($storeSubmissionDataFormsArray) && in_array($form, $storeSubmissionDataFormsArray))) {
-                    ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'storeInDatabase', [
-                        'contact'      => $contact,
-                        'userData'     => $userData,
-                        'customFields' => $customFields,
-                        'form'         => $form
-                    ]);
+        // set sender and recipient
+        if ($mailType == 'admin') {
+            $fromAddress = true === $modVars['useContactsAsSender'] ? $userData['emailAddress'] : $adminMail;
+            $message->setFrom([$fromAddress => $userData['name']]);
+            $message->setTo([$contact->getEmail() => $contact->getName()]);
+        } elseif ($mailType == 'user') {
+            $fromName = !empty($contact->getSenderName()) ? $contact->getSenderName() : $siteName . ' - ' . $this->__('Contact form');
+            $fromAddress = !empty($contact->getSenderEmail()) ? $contact->getSenderEmail() : $contact->getEmail();
+            $fromAddress = true === $modVars['useContactsAsSender'] ? $fromAddress : $adminMail;
+            $message->setFrom([$adminMail => $fromName]);
+            $message->setTo([$userData['emailAddress'] => $userData['name']]);
+        }
+
+        // send the email
+        $mailer = $this->get('zikula_mailer_module.api.mailer');
+        $mailSent = $mailer->sendMessage($message, $subject, $body, $altBody, ($format == 'html'), [], $attachments);
+
+        if ($mailType == 'admin') {
+            if (true === $modVars['deleteUploadedFiles']) {
+                foreach ($attachments as $attachment) {
+                    if (file_exists($attachment) && is_file($attachment)) {
+                        unlink($attachment);
+                    }
                 }
+            }
+
+            if (false === $mailSent) {
+                $this->addFlash('error', $this->__('There was an error sending the email to our contact.'));
+            }
+        } elseif ($mailType == 'user') {
+            if (false === $mailSent) {
+                $this->addFlash('error', $this->__('There was an error sending the confirmation email to your email address.'));
             }
         }
 
-        $customFields = ModUtil::apiFunc('ZikulaFormiculaModule', 'user', 'removeUploadInformation', ['customFields' => $customFields]);
-        $this->view->assign('customFields', $customFields);
-
-        $template = $argumentsValid ? 'userConfirm' : 'userError';
-
-        return $this->view->fetch('Form/' . $form . '/' . $template . '.html.twig');
+        return $mailSent;
     }
 }

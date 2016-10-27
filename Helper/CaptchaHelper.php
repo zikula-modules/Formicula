@@ -11,6 +11,7 @@
 
 namespace Zikula\FormiculaModule\Helper;
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\ExtensionsModule\Api\VariableApi;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
@@ -39,19 +40,26 @@ class CaptchaHelper
     private $environmentHelper;
 
     /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * TwigExtension constructor.
      *
      * @param TranslatorInterface $translator        TranslatorInterface service instance
      * @param VariableApi         $variableApi       VariableApi service instance
      * @param PermissionApi       $permissionApi     PermissionApi service instance
      * @param EnvironmentHelper   $environmentHelper EnvironmentHelper service instance
+     * @param SessionInterface    $session           SessionInterface service instance
      */
-    public function __construct(TranslatorInterface $translator, VariableApi $variableApi, PermissionApi $permissionApi, EnvironmentHelper $environmentHelper)
+    public function __construct(TranslatorInterface $translator, VariableApi $variableApi, PermissionApi $permissionApi, EnvironmentHelper $environmentHelper, SessionInterface $session)
     {
         $this->translator = $translator;
         $this->variableApi = $variableApi;
         $this->permissionApi = $permissionApi;
         $this->environmentHelper = $environmentHelper;
+        $this->session = $session;
     }
 
     /**
@@ -165,7 +173,7 @@ class CaptchaHelper
 
         $m = ['+', '-'];
         // store the numbers in a session var
-        SessionUtil::setVar('formiculaCaptcha', serialize($operands));
+        $this->session->set('formiculaCaptcha', serialize($operands));
 
         // create the text for the image
         $exerciseText = $operands['x'] . ' ' . $m[$operands['z']] . ' ' . $operands['y'] . ' ' . $m[$operands['w']] . ' ' . $operands['v'] . ' =';

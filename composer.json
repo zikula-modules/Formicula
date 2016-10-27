@@ -22,6 +22,7 @@
             "core-compatibility": ">=1.4.3",
             "displayname": "Formicula",
             "url": "formicula",
+            "oldnames": ["Formicula"],
             "capabilities": {
                 "admin": {"route": "zikulaformiculamodule_contact_view"},
                 "user": {"route": "zikulaformiculamodule_user_index"},

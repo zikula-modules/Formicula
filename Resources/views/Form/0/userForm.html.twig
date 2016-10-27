@@ -1,108 +1,71 @@
 {{ include('@ZikulaFormiculaModule/Form/0/userHeader.html.twig') }}
+{% form_theme form with [
+    'ZikulaFormExtensionBundle:Form:bootstrap_3_zikula_admin_layout.html.twig',
+    'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+] %}
 {{ polyfill() }}
 
-<p class="z-informationmsg">
-    {gt text="Mandatory fields are indicated with a"} <span class="mandatory">*</span>
-</p>
+<div class="container-fluid">
+    <div class="row">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-<form id="contactform2" class="z-form" action="{modurl modname=Formicula type=user func=send}" method="post"{% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') %} enctype="multipart/form-data"{% endif %}>
-    <fieldset>
-        <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
-        <input type="hidden" name="form" value="0" />
-        <input type="hidden" name="adminFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultAdminFormat', 'html') }}" />
-        {% if not getModVar('ZikulaFormiculaModule', 'showUserFormat') %}<input type="hidden" name="userFormat" value="{{ getModVar('ZikulaFormiculaModule', 'defaultUserFormat', 'html') }}" />{% endif %}
+        <p class="alert alert-info">{{ __('Mandatory fields are indicated with an asterisk.') }}</p>
 
-        <legend>{gt text='Contact our team'}</legend>
-        <div class="z-formrow">
-            <label for="cid">{gt text="Contact"}</label>
-            <select class="formborder" id="cid" name="cid">
-                {% for contact in contacts if public %}
-                    <option value="{{ contact.cid }}">{{ contact.name }}</option>
-                {% endfor %}
-            </select>
+        <fieldset>
+            <legend>{{ __('Contact our team') }}</legend>
+            {{ form_row(form.form) }}
+            {{ form_row(form.adminFormat) }}
+            {% if modVars.sendConfirmationToUser and not modVars.showUserFormat %}
+                {{ form_row(form.userFormat) }}
+            {% endif %}
+            {{ form_row(form.cid) }}
+            {{ form_row(form.name) }}
+            {% if modVars.showCompany %}
+                {{ form_row(form.company) }}
+            {% endif %}
+            {{ form_row(form.emailAddress) }}
+            {% if modVars.showPhone %}
+                {{ form_row(form.phone) }}
+            {% endif %}
+            {% if modVars.showUrl %}
+                {{ form_row(form.url) }}
+            {% endif %}
+            {% if modVars.showLocation %}
+                {{ form_row(form.location) }}
+            {% endif %}
+            {% if modVars.showComment %}
+                {{ form_row(form.comment) }}
+            {% endif %}
+            {% if modVars.sendConfirmationToUser and modVars.showUserFormat %}
+                {{ form_row(form.userFormat) }}
+            {% endif %}
+            {% if modVars.showFileAttachment %}
+                {{ form_row(form.fileUpload) }}
+            {% endif %}
+
+            {% if enableSpamCheck %}
+                {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+            {% endif %}
+        </fieldset>
+
+        {% set hooks = notifyDisplayHooks(eventName='formicula.ui_hooks.forms.form_edit') %}
+        {% for providerArea, hook in hooks if hook %}
+            <fieldset>
+                <div class="help-block">
+                    {{ hook }}
+                </div>
+            </fieldset>
+        {% endfor %}
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.submit) }}
+            </div>
         </div>
 
-        <div class="z-formrow">
-            <label for="uname">{gt text="Your Name"}<span class="mandatory">*</span></label>
-            <input autofocus required class="formborder" id="uname" name="userdata[uname]" size="40" maxlength="80" value="{$userdata.uname}" />
-        </div>
-
-        <div class="z-formrow">
-            <label for="uemail">{gt text="Email"}<span class="mandatory">*</span></label>
-            <input type="email" required placeholder="{gt text='Enter a valid email address'}" class="formborder" id="uemail" name="userdata[uemail]" size="40" maxlength="40" value="{$userdata.uemail}" />
-        </div>
-
-        {if $modvars.Formicula.show_url==1}
-        <div class="z-formrow">
-            <label for="url">{gt text="Homepage"}</label>
-            <input type="url" placeholder="http://" class="formborder" id="url" name="userdata[url]" size="40" maxlength="40" value="{$userdata.url}" />
-        </div>
-        {/if}
-
-        {if $modvars.Formicula.show_phone==1}
-        <div class="z-formrow">
-            <label for="phone">{gt text="Phone Number"}</label>
-            <input type="text" class="formborder" id="phone" name="userdata[phone]" size="40" maxlength="40" value="{$userdata.phone}" />
-        </div>
-        {/if}
-
-        {if $modvars.Formicula.show_company==1}
-        <div class="z-formrow">
-            <label for="company">{gt text="Company"}</label>
-            <input type="text" class="formborder" id="company" name="userdata[company]" size="40" maxlength="40" value="{$userdata.company}" />
-        </div>
-        {/if}
-
-        {if $modvars.Formicula.show_location==1}
-        <div class="z-formrow">
-            <label for="location">{gt text="Location"}</label>
-            <input type="text" class="formborder" id="location" name="userdata[location]" size="40" maxlength="40" value="{$userdata.location}" />
-        </div>
-        {/if}
-
-        <div class="z-formrow">
-            <label for="comment">{gt text="Comment"}<span class="mandatory">*</span></label>
-            <textarea required placeholder="{gt text='Your comments here...'}" class="formborder" rows="6" cols="45" id="comment" name="userdata[comment]">{$userdata.comment}</textarea>
-        </div>
-
-        {if $modvars.Formicula.show_userformat eq 1}
-        <div class="z-formrow">
-            <label for="userformat">{gt text="Email Format"}</label>
-            <select class="formborder" id="userformat" name="userformat">
-                <option value="html"{if $modvars.Formicula.default_userformat eq 'html'} selected="selected"{/if}>{gt text="HTML"}</option>
-                <option value="plain"{if $modvars.Formicula.default_userformat eq 'plain'} selected="selected"{/if}>{gt text="Text"}</option>
-            </select>
-        </div>
-        {/if}
-
-        {% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') %}
-        <div class="z-formrow">
-            <label for="fileUpload">{gt text="Attach a file"}</label>
-            <input type="hidden" name="custom[fileUpload][name]" value="{gt text='Attached file'}" />
-            <input type="hidden" name="custom[fileUpload][mandatory]" value="0" />
-            <input id="fileUpload" type="file" class="formborder2" name="custom[fileUpload][data]" size="20" maxlength="16700000" value="" />
-        </div>
-        {% endif %}
-
-        {% if enableSpamCheck %}
-            {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
-        {% endif %}
-    </fieldset>
-
-    {notifydisplayhooks eventname='formicula.ui_hooks.forms.form_edit' id=null assign='hooks'}
-    {foreach from=$hooks key='provider_area' item='hook'}
-    {if $hook}
-    <fieldset>
-        <div class="z-formnote">
-            {$hook}
-        </div>
-    </fieldset>
-    {/if}
-    {/foreach}
-
-    <div class="z-formbuttons z-buttons">
-        {button src='button_ok.png' name='submit' value='submit' set='icons/extrasmall' __alt='Send' __title='Send' __text='Send'}
+        {{ form_end(form) }}
     </div>
-</form>
+</div>
 
 {{ include('@ZikulaFormiculaModule/Form/0/userFooter.html.twig') }}

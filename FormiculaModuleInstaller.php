@@ -26,7 +26,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      */
     private $entities = [
         'Zikula\FormiculaModule\Entity\ContactEntity',
-        'Zikula\FormiculaModule\Entity\SubmitEntity',
+        'Zikula\FormiculaModule\Entity\SubmissionEntity',
     ];
 
     /**

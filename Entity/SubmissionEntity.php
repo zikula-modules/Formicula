@@ -17,15 +17,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Zikula\Core\Doctrine\EntityAccess;
 
 /**
- * Form submit entity class.
+ * Form submission entity class.
  *
  * @ORM\Entity(repositoryClass="Zikula\FormiculaModule\Entity\Repository\SubmitRepository")
  * @ORM\Table(name="formicula_submission")
  */
-class SubmitEntity extends EntityAccess
+class SubmissionEntity extends EntityAccess
 {
     /**
-     * The submit id
+     * The submission id
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -180,9 +180,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the id of the submit.
+     * Gets the id of the submission.
      *
-     * @return integer the submit's id
+     * @return integer the submission's id
      */
     public function getSid()
     {
@@ -190,9 +190,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the id for the submit.
+     * Sets the id for the submission.
      *
-     * @param integer $sid the submit's id
+     * @param integer $sid the submission's id
      */
     public function setSid($sid)
     {
@@ -202,7 +202,7 @@ class SubmitEntity extends EntityAccess
     /**
      * Gets the id of the form.
      *
-     * @return integer the submit's form id
+     * @return integer the submission's form id
      */
     public function getForm()
     {
@@ -210,9 +210,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the form id for the submit.
+     * Sets the form id for the submission.
      *
-     * @param integer $form the submit's form id
+     * @param integer $form the submission's form id
      */
     public function setForm($form)
     {
@@ -220,9 +220,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the contact id of the submit.
+     * Gets the contact id of the submission.
      *
-     * @return integer the submit's contact id
+     * @return integer the submission's contact id
      */
     public function getCid()
     {
@@ -230,9 +230,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the contact id for the submit.
+     * Sets the contact id for the submission.
      *
-     * @param integer $sid the submit's contact id
+     * @param integer $sid the submission's contact id
      */
     public function setCid($cid)
     {
@@ -240,9 +240,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the ip address of the submit.
+     * Gets the ip address of the submission.
      *
-     * @return string the submit's ip address
+     * @return string the submission's ip address
      */
     public function getIpAddress()
     {
@@ -250,9 +250,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the ip address for the submit.
+     * Sets the ip address for the submission.
      *
-     * @param string $ipAddress the submit's ip address
+     * @param string $ipAddress the submission's ip address
      */
     public function setIpAddress($ipAddress)
     {
@@ -260,9 +260,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the host name of the submit.
+     * Gets the host name of the submission.
      *
-     * @return string the submit's host name
+     * @return string the submission's host name
      */
     public function getHostName()
     {
@@ -270,9 +270,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the host name for the submit.
+     * Sets the host name for the submission.
      *
-     * @param string $hostName the submit's host name
+     * @param string $hostName the submission's host name
      */
     public function setHostName($hostName)
     {
@@ -280,9 +280,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the name of the submit.
+     * Gets the name of the submission.
      *
-     * @return string the submit's name
+     * @return string the submission's name
      */
     public function getName()
     {
@@ -290,9 +290,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the name for the submit.
+     * Sets the name for the submission.
      *
-     * @param string $name the submit's name
+     * @param string $name the submission's name
      */
     public function setName($name)
     {
@@ -300,9 +300,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the email address of the submit.
+     * Gets the email address of the submission.
      *
-     * @return string the submit's email address
+     * @return string the submission's email address
      */
     public function getEmail()
     {
@@ -310,9 +310,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the email address for the submit.
+     * Sets the email address for the submission.
      *
-     * @param string $email the submit's email address
+     * @param string $email the submission's email address
      */
     public function setEmail($email)
     {
@@ -320,9 +320,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the phone number of the submit.
+     * Gets the phone number of the submission.
      *
-     * @return string the submit's phone number
+     * @return string the submission's phone number
      */
     public function getPhoneNumber()
     {
@@ -330,9 +330,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the phone number for the submit.
+     * Sets the phone number for the submission.
      *
-     * @param string $phoneNumber the submit's phone number
+     * @param string $phoneNumber the submission's phone number
      */
     public function setPhoneNumber($phoneNumber)
     {
@@ -340,9 +340,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the url of the submit.
+     * Gets the url of the submission.
      *
-     * @return string the submit's url
+     * @return string the submission's url
      */
     public function getUrl()
     {
@@ -350,9 +350,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the url for the submit.
+     * Sets the url for the submission.
      *
-     * @param string $url the submit's url
+     * @param string $url the submission's url
      */
     public function setUrl($url)
     {
@@ -360,9 +360,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the location of the submit.
+     * Gets the location of the submission.
      *
-     * @return string the submit's location
+     * @return string the submission's location
      */
     public function getLocation()
     {
@@ -370,9 +370,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the location for the submit.
+     * Sets the location for the submission.
      *
-     * @param string $location the submit's location
+     * @param string $location the submission's location
      */
     public function setLocation($location)
     {
@@ -380,9 +380,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the comment of the submit.
+     * Gets the comment of the submission.
      *
-     * @return string the submit's comment
+     * @return string the submission's comment
      */
     public function getComment()
     {
@@ -390,9 +390,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the comment for the submit.
+     * Sets the comment for the submission.
      *
-     * @param string $comment the submit's comment
+     * @param string $comment the submission's comment
      */
     public function setComment($comment)
     {
@@ -400,9 +400,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Gets the custom data of the submit.
+     * Gets the custom data of the submission.
      *
-     * @return string the submit's custom data
+     * @return string the submission's custom data
      */
     public function getCustomData()
     {
@@ -410,9 +410,9 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Sets the custom data for the submit.
+     * Sets the custom data for the submission.
      *
-     * @param string $customData the submit's custom data
+     * @param string $customData the submission's custom data
      */
     public function setCustomData($customData)
     {
@@ -420,7 +420,7 @@ class SubmitEntity extends EntityAccess
     }
 
     /**
-     * Adds a value to the submit's custom data.
+     * Adds a value to the submission's custom data.
      *
      * @param string $key   name of the custom property
      * @param string $value the property value

@@ -8,27 +8,31 @@
 {{ __('This data was sent to us:') }}
 
 {{ __('Your name') }}: {{ userData.uname }}
-{% if getModVar('ZikulaFormiculaModule', 'showCompany') and userData.company %}
+{% if modVars.showCompany and userData.company %}
 {{ __('Company') }}: {{ userData.company }}
 {% endif %}
 {{ __('Email') }}: {{ userData.uemail }}
-{% if getModVar('ZikulaFormiculaModule', 'showPhone') and userData.phone %}
+{% if modVars.showPhone and userData.phone %}
 {{ __('Phone number') }}: {{ userData.phone }}
 {% endif %}
-{% if getModVar('ZikulaFormiculaModule', 'showUrl') and userData.url %}
+{% if modVars.showUrl and userData.url %}
 {{ __('Website') }}: {{ userData.url }}
 {% endif %}
-{% if getModVar('ZikulaFormiculaModule', 'showLocation') and userData.location %}
+{% if modVars.showLocation and userData.location %}
 {{ __('Location') }}: {{ userData.location }}
 {% endif %}
 
 {% for field in customFields %}
 {{ field.name }}: {{ field.data }}
 {% endfor %}
-{% if getModVar('ZikulaFormiculaModule', 'showComment') and userData.comment %}
+{% if modVars.showComment and userData.comment %}
 
 {{ __('Comment') }}:
 {{ userData.comment }}
+{% endif %}
+{% if modVars.showFileAttachment and userData.fileUpload %}
+
+{{ __('Attached file' }}: {{ userData.fileUpload }}
 {% endif %}
 
 {{ __('We will respond to your email address as soon as possible.') }}

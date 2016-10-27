@@ -62,7 +62,7 @@ class ConfigType extends AbstractType
             ])
             ->add('uploadDirectory', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Directory for uploaded files'),
-                'max_length' => 80
+                'max_length' => 150
             ])
             ->add('deleteUploadedFiles', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                 'label' => $translator->__('Delete uploaded file(s) after sending'),
@@ -145,7 +145,7 @@ class ConfigType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'zikulasearchmodule_config';
+        return 'zikulaformiculamodule_config';
     }
 
     /**

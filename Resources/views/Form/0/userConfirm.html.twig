@@ -20,7 +20,7 @@
             <th headers="hField" id="hName" scope="row">{{ __('Your name') }}</th>
             <td headers="hValue hName">{{ userData.uname }}</span>
         </tr>
-{% if getModVar('ZikulaFormiculaModule', 'showCompany') and userData.company %}
+{% if modVars.showCompany and userData.company %}
         <tr>
             <th headers="hField" id="hCompany" scope="row">{{ __('Company') }}</th>
             <td headers="hValue hCompany">{{ userData.company }}</span>
@@ -30,19 +30,19 @@
             <th headers="hField" id="hEmail" scope="row">{{ __('Email') }}</th>
             <td headers="hValue hEmail">{{ userData.uemail }}</span>
         </tr>
-{% if getModVar('ZikulaFormiculaModule', 'showPhone') and userData.phone %}
+{% if modVars.showPhone and userData.phone %}
         <tr>
             <th headers="hField" id="hPhone" scope="row">{{ __('Phone number') }}</th>
             <td headers="hValue hPhone">{{ userData.phone }}</span>
         </tr>
 {% endif %}
-{% if getModVar('ZikulaFormiculaModule', 'showUrl') and userData.url %}
+{% if modVars.showUrl and userData.url %}
         <tr>
             <th headers="hField" id="hUrl" scope="row">{{ __('Website') }}</th>
             <td headers="hValue hUrl">{{ userData.url }}</span>
         </tr>
 {% endif %}
-{% if getModVar('ZikulaFormiculaModule', 'showLocation') and userData.location %}
+{% if modVars.showLocation and userData.location %}
         <tr>
             <th headers="hField" id="hLocation" scope="row">{{ __('Location') }}</th>
             <td headers="hValue hLocation">{{ userData.location }}</span>
@@ -54,21 +54,22 @@
             <td headers="hValue hCustom{{ field.name }}">{{ field.data }}</span>
         </tr>
 {% endfor %}
-{% if getModVar('ZikulaFormiculaModule', 'showComment') and userData.comment %}
+{% if modVars.showComment and userData.comment %}
         <tr>
             <th headers="hField" id="hComment" scope="row">{{ __('Comment') }}</th>
-            <td headers="hValue hComment">{{ userFormat == 'html' ? userData.location : userData.location|nl2br }}</span>
+            <td headers="hValue hComment">{{ userFormat == 'html' ? userData.comment : userData.comment|nl2br }}</span>
         </tr>
 {% endif %}
-{% if getModVar('ZikulaFormiculaModule', 'showFileAttachment') %}
+{% if modVars.showFileAttachment and userData.fileUpload %}
         <tr>
-            <th headers="hField" id="hAttachment" scope="row">{{ customFields.fileUpload.name }}</th>
-            <td headers="hValue hAttachment">{{ customFields.fileUpload.data.name }}</span>
+            <th headers="hField" id="hAttachment" scope="row">{{ __('Attached file') }}</th>
+            <td headers="hValue hAttachment">{{ userData.fileUpload }}</span>
         </tr>
 {% endif %}
     </tbody>
 </table>
 
+{% if modVars.sendConfirmationToUser %}
 <p class="alert alert-{{ sentToUser ? 'success' : 'danger' }}">
     {% if sentToUser %}
     {{ __('Confirmation of your submission will be emailed to you in a few minutes.') }}
@@ -76,5 +77,6 @@
     {{ __('There was an internal error when sending confirmation mail to you.') }}
     {% endif %}
 </p>
+{% endif %}
 
 {{ include('@ZikulaFormiculaModule/Form/0/userFooter.html.twig') }}
