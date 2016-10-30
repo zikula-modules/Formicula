@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+namespace Zikula\FormiculaModule\ContentType;
+
 use DataUtil;
 use ServiceUtil;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
@@ -17,7 +19,7 @@ use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 /**
  * Content plugin class for displaying forms
  */
-class Formicula_ContentType_Form extends Content_AbstractContentType
+class FormType extends Content_AbstractContentType
 {
     protected $form;
 
