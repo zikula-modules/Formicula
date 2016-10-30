@@ -43,14 +43,17 @@ class EditContactType extends AbstractType
             ])
             ->add('senderName', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Sender name'),
+                'required' => false,
                 'max_length' => 100
             ])
             ->add('senderEmail', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => $translator->__('Sender email address'),
+                'required' => false,
                 'max_length' => 100
             ])
             ->add('sendingSubject', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Subject'),
+                'required' => false,
                 'max_length' => 150
             ])
             ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
