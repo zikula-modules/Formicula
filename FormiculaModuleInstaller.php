@@ -15,6 +15,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Zikula\Core\AbstractExtensionInstaller;
 use Zikula\FormiculaModule\Entity\ContactEntity;
+use Zikula\FormiculaModule\Entity\SubmissionEntity;
 
 /**
  * Installation routines for the Formicula module.
@@ -112,15 +113,62 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             $conn = $this->getConnection();
             $dbName = $this->getDbName();
 
-            $conn->executeQuery("DELETE FROM $dbName.hook_area WHERE `owner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.hook_binding WHERE `sowner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.hook_runtime WHERE `sowner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.hook_subscriber WHERE `owner` = 'Formicula'");
-            $conn->executeQuery("DROP TABLE $dbName.formcontacts");
-            $conn->executeQuery("DROP TABLE $dbName.formsubmits");
+            $conn->executeQuery("DELETE FROM $dbName.`hook_area` WHERE `owner` = 'Formicula'");
+            $conn->executeQuery("DELETE FROM $dbName.`hook_binding` WHERE `sowner` = 'Formicula'");
+            $conn->executeQuery("DELETE FROM $dbName.`hook_runtime` WHERE `sowner` = 'Formicula'");
+            $conn->executeQuery("DELETE FROM $dbName.`hook_subscriber` WHERE `owner` = 'Formicula'");
 
             // reinstall
             $this->install();
+
+            $hasMigrationData = false;
+
+            // migrate old contacts
+            $stmt = $conn->executeQuery("SELECT * FROM $dbName.`formcontacts`");
+            while ($row = $stmt->fetch()) {
+                $hasMigrationData = true;
+                $contact = new ContactEntity();
+                $contact->setCid($row['cid']);
+                $contact->setName($row['name']);
+                $contact->setEmail($row['email']);
+                $contact->setPublic((bool)$row['public']);
+                $contact->setSenderName($row['sname']);
+                $contact->setSenderEmail($row['semail']);
+                $contact->setSendingSubject($row['ssubject']);
+                $this->entityManager->persist($contact);
+            }
+
+            // migrate old submissions
+            $stmt = $conn->executeQuery("SELECT * FROM $dbName.`formsubmits`");
+            while ($row = $stmt->fetch()) {
+                $hasMigrationData = true;
+                $submission = new SubmissionEntity();
+                $submission->setSid($row['sid']);
+                $submission->setForm($row['form']);
+                $submission->setCid($row['cid']);
+                $submission->setIpAddress($row['ip']);
+                $submission->setHostName($row['host']);
+                $submission->setName($row['name']);
+                $submission->setEmail($row['email']);
+                $submission->setPhoneNumber($row['phone']);
+                $submission->setCompany((bool)$row['company']);
+                $submission->setUrl($row['url']);
+                $submission->setLocation($row['location']);
+                $submission->setComment($row['comment']);
+                $customData = @unserialize($row['customdata']);
+                if ($customData) {
+                    $submission->setCustomData($customData);
+                }
+                $this->entityManager->persist($submission);
+            }
+
+            // save migrated data
+            if ($hasMigrationData) {
+                $this->entityManager->flush();
+            }
+
+            $conn->executeQuery("DROP TABLE $dbName.`formcontacts`");
+            $conn->executeQuery("DROP TABLE $dbName.`formsubmits`");
 
             $oldVersion = '4.0.0';
         }
