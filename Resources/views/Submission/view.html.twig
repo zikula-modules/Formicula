@@ -32,8 +32,8 @@
                 <td headers="hDate">{{ submission.createdDate|localizeddate('short', 'short') }}</td>
                 <td headers="hName"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', { '%1$s': submission.email, '%2$s': submission.createdUserId }) }}">{{ submission.name }}</a></td>
                 <td headers="hActions" class="text-right nowrap">
-                    <a href="{{ path('zikulaformiculamodule_submission_display', { sid: submission.sid }) }}" class="fa fa-eye tooltips" title="{{ __('View form submission') }}"></a>
-                    <a href="{{ path('zikulaformiculamodule_submission_delete', { sid: submission.sid }) }}" class="fa fa-trash tooltips" title="{{ __('Delete form submission') }}"></a>
+                    <a href="{{ path('zikulaformiculamodule_submission_display', { sid: submission.sid }) }}" class="fa fa-eye fa-lg tooltips" title="{{ __('View form submission') }}"></a>
+                    <a href="{{ path('zikulaformiculamodule_submission_delete', { sid: submission.sid }) }}" class="fa fa-trash fa-lg tooltips" title="{{ __('Delete form submission') }}"></a>
                 </td>
             </tr>
         {% else %}
