@@ -30,10 +30,10 @@
                 <td headers="hPublic">{{ contact.public|yesNo }}</td>
                 <td headers="hActions" class="text-right nowrap">
                     {% if contact.allowEdit %}
-                        <a href="{{ path('zikulaformiculamodule_contact_edit', { cid: contact.cid }) }}" class="fa fa-pencil tooltips" title="{{ __('Edit contact') }}">{{ __('Edit contact') }}</a>
+                        <a href="{{ path('zikulaformiculamodule_contact_edit', { cid: contact.cid }) }}" class="fa fa-pencil tooltips" title="{{ __('Edit contact') }}"></a>
                     {% endif %}
                     {% if contact.allowDelete %}
-                        <a href="{{ path('zikulaformiculamodule_contact_delete', { cid: contact.cid }) }}" class="fa fa-trash tooltips" title="{{ __('Delete contact') }}">{{ __('Delete contact') }}</a>
+                        <a href="{{ path('zikulaformiculamodule_contact_delete', { cid: contact.cid }) }}" class="fa fa-trash tooltips" title="{{ __('Delete contact') }}"></a>
                     {% endif %}
                 </td>
             </tr>
