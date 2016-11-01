@@ -113,7 +113,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             $dbName = $this->getDbName();
 
             $conn->executeQuery("DELETE FROM $dbName.hook_area WHERE `owner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.hook_binding WHERE `owner` = 'Formicula'");
+            $conn->executeQuery("DELETE FROM $dbName.hook_binding WHERE `sowner` = 'Formicula'");
             $conn->executeQuery("DELETE FROM $dbName.hook_runtime WHERE `sowner` = 'Formicula'");
             $conn->executeQuery("DELETE FROM $dbName.hook_subscriber WHERE `owner` = 'Formicula'");
             $conn->executeQuery("DROP TABLE $dbName.formcontacts");
