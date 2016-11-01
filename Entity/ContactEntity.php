@@ -67,7 +67,7 @@ class ContactEntity extends EntityAccess
      * The sender name for replying
      *
      * @Assert\Length(max = 100)
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @var string $senderName
      */
     private $senderName;
@@ -77,7 +77,7 @@ class ContactEntity extends EntityAccess
      *
      * @Assert\Length(max = 100)
      * @Assert\Email()
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @var string $senderEmail
      */
     private $senderEmail;
@@ -86,7 +86,7 @@ class ContactEntity extends EntityAccess
      * The subject for replying
      *
      * @Assert\Length(max = 150)
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      * @var string $sendingSubject
      */
     private $sendingSubject;
