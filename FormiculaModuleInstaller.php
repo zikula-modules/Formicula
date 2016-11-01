@@ -128,13 +128,13 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             while ($row = $stmt->fetch()) {
                 $hasMigrationData = true;
                 $contact = new ContactEntity();
-                $contact->setCid($row['cid']);
-                $contact->setName($row['name']);
-                $contact->setEmail($row['email']);
-                $contact->setPublic((bool)$row['public']);
-                $contact->setSenderName($row['sname']);
-                $contact->setSenderEmail($row['semail']);
-                $contact->setSendingSubject($row['ssubject']);
+                $contact->setCid($row['pn_cid']);
+                $contact->setName($row['pn_name']);
+                $contact->setEmail($row['pn_email']);
+                $contact->setPublic((bool)$row['pn_public']);
+                $contact->setSenderName($row['pn_sname']);
+                $contact->setSenderEmail($row['pn_semail']);
+                $contact->setSendingSubject($row['pn_ssubject']);
                 $this->entityManager->persist($contact);
             }
 
@@ -143,19 +143,19 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             while ($row = $stmt->fetch()) {
                 $hasMigrationData = true;
                 $submission = new SubmissionEntity();
-                $submission->setSid($row['sid']);
-                $submission->setForm($row['form']);
-                $submission->setCid($row['cid']);
-                $submission->setIpAddress($row['ip']);
-                $submission->setHostName($row['host']);
-                $submission->setName($row['name']);
-                $submission->setEmail($row['email']);
-                $submission->setPhoneNumber($row['phone']);
-                $submission->setCompany((bool)$row['company']);
-                $submission->setUrl($row['url']);
-                $submission->setLocation($row['location']);
-                $submission->setComment($row['comment']);
-                $customData = @unserialize($row['customdata']);
+                $submission->setSid($row['pn_sid']);
+                $submission->setForm($row['pn_form']);
+                $submission->setCid($row['pn_cid']);
+                $submission->setIpAddress($row['pn_ip']);
+                $submission->setHostName($row['pn_host']);
+                $submission->setName($row['pn_name']);
+                $submission->setEmail($row['pn_email']);
+                $submission->setPhoneNumber($row['pn_phone']);
+                $submission->setCompany((bool)$row['pn_company']);
+                $submission->setUrl($row['pn_url']);
+                $submission->setLocation($row['pn_location']);
+                $submission->setComment($row['pn_comment']);
+                $customData = @unserialize($row['pn_customdata']);
                 if ($customData) {
                     $submission->setCustomData($customData);
                 }
