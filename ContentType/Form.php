@@ -13,8 +13,7 @@ namespace Zikula\FormiculaModule\ContentType;
 
 use DataUtil;
 use ServiceUtil;
-use Symfony\Component\HttpKernel\Controller\ControllerReference;
-use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 if (!class_exists('Content_AbstractContentType')) {
     if (file_exists('modules/Content/lib/Content/AbstractContentType.php')) {
@@ -57,14 +56,16 @@ class Form extends \Content_AbstractContentType
                 $this->contact = -1;
             }
 
-            $fragmentHandler = new FragmentHandler(ServiceUtil::get('request_stack'));
+            $path = [
+                '_controller' => 'ZikulaFormiculaModule:User:index'
+            ];
 
-            $ref = new ControllerReference('ZikulaFormiculaModule:User:index', [], [
+            $subRequest = ServiceUtil::get('request_stack')->getCurrentRequest()->duplicate([
                 'form' => (int)$this->form,
                 'cid' => $this->contact
-            ]);
+            ], null, $path);
 
-            return $fragmentHandler->render($ref, 'inline', []);
+            return ServiceUtil::get('http_kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
         }
 
         return DataUtil::formatForDisplay($this->__('No form selected'));
