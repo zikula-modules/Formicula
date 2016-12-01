@@ -16,10 +16,19 @@ use ServiceUtil;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
+if (!class_exists('Content_AbstractContentType')) {
+    if (file_exists('modules/Content/lib/Content/AbstractContentType.php')) {
+        require_once 'modules/Content/lib/Content/AbstractType.php';
+        require_once 'modules/Content/lib/Content/AbstractContentType.php';
+    } else {
+        class Content_AbstractContentType {}
+    }
+}
+
 /**
  * Content plugin class for displaying forms
  */
-class FormType extends Content_AbstractContentType
+class Form extends \Content_AbstractContentType
 {
     protected $form;
 
@@ -65,7 +74,7 @@ class FormType extends Content_AbstractContentType
     {
         if (isset($this->form)) {
             if ($this->contact > 0) {
-                $output = '<p>' . $this->__f('The Formicula form #%1$s is shown here with only contact %2$s', [$this->form, $this->contact)] . '</p>';
+                $output = '<p>' . $this->__f('The Formicula form #%1$s is shown here with only contact %2$s', [$this->form, $this->contact]) . '</p>';
             } else {
                 $output = '<p>' . $this->__f('The Formicula form #%s is shown here with all contacts', $this->form) . '</p>';
             }
@@ -106,5 +115,12 @@ class FormType extends Content_AbstractContentType
         }
 
         $this->view->assign('contacts', $contacts);
+    }
+
+    public function getEditTemplate()
+    {
+        $absoluteTemplatePath = str_replace('ContentType/Form.php', 'Resources/views/ContentType/form_edit.tpl', __FILE__);
+
+        return 'file:' . $absoluteTemplatePath;
     }
 }
