@@ -65,7 +65,9 @@ class Form extends \Content_AbstractContentType
                 'cid' => $this->contact
             ], null, $path);
 
-            return ServiceUtil::get('http_kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+            $response = ServiceUtil::get('http_kernel')->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
+
+            return $response->getContent();
         }
 
         return DataUtil::formatForDisplay($this->__('No form selected'));
