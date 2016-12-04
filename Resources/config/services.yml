@@ -4,26 +4,31 @@ parameters:
     zikula_formicula_module.listener.third_party_listener.class: Zikula\FormiculaModule\Listener\ThirdPartyListener
     zikula_formicula_module.helper.environment_helper.class: Zikula\FormiculaModule\Helper\EnvironmentHelper
     zikula_formicula_module.helper.captcha_helper.class: Zikula\FormiculaModule\Helper\CaptchaHelper
+
 services:
     zikula_formicula_module.container.link_container:
         class: %zikula_formicula_module.container.link_container.class%
         arguments: ["@translator.default", "@jms_i18n_routing.router", "@zikula_permissions_module.api.permission"]
         tags:
             - { name: zikula.link_container }
+
     twig.extension.zikula_formicula_module:
         class: %twig.extension.zikula_formicula_module.class%
         public: false
         arguments: ["@zikula_formicula_module.helper.captcha_helper"]
         tags:
             - { name: twig.extension }
+
     zikula_formicula_module.listener.third_party_listener:
         class: %zikula_formicula_module.listener.third_party_listener.class%
         tags:
             - { name: kernel.event_subscriber }
+
     zikula_formicula_module.helper.captcha_helper:
         class: %zikula_formicula_module.helper.captcha_helper.class%
         lazy: true
         arguments: ["@translator.default", "@zikula_extensions_module.api.variable", "@zikula_permissions_module.api.permission", "@zikula_formicula_module.helper.environment_helper", "@jms_i18n_routing.router", "@session"]
+
     zikula_formicula_module.helper.environment_helper:
         class: %zikula_formicula_module.helper.environment_helper.class%
         lazy: true
