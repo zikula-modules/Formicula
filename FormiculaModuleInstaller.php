@@ -240,13 +240,18 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         $cacheDirectory = $this->getCacheDirectory();
         $fs = new Filesystem();
         try {
-            $fs->mkdir($cacheDirectory);
-            $fs->chmod($cacheDirectory, 0777);
+            if (!$fs->exists($cacheDirectory)) {
+                $fs->mkdir($cacheDirectory);
+                $fs->chmod($cacheDirectory, 0777);
+            }
         } catch (IOExceptionInterface $e) {
             $this->addFlash('error', $this->__f('An error occurred while creating the cache directory at %s.', ['%s' => $e->getPath()]));
         }
 
         try {
+            if ($fs->exists($cacheDirectory . '/.htaccess')) {
+                return;
+            }
             $fs->dumpFile($cacheDirectory . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
