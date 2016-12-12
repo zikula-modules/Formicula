@@ -62,14 +62,4 @@ class TwigExtension extends \Twig_Extension
     {
         return $this->captchaHelper->createCaptcha($font, $size, $bgColour, $fgColour);
     }
-
-    /**
-     * Returns internal name of this extension.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'zikulaformiculamodule_twigextension';
-    }
 }
