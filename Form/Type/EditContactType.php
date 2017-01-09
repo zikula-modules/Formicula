@@ -30,11 +30,15 @@ class EditContactType extends AbstractType
         $builder
             ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Contact name'),
-                'max_length' => 100
+                'attr' => [
+                    'max_length' => 100
+                ]
             ])
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Email address(es)'),
-                'max_length' => 200,
+                'attr' => [
+                    'max_length' => 200
+                ],
                 'help' => $translator->__('You may enter a single address or a comma separated list of addresses.')
             ])
             ->add('public', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
@@ -44,17 +48,23 @@ class EditContactType extends AbstractType
             ->add('senderName', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Sender name'),
                 'required' => false,
-                'max_length' => 100
+                'attr' => [
+                    'max_length' => 100
+                ]
             ])
             ->add('senderEmail', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => $translator->__('Sender email address'),
                 'required' => false,
-                'max_length' => 100
+                'attr' => [
+                    'max_length' => 100
+                ]
             ])
             ->add('sendingSubject', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Subject'),
                 'required' => false,
-                'max_length' => 150
+                'attr' => [
+                    'max_length' => 150
+                ]
             ])
             ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
                 'label' => $translator->__('Save'),

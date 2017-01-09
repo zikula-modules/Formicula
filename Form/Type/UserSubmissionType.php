@@ -45,45 +45,53 @@ class UserSubmissionType extends AbstractType
             ])
             ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Your name'),
-                'max_length' => 150
+                'attr' => [
+                    'max_length' => 150
+                ]
             ])
         ;
         if ($modVars['showCompany']) {
             $builder->add('company', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Company'),
                 'required' => false,
-                'max_length' => 150
+                'attr' => [
+                    'max_length' => 150
+                ]
             ]);
         }
         $builder->add('emailAddress', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
             'label' => $translator->__('Email address'),
             'attr' => [
+                'max_length' => 150,
                 'placeholder' => $translator->__('Enter a valid email address')
-            ],
-            'max_length' => 150
+            ]
         ]);
         if ($modVars['showPhone']) {
             $builder->add('phone', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Phone number'),
                 'required' => false,
-                'max_length' => 50
+                'attr' => [
+                    'max_length' => 50
+                ]
             ]);
         }
         if ($modVars['showUrl']) {
             $builder->add('url', 'Symfony\Component\Form\Extension\Core\Type\UrlType', [
                 'label' => $translator->__('Website'),
                 'attr' => [
+                    'max_length' => 150,
                     'placeholder' => $translator->__('Enter a valid url')
                 ],
-                'required' => false,
-                'max_length' => 150
+                'required' => false
             ]);
         }
         if ($modVars['showLocation']) {
             $builder->add('location', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Location'),
                 'required' => false,
-                'max_length' => 150
+                'attr' => [
+                    'max_length' => 150
+                ]
             ]);
         }
         if ($modVars['sendConfirmationToUser'] && $modVars['showUserFormat']) {

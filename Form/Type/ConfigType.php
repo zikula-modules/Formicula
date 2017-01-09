@@ -62,7 +62,9 @@ class ConfigType extends AbstractType
             ])
             ->add('uploadDirectory', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Directory for uploaded files'),
-                'max_length' => 150
+                'attr' => [
+                    'max_length' => 150
+                ]
             ])
             ->add('deleteUploadedFiles', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
                 'label' => $translator->__('Delete uploaded file(s) after sending'),
@@ -110,7 +112,9 @@ class ConfigType extends AbstractType
             ->add('excludeSpamCheck', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Do not use spam check in these forms'),
                 'required' => false,
-                'max_length' => 40,
+                'attr' => [
+                    'max_length' => 40
+                ],
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for using the spam check in all forms.')
             ])
             ->add('storeSubmissionData', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
@@ -120,7 +124,9 @@ class ConfigType extends AbstractType
             ->add('storeSubmissionDataForms', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Only store submissions from these forms'),
                 'required' => false,
-                'max_length' => 40,
+                'attr' => [
+                    'max_length' => 40
+                ],
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for storing all forms.')
             ])
             ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
