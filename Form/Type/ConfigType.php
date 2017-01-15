@@ -63,7 +63,7 @@ class ConfigType extends AbstractType
             ->add('uploadDirectory', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Directory for uploaded files'),
                 'attr' => [
-                    'max_length' => 150
+                    'maxlength' => 150
                 ]
             ])
             ->add('deleteUploadedFiles', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
@@ -113,7 +113,7 @@ class ConfigType extends AbstractType
                 'label' => $translator->__('Do not use spam check in these forms'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 40
+                    'maxlength' => 40
                 ],
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for using the spam check in all forms.')
             ])
@@ -125,7 +125,7 @@ class ConfigType extends AbstractType
                 'label' => $translator->__('Only store submissions from these forms'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 40
+                    'maxlength' => 40
                 ],
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for storing all forms.')
             ])

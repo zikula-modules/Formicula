@@ -46,7 +46,7 @@ class UserSubmissionType extends AbstractType
             ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Your name'),
                 'attr' => [
-                    'max_length' => 150
+                    'maxlength' => 150
                 ]
             ])
         ;
@@ -55,14 +55,14 @@ class UserSubmissionType extends AbstractType
                 'label' => $translator->__('Company'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 150
+                    'maxlength' => 150
                 ]
             ]);
         }
         $builder->add('emailAddress', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
             'label' => $translator->__('Email address'),
             'attr' => [
-                'max_length' => 150,
+                'maxlength' => 150,
                 'placeholder' => $translator->__('Enter a valid email address')
             ]
         ]);
@@ -71,7 +71,7 @@ class UserSubmissionType extends AbstractType
                 'label' => $translator->__('Phone number'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 50
+                    'maxlength' => 50
                 ]
             ]);
         }
@@ -79,7 +79,7 @@ class UserSubmissionType extends AbstractType
             $builder->add('url', 'Symfony\Component\Form\Extension\Core\Type\UrlType', [
                 'label' => $translator->__('Website'),
                 'attr' => [
-                    'max_length' => 150,
+                    'maxlength' => 150,
                     'placeholder' => $translator->__('Enter a valid url')
                 ],
                 'required' => false
@@ -90,7 +90,7 @@ class UserSubmissionType extends AbstractType
                 'label' => $translator->__('Location'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 150
+                    'maxlength' => 150
                 ]
             ]);
         }

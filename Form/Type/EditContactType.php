@@ -31,13 +31,13 @@ class EditContactType extends AbstractType
             ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Contact name'),
                 'attr' => [
-                    'max_length' => 100
+                    'maxlength' => 100
                 ]
             ])
             ->add('email', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Email address(es)'),
                 'attr' => [
-                    'max_length' => 200
+                    'maxlength' => 200
                 ],
                 'help' => $translator->__('You may enter a single address or a comma separated list of addresses.')
             ])
@@ -49,21 +49,21 @@ class EditContactType extends AbstractType
                 'label' => $translator->__('Sender name'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 100
+                    'maxlength' => 100
                 ]
             ])
             ->add('senderEmail', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
                 'label' => $translator->__('Sender email address'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 100
+                    'maxlength' => 100
                 ]
             ])
             ->add('sendingSubject', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
                 'label' => $translator->__('Subject'),
                 'required' => false,
                 'attr' => [
-                    'max_length' => 150
+                    'maxlength' => 150
                 ]
             ])
             ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
