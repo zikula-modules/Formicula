@@ -201,7 +201,7 @@ class UserController extends AbstractController
 
             // Check hooked modules for validation
             $validationHook = new ValidationHook(new ValidationProviders());
-            $validators = $this->dispatchHooks('formicula.ui_hooks.forms.validate_edit', $validationHook)->getValidators();
+            $validators = $this->get('hook_dispatcher')->dispatch('formicula.ui_hooks.forms.validate_edit', $validationHook)->getValidators();
             if ($validators->hasErrors()) {
                 $this->addFlash('error', $this->__('The validation of the hooked security module was incorrect. Please try again.'));
                 $hasError = true;
