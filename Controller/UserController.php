@@ -383,8 +383,8 @@ class UserController extends AbstractController
              'modVars' => $modVars
         ];
 
-        $bodyTemplateHtml = 'Form/' . $formId . '/' . $mailType . '.html.twig';
-        $bodyTemplateText = 'Form/' . $formId . '/' . $mailType . '.html.twig';
+        $bodyTemplateHtml = '@ZikulaFormiculaModule/Form/' . $formId . '/' . $mailType . 'Mail.html.twig';
+        $bodyTemplateText = '@ZikulaFormiculaModule/Form/' . $formId . '/' . $mailType . 'Mail.html.twig';
         $bodyHtml = $this->renderView($bodyTemplateHtml, $templateParameters);
         $bodyText = $this->renderView($bodyTemplateText, $templateParameters);
 
