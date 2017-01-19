@@ -323,7 +323,7 @@ class UserController extends AbstractController
      */
     private function sendMail(Request $request, ContactEntity $contact, $formId, array $userData = [], array $customFields = [], $format = 'html', $mailType = '')
     {
-        if (!$this->get('kernel')->isModule('ZikulaMailerModule')) {
+        if (!$this->get('kernel')->isBundle('ZikulaMailerModule')) {
             // no mailer module - error!
             return false;
         }
