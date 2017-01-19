@@ -136,9 +136,9 @@ class UserController extends AbstractController
             // very basic input validation against HTTP response splitting
             $formData['emailAddress'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $formData['emailAddress']);
 
-            $formid = $formData['form'];
+            $formId = intval($formData['form']);
             $contactId = $formData['cid'];
-            if (empty($contactId) || empty($formId) || !$this->hasPermission('ZikulaFormiculaModule::', "$formId:$contactId:", ACCESS_COMMENT)) {
+            if (empty($contactId) || $formId < 0 || !$this->hasPermission('ZikulaFormiculaModule::', "$formId:$contactId:", ACCESS_COMMENT)) {
                 throw new AccessDeniedException();
             }
 
