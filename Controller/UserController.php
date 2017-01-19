@@ -222,10 +222,10 @@ class UserController extends AbstractController
             }
 
             // send emails
-            $sentToAdmin = $this->sendMail($contact, $formId, $userData, $customFields, $formData['adminFormat'], 'admin');
+            $sentToAdmin = $this->sendMail($request, $contact, $formId, $userData, $customFields, $formData['adminFormat'], 'admin');
             $sentToUser = true;
             if ($modVars['sendConfirmationToUser'] && $formData['userFormat'] != 'none') {
-                $sentToUser = $this->sendMail($contact, $formId, $userData, $customFields, $formData['userFormat'], 'user');
+                $sentToUser = $this->sendMail($request, $contact, $formId, $userData, $customFields, $formData['userFormat'], 'user');
             }
 
             $templateParameters['sentToUser'] = $sentToUser;
@@ -311,6 +311,7 @@ class UserController extends AbstractController
     /**
      * Sends mails to the contact and, if configured, to the user.
      *
+     * @param Request       $request      Current request instance
      * @param ContactEntity $contact      The contact entity
      * @param integer       $formId       The form number
      * @param array         $userData     Input for base fields
@@ -320,9 +321,9 @@ class UserController extends AbstractController
      *
      * @return boolean True if mail was successfully sent, false otherwise
      */
-    private function sendMail(ContactEntity $contact, $formId, array $userData = [], array $customFields = [], $format = 'html', $mailType = '')
+    private function sendMail(Request $request, ContactEntity $contact, $formId, array $userData = [], array $customFields = [], $format = 'html', $mailType = '')
     {
-        if (null === $this->get('kernel')->getModule('ZikulaMailerModule')) {
+        if (!$this->get('kernel')->isModule('ZikulaMailerModule')) {
             // no mailer module - error!
             return false;
         }
