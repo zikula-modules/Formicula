@@ -27,7 +27,7 @@ if (!class_exists('Content_AbstractContentType')) {
 /**
  * Content plugin class for displaying forms
  */
-class Form extends \Content_AbstractContentType
+class Form extends Content_AbstractContentType
 {
     protected $form;
 
