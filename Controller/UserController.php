@@ -125,10 +125,6 @@ class UserController extends AbstractController
         // prepare captcha
         $captchaHelper = $this->get('zikula_formicula_module.helper.captcha_helper');
         $enableSpamCheck = $captchaHelper->isSpamCheckEnabled($formId);
-        if ($enableSpamCheck && $session->has('formiculaCaptcha')) {
-            // reset captcha
-            $session->del('formiculaCaptcha');
-        }
 
         if ($form->handleRequest($request)->isValid() && $form->get('submit')->isClicked()) {
             $formData = $form->getData();
@@ -172,6 +168,11 @@ class UserController extends AbstractController
             if (!isset($userData['name']) || empty($userData['name'])) {
                 $this->addFlash('error', $this->__('Error! No or invalid name given.'));
                 $hasError = true;
+            }
+            
+            //uname is needed by the mail templates. Set it now.
+            if(!isset($userData['uname']) || empty($userData['uname'])){
+                $userData['uname'] = $userName;
             }
             if (!isset($userData['emailAddress']) || false === filter_var($userData['emailAddress'], FILTER_VALIDATE_EMAIL)) {
                 $this->addFlash('error', $this->__('Error! No or incorrect email address supplied.'));
@@ -267,7 +268,7 @@ class UserController extends AbstractController
 
             return $this->render('Form/' . $formId . '/userConfirm.html.twig', $templateParameters);
         }
-
+        
         // show the form
         $templateParameters = [
             'modVars' => $modVars,
