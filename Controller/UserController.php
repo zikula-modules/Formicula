@@ -23,7 +23,7 @@ use Zikula\Core\Hook\ValidationHook;
 use Zikula\Core\Hook\ValidationProviders;
 use Zikula\FormiculaModule\Entity\ContactEntity;
 use Zikula\FormiculaModule\Entity\SubmissionEntity;
-
+use Swift_Message;
 /**
  * Class UserController
  */
@@ -219,7 +219,7 @@ class UserController extends AbstractController
                 $session->set('formiculaUserData', serialize($userData));
                 $session->set('formiculaCustomFields', serialize($customFields));
 
-                return $this->render('Form/' . $formId . '/userError.html.twig', $templateParameters);
+                return $this->render('@ZikulaFormiculaModule/Form/' . $formId . '/userError.html.twig', $templateParameters);
             }
 
             // send emails
@@ -266,7 +266,7 @@ class UserController extends AbstractController
                 }
             }
 
-            return $this->render('Form/' . $formId . '/userConfirm.html.twig', $templateParameters);
+            return $this->render('@ZikulaFormiculaModule/Form/' . $formId . '/userConfirm.html.twig', $templateParameters);
         }
         
         // show the form
