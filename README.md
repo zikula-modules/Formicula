@@ -63,7 +63,7 @@ Installation
 4. Create some contact names/topics with respective email adresses in the Formicula admin setion.
    Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.
-   unreg. users (group)  |  Formicula::  |  .*  |  comment
+   Unregistered (group)  |  ZikulaFormiculaModule::.*  |  .*  |  comment
    This enables unregistered users to use all existing forms. In a default installation
    the users group has a generic comment permission to do the same.
 6. Add a link to your main menu with: {Formicula} (using [Formicula] will not work!)
@@ -105,7 +105,7 @@ Using own contacts
 ------------------
 It is possible to pass own contacts to formicula instead using the formicula database. To do this by a link 
 you have to call the addSessionOwncontacts function in the User-API. This function will return you
-an integer wich you should append with the index 'owncontacts' to the URL pointing to formicula.
+an integer which you should append with the index 'owncontacts' to the URL pointing to formicula.
 If you want to embed your form you can pass the owncontacts directly to the form by adding
 the owncontacts array to your arguments array.
 
@@ -119,7 +119,7 @@ The owncontacts array should contain the following values (per item) in both cas
 Templates
 ---------
 Everything you want to do with the form is handled in the templates.
-Store them in templates/forms/
+Store them in Resources/views/Form/
 The '#' at the beginning of the template designates the number of form.
 
 The templates for the forms are named as follows:
@@ -196,13 +196,13 @@ Permissions
 -----------
 To use a form you need the right to COMMENT.
 
-Unregistered   |   Formicula::  |  .*   |  comment
+Unregistered   |   ZikulaFormiculaModule::  |  .*   |  comment
 all unregistered users are allowed to use all forms and write to all contacts
 
-Unregistered   |   Formicula::  |  0::  |  comment
+Unregistered   |   ZikulaFormiculaModule::  |  0::  |  comment
 all unregistered users are allowed to use form 0 with all existing contacts.
 	
-Users   |   Formicula::   |  1:(2|3):  |  comment
+Users   |   ZikulaFormiculaModule::   |  1:(2|3):  |  comment
 all members of the group Users are allowed to use form 1 and write to contact 2 and 3.
     
 Use external information in the forms
