@@ -2,11 +2,11 @@
 
 {{ __('Thank you for the comments posted from our website. The sent data is:') }}
 
-{{ __('Your Name') }}: {{ userData.uname }}
+{{ __('Your Name') }}: {{ userData.name }}
 {% if modVars.showCompany and userData.company %}
 {{ __('Company') }}: {{ userData.company }}
 {% endif %}
-{{ __('Email') }}: {{ userData.uemail }}
+{{ __('Email') }}: {{ userData.emailAddress }}
 {% if modVars.showPhone and userData.phone %}
 {{ __('Phone number') }}: {{ userData.phone }}
 {% endif %}

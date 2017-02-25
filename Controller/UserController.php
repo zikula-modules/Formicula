@@ -170,8 +170,8 @@ class UserController extends AbstractController
                 $hasError = true;
             }
             
-            //uname is needed by the mail templates. Set it now.
-            if(!isset($userData['uname']) || empty($userData['uname'])){
+            // uname is needed by the mail templates. Set it now.
+            if (!isset($userData['uname']) || empty($userData['uname'])) {
                 $userData['uname'] = $userName;
             }
             if (!isset($userData['emailAddress']) || false === filter_var($userData['emailAddress'], FILTER_VALIDATE_EMAIL)) {
@@ -268,7 +268,7 @@ class UserController extends AbstractController
 
             return $this->render('@ZikulaFormiculaModule/Form/' . $formId . '/userConfirm.html.twig', $templateParameters);
         }
-        
+
         // show the form
         $templateParameters = [
             'modVars' => $modVars,

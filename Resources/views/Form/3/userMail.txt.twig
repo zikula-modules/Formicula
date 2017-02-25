@@ -7,11 +7,11 @@
 
 {{ __('This data was sent to us:') }}
 
-{{ __('Your name') }}: {{ userData.uname }}
+{{ __('Your name') }}: {{ userData.name }}
 {% if modVars.showCompany and userData.company %}
 {{ __('Company') }}: {{ userData.company }}
 {% endif %}
-{{ __('Email') }}: {{ userData.uemail }}
+{{ __('Email') }}: {{ userData.emailAddress }}
 {% if modVars.showPhone and userData.phone %}
 {{ __('Phone number') }}: {{ userData.phone }}
 {% endif %}
