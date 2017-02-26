@@ -79,32 +79,32 @@ class LinkContainer implements LinkContainerInterface
 
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_contact_view'),
-            'text' => $this->translator->__('View contacts'),
+            'text' => $this->translator->__('View contacts', 'zikulaformiculamodule'),
             'icon' => 'group'
         ];
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_contact_edit'),
-            'text' => $this->translator->__('Add contact'),
+            'text' => $this->translator->__('Add contact', 'zikulaformiculamodule'),
             'icon' => 'user-plus'
         ];
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_submission_view'),
-            'text' => $this->translator->__('View submissions'),
+            'text' => $this->translator->__('View submissions', 'zikulaformiculamodule'),
             'icon' => 'envelope'
         ];
         $links[] = [
             'url' => $this->router->generate('zikulaformiculamodule_config_config'),
-            'text' => $this->translator->__('Settings'), 
+            'text' => $this->translator->__('Settings', 'zikulaformiculamodule'), 
             'icon' => 'wrench',
             'links' => [
                 [
                     'url' => $this->router->generate('zikulaformiculamodule_config_config'),
-                    'text' => $this->translator->__('Settings'), 
+                    'text' => $this->translator->__('Settings', 'zikulaformiculamodule'), 
                     'icon' => 'wrench'
                 ],
                 [
                     'url' => $this->router->generate('zikulaformiculamodule_config_clearcache'),
-                    'text' => $this->translator->__('Clear captcha image cache'), 
+                    'text' => $this->translator->__('Clear captcha image cache', 'zikulaformiculamodule'), 
                     'icon' => 'eraser'
                 ]
             ]
