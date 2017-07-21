@@ -106,6 +106,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             // delete all old data
             $variableApi = $this->container->get('zikula_extensions_module.api.variable');
             $variableApi->delAll('formicula');
+            $variableApi->delAll('Formicula');
 
             \EventUtil::unregisterPersistentModuleHandlers('Formicula');
 
