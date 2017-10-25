@@ -31,7 +31,7 @@ class SubmissionController extends AbstractController
      *
      * @Route("/view")
      * @Theme("admin")
-     * @Template
+     * @Template("ZikulaFormiculaModule:Submission:view.html.twig")
      *
      * @param Request $request
      * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
@@ -59,7 +59,7 @@ class SubmissionController extends AbstractController
      *
      * @Route("/display")
      * @Theme("admin")
-     * @Template
+     * @Template("ZikulaFormiculaModule:Submission:display.html.twig")
      *
      * @param Request $request
      * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
@@ -93,7 +93,7 @@ class SubmissionController extends AbstractController
      *
      * @Route("/delete")
      * @Theme("admin")
-     * @Template
+     * @Template("ZikulaFormiculaModule:Submission:delete.html.twig")
      *
      * @param Request $request
      * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
