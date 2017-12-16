@@ -14,7 +14,7 @@ The 4.x version in the master branch needs Zikula 1.4.3+ to run with.
 
 3.x versions for Zikula 1.3.x
 -----------------------------
-3.0.2 is the version that contains the same functionality as 3.1.0, but is Not converted to HTML5 validation and jQuery. See https://github.com/zikula-ev/Formicula/issues/54 about HTML5 required and CkEditor < 4.2 - Scribite.
+3.0.2 is the version that contains the same functionality as 3.1.0, but is Not converted to HTML5 validation and jQuery. See https://github.com/zikula-modules/Formicula/issues/54 about HTML5 required and CkEditor < 4.2 - Scribite.
 
 3.1.0 is a version that brings HTML5 form validation (with webshims lib polyfill fallback for
 browsers not supporting this) and all jQuery javascript. 3.0.2 is the latest version with prototype
