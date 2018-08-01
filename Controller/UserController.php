@@ -331,7 +331,7 @@ class UserController extends AbstractController
         }
 
         $mailData = $userData;
-        if ($format == 'plain') {
+        if ($format == 'plain' && isset($mailData['comment'])) {
             // remove tags from comment to avoid spam
             $mailData['comment'] = strip_tags($mailData['comment']);
         }
@@ -392,7 +392,7 @@ class UserController extends AbstractController
 
         $body = '';
         $altBody = '';
-        if ($format == 'text') {
+        if ($format == 'plain') {
             $body = $bodyText;
         } elseif ($format == 'html') {
             $body = $bodyHtml;
