@@ -175,8 +175,8 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
 
         switch ($oldVersion) {
             case '4.0.0':
-                // future upgrades
             case '4.0.1':
+            case '4.0.2':
                 // future upgrades
         }
 
