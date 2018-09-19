@@ -113,10 +113,13 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             $conn = $this->getConnection();
             $dbName = $this->getDbName();
 
-            $conn->executeQuery("DELETE FROM $dbName.`hook_area` WHERE `owner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.`hook_binding` WHERE `sowner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.`hook_runtime` WHERE `sowner` = 'Formicula'");
-            $conn->executeQuery("DELETE FROM $dbName.`hook_subscriber` WHERE `owner` = 'Formicula'");
+            $isLegacy = version_compare(\Zikula_Core::VERSION_NUM, '2.0.0') >= 0 ? false : true;
+            if ($isLegacy) {
+                $conn->executeQuery("DELETE FROM $dbName.`hook_area` WHERE `owner` = 'Formicula'");
+                $conn->executeQuery("DELETE FROM $dbName.`hook_binding` WHERE `sowner` = 'Formicula'");
+                $conn->executeQuery("DELETE FROM $dbName.`hook_runtime` WHERE `sowner` = 'Formicula'");
+                $conn->executeQuery("DELETE FROM $dbName.`hook_subscriber` WHERE `owner` = 'Formicula'");
+            }
 
             // reinstall
             $this->install();
