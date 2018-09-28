@@ -15,9 +15,9 @@ The 5.x version in the master branch needs Zikula 2.0.11+ to run with.
 Older versions
 --------------
 
-- 4.x versions (`4.x` branch) works with Zikula 1.4.x and Zikula 1.5.x.
-- 3.x versions (`3.1.2` branch) works with Zikula 1.3.x.
-- 2.x versions (`2.2` branch) works with Zikula 1.2.x.
+- 4.x versions (`4.x` branch) work with Zikula 1.4.x and Zikula 1.5.x.
+- 3.x versions (`3.1.2` branch) work with Zikula 1.3.x.
+- 2.x versions (`2.2` branch) work with Zikula 1.2.x.
 
 Requirements
 ------------
