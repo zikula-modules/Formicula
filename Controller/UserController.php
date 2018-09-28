@@ -93,7 +93,7 @@ class UserController extends AbstractController
         $userName = '';
         $emailAddress = '';
         if ($currentUserApi->isLoggedIn()) {
-            $userName = \UserUtil::getVar('name') != '' ? \UserUtil::getVar('name') : $currentUserApi->get('uname');
+            $userName = /* FIXME \UserUtil::getVar('name') != '' ? \UserUtil::getVar('name') : */$currentUserApi->get('uname');
             $emailAddress = $currentUserApi->get('email');
         }
 
@@ -336,7 +336,6 @@ class UserController extends AbstractController
             $mailData['comment'] = strip_tags($mailData['comment']);
         }
 
-        $formId = \DataUtil::formatForOS($formId);
         $variableApi = $this->get('zikula_extensions_module.api.variable');
         $modVars = $variableApi->getAll('ZikulaFormiculaModule');
         $siteName = $variableApi->get('ZConfig', 'sitename');
@@ -358,10 +357,11 @@ class UserController extends AbstractController
                 // %c = contact name
                 // %n<num> = user defined field name <num>
                 // %d<num> = user defined field data <num>
-                $subject = str_replace('%s', \DataUtil::formatForDisplay($siteName), $subject);
-                $subject = str_replace('%l', \DataUtil::formatForDisplay($variableApi->get('ZConfig', 'slogan')), $subject);
-                $subject = str_replace('%u', \System::getBaseUrl(), $subject);
-                $subject = str_replace('%c', \DataUtil::formatForDisplay($contact->getSenderName()), $subject);
+                $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath() . $request->getPathInfo();
+                $subject = str_replace('%s', htmlentities($siteName), $subject);
+                $subject = str_replace('%l', htmlentities($variableApi->get('ZConfig', 'slogan')), $subject);
+                $subject = str_replace('%u', $baseUrl, $subject);
+                $subject = str_replace('%c', htmlentities($contact->getSenderName()), $subject);
                 $i = 0;
                 foreach ($customFields as $fieldName => $customField) {
                     $i++;
