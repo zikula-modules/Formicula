@@ -14,10 +14,6 @@ services:
             - '@zikula_formicula_module.helper.captcha_helper'
         tags: ['twig.extension']
 
-    zikula_formicula_module.listener.third_party_listener:
-        class: Zikula\FormiculaModule\Listener\ThirdPartyListener
-        tags: ['kernel.event_subscriber']
-
     zikula_formicula_module.helper.captcha_helper:
         class: Zikula\FormiculaModule\Helper\CaptchaHelper
         lazy: true
