@@ -30,7 +30,7 @@
                 <div class="col-sm-9">
                     <input type="hidden" name="custom[dateOfBirth][name]" value="{{ __('Date of birth') }}" />
                     <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
-                    <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
+                    <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
                 </div>
             </div>
             {% if modVars.showCompany %}
@@ -42,7 +42,7 @@
                     <div class="col-sm-9">
                         <input type="hidden" name="custom[street][name]" value="{{ __('Street') }}" />
                         <input type="hidden" name="custom[street][mandatory]" value="1" />
-                        <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default }}" required="required" class="form-control" />
+                        <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default|e('html_attr') }}" required="required" class="form-control" />
                     </div>
                 </div>
                 {{ form_row(form.location, { label: __('Zip City') }) }}
@@ -59,7 +59,7 @@
                 <div class="col-sm-9">
                     <input type="hidden" name="custom[idCard][name]" value="{{ __('Identification card number') }}" />
                     <input type="hidden" name="custom[idCard][mandatory]" value="1" />
-                    <input type="text" id="idCard" name="custom[idCard][data]" maxlength="70" value="{{ customFields.idCard.data|default }}" required="required" class="form-control" />
+                    <input type="text" id="idCard" name="custom[idCard][data]" maxlength="70" value="{{ customFields.idCard.data|default|e('html_attr') }}" required="required" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -95,7 +95,7 @@
                 <div class="col-sm-9">
                     <input type="hidden" name="custom[amountOfPersons][name]" value="{{ __('Amount of persons') }}" />
                     <input type="hidden" name="custom[amountOfPersons][mandatory]" value="1" />
-                    <input type="number" id="amountOfPersons" name="custom[amountOfPersons][data]" maxlength="70" value="{{ customFields.amountOfPersons.data|default }}" required="required" class="form-control" />
+                    <input type="number" id="amountOfPersons" name="custom[amountOfPersons][data]" maxlength="70" value="{{ customFields.amountOfPersons.data|default|e('html_attr') }}" required="required" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -103,7 +103,7 @@
                 <div class="col-sm-9">
                     <input type="hidden" name="custom[rentalStart][name]" value="{{ __('Start of rental period') }}" />
                     <input type="hidden" name="custom[rentalStart][mandatory]" value="1" />
-                    <input type="text" id="rentalStart" name="custom[rentalStart][data]" maxlength="40" value="{{ customFields.rentalStart.data|default }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
+                    <input type="text" id="rentalStart" name="custom[rentalStart][data]" maxlength="40" value="{{ customFields.rentalStart.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -111,7 +111,7 @@
                 <div class="col-sm-9">
                     <input type="hidden" name="custom[rentalEnd][name]" value="{{ __('End of rental period') }}" />
                     <input type="hidden" name="custom[rentalEnd][mandatory]" value="1" />
-                    <input type="text" id="rentalEnd" name="custom[rentalEnd][data]" maxlength="40" value="{{ customFields.rentalEnd.data|default }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
+                    <input type="text" id="rentalEnd" name="custom[rentalEnd][data]" maxlength="40" value="{{ customFields.rentalEnd.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
                 </div>
             </div>
 

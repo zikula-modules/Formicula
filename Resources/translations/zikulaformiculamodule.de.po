@@ -398,7 +398,7 @@ msgid "Please enter a valid date (mm/dd/yyyy)."
 msgstr "Bitte ein gültiges Datum (mm/dd/yyyy) eingeben."
 
 msgid "Please solve this calculation"
-msgstr "Bitte diese Aufgabe löschen"
+msgstr "Bitte diese Aufgabe lösen"
 
 msgid "Public"
 msgstr "Öffentlich"
