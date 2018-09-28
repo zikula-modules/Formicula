@@ -109,11 +109,11 @@ If you want to embed your form you can pass the owncontacts directly to the form
 the owncontacts array to your arguments array.
 
 The owncontacts array should contain the following values (per item) in both cases:
-    name the contact full name (required)
-    sname the contact secure name wich will be send to the submitter (optional)
-    email the contact email (required)
-    semail the contact email wich will be send to the submiter (optional)
-    ssubject the subject of the confirmation mail (optional) 
+    * name the contact full name (required)
+    * sname the contact secure name wich will be send to the submitter (optional)
+    * email the contact email (required)
+    * semail the contact email wich will be send to the submiter (optional)
+    * ssubject the subject of the confirmation mail (optional) 
  
 Templates
 ---------
@@ -133,37 +133,35 @@ The admin mail in html format:  #_adminmail.html
 This is the email that the admin gets after the user sends submits the userform.
 
 Note: the email format can be chosen by using a dropdown like
-			
+
+```
 <select name="userformat">
-<option value="html">{gt text='Html'}</option>
-<option value="plain">{gt text='Plain text'}</option>
+    <option value="html">{{ __('Html') }}</option>
+    <option value="plain">{{ __('Plain text') }}</option>
 </select>
+```
 
 or if you want to force the type of email, you can use a hidden field in the form
-			
-<input type="hidden" name="userformat" value="html" /> 
+
+`<input type="hidden" name="userformat" value="html" />`
 
 If you do not want to send a confirmation email to the user for a certain form, set
 userformat to none:
- 
-<input type="hidden" name="userformat" value="none" /> 
+
+`<input type="hidden" name="userformat" value="none" />`
 
 This overrides the setting in the configuration.
 
 Standard Fields
 ---------------
-The standard fields to be used in forma are under userdata
+The standard fields to be used in forms are under userdata
 
-userdata[uname]: the users name (mandatory)
-userdata[uemail]: the users name (mandatory)
-userdata[url]: the users homepage (optional)
-userdata[location], userdata[phone], userdata[company]: these are obvious... (optional)
-userdata[comment]: normally a textarea for entering free text. Since 0.6 this is not longer 
-a mandatory field! HTML is stripped from the comments to avoid spam. In addition, the
-comment is send to Zikula's internal censor function. If the result differs from the 
-original comment, the submission is also treated as spam and not sent. This results
-in an error message. 
-captcha: mandatory if spamcheck feature is enabled, see 0_userform.html for an example
+* userdata[uname]: the users name (mandatory)
+* userdata[uemail]: the users name (mandatory)
+* userdata[url]: the users homepage (optional)
+* userdata[location], userdata[phone], userdata[company]: these are obvious... (optional)
+* userdata[comment]: normally a textarea for entering free text. Since 0.6 this is not longer a mandatory field! HTML is stripped from the comments to avoid spam. In addition, the comment is send to Zikula's internal censor function. If the result differs from the original comment, the submission is also treated as spam and not sent. This results in an error message.
+* captcha: mandatory if spamcheck feature is enabled, see 0_userform.html for an example
 
 Custom Fields
 -------------
@@ -186,10 +184,12 @@ These are:
 
 Example:
 
+```
 <label class="mandatory" for="foobar">{gt text='foobar'}</label><br />
 <input type="hidden" name="custom[foobar][name]" value="{gt text='foobar'}" />
 <input type="hidden" name="custom[foobar][mandatory]" value="1" />
 <input type="text" required name="custom[foobar][data]" id="foobar" size="35" maxLength="80" value="{$custom.foobar.data}" />
+```
 
 Permissions
 -----------
@@ -200,7 +200,7 @@ all unregistered users are allowed to use all forms and write to all contacts
 
 Unregistered   |   ZikulaFormiculaModule::  |  0::  |  comment
 all unregistered users are allowed to use form 0 with all existing contacts.
-	
+
 Users   |   ZikulaFormiculaModule::   |  1:(2|3):  |  comment
 all members of the group Users are allowed to use form 1 and write to contact 2 and 3.
     
@@ -211,10 +211,10 @@ the form. These data are send in an associative array addinfo where the key is t
 
 With
 
-index.php?name=Formicula&type=user&func=main&form=2&addinfo[tid]=4&addinfo[pid]=17
+`/contact/?form=2&addinfo[tid]=4&addinfo[pid]=17`
 
 you send two different information to the form 2 which can used in the userform template (in
-this example 2_userform.html) with
+this `example 2_userform.html`) with
 
 {$addinfo.tid}  => 4
 {$addinfo.pid}  => 17
@@ -231,10 +231,7 @@ The simplecaptcha plugins adds an image with a very basic math equation (3 numbe
 and either +, - or *) to the form if the spam check is enabled. If the user enters a wrong
 value, Formicula redirects back to the page where it came from.
 
-Formicula tries to create images in this order:
-gif
-jpg
-png
+Formicula tries to create images in this order: gif, jpg, png.
 If all these image types are not supported by your server, captchas are deactivated, in this
 case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
