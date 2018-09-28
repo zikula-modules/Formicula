@@ -9,19 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Zikula\FormiculaModule {
+namespace Zikula\FormiculaModule;
 
-    use Zikula\Core\AbstractModule;
+use Zikula\Core\AbstractModule;
 
-    /**
-     * Formicula module class.
-     */
-    class ZikulaFormiculaModule extends AbstractModule
-    {
-    }
-}
-
-namespace {
-    class ZikulaFormiculaModule_ContentType_Form extends \Zikula\FormiculaModule\ContentType\Form {
-    }
+/**
+ * Formicula module class.
+ */
+class ZikulaFormiculaModule extends AbstractModule
+{
 }

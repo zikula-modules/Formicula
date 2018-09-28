@@ -44,3 +44,16 @@ services:
             - '@translator.default'
         tags:
             - { name: zikula.hook_subscriber, areaName: 'subscriber.zikulaformiculamodule.ui_hooks.forms' }
+
+    Zikula\FormiculaModule\ContentType\FormType:
+        parent: zikula.content_type.base
+        shared: false
+        calls:
+            - [setRequestStack, ['@request_stack']]
+            - [setHttpKernel, ['@http_kernel']]
+        tags: ['zikula.content_type']
+    Zikula\FormiculaModule\ContentType\Form\Type\FormType:
+        parent: zikula.content_type.form.base
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags: ['form.type']
