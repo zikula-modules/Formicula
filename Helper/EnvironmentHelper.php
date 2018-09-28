@@ -11,10 +11,10 @@
 
 namespace Zikula\FormiculaModule\Helper;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Zikula\Common\Translator\TranslatorInterface;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 
 class EnvironmentHelper
 {
@@ -29,28 +29,33 @@ class EnvironmentHelper
     private $translator;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     private $variableApi;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * Constructor.
      *
-     * @param KernelInterface     $kernel      KernelInterface service instance
-     * @param TranslatorInterface $translator  TranslatorInterface service instance
-     * @param VariableApi         $variableApi VariableApi service instance
-     * @param SessionInterface    $session     SessionInterface service instance
+     * @param KernelInterface      $kernel       KernelInterface service instance
+     * @param TranslatorInterface  $translator   TranslatorInterface service instance
+     * @param VariableApiInterface $variableApi  VariableApi service instance
+     * @param RequestStack         $requestStack RequestStack service instance
      */
-    public function __construct(KernelInterface $kernel, TranslatorInterface $translator, VariableApi $variableApi, SessionInterface $session) {
+    public function __construct(
+        KernelInterface $kernel,
+        TranslatorInterface $translator,
+        VariableApiInterface $variableApi,
+        RequestStack $requestStack
+    ) {
         $this->kernel = $kernel;
         $this->translator = $translator;
         $this->variableApi = $variableApi;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -58,7 +63,12 @@ class EnvironmentHelper
      */
     public function check()
     {
-        $flashBag = $this->session->getFlashBag();
+        $request = $this->requestStack->getCurrentRequest();
+        $flashBag = null !== $request ? $request->getSession()->getFlashBag() : null;
+        if (null === $flashBag) {
+            return;
+        }
+
         if (null === $this->kernel->getModule('ZikulaMailerModule')) {
             $flashBag->add('error', $this->translator->__('Mailer module is not available - unable to send emails!'));
         }

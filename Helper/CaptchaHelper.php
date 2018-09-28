@@ -11,12 +11,12 @@
 
 namespace Zikula\FormiculaModule\Helper;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Zikula\Common\Translator\TranslatorInterface;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
-use Zikula\PermissionsModule\Api\PermissionApi;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 
 class CaptchaHelper
 {
@@ -26,12 +26,12 @@ class CaptchaHelper
     private $translator;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     private $variableApi;
 
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     private $permissionApi;
 
@@ -46,34 +46,34 @@ class CaptchaHelper
     private $router;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * TwigExtension constructor.
      *
-     * @param TranslatorInterface $translator        TranslatorInterface service instance
-     * @param VariableApi         $variableApi       VariableApi service instance
-     * @param PermissionApi       $permissionApi     PermissionApi service instance
-     * @param EnvironmentHelper   $environmentHelper EnvironmentHelper service instance
-     * @param RouterInterface     $router            RouterInterface service instance
-     * @param SessionInterface    $session           SessionInterface service instance
+     * @param TranslatorInterface    $translator        TranslatorInterface service instance
+     * @param VariableApiInterface   $variableApi       VariableApi service instance
+     * @param PermissionApiInterface $permissionApi     PermissionApi service instance
+     * @param EnvironmentHelper      $environmentHelper EnvironmentHelper service instance
+     * @param RouterInterface        $router            RouterInterface service instance
+     * @param RequestStack           $requestStack      RequestStack service instance
      */
     public function __construct(
         TranslatorInterface $translator,
-        VariableApi $variableApi,
-        PermissionApi $permissionApi,
+        VariableApiInterface $variableApi,
+        PermissionApiInterface $permissionApi,
         EnvironmentHelper $environmentHelper,
         RouterInterface $router,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->translator = $translator;
         $this->variableApi = $variableApi;
         $this->permissionApi = $permissionApi;
         $this->environmentHelper = $environmentHelper;
         $this->router = $router;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -186,8 +186,12 @@ class CaptchaHelper
         $operands = $this->determineOperands();
 
         $m = ['+', '-'];
-        // store the numbers in a session var
-        $this->session->set('formiculaCaptcha', serialize($operands));
+
+        $request = $this->requestStack->getCurrentRequest();
+        if (null !== $request) {
+            // store the numbers in a session var
+            $request->getSession()->set('formiculaCaptcha', serialize($operands));
+        }
 
         // create the text for the image
         $exerciseText = $operands['x'] . ' ' . $m[$operands['z']] . ' ' . $operands['y'] . ' ' . $m[$operands['w']] . ' ' . $operands['v'] . ' =';

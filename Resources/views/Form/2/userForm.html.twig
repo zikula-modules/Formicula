@@ -49,7 +49,7 @@
             {% endif %}
         </fieldset>
 
-        {% set hooks = notifyDisplayHooks(eventName='formicula.ui_hooks.forms.form_edit') %}
+        {% set hooks = notifyDisplayHooks(eventName='zikulaformiculamodule.ui_hooks.forms.form_edit') %}
         {% for providerArea, hook in hooks if hook %}
             <fieldset>
                 <div class="help-block">
