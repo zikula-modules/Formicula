@@ -72,7 +72,7 @@ class FormType extends AbstractContentType
     public function displayView()
     {
         $this->data = $this->getData();
-        if (null === $this->data['form'] || empty($this->data['form'])) {
+        if (null === $this->data['form'] || intval($this->data['form']) < 0) {
             return '';
         }
 
@@ -81,8 +81,8 @@ class FormType extends AbstractContentType
         ];
 
         $subRequest = $this->requestStack->getCurrentRequest()->duplicate([
-            'form' => (int)$this->form,
-            'cid' => $this->contact
+            'form' => (int)$this->data['form'],
+            'cid' => $this->data['contact']
         ], null, $path);
 
         $response = $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
