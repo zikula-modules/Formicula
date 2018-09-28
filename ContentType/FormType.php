@@ -114,8 +114,6 @@ class FormType extends AbstractContentType
      */
     public function getEditFormClass()
     {
-        $this->customInit();
-
         return EditFormType::class;
     }
 
