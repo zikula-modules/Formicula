@@ -96,7 +96,7 @@ class FormType extends AbstractContentType
     public function displayEditing()
     {
         $this->data = $this->getData();
-        if (null === $this->data['form'] || empty($this->data['form'])) {
+        if (null === $this->data['form'] || intval($this->data['form']) < 0) {
             return $this->translator->__('No form selected.', 'zikulaformiculamodule');
         }
 

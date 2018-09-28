@@ -62,8 +62,7 @@ class FormType extends AbstractContentFormType
             ])
             ->add('contact', ChoiceType::class, [
                 'label' => $this->__('Show contact', 'zikulaformiculamodule'),
-                'choices' => $contactChoices,
-                'required' => false
+                'choices' => $contactChoices
             ])
         ;
     }
