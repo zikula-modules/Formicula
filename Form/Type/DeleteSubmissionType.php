@@ -12,6 +12,8 @@
 namespace Zikula\FormiculaModule\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,15 +30,15 @@ class DeleteSubmissionType extends AbstractType
         $translator = $options['translator'];
 
         $builder
-            ->add('sid', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [])
-            ->add('delete', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('sid', HiddenType::class)
+            ->add('delete', SubmitType::class, [
                 'label' => $translator->__('Delete'),
                 'icon' => 'fa-trash-o',
                 'attr' => [
                     'class' => 'btn btn-danger'
                 ]
             ])
-            ->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('cancel', SubmitType::class, [
                 'label' => $translator->__('Cancel'),
                 'icon' => 'fa-times',
                 'attr' => [
@@ -52,14 +54,6 @@ class DeleteSubmissionType extends AbstractType
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_deletesubmission';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**

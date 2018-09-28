@@ -12,6 +12,10 @@
 namespace Zikula\FormiculaModule\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,88 +32,85 @@ class ConfigType extends AbstractType
         $translator = $options['translator'];
 
         $builder
-            ->add('defaultForm', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('defaultForm', ChoiceType::class, [
                 'label' => $translator->__('Default form'),
                 'choices' => $options['formChoices'],
-                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => false,
                 'help' => $translator->__('This form is used when no form is specified.')
             ])
-            ->add('showCompany', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showCompany', CheckboxType::class, [
                 'label' => $translator->__('Show company'),
                 'required' => false
             ])
-            ->add('showPhone', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showPhone', CheckboxType::class, [
                 'label' => $translator->__('Show phone number'),
                 'required' => false
             ])
-            ->add('showUrl', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showUrl', CheckboxType::class, [
                 'label' => $translator->__('Show url'),
                 'required' => false
             ])
-            ->add('showLocation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showLocation', CheckboxType::class, [
                 'label' => $translator->__('Show location'),
                 'required' => false
             ])
-            ->add('showComment', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showComment', CheckboxType::class, [
                 'label' => $translator->__('Show comments textarea'),
                 'required' => false
             ])
-            ->add('showFileAttachment', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showFileAttachment', CheckboxType::class, [
                 'label' => $translator->__('Show file attachment'),
                 'required' => false
             ])
-            ->add('uploadDirectory', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('uploadDirectory', TextType::class, [
                 'label' => $translator->__('Directory for uploaded files'),
                 'attr' => [
                     'maxlength' => 150
                 ]
             ])
-            ->add('deleteUploadedFiles', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('deleteUploadedFiles', CheckboxType::class, [
                 'label' => $translator->__('Delete uploaded file(s) after sending'),
                 'required' => false
             ])
-            ->add('sendConfirmationToUser', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('sendConfirmationToUser', CheckboxType::class, [
                 'label' => $translator->__('Send confirmation email to user'),
                 'required' => false
             ])
-            ->add('defaultAdminFormat', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('defaultAdminFormat', ChoiceType::class, [
                 'label' => $translator->__('Default email format for admin emails'),
                 'choices' => [
                     $translator->__('HTML') => 'html',
                     $translator->__('Plain text') => 'plain'
                 ],
-                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('defaultUserFormat', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('defaultUserFormat', ChoiceType::class, [
                 'label' => $translator->__('Default email format for user emails'),
                 'choices' => [
                     $translator->__('HTML') => 'html',
                     $translator->__('Plain text') => 'plain',
                     $translator->__('None') => 'none'
                 ],
-                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('showUserFormat', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('showUserFormat', CheckboxType::class, [
                 'label' => $translator->__('Show user email format selector'),
                 'required' => false
             ])
-            ->add('useContactsAsSender', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('useContactsAsSender', CheckboxType::class, [
                 'label' => $translator->__('Use contact mail addresses as sender'),
                 'required' => false,
                 'help' => $translator->__('Disable this if you experience problems with your SMTP server')
             ])
-            ->add('enableSpamCheck', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('enableSpamCheck', CheckboxType::class, [
                 'label' => $translator->__('Activate simple spam check'),
                 'required' => false,
                 'alert' => [$translator->__('Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP functions for creating images are available.') => 'info']
             ])
-            ->add('excludeSpamCheck', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('excludeSpamCheck', TextType::class, [
                 'label' => $translator->__('Do not use spam check in these forms'),
                 'required' => false,
                 'attr' => [
@@ -117,11 +118,11 @@ class ConfigType extends AbstractType
                 ],
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for using the spam check in all forms.')
             ])
-            ->add('storeSubmissionData', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('storeSubmissionData', CheckboxType::class, [
                 'label' => $translator->__('Store submitted data in database'),
                 'required' => false
             ])
-            ->add('storeSubmissionDataForms', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('storeSubmissionDataForms', TextType::class, [
                 'label' => $translator->__('Only store submissions from these forms'),
                 'required' => false,
                 'attr' => [
@@ -129,14 +130,14 @@ class ConfigType extends AbstractType
                 ],
                 'help' => $translator->__('Enter comma separated list of form ids or leave empty for storing all forms.')
             ])
-            ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('save', SubmitType::class, [
                 'label' => $translator->__('Save'),
                 'icon' => 'fa-check',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
             ])
-            ->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('cancel', SubmitType::class, [
                 'label' => $translator->__('Cancel'),
                 'icon' => 'fa-times',
                 'attr' => [
@@ -152,14 +153,6 @@ class ConfigType extends AbstractType
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_config';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**

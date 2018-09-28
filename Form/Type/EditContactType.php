@@ -12,6 +12,10 @@
 namespace Zikula\FormiculaModule\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -28,52 +32,52 @@ class EditContactType extends AbstractType
         $translator = $options['translator'];
 
         $builder
-            ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('name', TextType::class, [
                 'label' => $translator->__('Contact name'),
                 'attr' => [
                     'maxlength' => 100
                 ]
             ])
-            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('email', TextType::class, [
                 'label' => $translator->__('Email address(es)'),
                 'attr' => [
                     'maxlength' => 200
                 ],
                 'help' => $translator->__('You may enter a single address or a comma separated list of addresses.')
             ])
-            ->add('public', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+            ->add('public', CheckboxType::class, [
                 'label' => $translator->__('Public'),
                 'required' => false
             ])
-            ->add('senderName', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('senderName', TextType::class, [
                 'label' => $translator->__('Sender name'),
                 'required' => false,
                 'attr' => [
                     'maxlength' => 100
                 ]
             ])
-            ->add('senderEmail', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
+            ->add('senderEmail', EmailType::class, [
                 'label' => $translator->__('Sender email address'),
                 'required' => false,
                 'attr' => [
                     'maxlength' => 100
                 ]
             ])
-            ->add('sendingSubject', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('sendingSubject', TextType::class, [
                 'label' => $translator->__('Subject'),
                 'required' => false,
                 'attr' => [
                     'maxlength' => 150
                 ]
             ])
-            ->add('save', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('save', SubmitType::class, [
                 'label' => $translator->__('Save'),
                 'icon' => 'fa-check',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
             ])
-            ->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+            ->add('cancel', SubmitType::class, [
                 'label' => $translator->__('Cancel'),
                 'icon' => 'fa-times',
                 'attr' => [
@@ -89,14 +93,6 @@ class EditContactType extends AbstractType
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_editcontact';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**

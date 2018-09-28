@@ -12,6 +12,14 @@
 namespace Zikula\FormiculaModule\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,21 +37,20 @@ class UserSubmissionType extends AbstractType
         $modVars = $options['modVars'];
 
         $builder
-            ->add('form', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [])
-            ->add('adminFormat', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [])
+            ->add('form', HiddenType::class)
+            ->add('adminFormat', HiddenType::class)
         ;
         if ($modVars['sendConfirmationToUser'] && !$modVars['showUserFormat']) {
-            $builder->add('userFormat', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', []);
+            $builder->add('userFormat', HiddenType::class);
         }
         $builder
-            ->add('cid', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('cid', ChoiceType::class, [
                 'label' => $translator->__('Contact'),
                 'choices' => $options['contactChoices'],
-                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('name', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('name', TextType::class, [
                 'label' => $translator->__('Your name'),
                 'attr' => [
                     'maxlength' => 150
@@ -51,7 +58,7 @@ class UserSubmissionType extends AbstractType
             ])
         ;
         if ($modVars['showCompany']) {
-            $builder->add('company', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            $builder->add('company', TextType::class, [
                 'label' => $translator->__('Company'),
                 'required' => false,
                 'attr' => [
@@ -59,7 +66,7 @@ class UserSubmissionType extends AbstractType
                 ]
             ]);
         }
-        $builder->add('emailAddress', 'Symfony\Component\Form\Extension\Core\Type\EmailType', [
+        $builder->add('emailAddress', EmailType::class, [
             'label' => $translator->__('Email address'),
             'attr' => [
                 'maxlength' => 150,
@@ -67,7 +74,7 @@ class UserSubmissionType extends AbstractType
             ]
         ]);
         if ($modVars['showPhone']) {
-            $builder->add('phone', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            $builder->add('phone', TextType::class, [
                 'label' => $translator->__('Phone number'),
                 'required' => false,
                 'attr' => [
@@ -76,7 +83,7 @@ class UserSubmissionType extends AbstractType
             ]);
         }
         if ($modVars['showUrl']) {
-            $builder->add('url', 'Symfony\Component\Form\Extension\Core\Type\UrlType', [
+            $builder->add('url', UrlType::class, [
                 'label' => $translator->__('Website'),
                 'attr' => [
                     'maxlength' => 150,
@@ -86,7 +93,7 @@ class UserSubmissionType extends AbstractType
             ]);
         }
         if ($modVars['showLocation']) {
-            $builder->add('location', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            $builder->add('location', TextType::class, [
                 'label' => $translator->__('Location'),
                 'required' => false,
                 'attr' => [
@@ -95,20 +102,19 @@ class UserSubmissionType extends AbstractType
             ]);
         }
         if ($modVars['sendConfirmationToUser'] && $modVars['showUserFormat']) {
-            $builder->add('userFormat', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            $builder->add('userFormat', ChoiceType::class, [
                 'label' => $translator->__('Email confirmation format'),
                 'choices' => [
                     $translator->__('HTML') => 'html',
                     $translator->__('Text') => 'plain',
                     $translator->__('None') => 'none'
                 ],
-                'choices_as_values' => true,
                 'expanded' => false,
                 'multiple' => false
             ]);
         }
         if ($modVars['showComment']) {
-            $builder->add('comment', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            $builder->add('comment', TextareaType::class, [
                 'label' => $translator->__('Comment'),
                 'attr' => [
                     'placeholder' => $translator->__('Enter your comments here')
@@ -116,12 +122,12 @@ class UserSubmissionType extends AbstractType
             ]);
         }
         if ($modVars['showFileAttachment']) {
-            $builder->add('fileUpload', 'Symfony\Component\Form\Extension\Core\Type\FileType', [
+            $builder->add('fileUpload', FileType::class, [
                 'label' => $translator->__('Attach a file'),
                 'required' => false
             ]);
         }
-        $builder->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('submit', SubmitType::class, [
             'label' => $translator->__('Send'),
             'icon' => 'fa-check',
             'attr' => [
@@ -136,14 +142,6 @@ class UserSubmissionType extends AbstractType
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_usersubmission';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**
