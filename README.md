@@ -66,13 +66,12 @@ Installation
    Unregistered (group)  |  ZikulaFormiculaModule::.*  |  .*  |  comment
    This enables unregistered users to use all existing forms. In a default installation
    the users group has a generic comment permission to do the same.
-6. Add a link to your main menu with: {Formicula} (using [Formicula] will not work!)
-6. Add a link to your main menu with: {Formicula:user:main}
-   This uses form 0. To call a specific form id use
-   index.php?name=Formicula&type=user&func=main&form=<formid>
-   e.g. index.php?name=Formicula&type=user&func=main&form=5 to use form #5
-In the distribution package you will find sample forms 0, 1, 2 and 3
-0 is a normal contact form and form #1 and beyond are more extensive forms.
+6. Add a link to your main menu using `/contact` as URL (whereby _contact_ corresponds
+   to the module name defined for Formicula in the extensions list).
+   This uses form 0. To call a specific form id use `/contact/?form=<formid>`
+   e.g. `/contact/?form=5` to use form #5
+   In the distribution package you will find sample forms 0, 1, 2 and 3.
+   0 is a normal contact form and form #1 and beyond are more extensive forms.
 
 Configuration
 -------------
@@ -175,10 +174,10 @@ This makes it necessary to send certain information from the form page to the mo
 The custom fields are numbered in old versions and an associative array in newer versions.
 
 These are:
-  
+
 * custom[fieldname][name] (hidden field) name of the custom field
   can be used in the confirmation email
-  
+
 * custom[fieldname][mandatory] (hidden field) set to 1 if this is a mandatory field.
   Formicula checks this and shows an errormessage when this field is not filled
 
@@ -241,7 +240,5 @@ case Formicula turns the configuration option "Activate spamcheck" off.
 Please refer to http://php.net/manual/en/ref.image.php for more information.
 
 Formicula also supports ztemp-directories located outside the websites root directory. In this case
-(when the temp directory points to an absolute path) the image is delivered by a internal 
+(when the temp directory points to an absolute path) the image is delivered by an internal
 function and not linked directly.
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
