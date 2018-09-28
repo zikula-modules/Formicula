@@ -7,39 +7,21 @@ You can create any kind of contact form with any number contact fields by changi
 Forms can be controlled by permissions.
 It also supports multiple, permission controlled recipients, configurable notification emails, a simple captcha for spam protection, hooks to the Captcha module, javascript form validation and file uploads.
 
-4.x versions
+5.x versions
 ------------
-The 4.x version in the master branch needs Zikula 1.4.3+ to run with.
+The 5.x version in the master branch needs Zikula 2.0.11+ to run with.
 **Note the master branch is work in progress and not stable at the moment!**
 
-3.x versions for Zikula 1.3.x
------------------------------
-3.0.2 is the version that contains the same functionality as 3.1.0, but is Not converted to HTML5 validation and jQuery. See https://github.com/zikula-modules/Formicula/issues/54 about HTML5 required and CkEditor < 4.2 - Scribite.
+Older versions
+--------------
 
-3.1.0 is a version that brings HTML5 form validation (with webshims lib polyfill fallback for
-browsers not supporting this) and all jQuery javascript. 3.0.2 is the latest version with prototype
-and prototype validation.
-
-* More information on HTML5 form validation also in the Zikula Core ticket: https://github.com/zikula/core/issues/1181
-* HTML5 constraint validation: http://www.html5rocks.com/en/tutorials/forms/constraintvalidation/
-* Webshims polyfill lib for html5 functionality in browsers not supporting this: http://afarkas.github.io/webshim/demos/
-
-3.1.2 is unreleased an contains some minor bugfixes.
-
-2.x versions for Zikula 1.2.x
------------------------------
-The 2.2 branch contains the latest version for Zikula 1.2.x
-
-Formicula 4.0 user manual
--------------------------     
-Formicula supports an infinite number of contact forms with an infinite number 
-of custom fields (ok, infinite as long as you have enough server memory).
+- 4.x versions (`4.x` branch) works with Zikula 1.4.x and Zikula 1.5.x.
+- 3.x versions (`3.1.2` branch) works with Zikula 1.3.x.
+- 2.x versions (`2.2` branch) works with Zikula 1.2.x.
 
 Requirements
 ------------
-Formicula 4.0 requires Zikula Core 1.4.3 or later. It *will not* run
-with earlier versions - sorry. Use Formicula < 4.0 instead.
-For creating captchas you need PHP compiled with the GD graphics library.
+Formicula 5.0 requires Zikula Core 2.0.11 or later. It *will not* run with earlier versions - sorry. Use Formicula < 5.0 instead. For creating captchas you need PHP compiled with the GD graphics library.
 
 Installation
 ------------
