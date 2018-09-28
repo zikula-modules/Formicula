@@ -1,0 +1,632 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: Formicula 5.0.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Axel Guckelsberger <info@guite.de>\n"
+"Language-Team: Axel Guckelsberger\n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "(to prevent spam)"
+msgstr "(Spamschutz)"
+
+msgid "- Make a choice -"
+msgstr "- Bitte eine Auswahl treffen -"
+
+msgid "A visitor of to your web site used the form for contact and sent the following:"
+msgstr "Ein Besucher Ihrer Webseite hat das Kontaktformular verwendet und die folgenden Daten gesendet:"
+
+msgid "A visitor to your website made a new rental request and sent the following:"
+msgstr "Ein Besucher Ihrer Webseite hat eine neue Mietanfrage gemacht und die folgenden Daten gesendet:"
+
+msgid "Actions"
+msgstr "Aktionen"
+
+msgid "Activate simple spam check"
+msgstr "Einfachen Spamschutz aktivieren"
+
+msgid "Add contact"
+msgstr "Kontakt hinzufügen"
+
+msgid "Agree with terms and conditions"
+msgstr "Nutzungsbedingungen zustimmen"
+
+msgid "All public contacts or form default"
+msgstr "Alle öffentlichen Kontakte oder Formular-Standard"
+
+msgid "Amount of persons"
+msgstr "Anzahl Personen"
+
+msgid "An email with the filled in data will be sent to our and your email address (%s). We will reply as soon as possible."
+msgstr "Eine E-Mail mit den eingetragenen Daten wird an uns und Ihre E-Mail-Adresse (%s) gesendet. Wir antworten so schnell wie möglich."
+
+msgid "An error occurred while creating the cache directory at %s."
+msgstr "Beim Erstellen des Cache-Verzeichnisses in %s ist ein Fehler aufgetreten."
+
+msgid "An error occurred while removing the cache directory at %s."
+msgstr "Beim Entfernen des Cache-Verzeichnisses in %s ist ein Fehler aufgetreten."
+
+msgid "Apply as"
+msgstr "Anmelden als"
+
+msgid "Apply online"
+msgstr "Online anmelden"
+
+msgid "Apply online!"
+msgstr "Online anmelden!"
+
+msgid "Attach a file"
+msgstr "Eine Datei anhängen"
+
+msgid "Attached file"
+msgstr "Angehängte Datei"
+
+msgid "Basic contact information"
+msgstr "Grundlegende Kontaktinformationen"
+
+msgid "Cache directory"
+msgstr "Cache-Verzeichnis"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Clear captcha image cache"
+msgstr "Cache für Captchabilder leeren"
+
+msgid "Comment"
+msgstr "Kommentar"
+
+msgid "Company"
+msgstr "Firma"
+
+msgid "Confirmation of your submission will be emailed to you in a few minutes."
+msgstr "Eine Bestätigung der Nachricht wird in ein paar Minuten zugestellt."
+
+msgid "Confirmation prompt"
+msgstr "Bestätigungsabfrage"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Contact ID"
+msgstr "Kontakt ID"
+
+msgid "Contact could not be found."
+msgstr "Kontakt konnte nicht gefunden werden."
+
+msgid "Contact form"
+msgstr "Kontaktformular"
+
+msgid "Contact information"
+msgstr "Kontaktinformationen"
+
+msgid "Contact name"
+msgstr "Kontakt Name"
+
+msgid "Contact our team"
+msgstr "Unser Team kontaktieren"
+
+msgid "Contact's sender name"
+msgstr "Absendername des Kontaktes"
+
+msgid "Could not create .htaccess file in %s, please refer to the manual before using the module!"
+msgstr "Es konnte keine .htaccess-Datei in %s erstellt werden, bitte vor Verwendung des Moduls das Handbuch anschauen!"
+
+msgid "Custom fields"
+msgstr "Eigene Felder"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Date of birth"
+msgstr "Geburtsdatum"
+
+msgid "Default email format for admin emails"
+msgstr "Standardformat für Admin E-Mails"
+
+msgid "Default email format for user emails"
+msgstr "Standardformat für Benutzer E-Mails"
+
+msgid "Default form"
+msgstr "Standardformular"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "Delete contact"
+msgstr "Kontakt löschen"
+
+msgid "Delete form submission"
+msgstr "Formular-Einreichung löschen"
+
+msgid "Delete uploaded file(s) after sending"
+msgstr "Hochgeladene Datei(en) nach dem Versand löschen"
+
+msgid "Desired salary"
+msgstr "Gewünschtes Gehalt"
+
+msgid "Directory for uploaded files"
+msgstr "Verzeichnis für hochgeladene Dateien"
+
+msgid "Disable this if you experience problems with your SMTP server"
+msgstr "Diese Option deaktivieren, falls Probleme mit dem SMTP-Server auftreten"
+
+msgid "Display a specific Formicula form."
+msgstr "Ein spezifisches Formicula-Formular anzeigen."
+
+msgid "Do not use spam check in these forms"
+msgstr "In diesem Formularen keinen Spamschutz verwenden"
+
+msgid "Do you really want to delete contact '%s'?"
+msgstr "Soll der Kontakt '%s' wirklich gelöscht werden?"
+
+msgid "Do you really want to delete form submission '%s'?"
+msgstr "Soll die Formular-Einreichung '%s' wirklich gelöscht werden?"
+
+msgid "Done! Contact created."
+msgstr "Erledigt! Kontakt erstellt."
+
+msgid "Done! Contact deleted."
+msgstr "Erledigt! Kontakt gelöscht."
+
+msgid "Done! Contact updated."
+msgstr "Erledigt! Kontakt geändert."
+
+msgid "Done! Module configuration updated."
+msgstr "Erledigt! Modulkonfiguration geändert."
+
+msgid "Done! Submission deleted."
+msgstr "Erledigt! Einreichung gelöscht."
+
+msgid "Edit contact"
+msgstr "Kontakt bearbeiten"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Email address"
+msgstr "E-Mail-Adresse"
+
+msgid "Email address(es)"
+msgstr "E-Mail-Adresse(n)"
+
+msgid "Email and confirmation settings"
+msgstr "Einstellungen zu E-Mail und Bestätigung"
+
+msgid "Email confirmation format"
+msgstr "Format der E-Mail Bestätigung"
+
+msgid "Email: %1$s - UID: %2$s"
+msgstr "E-Mail: %1$s - UID: %2$s"
+
+msgid "End of rental period"
+msgstr "Ende des Mietzeitraums"
+
+msgid "Enter a valid email address"
+msgstr "Bitte eine gültige E-Mail Adresse eingeben"
+
+msgid "Enter a valid url"
+msgstr "Bitte eine gültige URL eingeben"
+
+msgid "Enter comma separated list of form ids or leave empty for storing all forms."
+msgstr "Kommaseparierte Liste von Formular-IDs eingeben oder leer lassen zum Speichern aller Formulare."
+
+msgid "Enter comma separated list of form ids or leave empty for using the spam check in all forms."
+msgstr "Kommaseparierte Liste von Formular-IDs eingeben oder leer lassen zum Verwenden des Spamschutzes in allen Formularen."
+
+msgid "Enter your comments here"
+msgstr "Kommentare hier eingeben"
+
+msgid "Entry date"
+msgstr "Eintragsdatum"
+
+msgid "Error! Could not store your submission into the database."
+msgstr "Fehler! Die Einreichung konnte nicht in der Datenbank gespeichert werden."
+
+msgid "Error! Incorrect email address [%s] supplied."
+msgstr "Fehler! Ungültige E-Mail-Adresse [%s] angegeben."
+
+msgid "Error! No or incorrect email address supplied."
+msgstr "Fehler! Keine oder ungültige E-Mail-Adresse angegeben."
+
+msgid "Error! No or invalid name given."
+msgstr "Fehler! Keinen oder ungültigen Namen angegeben."
+
+msgid "Error! No value given for mandatory field \"%s\"."
+msgstr "Fehler! Keinen Wert für das Pflichtfeld \"%s\" angegeben."
+
+msgid "Extra 1"
+msgstr "Extra 1"
+
+msgid "Extra 2"
+msgstr "Extra 2"
+
+msgid "Extra 3"
+msgstr "Extra 3"
+
+msgid "Female"
+msgstr "Weiblich"
+
+msgid "Field"
+msgstr "Feld"
+
+msgid "File upload settings"
+msgstr "Einstellungen zum Dateiupload"
+
+msgid "Finish and send"
+msgstr "Abschließen und Senden"
+
+msgid "For your information: There are better spam check modules out there. For example the Zikula Captcha module which can be hooked to Formicula. If you want to use this module, then please do not forget to add the required permissions for the Captcha module, too."
+msgstr "Zur Information: Es gibt bessere Spamschutzmodule. Zum Beispiel das Zikula Captcha Modul, das in Formicula eingehakt werden kann. Wenn dieses Modul benutzt wird, nicht vergessen, die notwendigen Berechtigungen zu erteilen."
+
+msgid "Form #"
+msgstr "Formular #"
+
+msgid "Form #%1$s containing %2$s templates"
+msgstr "Formular #%1$s mit %2$s Templates"
+
+msgid "Form submission could not be found."
+msgstr "Formular-Einreichung konnte nicht gefunden werden."
+
+msgid "Form submission storage"
+msgstr "Speicherung von Formular-Einreichungen"
+
+msgid "Form ui hooks subscriber"
+msgstr "Form UI-Hooks Abonnent"
+
+msgid "Formicula cache directory does not contain the required .htaccess file - Captchas have been disabled."
+msgstr "Das Formicula Cache-Verzeichnis enthält die benötigte .htaccess-Datei nicht - Captchas wurden deaktiviert."
+
+msgid "Formicula cache directory does not exist or is not writable - Captchas have been disabled."
+msgstr "Das Formicula Cache-Verzeichnis existiert nicht oder ist nicht beschreibbar - Captchas wurden deaktiviert."
+
+msgid "Formicula form"
+msgstr "Formicula Formular"
+
+msgid "Formicula settings"
+msgstr "Formicula Einstellungen"
+
+msgid "Gender"
+msgstr "Geschlecht"
+
+msgid "General settings"
+msgstr "Allgemeine Einstellungen"
+
+msgid "Go back to the form"
+msgstr "Zurück zum Formular"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Hello %s!"
+msgstr "Hallo %s!"
+
+msgid "Hello!"
+msgstr "Hallo!"
+
+msgid "Hostname"
+msgstr "Hostname"
+
+msgid "How did you find us?"
+msgstr "Wie haben Sie uns gefunden?"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "IP address"
+msgstr "IP-Adresse"
+
+msgid "Identification card number"
+msgstr "Ausweisnummer"
+
+msgid "Included extras"
+msgstr "Zusätzliche Extras"
+
+msgid "Kind regards"
+msgstr "Mit freundlichen Grüßen"
+
+msgid "Location"
+msgstr "Ort"
+
+msgid "Mailer module is not available - unable to send emails!"
+msgstr "Das Mailermodul ist nicht verfügbar - es können keine E-Mails versendet werden!"
+
+msgid "Make a reservation"
+msgstr "Eine Reservierung vornehmen"
+
+msgid "Make sure you the necessary form fields are available, see the docs for more information. This option will be turned off by Formicula automatically if no PHP functions for creating images are available."
+msgstr "Bitte sicherstellen, dass die notwendigen Formularfelder verfügbar sind (mehr Informationen in den Docs). Diese Option wird automatisch von Formicula ausgeschaltet, wenn keine PHP-Funktionen zur Erstellung der Bilder verfügbar sind."
+
+msgid "Male"
+msgstr "Männlich"
+
+msgid "Mandatory fields are indicated with an asterisk."
+msgstr "Pflichtangaben werden durch ein Sternchen gekennzeichnet."
+
+msgid "Math"
+msgstr "Mathe"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "New application"
+msgstr "Neue Anmeldung"
+
+msgid "New contact"
+msgstr "Neuer Kontakt"
+
+msgid "New rental request"
+msgstr "Neue Mietanfrage"
+
+msgid "No contacts found."
+msgstr "Keine Kontakte gefunden."
+
+msgid "No form selected."
+msgstr "Kein Formular ausgewählt."
+
+msgid "No submissions found."
+msgstr "Keine Einreichungen gefunden."
+
+msgid "None"
+msgstr "Keines"
+
+msgid "Only store submissions from these forms"
+msgstr "Einreichungen nur von diesen Formularen speichern"
+
+msgid "Operation cancelled."
+msgstr "Vorgang abgebrochen."
+
+msgid "Otherwise"
+msgstr "Ansonsten"
+
+msgid "Personal data"
+msgstr "Persönliche Daten"
+
+msgid "Phone number"
+msgstr "Telefonnummer"
+
+msgid "Plain text"
+msgstr "Einfacher Text"
+
+msgid "Please enter a valid date (mm/dd/yyyy)."
+msgstr "Bitte ein gültiges Datum (mm/dd/yyyy) eingeben."
+
+msgid "Please solve this calculation"
+msgstr "Bitte diese Aufgabe löschen"
+
+msgid "Public"
+msgstr "Öffentlich"
+
+msgid "Rental data"
+msgstr "Daten zum Verleih"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Send"
+msgstr "Absenden"
+
+msgid "Send confirmation email to user"
+msgstr "Bestätigungsmail an den Benutzer senden"
+
+msgid "Sender email address"
+msgstr "E-Mail-Adresse des Absenders"
+
+msgid "Sender name"
+msgstr "Absendername"
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Show comments textarea"
+msgstr "Eingabefeld für Kommentare anzeigen"
+
+msgid "Show company"
+msgstr "Firma anzeigen"
+
+msgid "Show contact"
+msgstr "Kontakt anzeigen"
+
+msgid "Show file attachment"
+msgstr "Dateianhang anzeigen"
+
+msgid "Show location"
+msgstr "Ort anzeigen"
+
+msgid "Show phone number"
+msgstr "Telefonnummer anzeigen"
+
+msgid "Show url"
+msgstr "URL anzeigen"
+
+msgid "Show user email format selector"
+msgstr "Auswahl für Format der Benutzer E-Mail anzeigen"
+
+msgid "Site name"
+msgstr "Seitenname"
+
+msgid "Site slogan"
+msgstr "Seitenslogan"
+
+msgid "Site url"
+msgstr "URL der Seite"
+
+msgid "Spam check settings"
+msgstr "Einstellungen zum Spamschutz"
+
+msgid "Start of rental period"
+msgstr "Beginn des Mietzeitraums"
+
+msgid "Store submitted data in database"
+msgstr "Eingereichte Daten in der Datenbank speichern"
+
+msgid "Street"
+msgstr "Straße"
+
+msgid "Subject"
+msgstr "Betreff"
+
+msgid "Submission information"
+msgstr "Informationen zur Einreichung"
+
+msgid "Successfully created the cache directory with a .htaccess file in it."
+msgstr "Das Cache-Verzeichnis wurde erfolgreich mit einer .htaccess-Datei erstellt."
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Thank you %s for your reservation."
+msgstr "Vielen Dank %s für die Reservierung."
+
+msgid "Thank you for the comments posted from our website. The sent data is:"
+msgstr "Vielen Dank für Nachricht von unserer Internetseite. Die gesendeten Daten sind:"
+
+msgid "Thank you for your questions/comments to our website!"
+msgstr "Vielen Dank für Ihre Fragen/Anmerkungen zu unserer Internetseite!"
+
+msgid "Thank you for your reservation."
+msgstr "Vielen Dank für die Reservierung."
+
+msgid "Thanks for applying, we will keep your data strictly confidential."
+msgstr "Danke für die Anmeldung, wir werden die Daten vertraulich behandeln."
+
+msgid "The %s team"
+msgstr "Das Team von %s"
+
+msgid "The Formicula form #%1$s is shown here with only contact %2$s"
+msgstr "Das Formicula Formular #%1$s wird hier mit dem Kontakt %2$s angezeigt"
+
+msgid "The Formicula form #%s is shown here with all contacts"
+msgstr "Das Formicula Formular #%s wird hier mit allen Kontakten angezeigt"
+
+msgid "The calculation to prevent spam was incorrect. Please try again."
+msgstr "Die Lösung zur Rechenaufgabe zur Vermeidung von Spam war nicht korrekt. Bitte noch einmal versuchen."
+
+msgid "The captcha image cache has been cleared."
+msgstr "Der Cache für Captchabilder wurde geleert."
+
+msgid "The user has the following IP address/hostname:"
+msgstr "Der Benutzer hat die folgende IP-Adresse / Hostname:"
+
+msgid "The validation of the hooked security module was incorrect. Please try again."
+msgstr "Die Validierung des eingehakten Sicherheitsmoduls war nicht korrekt. Bitte noch einmal versuchen."
+
+msgid "The webserver cannot write into this directory!"
+msgstr "Der Webserver kann nicht in dieses Verzeichnis schreiben!"
+
+msgid "There are no image function available - Captchas have been disabled."
+msgstr "Es ist keine Bildfunktion verfügbar - Captches wurden deaktiviert."
+
+msgid "There is an error in your input."
+msgstr "Es gibt einen Fehler in den Eingaben."
+
+msgid "There was an error sending the confirmation email to your email address."
+msgstr "Beim Versand der Bestätigungsmail ist ein Fehler aufgetreten."
+
+msgid "There was an error sending the email to our contact."
+msgstr "Beim Versand der E-Mail an unseren Kontakt ist ein Fehler aufgetreten."
+
+msgid "There was an internal error when sending confirmation mail to you."
+msgstr "Beim Versand der Bestätigungsmail ist ein Fehler aufgetreten."
+
+msgid "This data was sent to us:"
+msgstr "Diese Daten wurden gesendet:"
+
+msgid "This form is used when no form is specified."
+msgstr "Dieses Formular wird verwendet, wenn kein Formular angegeben wird."
+
+msgid "Type 1"
+msgstr "Typ 1"
+
+msgid "Type 2"
+msgstr "Typ 2"
+
+msgid "Type 3"
+msgstr "Typ 3"
+
+msgid "Type of vehicle"
+msgstr "Art des Fahrzeugs"
+
+msgid "Use contact mail addresses as sender"
+msgstr "Kontakt-Mailadressen als Absender verwenden"
+
+msgid "User confirmation email data"
+msgstr "Daten zur E-Mail für die Benutzerbestätigung"
+
+msgid "User defined field data #num"
+msgstr "Benutzerdefiniertes Feld Daten #num"
+
+msgid "User defined field name #num"
+msgstr "Benutzerdefiniertes Feld Name #num"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "View contacts"
+msgstr "Kontakte anzeigen"
+
+msgid "View form submission"
+msgstr "Formular-Einreichung anzeigen"
+
+msgid "View form submissions"
+msgstr "Formular-Einreichungen anzeigen"
+
+msgid "View submissions"
+msgstr "Einreichungen anzeigen"
+
+msgid "View submitted form data"
+msgstr "Eingereichte Formulardaten anzeigen"
+
+msgid "Visit website"
+msgstr "Internetseite besuchen"
+
+msgid "We will reply as soon as possible."
+msgstr "Wir werden so schnell wie möglich antworten."
+
+msgid "We will respond to your email address as soon as possible."
+msgstr "Wir werden so schnell wie möglich an die angegebene E-Mail-Adresse antworten."
+
+msgid "Web Location 1"
+msgstr "Web Adresse 1"
+
+msgid "Web Location 2"
+msgstr "Web Adresse 2"
+
+msgid "Web Location 3"
+msgstr "Web Adresse 3"
+
+msgid "Webmaster"
+msgstr "Webmaster"
+
+msgid "Website"
+msgstr "Internetseite"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Yes, I agree with the <a href=\"%s\">Terms and Conditions</a>"
+msgstr "Ja, ich stimme den <a href=\"%s\">Nutzungsbedingungen</a> zu"
+
+msgid "You can use the following placeholders within the subject:"
+msgstr "Die folgenden Platzhalter können innerhalb des Betreffs benutzt werden:"
+
+msgid "You may enter a single address or a comma separated list of addresses."
+msgstr "Es kann eine einzelne Adresse oder eine kommaseparierte Liste von Adressen eingegeben werden."
+
+msgid "Your Name"
+msgstr "Name"
+
+msgid "Your mail to %s"
+msgstr "Ihre E-Mail an %s"
+
+msgid "Your name"
+msgstr "Name"
+
+msgid "Zip City"
+msgstr "PLZ, Ort"

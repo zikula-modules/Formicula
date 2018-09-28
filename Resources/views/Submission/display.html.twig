@@ -48,10 +48,10 @@
     </thead>
     <tbody>
         <tr>
-            <td headers="hUrl">{if submission.url ne ''}<a href="{{ submission.url }}" title="{{ __('Visit website') }}" target="_blank">{{ submission.url }}</a>{% else %}{{ __('None') }}{% endif %}</td>
-            <td headers="hCompany">{% if submission.company ne '' %}{{ submission.company }}{% else %}{{ __('None') }}{% endif %}</td>
-            <td headers="hPhoneNumber">{% if submission.phoneNumber ne '' %}{{ submission.phoneNumber }}{% else %}{{ __('None') }}{% endif %}</td>
-            <td headers="hLocation">{% if submission.location ne '' %}{{ submission.location }}{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hUrl">{% if submission.url != '' %}<a href="{{ submission.url }}" title="{{ __('Visit website') }}" target="_blank">{{ submission.url }}</a>{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hCompany">{% if submission.company != '' %}{{ submission.company }}{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hPhoneNumber">{% if submission.phoneNumber != '' %}{{ submission.phoneNumber }}{% else %}{{ __('None') }}{% endif %}</td>
+            <td headers="hLocation">{% if submission.location != '' %}{{ submission.location }}{% else %}{{ __('None') }}{% endif %}</td>
         </tr>
     </tbody>
 </table>
@@ -77,7 +77,7 @@
         </tbody>
     </table>
 {% endif %}
-{% if submission.comment ne '' %}
+{% if submission.comment != '' %}
     <table class="table table-bordered table-striped">
         <colgroup>
             <col id="cComment" />

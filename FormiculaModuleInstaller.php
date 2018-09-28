@@ -71,7 +71,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             'showComment' => true,
 
             'showFileAttachment' => false,
-            'uploadDirectory' => 'userdata',
+            'uploadDirectory' => 'web/uploads',
             'deleteUploadedFiles' => true,
 
             'sendConfirmationToUser' => true,
