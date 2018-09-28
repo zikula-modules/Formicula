@@ -18,11 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Zikula\Bundle\HookBundle\Hook\ValidationHook;
+use Zikula\Bundle\HookBundle\Hook\ValidationProviders;
 use Zikula\Core\Controller\AbstractController;
-use Zikula\Core\Hook\ValidationHook;
-use Zikula\Core\Hook\ValidationProviders;
 use Zikula\FormiculaModule\Entity\ContactEntity;
 use Zikula\FormiculaModule\Entity\SubmissionEntity;
+use Zikula\FormiculaModule\Form\Type\UserSubmissionType;
 use Swift_Message;
 
 /**
@@ -111,11 +112,12 @@ class UserController extends AbstractController
             }
         }
 
-        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\UserSubmissionType',
+        $form = $this->createForm(UserSubmissionType::class,
             $formData, [
                 'translator' => $this->get('translator.default'),
                 'modVars' => $modVars,
-                'contactChoices' => $contactChoices
+                'contactChoices' => $contactChoices,
+                'action' => $this->generateUrl('zikulaformiculamodule_user_index')
             ]
         );
 
@@ -199,7 +201,7 @@ class UserController extends AbstractController
                     $hasError = true;
                 }
             }
-            $session->del('formiculaCaptcha');
+            $session->remove('formiculaCaptcha');
 
             // Check hooked modules for validation
             $validationHook = new ValidationHook(new ValidationProviders());

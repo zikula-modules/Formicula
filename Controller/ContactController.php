@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
 use Zikula\FormiculaModule\Entity\ContactEntity;
+use Zikula\FormiculaModule\Form\Type\DeleteContactType;
+use Zikula\FormiculaModule\Form\Type\EditContactType;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
@@ -107,7 +109,7 @@ class ContactController extends AbstractController
             }
         }
 
-        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\EditContactType', $contact, [
+        $form = $this->createForm(EditContactType::class, $contact, [
             'translator' => $this->get('translator.default')
         ]);
 
@@ -186,7 +188,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('zikulaformiculamodule_contact_view');
         }
 
-        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\DeleteContactType', $contact, [
+        $form = $this->createForm(DeleteContactType::class, $contact, [
             'translator' => $this->get('translator.default')
         ]);
 

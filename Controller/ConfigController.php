@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
+use Zikula\FormiculaModule\Form\Type\ConfigType;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
@@ -62,7 +63,7 @@ class ConfigController extends AbstractController
             $formChoices[$this->__f('Form #%1$s containing %2$s templates', [ '%1$s' => $formNumber, '%2$s' => count($finder2) ])] = $formNumber;
         }
 
-        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\ConfigType',
+        $form = $this->createForm(ConfigType::class,
             $modVars, [
                 'translator' => $this->get('translator.default'),
                 'formChoices' => $formChoices

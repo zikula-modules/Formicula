@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
+use Zikula\FormiculaModule\Form\Type\DeleteSubmissionType;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
@@ -119,7 +120,7 @@ class SubmissionController extends AbstractController
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
 
-        $form = $this->createForm('Zikula\FormiculaModule\Form\Type\DeleteSubmissionType', $submission, [
+        $form = $this->createForm(DeleteSubmissionType::class, $submission, [
             'translator' => $this->get('translator.default')
         ]);
 
