@@ -1,6 +1,6 @@
 {
     "name": "zikula/formicula-module",
-    "version": "4.0.2",
+    "version": "5.0.0",
     "description": "Template-driven form mailer.",
     "type": "zikula-module",
     "license": "LGPL-3.0+",
@@ -14,12 +14,12 @@
         "psr-4": { "Zikula\\FormiculaModule\\": "" }
     },
     "require": {
-        "php": ">5.4.0"
+        "php": ">5.5.9"
     },
     "extra": {
         "zikula": {
             "class": "Zikula\\FormiculaModule\\ZikulaFormiculaModule",
-            "core-compatibility": ">=1.4.3",
+            "core-compatibility": ">=2.0.11 <3.0",
             "displayname": "Formicula",
             "url": "formicula",
             "oldnames": ["Formicula"],
@@ -32,5 +32,14 @@
                 "ZikulaFormiculaModule::": "Form ID:Contact ID:"
             }
         }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "5.5.9"
+        },
+        "sort-packages": true
     }
 }
