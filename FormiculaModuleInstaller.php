@@ -86,9 +86,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             'storeSubmissionDataForms' => ''
         ]);
 
-        // install subscriber hook
-        $this->hookApi->installSubscriberHooks($this->bundle->getMetaData());
-
         // initialisation successful
         return true;
     }
@@ -180,6 +177,23 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             case '4.0.1':
                 // nothing to do
             case '4.0.2':
+                // fields have changed: createdUserId becomes createdBy, updatedUserId becomes updatedBy
+                $connection = $this->entityManager->getConnection();
+                $tableName = 'submission';
+                $sql = '
+                    ALTER TABLE `formicula_' . $tableName . '`
+                    CHANGE `createdUserId` `createdBy` INT(11) DEFAULT NULL
+                ';
+                $stmt = $connection->prepare($sql);
+                $stmt->execute();
+
+                $sql = '
+                    ALTER TABLE `formicula_' . $tableName . '`
+                    CHANGE `updatedUserId` `updatedBy` INT(11) DEFAULT NULL
+                ';
+                $stmt = $connection->prepare($sql);
+                $stmt->execute();
+            case '5.0.0':
                 // future upgrades
         }
 
@@ -217,9 +231,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
 
         // Remove module variables
         $this->delVars();
-
-        // uninstall subscriber hook
-        $this->hookApi->uninstallSubscriberHooks($this->bundle->getMetaData());
 
         // Deletion successful
         return true;
