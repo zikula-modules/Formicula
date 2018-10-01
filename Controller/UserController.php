@@ -215,7 +215,9 @@ class UserController extends AbstractController
                 'modVars' => $modVars,
                 'contact' => $contact,
                 'userData' => $userData,
-                'customFields' => $customFields
+                'customFields' => $customFields,
+                'adminFormat' => $formData['adminFormat'],
+                'userFormat' => (isset($formData['userFormat']) ? $formData['userFormat'] : $modVars['defaultUserFormat'])
             ];
 
             if ($hasError) {
