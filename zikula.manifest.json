@@ -10,8 +10,8 @@
         "icon": ""
     },
     "version": {
-        "semver": "4.0.2",
-        "compatibility": ">=1.4.3 <2.0",
+        "semver": "5.0.1",
+        "compatibility": ">=2.0.11 <3.0",
         "composerpath": "composer.json",
         "description": "Template-driven form mailer.",
         "keywords": [

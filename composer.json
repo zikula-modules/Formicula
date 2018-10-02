@@ -1,6 +1,6 @@
 {
     "name": "zikula/formicula-module",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "description": "Template-driven form mailer.",
     "type": "zikula-module",
     "license": "LGPL-3.0+",
