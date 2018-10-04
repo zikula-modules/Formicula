@@ -101,6 +101,14 @@ class SubmissionEntity extends EntityAccess
     private $phoneNumber;
 
     /**
+     * The company
+     *
+     * @ORM\Column(type="string", length=255)
+     * @var string $company
+     */
+    private $company;
+
+    /**
      * The url
      *
      * @Assert\Url()
@@ -145,6 +153,7 @@ class SubmissionEntity extends EntityAccess
         $this->name = '';
         $this->email = '';
         $this->phoneNumber = '';
+        $this->company = '';
         $this->url = '';
         $this->location = '';
         $this->comment = '';
@@ -309,6 +318,36 @@ class SubmissionEntity extends EntityAccess
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * Alias for easier form handling.
+     *
+     * @param string $phoneNumber the submission's phone number
+     */
+    public function setPhone($phoneNumber)
+    {
+        return $this->setPhoneNumber($phoneNumber);
+    }
+
+    /**
+     * Gets the company of the submission.
+     *
+     * @return string the submission's company
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * Sets the company for the submission.
+     *
+     * @param string $company the submission's company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
     }
 
     /**

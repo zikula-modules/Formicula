@@ -27,7 +27,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      */
     private $entities = [
         'Zikula\FormiculaModule\Entity\ContactEntity',
-        'Zikula\FormiculaModule\Entity\SubmissionEntity',
+        'Zikula\FormiculaModule\Entity\SubmissionEntity'
     ];
 
     /**
@@ -194,6 +194,17 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                 $stmt = $connection->prepare($sql);
                 $stmt->execute();
             case '5.0.0':
+                // added forgotten company field
+                try {
+                    $this->schemaTool->update([
+                        'Zikula\FormiculaModule\Entity\SubmissionEntity'
+                    ]);
+                } catch (\Exception $exception) {
+                    $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
+    
+                    return false;
+                }
+            case '5.0.1':
                 // future upgrades
         }
 

@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">{{ __('Name') }}</label>
                 <div class="col-sm-9">
-                    <p class="form-control-static"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', { '%1$s': submission.email, '%2$s': submission.createdUserId }) }}">{{ submission.name }}</a></p>
+                    <p class="form-control-static"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', {'%1$s': submission.email, '%2$s': submission.createdBy.uid}) }}">{{ submission.name }}</a></p>
                 </div>
             </div>
         </fieldset>
