@@ -82,11 +82,11 @@ class UserController extends AbstractController
         $customFields = [];
         if ($session->has('formiculaUserData')) {
             $userData = unserialize($session->get('formiculaUserData'));
-            $session->del('formiculaUserData');
+            $session->remove('formiculaUserData');
         }
         if ($session->has('formiculaCustomFields')) {
             $customFields = unserialize($session->get('formiculaCustomFields'));
-            $session->del('formiculaCustomFields');
+            $session->remove('formiculaCustomFields');
         }
 
         // default user values with an empty form
@@ -195,10 +195,12 @@ class UserController extends AbstractController
             if ($enableSpamCheck) {
                 $captcha = (int)$request->request->getDigits('captcha', 0);
                 $operands = @unserialize($session->get('formiculaCaptcha'));
-                $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
-                if (false === $captchaValid) {
-                    $this->addFlash('error', $this->__('The calculation to prevent spam was incorrect. Please try again.'));
-                    $hasError = true;
+                if (is_array($operands)) {
+                    $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
+                    if (false === $captchaValid) {
+                        $this->addFlash('error', $this->__('The calculation to prevent spam was incorrect. Please try again.'));
+                        $hasError = true;
+                    }
                 }
             }
             $session->remove('formiculaCaptcha');
