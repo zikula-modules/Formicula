@@ -129,7 +129,12 @@ class UserController extends AbstractController
         $captchaHelper = $this->get('zikula_formicula_module.helper.captcha_helper');
         $enableSpamCheck = $captchaHelper->isSpamCheckEnabled($formId);
 
-        if ($form->handleRequest($request)->isValid() && $form->get('submit')->isClicked()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $formData = $form->getData();
+            $formId = $formData['form'];
+        }
+        if ($form->isValid() && $form->get('submit')->isClicked()) {
             $formData = $form->getData();
 
             // very basic input validation against HTTP response splitting
@@ -188,6 +193,7 @@ class UserController extends AbstractController
                 $customFields[$key]['mandatory'] = $isMandatory;
                 if ($isMandatory && !is_array($customField['data']) && empty($customField['data'])) {
                     $this->addFlash('error', $this->__f('Error! No value given for mandatory field "%s".', ['%s' => $customField['name']]));
+                    $hasError = true;
                 }
             }
 
@@ -421,7 +427,16 @@ class UserController extends AbstractController
         if ($mailType == 'admin') {
             $fromAddress = true === $modVars['useContactsAsSender'] ? $userData['emailAddress'] : $adminMail;
             $message->setFrom([$fromAddress => $userData['name']]);
-            $message->setTo([$contact->getEmail() => $contact->getName()]);
+            $recipients = [];
+            if (false !== strpos($contact->getEmail(), ',')) {
+                $emails = explode(',', $contact->getEmail());
+                foreach ($emails as $email) {
+                    $recipients[$email] = $contact->getName();
+                }
+            } else {
+                $recipients[$contact->getEmail()] = $contact->getName();
+            }
+            $message->setTo($recipients);
         } elseif ($mailType == 'user') {
             $fromName = !empty($contact->getSenderName()) ? $contact->getSenderName() : $siteName . ' - ' . $this->__('Contact form');
             $fromAddress = !empty($contact->getSenderEmail()) ? $contact->getSenderEmail() : $contact->getEmail();
