@@ -101,6 +101,6 @@ class EnvironmentHelper
      */
     public function getCacheDirectory()
     {
-        return 'app/cache/formicula';
+        return 'var/cache/formicula';
     }
 }
