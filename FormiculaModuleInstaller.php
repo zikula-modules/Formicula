@@ -254,7 +254,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      */
     private function getCacheDirectory()
     {
-        return 'app/cache/formicula';
+        return 'var/cache/formicula';
     }
 
     /**
