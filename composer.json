@@ -14,7 +14,7 @@
         "psr-4": { "Zikula\\FormiculaModule\\": "" }
     },
     "require": {
-        "php": ">5.5.9"
+        "php": ">=5.5.9"
     },
     "extra": {
         "zikula": {
@@ -37,7 +37,7 @@
         "preferred-install": "dist",
         "optimize-autoloader": true,
         "platform": {
-            "php": "5.5.9"
+            "php": "7.3.12"
         },
         "sort-packages": true
     }
