@@ -1,7 +1,7 @@
 {{ include('@ZikulaFormiculaModule/Form/2/userHeader.html.twig') }}
 {% form_theme form with [
-    'ZikulaFormExtensionBundle:Form:bootstrap_3_zikula_admin_layout.html.twig',
-    'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+    '@ZikulaFormExtension/Form/bootstrap_3_zikula_admin_layout.html.twig',
+    '@ZikulaFormExtension/Form/form_div_layout.html.twig'
 ] %}
 {{ polyfill() }}
 

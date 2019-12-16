@@ -33,8 +33,8 @@ class ContactController extends AbstractController
      * Show a list of contacts.
      *
      * @Route("/view")
+     * @Template("@ZikulaFormiculaModule/Contact/view.html.twig")
      * @Theme("admin")
-     * @Template("ZikulaFormiculaModule:Contact:view.html.twig")
      *
      * @param Request $request
      * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
@@ -75,8 +75,8 @@ class ContactController extends AbstractController
      * Allows adding and editing contacts.
      *
      * @Route("/edit")
+     * @Template("@ZikulaFormiculaModule/Contact/edit.html.twig")
      * @Theme("admin")
-     * @Template("ZikulaFormiculaModule:Contact:edit.html.twig")
      *
      * @param Request $request
      * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
@@ -161,8 +161,8 @@ class ContactController extends AbstractController
      * Deletes an existing contact from the database.
      *
      * @Route("/delete")
+     * @Template("@ZikulaFormiculaModule/Contact/delete.html.twig")
      * @Theme("admin")
-     * @Template("ZikulaFormiculaModule:Contact:delete.html.twig")
      *
      * @param Request $request
      * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
