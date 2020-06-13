@@ -8,7 +8,7 @@ It also supports multiple, permission controlled recipients, configurable notifi
 
 ## Master branch
 
-The 5.1.x version in the `master` branch target Zikula 3.0+.
+The 5.1.x version in the `master` branch targets Zikula 3.0+.
 **Note the master branch is work in progress and not stable at the moment!**
 
 ## Older versions
