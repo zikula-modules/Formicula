@@ -6,26 +6,20 @@ You can create any kind of contact form with any number contact fields by changi
 Forms can be controlled by permissions.
 It also supports multiple, permission controlled recipients, configurable notification emails, a simple captcha for spam protection, hooks to the Captcha module, javascript form validation and file uploads.
 
-## 5.x versions
+## Master branch
 
-The 5.x version in the master branch needs Zikula 2.0.11+ to run with.
+The 5.1.x version in the `master` branch target Zikula 3.0+.
 **Note the master branch is work in progress and not stable at the moment!**
 
 ## Older versions
 
-- 4.x versions (`4.x` branch) work with Zikula 1.4.x and Zikula 1.5.x.
-- 3.x versions (`3.1.2` branch) work with Zikula 1.3.x.
-- 2.x versions (`2.2` branch) work with Zikula 1.2.x.
-
-## Requirements
-
-Formicula 5.0 requires Zikula Core 2.0.11 or later. It *will not* run with earlier versions - sorry. Use Formicula < 5.0 instead. For creating captchas you need PHP compiled with the GD graphics library.
+See [releases](https://github.com/zikula-modules/Formicula/releases).
 
 ## Installation
 
-1. Extract the files to your Zikula modules directory.
-2. Initialize and activate the module in the admin section.
-3. During installation, Formicula tries to create a directory formicula_cache containing a .htaccess file.
+1. Extract the files to your Zikula `extensions` directory.
+2. Initialize and activate Formicula in the extensions administration.
+3. During installation, Formicula tries to create a `formicula_cache` directory containing a `.htaccess` file.
    If this fails (most probably when safemode is set to 'on' in your PHP environment or the zTemp
    directory is outside your web root), you will be notified and have to create them on your own:
    a) Create a directory formicula_cache in your temporary directory (most likely ztemp) and make it 

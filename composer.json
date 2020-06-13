@@ -1,6 +1,6 @@
 {
     "name": "zikula/formicula-module",
-    "version": "5.0.2",
+    "version": "5.1.0",
     "description": "Template-driven form mailer.",
     "type": "zikula-module",
     "license": "LGPL-3.0+",
@@ -14,12 +14,12 @@
         "psr-4": { "Zikula\\FormiculaModule\\": "" }
     },
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=7.2.5"
     },
     "extra": {
         "zikula": {
             "class": "Zikula\\FormiculaModule\\ZikulaFormiculaModule",
-            "core-compatibility": ">=2.0.11 <3.0",
+            "core-compatibility": ">=3.0.0 <4.0.0",
             "displayname": "Formicula",
             "url": "formicula",
             "oldnames": ["Formicula"],
