@@ -174,7 +174,7 @@ With
 you send two different information to the form 2 which can used in the userform template (in
 this `example 2_userform.html`) with
 
-{{ addinfo.tid }}  => 4
+{{ addinfo.tid }}  => 4  
 {{ addinfo.pid }}  => 17
 
 As you can see you can use this to e.g. load data from Pagesetter in the userform template.
