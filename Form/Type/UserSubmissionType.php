@@ -33,7 +33,6 @@ class UserSubmissionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $translator = $options['translator'];
         $modVars = $options['modVars'];
 
         $builder
@@ -45,13 +44,13 @@ class UserSubmissionType extends AbstractType
         }
         $builder
             ->add('cid', ChoiceType::class, [
-                'label' => $translator->__('Contact'),
+                'label' => 'Contact',
                 'choices' => $options['contactChoices'],
                 'expanded' => false,
                 'multiple' => false
             ])
             ->add('name', TextType::class, [
-                'label' => $translator->__('Your name'),
+                'label' => 'Your name',
                 'attr' => [
                     'maxlength' => 150
                 ]
@@ -59,7 +58,7 @@ class UserSubmissionType extends AbstractType
         ;
         if ($modVars['showCompany']) {
             $builder->add('company', TextType::class, [
-                'label' => $translator->__('Company'),
+                'label' => 'Company',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 150
@@ -67,15 +66,15 @@ class UserSubmissionType extends AbstractType
             ]);
         }
         $builder->add('emailAddress', EmailType::class, [
-            'label' => $translator->__('Email address'),
+            'label' => 'Email address',
             'attr' => [
                 'maxlength' => 150,
-                'placeholder' => $translator->__('Enter a valid email address')
+                'placeholder' => 'Enter a valid email address'
             ]
         ]);
         if ($modVars['showPhone']) {
             $builder->add('phone', TextType::class, [
-                'label' => $translator->__('Phone number'),
+                'label' => 'Phone number',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 50
@@ -84,17 +83,17 @@ class UserSubmissionType extends AbstractType
         }
         if ($modVars['showUrl']) {
             $builder->add('url', UrlType::class, [
-                'label' => $translator->__('Website'),
+                'label' => 'Website',
                 'attr' => [
                     'maxlength' => 150,
-                    'placeholder' => $translator->__('Enter a valid url')
+                    'placeholder' => 'Enter a valid url'
                 ],
                 'required' => false
             ]);
         }
         if ($modVars['showLocation']) {
             $builder->add('location', TextType::class, [
-                'label' => $translator->__('Location'),
+                'label' => 'Location',
                 'required' => false,
                 'attr' => [
                     'maxlength' => 150
@@ -103,11 +102,11 @@ class UserSubmissionType extends AbstractType
         }
         if ($modVars['sendConfirmationToUser'] && $modVars['showUserFormat']) {
             $builder->add('userFormat', ChoiceType::class, [
-                'label' => $translator->__('Email confirmation format'),
+                'label' => 'Email confirmation format',
                 'choices' => [
-                    $translator->__('HTML') => 'html',
-                    $translator->__('Text') => 'plain',
-                    $translator->__('None') => 'none'
+                    'HTML' => 'html',
+                    'Text' => 'plain',
+                    'None' => 'none'
                 ],
                 'expanded' => false,
                 'multiple' => false
@@ -115,20 +114,20 @@ class UserSubmissionType extends AbstractType
         }
         if ($modVars['showComment']) {
             $builder->add('comment', TextareaType::class, [
-                'label' => $translator->__('Comment'),
+                'label' => 'Comment',
                 'attr' => [
-                    'placeholder' => $translator->__('Enter your comments here')
+                    'placeholder' => 'Enter your comments here'
                 ]
             ]);
         }
         if ($modVars['showFileAttachment']) {
             $builder->add('fileUpload', FileType::class, [
-                'label' => $translator->__('Attach a file'),
+                'label' => 'Attach a file',
                 'required' => false
             ]);
         }
         $builder->add('submit', SubmitType::class, [
-            'label' => $translator->__('Send'),
+            'label' => 'Send',
             'icon' => 'fa-check',
             'attr' => [
                 'class' => 'btn btn-success'
@@ -150,7 +149,6 @@ class UserSubmissionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translator' => null,
             'modVars' => [],
             'contactChoices' => []
         ]);

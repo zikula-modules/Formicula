@@ -1,8 +1,7 @@
-{{ adminHeader() }}
 <h3>
     <span class="fa fa-envelope"></span>
-    {{ __('View form submissions') }}
-    {{ pageSetVar('title', __('View form submissions')) }}
+    {% trans %}View form submissions{% endtrans %}
+    {{ pageSetVar('title', 'View form submissions'|trans) }}
 </h3>
 <table class="table table-bordered table-striped">
     <colgroup>
@@ -15,12 +14,12 @@
     </colgroup>
     <thead>
         <tr>
-            <th id="hId" scope="col">{{ __('ID') }}</th>
-            <th id="hForm" scope="col">{{ __('Form #') }}</th>
-            <th id="hContactId" scope="col">{{ __('Contact ID') }}</th>
-            <th id="hDate" scope="col">{{ __('Date') }}</th>
-            <th id="hName" scope="col">{{ __('Name') }}</th>
-            <th id="hActions" scope="col" class="text-right nowrap">{{ __('Actions') }}</th>
+            <th id="hId" scope="col">{% trans %}ID{% endtrans %}</th>
+            <th id="hForm" scope="col">{% trans %}Form #{% endtrans %}</th>
+            <th id="hContactId" scope="col">{% trans %}Contact ID{% endtrans %}</th>
+            <th id="hDate" scope="col">{% trans %}Date{% endtrans %}</th>
+            <th id="hName" scope="col">{% trans %}Name{% endtrans %}</th>
+            <th id="hActions" scope="col" class="text-right nowrap">{% trans %}Actions{% endtrans %}</th>
         </tr>
     </thead>
     <tbody>
@@ -29,16 +28,16 @@
                 <td headers="hId">{{ submission.sid }}</td>
                 <td headers="hForm">{{ submission.form }}</td>
                 <td headers="hContactId">{{ submission.cid }}</td>
-                <td headers="hDate">{{ submission.createdDate|localizeddate('short', 'short') }}</td>
-                <td headers="hName"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', {'%1$s': submission.email, '%2$s': submission.createdBy.uid}) }}">{{ submission.name }}</a></td>
+                <td headers="hDate">{{ submission.createdDate|format_date('short', 'short') }}</td>
+                <td headers="hName"><a href="#" class="tooltips" title="{% trans with {'%email%': submission.email, '%uid%': submission.createdBy.uid} %}Email: %email% - UID: %uid%{% endtrans %}">{{ submission.name }}</a></td>
                 <td headers="hActions" class="text-right nowrap">
-                    <a href="{{ path('zikulaformiculamodule_submission_display', {sid: submission.sid}) }}" class="fa fa-eye fa-lg tooltips" title="{{ __('View form submission') }}"></a>
-                    <a href="{{ path('zikulaformiculamodule_submission_delete', {sid: submission.sid}) }}" class="fa fa-trash fa-lg tooltips" title="{{ __('Delete form submission') }}"></a>
+                    <a href="{{ path('zikulaformiculamodule_submission_display', {sid: submission.sid}) }}" class="fa fa-eye fa-lg tooltips" title="{% trans %}View form submission{% endtrans %}"></a>
+                    <a href="{{ path('zikulaformiculamodule_submission_delete', {sid: submission.sid}) }}" class="fa fa-trash fa-lg tooltips" title="{% trans %}Delete form submission{% endtrans %}"></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">{{ __('No submissions found.') }}</td>
+                <td colspan="6">{% trans %}No submissions found.{% endtrans %}</td>
             </tr>
         {% endfor %}
     </tbody>

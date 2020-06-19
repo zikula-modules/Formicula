@@ -137,8 +137,8 @@ These are:
 Example:
 
 ```
-<label class="mandatory" for="foobar">{{ __('foobar') }}</label><br />
-<input type="hidden" name="custom[foobar][name]" value="{{ __('foobar') }}" />
+<label class="mandatory" for="foobar">{% trans %}foobar{% endtrans %}</label><br />
+<input type="hidden" name="custom[foobar][name]" value="{% trans %}foobar{% endtrans %}" />
 <input type="hidden" name="custom[foobar][mandatory]" value="1" />
 <input type="text" required name="custom[foobar][data]" id="foobar" size="35" maxLength="80" value="{{ customFields.foobar.data|default|e('html_attr') }}" />
 ```

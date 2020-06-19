@@ -11,12 +11,12 @@
 
 namespace Zikula\FormiculaModule\ContentType\Form\Type;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Translation\TranslatorInterface;
-use Zikula\Common\Content\AbstractContentFormType;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\CoreBundle\Translation\TranslatorTrait;
+use Zikula\ExtensionsModule\ModuleInterface\Content\Form\Type\AbstractContentFormType;
 use Zikula\FormiculaModule\Entity\Repository\ContactRepository;
 
 /**
@@ -24,28 +24,26 @@ use Zikula\FormiculaModule\Entity\Repository\ContactRepository;
  */
 class FormType extends AbstractContentFormType
 {
+    use TranslatorTrait;
+
     /**
      * @var ContactRepository
      */
     private $contactRepository;
 
-    /**
-     * @param TranslatorInterface    $translator
-     * @param EntityManagerInterface $em
-     */
     public function __construct(
         TranslatorInterface $translator,
-        EntityManagerInterface $em
+        ContactRepository $contactRepository
     ) {
         $this->setTranslator($translator);
-        $this->contactRepository = $em->getRepository('Zikula\FormiculaModule\Entity\ContactEntity');
+        $this->contactRepository = $contactRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $allContacts = $this->contactRepository->findBy([], ['name' => 'ASC']);
         $contactChoices = [];
-        $contactChoices[$this->__('All public contacts or form default')] = -1;
+        $contactChoices[$this->trans('All public contacts or form default')] = -1;
 
         // only use public contacts
         foreach ($allContacts as $contact) {
@@ -58,10 +56,10 @@ class FormType extends AbstractContentFormType
 
         $builder
             ->add('form', IntegerType::class, [
-                'label' => $this->__('Form #', 'zikulaformiculamodule')
+                'label' => $this->trans('Form #')
             ])
             ->add('contact', ChoiceType::class, [
-                'label' => $this->__('Show contact', 'zikulaformiculamodule'),
+                'label' => $this->trans('Show contact'),
                 'choices' => $contactChoices
             ])
         ;

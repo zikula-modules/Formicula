@@ -1,0 +1,11 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $extension: '@Zikula\FormiculaModule\ZikulaFormiculaModule'
+
+    Zikula\FormiculaModule\:
+        resource: '../../*'
+        exclude: '../../{bootstrap.php,Tests,vendor}'

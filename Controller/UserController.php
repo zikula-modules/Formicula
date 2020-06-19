@@ -11,48 +11,80 @@
 
 namespace Zikula\FormiculaModule\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\HookBundle\Dispatcher\HookDispatcherInterface;
 use Zikula\Bundle\HookBundle\Hook\ValidationHook;
 use Zikula\Bundle\HookBundle\Hook\ValidationProviders;
-use Zikula\Core\Controller\AbstractController;
+use Zikula\Bundle\CoreBundle\Controller\AbstractController;
+use Zikula\ExtensionsModule\AbstractExtension;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\FormiculaModule\Entity\ContactEntity;
+use Zikula\FormiculaModule\Entity\Repository\ContactRepository;
 use Zikula\FormiculaModule\Entity\SubmissionEntity;
 use Zikula\FormiculaModule\Form\Type\UserSubmissionType;
-use Swift_Message;
+use Zikula\FormiculaModule\Helper\CaptchaHelper;
+use Zikula\FormiculaModule\Helper\EnvironmentHelper;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
 /**
  * Class UserController
  */
 class UserController extends AbstractController
 {
+    private $contactRepository;
+    private $environmentHelper;
+    private $mailer;
+    private $mailLogger;
+
+    public function __construct(
+        AbstractExtension $extension,
+        PermissionApiInterface $permissionApi,
+        VariableApiInterface $variableApi,
+        TranslatorInterface $translator,
+        ContactRepository $contactRepository,
+        EnvironmentHelper $environmentHelper,
+        MailerInterface $mailer,
+        LoggerInterface $mailLogger
+    ) {
+        parent::__construct($extension, $permissionApi, $variableApi, $translator);
+        $this->contactRepository = $contactRepository;
+        $this->environmentHelper = $environmentHelper;
+        $this->mailer = $mailer;
+        $this->mailLogger = $mailLogger;
+    }
+
     /**
      * Shows a certain form.
      *
      * @Route("/")
-     *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return Response
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(
+        CurrentUserApiInterface $currentUserApi,
+        HookDispatcherInterface $hookDispatcher,
+        CaptchaHelper $captchaHelper,
+        Request $request
+    ) {
         $formId = $request->query->getDigits('form', $this->getVar('defaultForm', 0));
         $contactId = $request->query->getDigits('cid', 0);
 
         $session = $this->get('session');
-        $variableApi = $this->get('zikula_extensions_module.api.variable');
-        $modVars = $variableApi->getAll('ZikulaFormiculaModule');
+        $modVars = $this->getVars();
 
         $contacts = [];
         $contactChoices = [];
         if ($contactId < 1) {
-            $allContacts = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->findBy([], ['cid' => 'ASC']);
+            $allContacts = $this->contactRepository->findBy([], ['cid' => 'ASC']);
 
             // only use those contacts where we have the necessary rights for
             foreach ($allContacts as $contact) {
@@ -67,7 +99,7 @@ class UserController extends AbstractController
             if (!$this->hasPermission('ZikulaFormiculaModule::', $formId . ':' . $contactId . ':', ACCESS_COMMENT)) {
                 throw new AccessDeniedException();
             }
-            $contacts[] = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
+            $contacts[] = $this->contactRepository->find($contactId);
         }
         if (count($contacts) == 0) {
             throw new AccessDeniedException();
@@ -90,11 +122,10 @@ class UserController extends AbstractController
         }
 
         // default user values with an empty form
-        $currentUserApi = $this->get('zikula_users_module.current_user');
         $userName = '';
         $emailAddress = '';
         if ($currentUserApi->isLoggedIn()) {
-            $userName = /* FIXME \UserUtil::getVar('name') != '' ? \UserUtil::getVar('name') : */$currentUserApi->get('uname');
+            $userName = $currentUserApi->get('uname');
             $emailAddress = $currentUserApi->get('email');
         }
 
@@ -114,7 +145,6 @@ class UserController extends AbstractController
 
         $form = $this->createForm(UserSubmissionType::class,
             $formData, [
-                'translator' => $this->get('translator.default'),
                 'modVars' => $modVars,
                 'contactChoices' => $contactChoices,
                 'action' => $this->generateUrl('zikulaformiculamodule_user_index')
@@ -126,7 +156,6 @@ class UserController extends AbstractController
         $addInfo = $request->query->get('addinfo', []);
 
         // prepare captcha
-        $captchaHelper = $this->get('zikula_formicula_module.helper.captcha_helper');
         $enableSpamCheck = $captchaHelper->isSpamCheckEnabled($formId);
 
         $form->handleRequest($request);
@@ -149,9 +178,9 @@ class UserController extends AbstractController
             // generate a return url we need if the form has errors
             $returnUrl = $request->request->get('returntourl', $this->get('router')->generate('zikulaformiculamodule_user_index', ['form' => $formId]));
 
-            $contact = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
+            $contact = $this->contactRepository->find($contactId);
             if (null === $contact) {
-                $this->addFlash('error', $this->__('Contact could not be found.'));
+                $this->addFlash('error', $this->trans('Contact could not be found.'));
 
                 return $this->redirect($returnUrl);
             }
@@ -174,16 +203,16 @@ class UserController extends AbstractController
             }
 
             if (!isset($userData['name']) || empty($userData['name'])) {
-                $this->addFlash('error', $this->__('Error! No or invalid name given.'));
+                $this->addFlash('error', $this->trans('Error! No or invalid name given.'));
                 $hasError = true;
             }
-            
+
             // uname is needed by the mail templates. Set it now.
             if (!isset($userData['uname']) || empty($userData['uname'])) {
                 $userData['uname'] = $userName;
             }
             if (!isset($userData['emailAddress']) || false === filter_var($userData['emailAddress'], FILTER_VALIDATE_EMAIL)) {
-                $this->addFlash('error', $this->__('Error! No or incorrect email address supplied.'));
+                $this->addFlash('error', $this->trans('Error! No or incorrect email address supplied.'));
                 $hasError = true;
             }
 
@@ -192,7 +221,7 @@ class UserController extends AbstractController
                 $isMandatory = isset($customField['mandatory']) && $customField['mandatory'] == 1 ? true : false;
                 $customFields[$key]['mandatory'] = $isMandatory;
                 if ($isMandatory && !is_array($customField['data']) && empty($customField['data'])) {
-                    $this->addFlash('error', $this->__f('Error! No value given for mandatory field "%s".', ['%s' => $customField['name']]));
+                    $this->addFlash('error', $this->trans('Error! No value given for mandatory field "%s%".', ['%s%' => $customField['name']]));
                     $hasError = true;
                 }
             }
@@ -204,7 +233,7 @@ class UserController extends AbstractController
                 if (is_array($operands)) {
                     $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
                     if (false === $captchaValid) {
-                        $this->addFlash('error', $this->__('The calculation to prevent spam was incorrect. Please try again.'));
+                        $this->addFlash('error', $this->trans('The calculation to prevent spam was incorrect. Please try again.'));
                         $hasError = true;
                     }
                 }
@@ -213,9 +242,9 @@ class UserController extends AbstractController
 
             // Check hooked modules for validation
             $validationHook = new ValidationHook(new ValidationProviders());
-            $validators = $this->get('hook_dispatcher')->dispatch('zikulaformiculamodule.ui_hooks.forms.validate_edit', $validationHook)->getValidators();
+            $validators = $hookDispatcher->dispatch('zikulaformiculamodule.ui_hooks.forms.validate_edit', $validationHook)->getValidators();
             if ($validators->hasErrors()) {
-                $this->addFlash('error', $this->__('The validation of the hooked security module was incorrect. Please try again.'));
+                $this->addFlash('error', $this->trans('The validation of the hooked security module was incorrect. Please try again.'));
                 $hasError = true;
             }
 
@@ -249,17 +278,17 @@ class UserController extends AbstractController
                 $storeSubmissionDataForms = $this->getVar('storeSubmissionDataForms', '');
                 $storeSubmissionDataFormsArray = explode(',', $storeSubmissionDataForms);
                 if (empty($storeSubmissionDataForms) || (is_array($storeSubmissionDataFormsArray) && in_array($formId, $storeSubmissionDataFormsArray))) {
-                    $submisssion = new SubmissionEntity();
-                    $submisssion->setForm($formId);
-                    $submisssion->setSid($contact->getCid());
+                    $submission = new SubmissionEntity();
+                    $submission->setForm($formId);
+                    $submission->setSid($contact->getCid());
                     $ipAddress = $request->getClientIp();
-                    $submisssion->setIpAddress($ipAddress);
-                    $submisssion->setHostName(gethostbyaddr($ipAddress));
-                    $submisssion->setName($userData['name']);
-                    $submisssion->setEmail($userData['emailAddress']);
+                    $submission->setIpAddress($ipAddress);
+                    $submission->setHostName(gethostbyaddr($ipAddress));
+                    $submission->setName($userData['name']);
+                    $submission->setEmail($userData['emailAddress']);
                     foreach (['company', 'phone', 'url', 'location', 'comment'] as $fieldName) {
                         if (isset($userData[$fieldName])) {
-                            $submisssion[$fieldName] = $userData[$fieldName];
+                            $submission[$fieldName] = $userData[$fieldName];
                         }
                     }
                     foreach ($customFields as $customField) {
@@ -273,8 +302,8 @@ class UserController extends AbstractController
                         $entityManager = $this->get('doctrine')->getManager();
                         $entityManager->persist($submission);
                         $entityManager->flush();
-                    } catch (Exception $e) {
-                        $this->addFlash('error', $this->__('Error! Could not store your submission into the database.') . ' ' . $e->getMessage());
+                    } catch (\Exception $e) {
+                        $this->addFlash('error', $this->trans('Error! Could not store your submission into the database.') . ' ' . $e->getMessage());
                     }
                 }
             }
@@ -297,8 +326,6 @@ class UserController extends AbstractController
     /**
      * Processes a possible file upload.
      *
-     * @param UploadedFile $file The uploaded file
-     *
      * @return string Name of uploaded file or empty string on failure
      */
     private function handleUpload(UploadedFile $file)
@@ -312,7 +339,7 @@ class UserController extends AbstractController
 
         $fileName = $file->getClientOriginalName();
         try {
-            $file = $file->getData()->move($uploadDirectory, $fileName);
+            $file->move($uploadDirectory, $fileName);
         } catch (FileException $e) {
             $this->addFlash('error', $e->getMessage());
 
@@ -335,8 +362,15 @@ class UserController extends AbstractController
      *
      * @return boolean True if mail was successfully sent, false otherwise
      */
-    private function sendMail(Request $request, ContactEntity $contact, $formId, array $userData = [], array $customFields = [], $format = 'html', $mailType = '')
-    {
+    private function sendMail(
+        Request $request,
+        ContactEntity $contact,
+        $formId,
+        array $userData = [],
+        array $customFields = [],
+        $format = 'html',
+        $mailType = ''
+    ) {
         if (!$this->get('kernel')->isBundle('ZikulaMailerModule')) {
             // no mailer module - error!
             return false;
@@ -348,10 +382,9 @@ class UserController extends AbstractController
             $mailData['comment'] = strip_tags($mailData['comment']);
         }
 
-        $variableApi = $this->get('zikula_extensions_module.api.variable');
-        $modVars = $variableApi->getAll('ZikulaFormiculaModule');
-        $siteName = $variableApi->get('ZConfig', 'sitename');
-        $adminMail = $variableApi->get('ZConfig', 'adminmail');
+        $modVars = $this->getVars();
+        $siteName = $this->getVariableApi()->getSystemVar('sitename');
+        $adminMail = $this->getVariableApi()->getSystemVar('adminmail');
         $ipAddress = $request->getClientIp();
 
         // determine subject
@@ -371,7 +404,7 @@ class UserController extends AbstractController
                 // %d<num> = user defined field data <num>
                 $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath() . $request->getPathInfo();
                 $subject = str_replace('%s', htmlentities($siteName), $subject);
-                $subject = str_replace('%l', htmlentities($variableApi->get('ZConfig', 'slogan')), $subject);
+                $subject = str_replace('%l', htmlentities($this->getVariableApi()->getSystemVar('slogan')), $subject);
                 $subject = str_replace('%u', $baseUrl, $subject);
                 $subject = str_replace('%c', htmlentities($contact->getSenderName()), $subject);
                 $i = 0;
@@ -399,59 +432,60 @@ class UserController extends AbstractController
 
         $bodyTemplateHtml = '@ZikulaFormiculaModule/Form/' . $formId . '/' . $mailType . 'Mail.html.twig';
         $bodyTemplateText = '@ZikulaFormiculaModule/Form/' . $formId . '/' . $mailType . 'Mail.txt.twig';
-        $bodyHtml = $this->renderView($bodyTemplateHtml, $templateParameters);
-        $bodyText = $this->renderView($bodyTemplateText, $templateParameters);
 
-        $body = '';
-        $altBody = '';
-        if ($format == 'plain') {
-            $body = $bodyText;
-        } elseif ($format == 'html') {
-            $body = $bodyHtml;
-            $altBody = $bodyText;
-        }
+        $message = (new Email())
+            ->subject($subject)
+            ->text($this->renderView($bodyTemplateHtml, $templateParameters))
+            ->html($this->renderView($bodyTemplateText, $templateParameters));
 
         // add possible attachment to admin mail
-        $attachments = [];
         if ($mailType == 'contact' && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
             // add file attachment
-            $uploadDirectory = realpath($variableApi->get('ZikulaFormiculaModule', 'uploadDirectory', 'userdata'));
-            $attachments[] = $uploadDirectory . '/' . $userData['fileUpload'];
+            $uploadDirectory = realpath($this->getVar('uploadDirectory', 'userdata'));
+            $message->attachFromPath($uploadDirectory . '/' . $userData['fileUpload']);
         }
-
-        // create new message instance
-        /** @var Swift_Message */
-        $message = Swift_Message::newInstance();
 
         // set sender and recipient
         if ($mailType == 'admin') {
             $fromAddress = true === $modVars['useContactsAsSender'] ? $userData['emailAddress'] : $adminMail;
-            $message->setFrom([$fromAddress => $userData['name']]);
+            $message->from(new Address($fromAddress, $userData['name']));
             $recipients = [];
             if (false !== strpos($contact->getEmail(), ',')) {
                 $emails = explode(',', $contact->getEmail());
                 foreach ($emails as $email) {
-                    $recipients[$email] = $contact->getName();
+                    $message->addTo(new Address($email, $contact->getName()));
                 }
             } else {
-                $recipients[$contact->getEmail()] = $contact->getName();
+                $message->addTo(new Address($contact->getEmail(), $contact->getName()));
             }
-            $message->setTo($recipients);
         } elseif ($mailType == 'user') {
-            $fromName = !empty($contact->getSenderName()) ? $contact->getSenderName() : $siteName . ' - ' . $this->__('Contact form');
+            $fromName = !empty($contact->getSenderName()) ? $contact->getSenderName() : $siteName . ' - ' . $this->trans('Contact form');
             $fromAddress = !empty($contact->getSenderEmail()) ? $contact->getSenderEmail() : $contact->getEmail();
             $fromAddress = true === $modVars['useContactsAsSender'] ? $fromAddress : $adminMail;
-            $message->setFrom([$adminMail => $fromName]);
-            $message->setTo([$userData['emailAddress'] => $userData['name']]);
+            $message->from(new Address($fromAddress, $fromName));
+            $message->addTo(new Address($userData['emailAddress'], $userData['name']));
         }
 
         // send the email
-        $mailer = $this->get('zikula_mailer_module.api.mailer');
-        $mailSent = $mailer->sendMessage($message, $subject, $body, $altBody, ($format == 'html'), [], $attachments);
+        $mailSent = true;
+        $logging = $this->getVariableApi()->get('ZikulaMailerModule', 'enableLogging', false);
+        try {
+            $this->mailer->send($message);
+            if ($logging) {
+                $this->mailLogger->info(sprintf('Email sent to %s', $message->getTo()), [
+                    'in' => __METHOD__,
+                ]);
+            }
+        } catch (TransportExceptionInterface $exception) {
+            $this->mailLogger->error($exception->getMessage(), [
+                'in' => __METHOD__,
+            ]);
+            $mailSent = false;
+        }
 
         if ($mailType == 'admin') {
             if (true === $modVars['deleteUploadedFiles']) {
-                foreach ($attachments as $attachment) {
+                foreach ($message->getAttachments() as $attachment) {
                     if (file_exists($attachment) && is_file($attachment)) {
                         unlink($attachment);
                     }
@@ -459,11 +493,11 @@ class UserController extends AbstractController
             }
 
             if (false === $mailSent) {
-                $this->addFlash('error', $this->__('There was an error sending the email to our contact.'));
+                $this->addFlash('error', $this->trans('There was an error sending the email to our contact.'));
             }
         } elseif ($mailType == 'user') {
             if (false === $mailSent) {
-                $this->addFlash('error', $this->__('There was an error sending the confirmation email to your email address.'));
+                $this->addFlash('error', $this->trans('There was an error sending the confirmation email to your email address.'));
             }
         }
 

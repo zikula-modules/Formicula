@@ -1,9 +1,9 @@
 {{ include('@ZikulaFormiculaModule/Form/2/userHeader.html.twig') }}
 
 <p class="alert alert-danger">
-    {{ __('There is an error in your input.') }}
+    {% trans %}There is an error in your input.{% endtrans %}
     <br /><br />
-    <a href="javascript:history.back(-1)">{{ __('Go back to the form') }}</a>
+    <a href="javascript:history.back(-1)">{% trans %}Go back to the form{% endtrans %}</a>
     <br /><br />
 </p>
 

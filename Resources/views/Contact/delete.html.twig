@@ -1,50 +1,39 @@
-{% form_theme form with [
-    '@ZikulaFormExtension/Form/bootstrap_3_zikula_admin_layout.html.twig',
-    '@ZikulaFormExtension/Form/form_div_layout.html.twig'
-] %}
-{{ polyfill() }}
-{{ adminHeader() }}
-<div class="container-fluid">
-    <div class="row">
-        <h3>
-            <span class="fa fa-trash-o"></span>
-            {{ __('Delete contact') }}
-            {{ pageSetVar('title', __('Delete contact')) }}
-        </h3>
+<h3>
+    <span class="fa fa-trash-o"></span>
+    {% trans %}Delete contact{% endtrans %}
+    {{ pageSetVar('title', 'Delete contact'|trans) }}
+</h3>
 
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
+{{ form_start(form) }}
+{{ form_errors(form) }}
 
-        <fieldset>
-            <legend>{{ __('Confirmation prompt') }}</legend>
-            <p class="alert alert-warning">{{ __f("Do you really want to delete contact '%s'?", { '%s': contact.name }) }}</p>
+<fieldset>
+    <legend>{% trans %}Confirmation prompt{% endtrans %}</legend>
+    <p class="alert alert-warning">{% trans with { '%s%': contact.name } %}Do you really want to delete contact '%s%'?{% endtrans %}</p>
 
-            {{ form_row(form.cid) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('Contact information') }}</legend>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Contact name') }}</label>
-                <div class="col-sm-9">
-                    <p class="form-control-static">{{ contact.name }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Email address') }}</label>
-                <div class="col-sm-9">
-                    <p class="form-control-static">{{ contact.email }}</p>
-                </div>
-            </div>
-        </fieldset>
-
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                {{ form_widget(form.delete) }}
-                {{ form_widget(form.cancel) }}
-            </div>
+    {{ form_row(form.cid) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}Contact information{% endtrans %}</legend>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{% trans %}Contact name{% endtrans %}</label>
+        <div class="col-sm-9">
+            <p class="form-control-static">{{ contact.name }}</p>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{% trans %}Email address{% endtrans %}</label>
+        <div class="col-sm-9">
+            <p class="form-control-static">{{ contact.email }}</p>
+        </div>
+    </div>
+</fieldset>
 
-        {{ form_end(form) }}
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+        {{ form_widget(form.delete) }}
+        {{ form_widget(form.cancel) }}
     </div>
 </div>
-{{ adminFooter() }}
+
+{{ form_end(form) }}

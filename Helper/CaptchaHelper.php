@@ -13,9 +13,8 @@ namespace Zikula\FormiculaModule\Helper;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Zikula\Common\Translator\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
-use Zikula\FormiculaModule\Helper\EnvironmentHelper;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 
 class CaptchaHelper
@@ -50,16 +49,6 @@ class CaptchaHelper
      */
     private $requestStack;
 
-    /**
-     * TwigExtension constructor.
-     *
-     * @param TranslatorInterface    $translator        TranslatorInterface service instance
-     * @param VariableApiInterface   $variableApi       VariableApi service instance
-     * @param PermissionApiInterface $permissionApi     PermissionApi service instance
-     * @param EnvironmentHelper      $environmentHelper EnvironmentHelper service instance
-     * @param RouterInterface        $router            RouterInterface service instance
-     * @param RequestStack           $requestStack      RequestStack service instance
-     */
     public function __construct(
         TranslatorInterface $translator,
         VariableApiInterface $variableApi,
@@ -166,7 +155,7 @@ class CaptchaHelper
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
             if ($this->permissionApi->hasPermission('ZikulaFormiculaModule::', '.*', ACCESS_ADMIN)) {
                 // admin permission, show error messages
-                return '<p class="alert alert-danger">' . $this->translator->__('There are no image function available - Captchas have been disabled.') . '</p>';
+                return '<p class="alert alert-danger">' . $this->translator->trans('There are no image function available - Captchas have been disabled.') . '</p>';
             }
 
             // return silently
@@ -247,7 +236,7 @@ class CaptchaHelper
             $finalHeight = $imageData[1];
         }
 
-        return '<img src="' . $this->router->generate('home') . $imagePath . '" alt="' . $this->translator->__('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
+        return '<img src="' . $this->router->generate('home') . $imagePath . '" alt="' . $this->translator->trans('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
     }
 
     /**

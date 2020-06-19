@@ -1,74 +1,63 @@
 {{ pageAddAsset('javascript', zasset('@ZikulaFormiculaModule:js/ZikulaFormiculaModule.Config.js')) }}
-{% form_theme form with [
-    '@ZikulaFormExtension/Form/bootstrap_3_zikula_admin_layout.html.twig',
-    '@ZikulaFormExtension/Form/form_div_layout.html.twig'
-] %}
-{{ polyfill() }}
-{{ adminHeader() }}
-<div class="container-fluid">
-    <div class="row">
-        <h3>
-            <span class="fa fa-wrench"></span>
-            {{ __('Settings') }}
-            {{ pageSetVar('title', __('Formicula settings')) }}
-        </h3>
+<h3>
+    <span class="fa fa-wrench"></span>
+    {% trans %}Settings{% endtrans %}
+    {{ pageSetVar('title', 'Formicula settings'|trans) }}
+</h3>
 
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
+{{ form_start(form) }}
+{{ form_errors(form) }}
 
-        <fieldset>
-            <legend>{{ __('General settings') }}</legend>
-            {{ form_row(form.defaultForm) }}
-            {{ form_row(form.showCompany) }}
-            {{ form_row(form.showPhone) }}
-            {{ form_row(form.showUrl) }}
-            {{ form_row(form.showLocation) }}
-            {{ form_row(form.showComment) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('File upload settings') }}</legend>
-            {{ form_row(form.showFileAttachment) }}
-            {{ form_row(form.uploadDirectory) }}
-            {{ form_row(form.deleteUploadedFiles) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('Email and confirmation settings') }}</legend>
-            {{ form_row(form.sendConfirmationToUser) }}
-            {{ form_row(form.defaultAdminFormat) }}
-            {{ form_row(form.defaultUserFormat) }}
-            {{ form_row(form.showUserFormat) }}
-            {{ form_row(form.useContactsAsSender) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('Spam check settings') }}</legend>
-            <p class="alert alert-warning">{{ __('For your information: There are better spam check modules out there. For example the Zikula Captcha module which can be hooked to Formicula. If you want to use this module, then please do not forget to add the required permissions for the Captcha module, too.') }}</p>
-            {{ form_row(form.enableSpamCheck) }}
-            <div id="formiculaSpamCheckDetails">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{{ __('Cache directory') }}</label>
-                    <div class="col-sm-9">
-                        <p class="form-control-static">{{ cacheDirectory }}</p>
-                    </div>
-                </div>
-            </div>
-            {{ form_row(form.excludeSpamCheck) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('Form submission storage') }}</legend>
-            {{ form_row(form.storeSubmissionData) }}
-            <div id="formiculaDataStorageDetails">
-                {{ form_row(form.storeSubmissionDataForms) }}
-            </div>
-        </fieldset>
-
+<fieldset>
+    <legend>{% trans %}General settings{% endtrans %}</legend>
+    {{ form_row(form.defaultForm) }}
+    {{ form_row(form.showCompany) }}
+    {{ form_row(form.showPhone) }}
+    {{ form_row(form.showUrl) }}
+    {{ form_row(form.showLocation) }}
+    {{ form_row(form.showComment) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}File upload settings{% endtrans %}</legend>
+    {{ form_row(form.showFileAttachment) }}
+    {{ form_row(form.uploadDirectory) }}
+    {{ form_row(form.deleteUploadedFiles) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}Email and confirmation settings{% endtrans %}</legend>
+    {{ form_row(form.sendConfirmationToUser) }}
+    {{ form_row(form.defaultAdminFormat) }}
+    {{ form_row(form.defaultUserFormat) }}
+    {{ form_row(form.showUserFormat) }}
+    {{ form_row(form.useContactsAsSender) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}Spam check settings{% endtrans %}</legend>
+    <p class="alert alert-warning">{% trans %}For your information: There are better spam check modules out there. For example the Zikula Captcha module which can be hooked to Formicula. If you want to use this module, then please do not forget to add the required permissions for the Captcha module, too.{% endtrans %}</p>
+    {{ form_row(form.enableSpamCheck) }}
+    <div id="formiculaSpamCheckDetails">
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                {{ form_widget(form.save) }}
-                {{ form_widget(form.cancel) }}
+            <label class="col-sm-3 control-label">{% trans %}Cache directory{% endtrans %}</label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{ cacheDirectory }}</p>
             </div>
         </div>
+    </div>
+    {{ form_row(form.excludeSpamCheck) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}Form submission storage{% endtrans %}</legend>
+    {{ form_row(form.storeSubmissionData) }}
+    <div id="formiculaDataStorageDetails">
+        {{ form_row(form.storeSubmissionDataForms) }}
+    </div>
+</fieldset>
 
-        {{ form_end(form) }}
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.cancel) }}
     </div>
 </div>
-{{ adminFooter() }}
+
+{{ form_end(form) }}

@@ -11,17 +11,15 @@
 
 namespace Zikula\FormiculaModule\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use Zikula\Core\Doctrine\EntityAccess;
+use Zikula\Bundle\CoreBundle\Doctrine\EntityAccess;
 use Zikula\FormiculaModule\Traits\StandardFieldsTrait;
 
 /**
  * Form submission entity class.
  *
- * @ORM\Entity(repositoryClass="Zikula\FormiculaModule\Entity\Repository\SubmitRepository")
+ * @ORM\Entity(repositoryClass="SubmissionRepository")
  * @ORM\Table(name="formicula_submission")
  */
 class SubmissionEntity extends EntityAccess
@@ -412,8 +410,6 @@ class SubmissionEntity extends EntityAccess
 
     /**
      * Gets the custom data of the submission.
-     *
-     * @return string the submission's custom data
      */
     public function getCustomData()
     {

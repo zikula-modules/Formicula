@@ -13,13 +13,17 @@ namespace Zikula\FormiculaModule\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Zikula\Core\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\CoreBundle\Controller\AbstractController;
+use Zikula\ExtensionsModule\AbstractExtension;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\FormiculaModule\Entity\Repository\ContactRepository;
 use Zikula\FormiculaModule\Form\Type\ConfigType;
+use Zikula\FormiculaModule\Helper\EnvironmentHelper;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
@@ -28,28 +32,37 @@ use Zikula\ThemeModule\Engine\Annotation\Theme;
  */
 class ConfigController extends AbstractController
 {
+    private $environmentHelper;
+
+    public function __construct(
+        AbstractExtension $extension,
+        PermissionApiInterface $permissionApi,
+        VariableApiInterface $variableApi,
+        TranslatorInterface $translator,
+        EnvironmentHelper $environmentHelper
+    ) {
+        parent::__construct($extension, $permissionApi, $variableApi, $translator);
+        $this->environmentHelper = $environmentHelper;
+    }
+
     /**
      * @Route("/config")
      * @Template("@ZikulaFormiculaModule/Config/config.html.twig")
      * @Theme("admin")
-     *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return Response
      */
-    public function configAction(Request $request)
-    {
+    public function configAction(
+        VariableApiInterface $variableApi,
+        Request $request
+    ) {
         // Security check
         if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
         // check necessary environment
-        $environmentHelper = $this->get('zikula_formicula_module.helper.environment_helper');
-        $environmentHelper->check();
+        $this->environmentHelper->check();
 
-        $variableApi = $this->get('zikula_extensions_module.api.variable');
-        $modVars = $variableApi->getAll('ZikulaFormiculaModule');
+        $modVars = $this->getVars();
 
         // scan the templates folder for installed forms
         $templateDirectory = __DIR__ . '/../Resources/views/Form/';
@@ -60,12 +73,11 @@ class ConfigController extends AbstractController
             $finder2 = new Finder();
             $finder2->files()->in($directory->getRealPath());
             $formNumber = $directory->getFilename();
-            $formChoices[$this->__f('Form #%1$s containing %2$s templates', [ '%1$s' => $formNumber, '%2$s' => count($finder2) ])] = $formNumber;
+            $formChoices[$this->trans('Form #%num% containing %count% templates', [ '%num%' => $formNumber, '%count%' => count($finder2) ])] = $formNumber;
         }
 
         $form = $this->createForm(ConfigType::class,
             $modVars, [
-                'translator' => $this->get('translator.default'),
                 'formChoices' => $formChoices
             ]
         );
@@ -75,7 +87,7 @@ class ConfigController extends AbstractController
                 $formData = $form->getData();
 
                 if (!empty($formData['uploadDirectory']) && !is_writable($formData['uploadDirectory'])) {
-                    $this->addFlash('error', $this->__('The webserver cannot write into this directory!'));
+                    $this->addFlash('error', $this->trans('The webserver cannot write into this directory!'));
                 } else {
                     // remove spaces in the comma separated forms lists
                     $formData['excludeSpamCheck'] = preg_replace('/\s*/m', '', $formData['excludeSpamCheck']);
@@ -83,17 +95,17 @@ class ConfigController extends AbstractController
 
                     $this->setVars($formData);
 
-                    $this->addFlash('status', $this->__('Done! Module configuration updated.'));
+                    $this->addFlash('status', $this->trans('Done! Module configuration updated.'));
                 }
             }
             if ($form->get('cancel')->isClicked()) {
-                $this->addFlash('status', $this->__('Operation cancelled.'));
+                $this->addFlash('status', $this->trans('Operation cancelled.'));
             }
         }
 
         $templateParameters = array_merge($modVars, [
             'form' => $form->createView(),
-            'cacheDirectory' => $environmentHelper->getCacheDirectory()
+            'cacheDirectory' => $this->environmentHelper->getCacheDirectory()
         ]);
 
         return $templateParameters;
@@ -104,10 +116,6 @@ class ConfigController extends AbstractController
      *
      * @Route("/clearcache")
      * @Theme("admin")
-     *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return RedirectResponse
      */
     public function clearcacheAction(Request $request)
     {
@@ -116,17 +124,17 @@ class ConfigController extends AbstractController
             throw new AccessDeniedException();
         }
 
-        $cacheDirectory = $this->get('zikula_formicula_module.helper.environment_helper')->getCacheDirectory();
+        $cacheDirectory = $this->environmentHelper->getCacheDirectory();
         $finder = new Finder();
         foreach ($finder->files()->in($cacheDirectory) as $file) {
             $fileName = $file->getFilename();
-            if (in_array($file, ['.htaccess', 'index.htm', 'index.html'])) {
+            if (in_array($fileName, ['.htaccess', 'index.htm', 'index.html'])) {
                 continue;
             }
             unlink($file->getRealPath());
         }
 
-        $this->addFlash('status', $this->__('The captcha image cache has been cleared.'));
+        $this->addFlash('status', $this->trans('The captcha image cache has been cleared.'));
 
         return $this->redirectToRoute('zikulaformiculamodule_contact_view');
     }

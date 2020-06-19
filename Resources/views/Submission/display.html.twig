@@ -1,8 +1,7 @@
-{{ adminHeader() }}
 <h3>
     <span class="fa fa-eye"></span>
-    {{ __('View submitted form data') }}
-    {{ pageSetVar('title', __('View submitted form data')) }}
+    {% trans %}View submitted form data{% endtrans %}
+    {{ pageSetVar('title', 'View submitted form data'|trans) }}
 </h3>
 <table class="table table-bordered table-striped">
     <colgroup>
@@ -14,17 +13,17 @@
     </colgroup>
     <thead>
         <tr>
-            <th id="hDate" scope="col">{{ __('Date') }}</th>
-            <th id="hName" scope="col">{{ __('Name') }}</th>
-            <th id="hIpAddress" scope="col">{{ __('IP address') }}</th>
-            <th id="hHostName" scope="col">{{ __('Hostname') }}</th>
-            <th id="hContactId" scope="col">{{ __('Contact ID') }}</th>
+            <th id="hDate" scope="col">{% trans %}Date{% endtrans %}</th>
+            <th id="hName" scope="col">{% trans %}Name{% endtrans %}</th>
+            <th id="hIpAddress" scope="col">{% trans %}IP address{% endtrans %}</th>
+            <th id="hHostName" scope="col">{% trans %}Hostname{% endtrans %}</th>
+            <th id="hContactId" scope="col">{% trans %}Contact ID{% endtrans %}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td headers="hDate">{{ submission.createdDate|localizeddate('short', 'short') }}</td>
-            <td headers="hName"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', {'%1$s': submission.email, '%2$s': submission.createdBy.uid}) }}">{{ submission.name }}</a></td>
+            <td headers="hDate">{{ submission.createdDate|format_date('short', 'short') }}</td>
+            <td headers="hName"><a href="#" class="tooltips" title="{% trans with {'%email%': submission.email, '%uid%': submission.createdBy.uid} %}Email: %email% - UID: %uid%{% endtrans %}">{{ submission.name }}</a></td>
             <td headers="hIpAddress">{{ submission.ipAddress }}</td>
             <td headers="hHostName">{{ submission.hostName }}</td>
             <td headers="hContactId">{{ submission.cid }}</td>
@@ -40,31 +39,31 @@
     </colgroup>
     <thead>
         <tr>
-            <th id="hUrl" scope="col">{{ __('Website') }}</th>
-            <th id="hCompany" scope="col">{{ __('Company') }}</th>
-            <th id="hPhoneNumber" scope="col">{{ __('Phone number') }}</th>
-            <th id="hLocation" scope="col">{{ __('Location') }}</th>
+            <th id="hUrl" scope="col">{% trans %}Website{% endtrans %}</th>
+            <th id="hCompany" scope="col">{% trans %}Company{% endtrans %}</th>
+            <th id="hPhoneNumber" scope="col">{% trans %}Phone number{% endtrans %}</th>
+            <th id="hLocation" scope="col">{% trans %}Location{% endtrans %}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td headers="hUrl">{% if submission.url != '' %}<a href="{{ submission.url }}" title="{{ __('Visit website') }}" target="_blank">{{ submission.url }}</a>{% else %}{{ __('None') }}{% endif %}</td>
-            <td headers="hCompany">{{ submission.company|default(__('None')) }}</td>
-            <td headers="hPhoneNumber">{{ submission.phoneNumber|default(__('None')) }}</td>
-            <td headers="hLocation">{{ submission.location|default(__('None')) }}</td>
+            <td headers="hUrl">{% if submission.url != '' %}<a href="{{ submission.url }}" title="{% trans %}Visit website{% endtrans %}" target="_blank">{{ submission.url }}</a>{% else %}{% trans %}None{% endtrans %}{% endif %}</td>
+            <td headers="hCompany">{{ submission.company|default('None'|trans) }}</td>
+            <td headers="hPhoneNumber">{{ submission.phoneNumber|default('None'|trans) }}</td>
+            <td headers="hLocation">{{ submission.location|default('None'|trans) }}</td>
         </tr>
     </tbody>
 </table>
 {% if submission.customData|length > 0 %}
     <table class="table table-bordered table-striped">
-        <caption>{{ __('Custom fields') }}</caption>
+        <caption>{% trans %}Custom fields{% endtrans %}</caption>
         <colgroup>
             <col id="cCustomFields" />
         </colgroup>
         <thead>
             <tr>
-                <th id="hCustomFieldName" scope="col">{{ __('Name') }}</th>
-                <th id="hCustomFieldValue" scope="col">{{ __('Value') }}</th>
+                <th id="hCustomFieldName" scope="col">{% trans %}Name{% endtrans %}</th>
+                <th id="hCustomFieldValue" scope="col">{% trans %}Value{% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
@@ -84,7 +83,7 @@
         </colgroup>
         <thead>
             <tr>
-                <th id="hComment" scope="col">{{ __('Comment') }}</th>
+                <th id="hComment" scope="col">{% trans %}Comment{% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
@@ -94,4 +93,3 @@
         </tbody>
     </table>
 {% endif %}
-{{ adminFooter() }}

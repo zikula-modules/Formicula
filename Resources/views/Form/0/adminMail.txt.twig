@@ -1,22 +1,22 @@
-{{ __('Hello!') }}
+{% trans %}Hello!{% endtrans %}
 
-{{ __('A visitor of to your web site used the form for contact and sent the following:') }}
+{% trans %}A visitor of to your web site used the form for contact and sent the following:{% endtrans %}
 
-{{ __('Form #') }}: {{ form }}
-{{ __('Contact') }}: {{ contact.name }}
-{{ __('Name') }}: {{ userData.name }}
+{% trans %}Form #{% endtrans %}: {{ form }}
+{% trans %}Contact{% endtrans %}: {{ contact.name }}
+{% trans %}Name{% endtrans %}: {{ userData.name }}
 {% if modVars.showCompany and userData.company %}
-{{ __('Company') }}: {{ userData.company }}
+{% trans %}Company{% endtrans %}: {{ userData.company }}
 {% endif %}
-{{ __('Email') }}: {{ userData.emailAddress }}
+{% trans %}Email{% endtrans %}: {{ userData.emailAddress }}
 {% if modVars.showPhone and userData.phone %}
-{{ __('Phone number') }}: {{ userData.phone }}
+{% trans %}Phone number{% endtrans %}: {{ userData.phone }}
 {% endif %}
 {% if modVars.showUrl and userData.url %}
-{{ __('Website') }}: {{ userData.url }}
+{% trans %}Website{% endtrans %}: {{ userData.url }}
 {% endif %}
 {% if modVars.showLocation and userData.location %}
-{{ __('Location') }}: {{ userData.location }}
+{% trans %}Location{% endtrans %}: {{ userData.location }}
 {% endif %}
 
 {% for field in customFields %}
@@ -24,12 +24,12 @@
 {% endfor %}
 {% if modVars.showComment and userData.comment %}
 
-{{ __('Comment') }}:
+{% trans %}Comment{% endtrans %}:
 {{ userData.comment }}
 {% endif %}
 {% if modVars.showFileAttachment and userData.fileUpload %}
 
-{{ __('Attached file') }}: {{ userData.fileUpload }}
+{% trans %}Attached file{% endtrans %}: {{ userData.fileUpload }}
 {% endif %}
 
-{{ __('The user has the following IP address/hostname:') }} {{ ipAddress }} / {{ hostName }}
+{% trans %}The user has the following IP address/hostname:{% endtrans %} {{ ipAddress }} / {{ hostName }}

@@ -1,52 +1,41 @@
-{% form_theme form with [
-    '@ZikulaFormExtension/Form/bootstrap_3_zikula_admin_layout.html.twig',
-    '@ZikulaFormExtension/Form/form_div_layout.html.twig'
-] %}
-{{ polyfill() }}
-{{ adminHeader() }}
-<div class="container-fluid">
-    <div class="row">
-        <h3>
-            <span class="fa fa-{{ mode == 'create' ? 'user-plus' : 'pencil' }}"></span>
-            {{ mode == 'create' ? __('Add contact') : __('Edit contact') }}
-            {{ pageSetVar('title', mode == 'create' ? __('Add contact') : __('Edit contact')) }}
-        </h3>
+<h3>
+    <span class="fa fa-{{ mode == 'create' ? 'user-plus' : 'pencil' }}"></span>
+    {{ mode == 'create' ? 'Add contact'|trans : 'Edit contact'|trans }}
+    {{ pageSetVar('title', mode == 'create' ? 'Add contact'|trans : 'Edit contact'|trans) }}
+</h3>
 
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
+{{ form_start(form) }}
+{{ form_errors(form) }}
 
-        <fieldset>
-            <legend>{{ __('Basic contact information') }}</legend>
-            {{ form_row(form.name) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.public) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('User confirmation email data') }}</legend>
-            {{ form_row(form.senderName) }}
-            {{ form_row(form.senderEmail) }}
-            {{ form_row(form.sendingSubject) }}
-            <div class="alert alert-info">
-                <p>{{ __('You can use the following placeholders within the subject:') }}</p>
-                <ul>
-                    <li>%s = {{ __('Site name') }}</li>
-                    <li>%l = {{ __('Site slogan') }}</li>
-                    <li>%u = {{ __('Site url') }}</li>
-                    <li>%c = {{ __('Contact\'s sender name') }}</li>
-                    <li>%n&lt;num&gt; = {{ __('User defined field name #num') }}</li>
-                    <li>%d&lt;num&gt; = {{ __('User defined field data #num') }}</li>
-                </ul>
-            </div>
-        </fieldset>
+<fieldset>
+    <legend>{% trans %}Basic contact information{% endtrans %}</legend>
+    {{ form_row(form.name) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.public) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}User confirmation email data{% endtrans %}</legend>
+    {{ form_row(form.senderName) }}
+    {{ form_row(form.senderEmail) }}
+    {{ form_row(form.sendingSubject) }}
+    <div class="alert alert-info">
+        <p>{% trans %}You can use the following placeholders within the subject:{% endtrans %}</p>
+        <ul>
+            <li>%s = {% trans %}Site name{% endtrans %}</li>
+            <li>%l = {% trans %}Site slogan{% endtrans %}</li>
+            <li>%u = {% trans %}Site url{% endtrans %}</li>
+            <li>%c = {% trans %}Contact\'s sender name{% endtrans %}</li>
+            <li>%n&lt;num&gt; = {% trans %}User defined field name #num{% endtrans %}</li>
+            <li>%d&lt;num&gt; = {% trans %}User defined field data #num{% endtrans %}</li>
+        </ul>
+    </div>
+</fieldset>
 
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                {{ form_widget(form.save) }}
-                {{ form_widget(form.cancel) }}
-            </div>
-        </div>
-
-        {{ form_end(form) }}
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.cancel) }}
     </div>
 </div>
-{{ adminFooter() }}
+
+{{ form_end(form) }}

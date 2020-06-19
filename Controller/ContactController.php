@@ -12,15 +12,19 @@
 namespace Zikula\FormiculaModule\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Zikula\Core\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\CoreBundle\Controller\AbstractController;
+use Zikula\ExtensionsModule\AbstractExtension;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\FormiculaModule\Entity\ContactEntity;
+use Zikula\FormiculaModule\Entity\Repository\ContactRepository;
 use Zikula\FormiculaModule\Form\Type\DeleteContactType;
 use Zikula\FormiculaModule\Form\Type\EditContactType;
+use Zikula\FormiculaModule\Helper\EnvironmentHelper;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
@@ -29,28 +33,39 @@ use Zikula\ThemeModule\Engine\Annotation\Theme;
  */
 class ContactController extends AbstractController
 {
+    private $contactRepository;
+    private $environmentHelper;
+
+    public function __construct(
+        AbstractExtension $extension,
+        PermissionApiInterface $permissionApi,
+        VariableApiInterface $variableApi,
+        TranslatorInterface $translator,
+        ContactRepository $contactRepository,
+        EnvironmentHelper $environmentHelper
+    ) {
+        parent::__construct($extension, $permissionApi, $variableApi, $translator);
+        $this->contactRepository = $contactRepository;
+        $this->environmentHelper = $environmentHelper;
+    }
+
     /**
      * Show a list of contacts.
      *
      * @Route("/view")
      * @Template("@ZikulaFormiculaModule/Contact/view.html.twig")
      * @Theme("admin")
-     *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return Response
      */
-    public function viewAction(Request $request)
-    {
+    public function viewAction() {
         // Security check
         if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_helper')->check();
+        $this->environmentHelper->check();
 
-        $allContacts = $this->get('doctrine')->getManager()->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->findBy([], ['cid' => 'ASC']);
+        $allContacts = $this->contactRepository->findBy([], ['cid' => 'ASC']);
 
         // only use those contacts where we have the necessary rights for
         $visibleContacts = [];
@@ -77,20 +92,17 @@ class ContactController extends AbstractController
      * @Route("/edit")
      * @Template("@ZikulaFormiculaModule/Contact/edit.html.twig")
      * @Theme("admin")
-     *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return Response
      */
-    public function editAction(Request $request)
-    {
+    public function editAction(
+        Request $request
+    ) {
         // Security check
         if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_helper')->check();
+        $this->environmentHelper->check();
 
         $entityManager = $this->get('doctrine')->getManager();
         $contactId = $request->query->getDigits('cid', 0);
@@ -101,17 +113,15 @@ class ContactController extends AbstractController
             $contact->setPublic(true);
         } else {
             $mode = 'edit';
-            $contact = $entityManager->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
+            $contact = $this->contactRepository->find($contactId);
             if (false === $contact) {
-                $this->addFlash('error', $this->__('Contact could not be found.'));
+                $this->addFlash('error', $this->trans('Contact could not be found.'));
 
                 return $this->redirectToRoute('zikulaformiculamodule_contact_view');
             }
         }
 
-        $form = $this->createForm(EditContactType::class, $contact, [
-            'translator' => $this->get('translator.default')
-        ]);
+        $form = $this->createForm(EditContactType::class, $contact);
 
         if ($form->handleRequest($request)->isValid()) {
             $valid = true;
@@ -124,7 +134,7 @@ class ContactController extends AbstractController
                 $addresses = explode(',', $mailAddress);
                 foreach ($addresses as $address) {
                     if (false === filter_var($address, FILTER_VALIDATE_EMAIL)) {
-                        $this->addFlash('error', $this->__f('Error! Incorrect email address [%s] supplied.', ['%s' => $address]));
+                        $this->addFlash('error', $this->trans('Error! Incorrect email address [%s%] supplied.', ['%s%' => $address]));
                         $valid = false;
                         break;
                     }
@@ -135,14 +145,14 @@ class ContactController extends AbstractController
                     $entityManager->persist($contact);
                     $entityManager->flush();
                     if ($mode == 'create') {
-                        $this->addFlash('status', $this->__('Done! Contact created.'));
+                        $this->addFlash('status', $this->trans('Done! Contact created.'));
                     } else {
-                        $this->addFlash('status', $this->__('Done! Contact updated.'));
+                        $this->addFlash('status', $this->trans('Done! Contact updated.'));
                     }
                 }
             }
             if ($form->get('cancel')->isClicked()) {
-                $this->addFlash('status', $this->__('Operation cancelled.'));
+                $this->addFlash('status', $this->trans('Operation cancelled.'));
             }
 
             if ($valid) {
@@ -163,44 +173,39 @@ class ContactController extends AbstractController
      * @Route("/delete")
      * @Template("@ZikulaFormiculaModule/Contact/delete.html.twig")
      * @Theme("admin")
-     *
-     * @param Request $request
-     * @throws AccessDeniedException Thrown if the user doesn't have admin access to the module
-     * @return Response
      */
-    public function deleteAction(Request $request)
-    {
+    public function deleteAction(
+        Request $request
+    ) {
         // Security check
         if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_DELETE)) {
             throw new AccessDeniedException();
         }
 
         // check necessary environment
-        $this->get('zikula_formicula_module.helper.environment_helper')->check();
+        $this->environmentHelper->check();
 
         $entityManager = $this->get('doctrine')->getManager();
         $contactId = $request->query->getDigits('cid', 0);
 
-        $contact = $entityManager->getRepository('Zikula\FormiculaModule\Entity\ContactEntity')->find($contactId);
+        $contact = $this->contactRepository->find($contactId);
         if (false === $contact) {
-            $this->addFlash('error', $this->__('Contact could not be found.'));
+            $this->addFlash('error', $this->trans('Contact could not be found.'));
 
             return $this->redirectToRoute('zikulaformiculamodule_contact_view');
         }
 
-        $form = $this->createForm(DeleteContactType::class, $contact, [
-            'translator' => $this->get('translator.default')
-        ]);
+        $form = $this->createForm(DeleteContactType::class, $contact);
 
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
                 $contact = $form->getData();
                 $entityManager->remove($contact);
                 $entityManager->flush();
-                $this->addFlash('status', $this->__('Done! Contact deleted.'));
+                $this->addFlash('status', $this->trans('Done! Contact deleted.'));
             }
             if ($form->get('cancel')->isClicked()) {
-                $this->addFlash('status', $this->__('Operation cancelled.'));
+                $this->addFlash('status', $this->trans('Operation cancelled.'));
             }
 
             return $this->redirectToRoute('zikulaformiculamodule_contact_view');

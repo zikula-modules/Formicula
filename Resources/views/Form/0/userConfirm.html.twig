@@ -1,69 +1,71 @@
 {{ include('@ZikulaFormiculaModule/Form/0/userHeader.html.twig') }}
 
 <p class="alert alert-info">
-    {{ __('Thank you for your questions/comments to our website!') }}<br />
-    {{ __('We will reply as soon as possible.') }}
+    {% trans %}Thank you for your questions/comments to our website!{% endtrans %}<br />
+    {% trans %}We will reply as soon as possible.{% endtrans %}
 </p>
 
 <table class="table table-bordered table-striped">
-    <caption>{{ __('This data was sent to us:') }}</caption>
+    <caption>{% trans %}This data was sent to us:{% endtrans %}</caption>
     <colgroup>
         <col id="cField" style="width: 50%" />
         <col id="cValue" style="width: 50%" />
     </colgroup>
     <thead>
-        <th id="hField" scope="col">{{ __('Field') }}</th>
-        <th id="hValue" scope="col">{{ __('Value') }}</th>
+        <tr>
+            <th id="hField" scope="col">{% trans %}Field{% endtrans %}</th>
+            <th id="hValue" scope="col">{% trans %}Value{% endtrans %}</th>
+        </tr>
     </thead>
     <tbody>
         <tr>
-            <th headers="hField" id="hName" scope="row">{{ __('Your name') }}</th>
-            <td headers="hValue hName">{{ userData.name }}</span>
+            <th headers="hField" id="hName" scope="row">{% trans %}Your name{% endtrans %}</th>
+            <td headers="hValue hName">{{ userData.name }}</td>
         </tr>
 {% if modVars.showCompany and userData.company %}
         <tr>
-            <th headers="hField" id="hCompany" scope="row">{{ __('Company') }}</th>
-            <td headers="hValue hCompany">{{ userData.company }}</span>
+            <th headers="hField" id="hCompany" scope="row">{% trans %}Company{% endtrans %}</th>
+            <td headers="hValue hCompany">{{ userData.company }}</td>
         </tr>
 {% endif %}
         <tr>
-            <th headers="hField" id="hEmail" scope="row">{{ __('Email') }}</th>
-            <td headers="hValue hEmail">{{ userData.emailAddress }}</span>
+            <th headers="hField" id="hEmail" scope="row">{% trans %}Email{% endtrans %}</th>
+            <td headers="hValue hEmail">{{ userData.emailAddress }}</td>
         </tr>
 {% if modVars.showPhone and userData.phone %}
         <tr>
-            <th headers="hField" id="hPhone" scope="row">{{ __('Phone number') }}</th>
-            <td headers="hValue hPhone">{{ userData.phone }}</span>
+            <th headers="hField" id="hPhone" scope="row">{% trans %}Phone number{% endtrans %}</th>
+            <td headers="hValue hPhone">{{ userData.phone }}</td>
         </tr>
 {% endif %}
 {% if modVars.showUrl and userData.url %}
         <tr>
-            <th headers="hField" id="hUrl" scope="row">{{ __('Website') }}</th>
-            <td headers="hValue hUrl">{{ userData.url }}</span>
+            <th headers="hField" id="hUrl" scope="row">{% trans %}Website{% endtrans %}</th>
+            <td headers="hValue hUrl">{{ userData.url }}</td>
         </tr>
 {% endif %}
 {% if modVars.showLocation and userData.location %}
         <tr>
-            <th headers="hField" id="hLocation" scope="row">{{ __('Location') }}</th>
-            <td headers="hValue hLocation">{{ userData.location }}</span>
+            <th headers="hField" id="hLocation" scope="row">{% trans %}Location{% endtrans %}</th>
+            <td headers="hValue hLocation">{{ userData.location }}</td>
         </tr>
 {% endif %}
 {% for field in customFields %}
         <tr>
             <th headers="hField" id="hCustom{{ field.name }}" scope="row">{{ field.name }}</th>
-            <td headers="hValue hCustom{{ field.name }}">{{ field.data }}</span>
+            <td headers="hValue hCustom{{ field.name }}">{{ field.data }}</td>
         </tr>
 {% endfor %}
 {% if modVars.showComment and userData.comment %}
         <tr>
-            <th headers="hField" id="hComment" scope="row">{{ __('Comment') }}</th>
-            <td headers="hValue hComment">{{ userFormat == 'html' ? userData.comment : userData.comment|nl2br }}</span>
+            <th headers="hField" id="hComment" scope="row">{% trans %}Comment{% endtrans %}</th>
+            <td headers="hValue hComment">{{ userFormat == 'html' ? userData.comment : userData.comment|nl2br }}</td>
         </tr>
 {% endif %}
 {% if modVars.showFileAttachment and userData.fileUpload %}
         <tr>
-            <th headers="hField" id="hAttachment" scope="row">{{ __('Attached file') }}</th>
-            <td headers="hValue hAttachment">{{ userData.fileUpload }}</span>
+            <th headers="hField" id="hAttachment" scope="row">{% trans %}Attached file{% endtrans %}</th>
+            <td headers="hValue hAttachment">{{ userData.fileUpload }}</td>
         </tr>
 {% endif %}
     </tbody>
@@ -72,9 +74,9 @@
 {% if modVars.sendConfirmationToUser %}
 <p class="alert alert-{{ sentToUser ? 'success' : 'danger' }}">
     {% if sentToUser %}
-    {{ __('Confirmation of your submission will be emailed to you in a few minutes.') }}
+    {% trans %}Confirmation of your submission will be emailed to you in a few minutes.{% endtrans %}
     {% else %}
-    {{ __('There was an internal error when sending confirmation mail to you.') }}
+    {% trans %}There was an internal error when sending confirmation mail to you.{% endtrans %}
     {% endif %}
 </p>
 {% endif %}

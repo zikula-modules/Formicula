@@ -13,12 +13,12 @@ namespace Zikula\FormiculaModule\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Zikula\FormiculaModule\Entity\ContactEntity;
+use Zikula\FormiculaModule\Entity\SubmissionEntity;
 
-class ContactRepository extends ServiceEntityRepository
+class SubmissionRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ContactEntity::class);
+        parent::__construct($registry, SubmissionEntity::class);
     }
 }

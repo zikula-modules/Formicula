@@ -13,7 +13,7 @@ namespace Zikula\FormiculaModule\ContentType;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Zikula\Common\Content\AbstractContentType;
+use Zikula\ExtensionsModule\ModuleInterface\Content\AbstractContentType;
 use Zikula\FormiculaModule\ContentType\Form\Type\FormType as EditFormType;
 
 /**
@@ -34,7 +34,7 @@ class FormType extends AbstractContentType
     /**
      * {@inheritdoc}
      */
-    public function getIcon()
+    public function getIcon(): string
     {
         return 'list-ol';
     }
@@ -42,23 +42,23 @@ class FormType extends AbstractContentType
     /**
      * {@inheritdoc}
      */
-    public function getTitle()
+    public function getTitle(): string
     {
-        return $this->translator->__('Formicula form', 'zikulaformiculamodule');
+        return $this->translator->trans('Formicula form');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDescription()
+    public function getDescription(): string
     {
-        return $this->translator->__('Display a specific Formicula form.', 'zikulaformiculamodule');
+        return $this->translator->trans('Display a specific Formicula form.');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDefaultData()
+    public function getDefaultData(): array
     {
         return [
             'form' => 0,
@@ -69,7 +69,7 @@ class FormType extends AbstractContentType
     /**
      * {@inheritdoc}
      */
-    public function displayView()
+    public function displayView(): string
     {
         $this->data = $this->getData();
         if (null === $this->data['form'] || intval($this->data['form']) < 0) {
@@ -93,17 +93,17 @@ class FormType extends AbstractContentType
     /**
      * {@inheritdoc}
      */
-    public function displayEditing()
+    public function displayEditing(): string
     {
         $this->data = $this->getData();
         if (null === $this->data['form'] || intval($this->data['form']) < 0) {
-            return $this->translator->__('No form selected.', 'zikulaformiculamodule');
+            return $this->translator->trans('No form selected.');
         }
 
         if ($this->data['contact'] > 0) {
-            $output = '<p>' . $this->translator->__f('The Formicula form #%1$s is shown here with only contact %2$s', ['%1$s' => $this->data['form'], '%2$s' => $this->data['contact']], 'zikulaformiculamodule') . '</p>';
+            $output = '<p>' . $this->translator->trans('The Formicula form #%num% is shown here with only contact %con%', ['%num%' => $this->data['form'], '%con%' => $this->data['contact']]) . '</p>';
         } else {
-            $output = '<p>' . $this->translator->__f('The Formicula form #%s is shown here with all contacts', ['%s' => $this->data['form']], 'zikulaformiculamodule') . '</p>';
+            $output = '<p>' . $this->translator->trans('The Formicula form #%num% is shown here with all contacts', ['%num%' => $this->data['form']]) . '</p>';
         }
 
         return $output;
@@ -112,13 +112,13 @@ class FormType extends AbstractContentType
     /**
      * {@inheritdoc}
      */
-    public function getEditFormClass()
+    public function getEditFormClass(): string
     {
         return EditFormType::class;
     }
 
     /**
-     * @param RequestStack $requestStack
+     * @required
      */
     public function setRequestStack(RequestStack $requestStack)
     {
@@ -126,7 +126,7 @@ class FormType extends AbstractContentType
     }
 
     /**
-     * @param HttpKernelInterface $httpKernel
+     * @required
      */
     public function setHttpKernel(HttpKernelInterface $httpKernel)
     {

@@ -1,198 +1,189 @@
 {{ include('@ZikulaFormiculaModule/Form/3/userHeader.html.twig') }}
-{% form_theme form with [
-    '@ZikulaFormExtension/Form/bootstrap_3_zikula_admin_layout.html.twig',
-    '@ZikulaFormExtension/Form/form_div_layout.html.twig'
-] %}
-{{ polyfill() }}
 
-<div class="container-fluid">
-    <div class="row">
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
+{{ form_start(form) }}
+{{ form_errors(form) }}
 
-        <p class="alert alert-info">{{ __('Mandatory fields are indicated with an asterisk.') }}</p>
+<p class="alert alert-info">{% trans %}Mandatory fields are indicated with an asterisk.{% endtrans %}</p>
 
-        <fieldset>
-            <legend>{{ __('Make a reservation') }}</legend>
-            {{ form_row(form.form) }}
-            {{ form_row(form.adminFormat) }}
-            {% if modVars.sendConfirmationToUser and not modVars.showUserFormat %}
-                {{ form_row(form.userFormat) }}
-            {% endif %}
-            <div class="hidden">
-                {{ form_row(form.cid) }}
-            </div>
+<fieldset>
+    <legend>{% trans %}Make a reservation{% endtrans %}</legend>
+    {{ form_row(form.form) }}
+    {{ form_row(form.adminFormat) }}
+    {% if modVars.sendConfirmationToUser and not modVars.showUserFormat %}
+        {{ form_row(form.userFormat) }}
+    {% endif %}
+    <div class="hidden">
+        {{ form_row(form.cid) }}
+    </div>
 
-            <h3>{{ __('Personal data') }}</h3>
-            {{ form_row(form.name) }}
-            <div class="form-group">
-                <label for="dateOfBirth" class="control-label required col-sm-3">{{ __('Date of birth') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[dateOfBirth][name]" value="{{ __('Date of birth') }}" />
-                    <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
-                    <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
-                </div>
-            </div>
-            {% if modVars.showCompany %}
-                {{ form_row(form.company) }}
-            {% endif %}
-            {% if modVars.showLocation %}
-                <div class="form-group">
-                    <label for="street" class="control-label required col-sm-3">{{ __('Street') }}</label>
-                    <div class="col-sm-9">
-                        <input type="hidden" name="custom[street][name]" value="{{ __('Street') }}" />
-                        <input type="hidden" name="custom[street][mandatory]" value="1" />
-                        <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default|e('html_attr') }}" required="required" class="form-control" />
-                    </div>
-                </div>
-                {{ form_row(form.location, { label: __('Zip City') }) }}
-            {% endif %}
-            {{ form_row(form.emailAddress) }}
-            {% if modVars.showPhone %}
-                {{ form_row(form.phone) }}
-            {% endif %}
-            {% if modVars.showUrl %}
-                {{ form_row(form.url) }}
-            {% endif %}
-            <div class="form-group">
-                <label for="idCard" class="control-label required col-sm-3">{{ __('Identification card number') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[idCard][name]" value="{{ __('Identification card number') }}" />
-                    <input type="hidden" name="custom[idCard][mandatory]" value="1" />
-                    <input type="text" id="idCard" name="custom[idCard][data]" maxlength="70" value="{{ customFields.idCard.data|default|e('html_attr') }}" required="required" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label required col-sm-3">{{ __('Gender') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[gender][name]" value="{{ __('Gender') }}" />
-                    <input type="hidden" name="custom[gender][mandatory]" value="1" />
-                    <label class="radio-inline">
-                        <input type="radio" id="genderMale" name="custom[gender][data]" value="{{ __('Male') }}"{% if customFields.gender.data|default == __('Male') %} checked="checked"{% endif %}> {{ __('Male') }}
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" id="genderFemale" name="custom[gender][data]" value="{{ __('Female') }}"{% if customFields.gender.data|default == __('Female') %} checked="checked"{% endif %}> {{ __('Female') }}
-                    </label>
-                </div>
-            </div>
-    
-            <h3>{{ __('Rental data') }}</h3>
-            <div class="form-group">
-                <label for="typeOfVehicle" class="control-label required col-sm-3">{{ __('Type of vehicle') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[typeOfVehicle][name]" value="{{ __('Type of vehicle') }}" />
-                    <input type="hidden" name="custom[typeOfVehicle][mandatory]" value="1" />
-                    <select id="typeOfVehicle" name="custom[typeOfVehicle][data]" required="required" class="form-control">
-                        <option value="">{{ __('- Make a choice -') }}</option>
-                        <option{% if customFields.typeOfVehicle.data|default == __('Type 1') %} selected="selected"{% endif %} value="{{ __('Type 1') }}">{{ __('Type 1') }}</option>
-                        <option{% if customFields.typeOfVehicle.data|default == __('Type 2') %} selected="selected"{% endif %} value="{{ __('Type 2') }}">{{ __('Type 2') }}</option>
-                        <option{% if customFields.typeOfVehicle.data|default == __('Type 3') %} selected="selected"{% endif %} value="{{ __('Type 3') }}">{{ __('Type 3') }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="amountOfPersons" class="control-label required col-sm-3">{{ __('Amount of persons') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[amountOfPersons][name]" value="{{ __('Amount of persons') }}" />
-                    <input type="hidden" name="custom[amountOfPersons][mandatory]" value="1" />
-                    <input type="number" id="amountOfPersons" name="custom[amountOfPersons][data]" maxlength="70" value="{{ customFields.amountOfPersons.data|default|e('html_attr') }}" required="required" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="rentalStart" class="control-label required col-sm-3">{{ __('Start of rental period') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[rentalStart][name]" value="{{ __('Start of rental period') }}" />
-                    <input type="hidden" name="custom[rentalStart][mandatory]" value="1" />
-                    <input type="text" id="rentalStart" name="custom[rentalStart][data]" maxlength="40" value="{{ customFields.rentalStart.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="rentalEnd" class="control-label required col-sm-3">{{ __('End of rental period') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[rentalEnd][name]" value="{{ __('End of rental period') }}" />
-                    <input type="hidden" name="custom[rentalEnd][mandatory]" value="1" />
-                    <input type="text" id="rentalEnd" name="custom[rentalEnd][data]" maxlength="40" value="{{ customFields.rentalEnd.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{{ __('Please enter a valid date (mm/dd/yyyy).') }}" class="form-control" />
-                </div>
-            </div>
-
-            <h3>{{ __('Included extras') }}</h3>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <label class="checkbox-inline">
-                        <input type="hidden" name="custom[extra1][name]" value="{{ __('Extra 1') }}" />
-                        <input type="checkbox" id="extra1" name="custom[extra1][data]"{% if customFields.extra1.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 1') }}
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="hidden" name="custom[extra2][name]" value="{{ __('Extra 2') }}" />
-                        <input type="checkbox" id="extra2" name="custom[extra2][data]"{% if customFields.extra2.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 2') }}
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="hidden" name="custom[extra3][name]" value="{{ __('Extra 3') }}" />
-                        <input type="checkbox" id="extra3" name="custom[extra3][data]"{% if customFields.extra3.data|default == 'Yes' %} checked="checked"{% endif %} value="{{ __('Yes') }}" /> {{ __('Extra 3') }}
-                    </label>
-                </div>
-            </div>
-
-            <h3>{{ __('Finish and send') }}</h3>
-            {% if modVars.showComment %}
-                {{ form_row(form.comment, { required: false }) }}
-            {% endif %}
-            {% if modVars.sendConfirmationToUser and modVars.showUserFormat %}
-                {{ form_row(form.userFormat) }}
-            {% endif %}
-            {% if modVars.showFileAttachment %}
-                {{ form_row(form.fileUpload) }}
-            {% endif %}
-            <div class="form-group">
-                <label for="findUs" class="control-label col-sm-3">{{ __('How did you find us?') }}</label>
-                <div class="col-sm-9">
-                    <input type="hidden" name="custom[findUs][name]" value="{{ __('How did you find us?') }}" />
-                    <input type="hidden" name="custom[findUs][mandatory]" value="0" />
-                    <select id="findUs" name="custom[findUs][data]" class="form-control">
-                        <option value="">{{ __('- Make a choice -') }}</option>
-                        <option{% if customFields.findUs.data|default == __('Web Location 1') %} selected="selected"{% endif %} value="{{ __('Web Location 1') }}">{{ __('Web Location 1') }}</option>
-                        <option{% if customFields.findUs.data|default == __('Web Location 2') %} selected="selected"{% endif %} value="{{ __('Web Location 2') }}">{{ __('Web Location 2') }}</option>
-                        <option{% if customFields.findUs.data|default == __('Web Location 3') %} selected="selected"{% endif %} value="{{ __('Web Location 3') }}">{{ __('Web Location 3') }}</option>
-                        <option{% if customFields.findUs.data|default == __('Otherwise') %} selected="selected"{% endif %} value="{{ __('Otherwise') }}">{{ __('Otherwise') }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <input type="hidden" name="custom[termsAndConditions][name]" value="{{ __('Agree with terms and conditions') }}" />
-                    <input type="hidden" name="custom[termsAndConditions][mandatory]" value="1" />
-                    <div class="checkbox">
-                        <label class="required">
-                            <input type="checkbox" id="termsAndConditions" name="custom[termsAndConditions][data]" value="{{ __('Yes') }}"{% if customFields.termsAndConditions.data|default == __('Yes') %} checked="checked"{% endif %} />
-                            {{ __f('Yes, I agree with the <a href="%s">Terms and Conditions</a>', { '%s': 'terms-and-conditions.html' })|raw }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            {% if enableSpamCheck %}
-                {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
-            {% endif %}
-        </fieldset>
-
-        {% set hooks = notifyDisplayHooks(eventName='zikulaformiculamodule.ui_hooks.forms.form_edit') %}
-        {% for providerArea, hook in hooks if hook %}
-            <fieldset>
-                <div class="help-block">
-                    {{ hook }}
-                </div>
-            </fieldset>
-        {% endfor %}
-
+    <h3>{% trans %}Personal data{% endtrans %}</h3>
+    {{ form_row(form.name) }}
+    <div class="form-group">
+        <label for="dateOfBirth" class="control-label required col-sm-3">{% trans %}Date of birth{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[dateOfBirth][name]" value="{% trans %}Date of birth{% endtrans %}" />
+            <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
+            <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
+        </div>
+    </div>
+    {% if modVars.showCompany %}
+        {{ form_row(form.company) }}
+    {% endif %}
+    {% if modVars.showLocation %}
         <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                {{ form_widget(form.submit) }}
+            <label for="street" class="control-label required col-sm-3">{% trans %}Street{% endtrans %}</label>
+            <div class="col-sm-9">
+                <input type="hidden" name="custom[street][name]" value="{% trans %}Street{% endtrans %}" />
+                <input type="hidden" name="custom[street][mandatory]" value="1" />
+                <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default|e('html_attr') }}" required="required" class="form-control" />
             </div>
         </div>
+        {{ form_row(form.location, { label: 'Zip City'|trans }) }}
+    {% endif %}
+    {{ form_row(form.emailAddress) }}
+    {% if modVars.showPhone %}
+        {{ form_row(form.phone) }}
+    {% endif %}
+    {% if modVars.showUrl %}
+        {{ form_row(form.url) }}
+    {% endif %}
+    <div class="form-group">
+        <label for="idCard" class="control-label required col-sm-3">{% trans %}Identification card number{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[idCard][name]" value="{% trans %}Identification card number{% endtrans %}" />
+            <input type="hidden" name="custom[idCard][mandatory]" value="1" />
+            <input type="text" id="idCard" name="custom[idCard][data]" maxlength="70" value="{{ customFields.idCard.data|default|e('html_attr') }}" required="required" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label required col-sm-3">{% trans %}Gender{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[gender][name]" value="{% trans %}Gender{% endtrans %}" />
+            <input type="hidden" name="custom[gender][mandatory]" value="1" />
+            <label class="radio-inline">
+                <input type="radio" id="genderMale" name="custom[gender][data]" value="{% trans %}Male{% endtrans %}"{% if customFields.gender.data|default == 'Male'|trans %} checked="checked"{% endif %}> {% trans %}Male{% endtrans %}
+            </label>
+            <label class="radio-inline">
+                <input type="radio" id="genderFemale" name="custom[gender][data]" value="{% trans %}Female{% endtrans %}"{% if customFields.gender.data|default == 'Female'|trans %} checked="checked"{% endif %}> {% trans %}Female{% endtrans %}
+            </label>
+        </div>
+    </div>
 
-        {{ form_end(form) }}
+    <h3>{% trans %}Rental data{% endtrans %}</h3>
+    <div class="form-group">
+        <label for="typeOfVehicle" class="control-label required col-sm-3">{% trans %}Type of vehicle{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[typeOfVehicle][name]" value="{% trans %}Type of vehicle{% endtrans %}" />
+            <input type="hidden" name="custom[typeOfVehicle][mandatory]" value="1" />
+            <select id="typeOfVehicle" name="custom[typeOfVehicle][data]" required="required" class="form-control">
+                <option value="">{% trans %}- Make a choice -{% endtrans %}</option>
+                <option{% if customFields.typeOfVehicle.data|default == 'Type 1'|trans %} selected="selected"{% endif %} value="{% trans %}Type 1{% endtrans %}">{% trans %}Type 1{% endtrans %}</option>
+                <option{% if customFields.typeOfVehicle.data|default == 'Type 2'|trans %} selected="selected"{% endif %} value="{% trans %}Type 2{% endtrans %}">{% trans %}Type 2{% endtrans %}</option>
+                <option{% if customFields.typeOfVehicle.data|default == 'Type 3'|trans %} selected="selected"{% endif %} value="{% trans %}Type 3{% endtrans %}">{% trans %}Type 3{% endtrans %}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="amountOfPersons" class="control-label required col-sm-3">{% trans %}Amount of persons{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[amountOfPersons][name]" value="{% trans %}Amount of persons{% endtrans %}" />
+            <input type="hidden" name="custom[amountOfPersons][mandatory]" value="1" />
+            <input type="number" id="amountOfPersons" name="custom[amountOfPersons][data]" maxlength="70" value="{{ customFields.amountOfPersons.data|default|e('html_attr') }}" required="required" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="rentalStart" class="control-label required col-sm-3">{% trans %}Start of rental period{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[rentalStart][name]" value="{% trans %}Start of rental period{% endtrans %}" />
+            <input type="hidden" name="custom[rentalStart][mandatory]" value="1" />
+            <input type="text" id="rentalStart" name="custom[rentalStart][data]" maxlength="40" value="{{ customFields.rentalStart.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="rentalEnd" class="control-label required col-sm-3">{% trans %}End of rental period{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[rentalEnd][name]" value="{% trans %}End of rental period{% endtrans %}" />
+            <input type="hidden" name="custom[rentalEnd][mandatory]" value="1" />
+            <input type="text" id="rentalEnd" name="custom[rentalEnd][data]" maxlength="40" value="{{ customFields.rentalEnd.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
+        </div>
+    </div>
+
+    <h3>{% trans %}Included extras{% endtrans %}</h3>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <label class="checkbox-inline">
+                <input type="hidden" name="custom[extra1][name]" value="{% trans %}Extra 1{% endtrans %}" />
+                <input type="checkbox" id="extra1" name="custom[extra1][data]"{% if customFields.extra1.data|default == 'Yes' %} checked="checked"{% endif %} value="{% trans %}Yes{% endtrans %}" /> {% trans %}Extra 1{% endtrans %}
+            </label>
+            <label class="checkbox-inline">
+                <input type="hidden" name="custom[extra2][name]" value="{% trans %}Extra 2{% endtrans %}" />
+                <input type="checkbox" id="extra2" name="custom[extra2][data]"{% if customFields.extra2.data|default == 'Yes' %} checked="checked"{% endif %} value="{% trans %}Yes{% endtrans %}" /> {% trans %}Extra 2{% endtrans %}
+            </label>
+            <label class="checkbox-inline">
+                <input type="hidden" name="custom[extra3][name]" value="{% trans %}Extra 3{% endtrans %}" />
+                <input type="checkbox" id="extra3" name="custom[extra3][data]"{% if customFields.extra3.data|default == 'Yes' %} checked="checked"{% endif %} value="{% trans %}Yes{% endtrans %}" /> {% trans %}Extra 3{% endtrans %}
+            </label>
+        </div>
+    </div>
+
+    <h3>{% trans %}Finish and send{% endtrans %}</h3>
+    {% if modVars.showComment %}
+        {{ form_row(form.comment, { required: false }) }}
+    {% endif %}
+    {% if modVars.sendConfirmationToUser and modVars.showUserFormat %}
+        {{ form_row(form.userFormat) }}
+    {% endif %}
+    {% if modVars.showFileAttachment %}
+        {{ form_row(form.fileUpload) }}
+    {% endif %}
+    <div class="form-group">
+        <label for="findUs" class="control-label col-sm-3">{% trans %}How did you find us?{% endtrans %}</label>
+        <div class="col-sm-9">
+            <input type="hidden" name="custom[findUs][name]" value="{% trans %}How did you find us?{% endtrans %}" />
+            <input type="hidden" name="custom[findUs][mandatory]" value="0" />
+            <select id="findUs" name="custom[findUs][data]" class="form-control">
+                <option value="">{% trans %}- Make a choice -{% endtrans %}</option>
+                <option{% if customFields.findUs.data|default == 'Web Location 1'|trans %} selected="selected"{% endif %} value="{% trans %}Web Location 1{% endtrans %}">{% trans %}Web Location 1{% endtrans %}</option>
+                <option{% if customFields.findUs.data|default == 'Web Location 2'|trans %} selected="selected"{% endif %} value="{% trans %}Web Location 2{% endtrans %}">{% trans %}Web Location 2{% endtrans %}</option>
+                <option{% if customFields.findUs.data|default == 'Web Location 3'|trans %} selected="selected"{% endif %} value="{% trans %}Web Location 3{% endtrans %}">{% trans %}Web Location 3{% endtrans %}</option>
+                <option{% if customFields.findUs.data|default == 'Otherwise'|trans %} selected="selected"{% endif %} value="{% trans %}Otherwise{% endtrans %}">{% trans %}Otherwise{% endtrans %}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <input type="hidden" name="custom[termsAndConditions][name]" value="{% trans %}Agree with terms and conditions{% endtrans %}" />
+            <input type="hidden" name="custom[termsAndConditions][mandatory]" value="1" />
+            <div class="checkbox">
+                <label class="required">
+                    <input type="checkbox" id="termsAndConditions" name="custom[termsAndConditions][data]" value="{% trans %}Yes{% endtrans %}"{% if customFields.termsAndConditions.data|default == 'Yes'|trans %} checked="checked"{% endif %} />
+                    {% trans with { '%s%': 'terms-and-conditions.html' } %}Yes, I agree with the <a href="%s%">Terms and Conditions</a>{% endtrans %}
+                </label>
+            </div>
+        </div>
+    </div>
+
+    {% if enableSpamCheck %}
+        {{ include('@ZikulaFormiculaModule/Include/spamCheck.html.twig') }}
+    {% endif %}
+</fieldset>
+
+{% set hooks = notifyDisplayHooks(eventName='zikulaformiculamodule.ui_hooks.forms.form_edit') %}
+{% for providerArea, hook in hooks|filter(hook => hook|default) %}
+    <fieldset>
+        <div class="help-block">
+            {{ hook }}
+        </div>
+    </fieldset>
+{% endfor %}
+
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+        {{ form_widget(form.submit) }}
     </div>
 </div>
+
+{{ form_end(form) }}
 
 {{ include('@ZikulaFormiculaModule/Form/3/userFooter.html.twig') }}
 

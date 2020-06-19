@@ -11,11 +11,8 @@
 
 namespace Zikula\FormiculaModule;
 
-use Zikula\Core\AbstractModule;
+use Zikula\ExtensionsModule\AbstractExtension;
 
-/**
- * Formicula module class.
- */
-class ZikulaFormiculaModule extends AbstractModule
+class ZikulaFormiculaModule extends AbstractExtension
 {
 }

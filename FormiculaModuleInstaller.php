@@ -13,21 +13,19 @@ namespace Zikula\FormiculaModule;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Zikula\Core\AbstractExtensionInstaller;
+use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaKernel;
+use Zikula\ExtensionsModule\Installer\AbstractExtensionInstaller;
 use Zikula\FormiculaModule\Entity\ContactEntity;
 use Zikula\FormiculaModule\Entity\SubmissionEntity;
 
-/**
- * Installation routines for the Formicula module.
- */
 class FormiculaModuleInstaller extends AbstractExtensionInstaller
 {
     /**
      * @var array
      */
     private $entities = [
-        'Zikula\FormiculaModule\Entity\ContactEntity',
-        'Zikula\FormiculaModule\Entity\SubmissionEntity'
+        ContactEntity::class,
+        SubmissionEntity::class
     ];
 
     /**
@@ -35,27 +33,20 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      *
      * @return boolean True if initialisation successful, false otherwise
      */
-    public function install()
+    public function install(): bool
     {
-        // create schema
-        try {
-            $this->schemaTool->create($this->entities);
-        } catch (\Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        $this->schemaTool->create($this->entities);
 
-            return false;
-        }
-
-        $variableApi = $this->container->get('zikula_extensions_module.api.variable');
+        $variableApi = $this->getVariableApi();
 
         // create a contact for the webmaster
         $contact = new ContactEntity();
-        $contact->setName($this->__('Webmaster'));
+        $contact->setName($this->trans('Webmaster'));
         $contact->setEmail($variableApi->get('ZConfig', 'adminmail'));
         $contact->setPublic(true);
         $contact->setSenderName($contact->getName());
         $contact->setSenderEmail($contact->getEmail());
-        $contact->setSendingSubject($this->__('Your mail to %s'));
+        $contact->setSendingSubject($this->trans('Your mail to %s'));
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
 
@@ -97,33 +88,32 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      *
      * @return bool|string true on success, last valid version string or false if fails
      */
-    public function upgrade($oldVersion)
+    public function upgrade($oldVersion): bool
     {
         if (version_compare($oldVersion, '4.0.0', '<')) {
             // delete all old data
-            $variableApi = $this->container->get('zikula_extensions_module.api.variable');
+            $variableApi = $this->getVariableApi();
             $variableApi->delAll('formicula');
             $variableApi->delAll('Formicula');
 
-            $isLegacy = version_compare(\Zikula_Core::VERSION_NUM, '2.0.0') >= 0 ? false : true;
-            if ($isLegacy) {
-                \EventUtil::unregisterPersistentModuleHandlers('Formicula');
+//            $isLegacy = version_compare(ZikulaKernel::VERSION, '2.0.0') >= 0 ? false : true;
+//            if ($isLegacy) {
+//                \EventUtil::unregisterPersistentModuleHandlers('Formicula');
 
-                $conn->executeQuery("DELETE FROM $dbName.`hook_area` WHERE `owner` = 'Formicula'");
-                $conn->executeQuery("DELETE FROM $dbName.`hook_binding` WHERE `sowner` = 'Formicula'");
-                $conn->executeQuery("DELETE FROM $dbName.`hook_runtime` WHERE `sowner` = 'Formicula'");
-                $conn->executeQuery("DELETE FROM $dbName.`hook_subscriber` WHERE `owner` = 'Formicula'");
-            }
+//                $conn->executeQuery("DELETE FROM $dbName.`hook_area` WHERE `owner` = 'Formicula'");
+//                $conn->executeQuery("DELETE FROM $dbName.`hook_binding` WHERE `sowner` = 'Formicula'");
+//                $conn->executeQuery("DELETE FROM $dbName.`hook_runtime` WHERE `sowner` = 'Formicula'");
+//                $conn->executeQuery("DELETE FROM $dbName.`hook_subscriber` WHERE `owner` = 'Formicula'");
+//            }
 
             // reinstall
             $this->install();
 
-            $conn = $this->getConnection();
-            $dbName = $this->getDbName();
+            $conn = $this->managerRegistry->getConnection();
             $hasMigrationData = false;
 
             // migrate old contacts
-            $stmt = $conn->executeQuery("SELECT * FROM $dbName.`formcontacts`");
+            $stmt = $conn->executeQuery("SELECT * FROM `formcontacts`");
             while ($row = $stmt->fetch()) {
                 $hasMigrationData = true;
                 $contact = new ContactEntity();
@@ -138,7 +128,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             }
 
             // migrate old submissions
-            $stmt = $conn->executeQuery("SELECT * FROM $dbName.`formsubmits`");
+            $stmt = $conn->executeQuery("SELECT * FROM `formsubmits`");
             while ($row = $stmt->fetch()) {
                 $hasMigrationData = true;
                 $submission = new SubmissionEntity();
@@ -166,8 +156,8 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                 $this->entityManager->flush();
             }
 
-            $conn->executeQuery("DROP TABLE $dbName.`formcontacts`");
-            $conn->executeQuery("DROP TABLE $dbName.`formsubmits`");
+            $conn->executeQuery("DROP TABLE `formcontacts`");
+            $conn->executeQuery("DROP TABLE `formsubmits`");
 
             $oldVersion = '4.0.0';
         }
@@ -197,11 +187,11 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                 // added forgotten company field
                 try {
                     $this->schemaTool->update([
-                        'Zikula\FormiculaModule\Entity\SubmissionEntity'
+                        SubmissionEntity::class
                     ]);
                 } catch (\Exception $exception) {
-                    $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
-    
+                    $this->addFlash('error', $this->trans('Doctrine Exception') . ': ' . $exception->getMessage());
+
                     return false;
                 }
             case '5.0.1':
@@ -217,17 +207,10 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      *
      * @return bool true if deletion successful, false otherwise
      */
-    public function uninstall()
+    public function uninstall(): bool
     {
-        try {
-            $this->schemaTool->drop($this->entities);
-        } catch (\Exception $e) {
-            $this->addFlash('error', $e->getMessage());
+        $this->schemaTool->drop($this->entities);
 
-            return false;
-        }
-
-        // Delete any module variables
         $this->delVars();
 
         $cacheDirectory = $this->getCacheDirectory();
@@ -236,14 +219,10 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             try {
                 $fs->remove($cacheDirectory);
             } catch (IOExceptionInterface $e) {
-                $this->addFlash('error', $this->__f('An error occurred while removing the cache directory at %s.', ['%s' => $e->getPath()]));
+                $this->addFlash('error', $this->trans('An error occurred while removing the cache directory at %s%.', ['%s%' => $e->getPath()]));
             }
         }
 
-        // Remove module variables
-        $this->delVars();
-
-        // Deletion successful
         return true;
     }
 
@@ -272,7 +251,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                 $fs->chmod($cacheDirectory, 0777);
             }
         } catch (IOExceptionInterface $e) {
-            $this->addFlash('error', $this->__f('An error occurred while creating the cache directory at %s.', ['%s' => $e->getPath()]));
+            $this->addFlash('error', $this->trans('An error occurred while creating the cache directory at %s%.', ['%s%' => $e->getPath()]));
         }
 
         try {
@@ -290,31 +269,9 @@ Allow from env=object_is_png
 Allow from env=object_is_jpg
 Allow from env=object_is_jpeg
 ');
-            $this->addFlash('status', $this->__('Successfully created the cache directory with a .htaccess file in it.'));
+            $this->addFlash('status', $this->trans('Successfully created the cache directory with a .htaccess file in it.'));
         } catch (IOExceptionInterface $e) {
-            $this->addFlash('error', $this->__f('Could not create .htaccess file in %s, please refer to the manual before using the module!', ['%s' => $e->getPath()]));
+            $this->addFlash('error', $this->trans('Could not create .htaccess file in %s%, please refer to the manual before using the module!', ['%s%' => $e->getPath()]));
         }
-    }
-
-    /**
-     * Returns connection to the database.
-     *
-     * @return Connection the current connection
-     */
-    private function getConnection()
-    {
-        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-        $connection = $entityManager->getConnection();
-
-        return $connection;
-    }
-    /**
-     * Returns the name of the default system database.
-     *
-     * @return string the database name
-     */
-    private function getDbName()
-    {
-        return $this->container->getParameter('database_name');
     }
 }

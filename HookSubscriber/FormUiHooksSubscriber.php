@@ -11,9 +11,9 @@
 
 namespace Zikula\FormiculaModule\HookSubscriber;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Bundle\HookBundle\HookSubscriberInterface;
-use Zikula\Common\Translator\TranslatorInterface;
 
 /**
  * UI hooks subscriber class.
@@ -38,31 +38,31 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
     /**
      * @inheritDoc
      */
-    public function getOwner()
+    public function getOwner(): string
     {
         return 'ZikulaFormiculaModule';
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    public function getCategory()
-    {
-        return UiHooksCategory::NAME;
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    public function getTitle()
-    {
-        return $this->translator->__('Form ui hooks subscriber');
     }
 
     /**
      * @inheritDoc
      */
-    public function getEvents()
+    public function getCategory(): string
+    {
+        return UiHooksCategory::NAME;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTitle(): string
+    {
+        return $this->translator->trans('Form ui hooks subscriber');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getEvents(): array
     {
         return [
             // Display hook for view/display templates.
@@ -78,5 +78,10 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
             // Perform the final delete actions for a deleted item.
             //UiHooksCategory::TYPE_PROCESS_DELETE => 'zikulaformiculamodule.ui_hooks.forms.process_delete'
         ];
+    }
+
+    public function getAreaName(): string
+    {
+        return 'subscriber.zikulaformiculamodule.ui_hooks.forms';
     }
 }

@@ -1,62 +1,51 @@
-{% form_theme form with [
-    '@ZikulaFormExtension/Form/bootstrap_3_zikula_admin_layout.html.twig',
-    '@ZikulaFormExtension/Form/form_div_layout.html.twig'
-] %}
-{{ polyfill() }}
-{{ adminHeader() }}
-<div class="container-fluid">
-    <div class="row">
-        <h3>
-            <span class="fa fa-trash-o"></span>
-            {{ __('Delete form submission') }}
-            {{ pageSetVar('title', __('Delete form submission')) }}
-        </h3>
+<h3>
+    <span class="fa fa-trash-o"></span>
+    {% trans %}Delete form submission{% endtrans %}
+    {{ pageSetVar('title', 'Delete form submission'|trans) }}
+</h3>
 
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
+{{ form_start(form) }}
+{{ form_errors(form) }}
 
-        <fieldset>
-            <legend>{{ __('Confirmation prompt') }}</legend>
-            <p class="alert alert-warning">{{ __f("Do you really want to delete form submission '%s'?", { '%s': submission.name }) }}</p>
+<fieldset>
+    <legend>{% trans %}Confirmation prompt{% endtrans %}</legend>
+    <p class="alert alert-warning">{% trans with { '%s%': submission.name } %}Do you really want to delete form submission '%s%'?{% endtrans %}</p>
 
-            {{ form_row(form.sid) }}
-        </fieldset>
-        <fieldset>
-            <legend>{{ __('Submission information') }}</legend>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Form #') }}</label>
-                <div class="col-sm-9">
-                    <p class="form-control-static">{{ submission.form }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Contact ID') }}</label>
-                <div class="col-sm-9">
-                    <p class="form-control-static">{{ submission.cid }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Date') }}</label>
-                <div class="col-sm-9">
-                    <p class="form-control-static">{{ submission.createdDate|localizeddate('short', 'short') }}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">{{ __('Name') }}</label>
-                <div class="col-sm-9">
-                    <p class="form-control-static"><a href="#" class="tooltips" title="{{ __f('Email: %1$s - UID: %2$s', {'%1$s': submission.email, '%2$s': submission.createdBy.uid}) }}">{{ submission.name }}</a></p>
-                </div>
-            </div>
-        </fieldset>
-
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                {{ form_widget(form.delete) }}
-                {{ form_widget(form.cancel) }}
-            </div>
+    {{ form_row(form.sid) }}
+</fieldset>
+<fieldset>
+    <legend>{% trans %}Submission information{% endtrans %}</legend>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{% trans %}Form #{% endtrans %}</label>
+        <div class="col-sm-9">
+            <p class="form-control-static">{{ submission.form }}</p>
         </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{% trans %}Contact ID{% endtrans %}</label>
+        <div class="col-sm-9">
+            <p class="form-control-static">{{ submission.cid }}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{% trans %}Date{% endtrans %}</label>
+        <div class="col-sm-9">
+            <p class="form-control-static">{{ submission.createdDate|format_date('short', 'short') }}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{% trans %}Name{% endtrans %}</label>
+        <div class="col-sm-9">
+            <p class="form-control-static"><a href="#" class="tooltips" title="{% trans with {'%email%': submission.email, '%uid%': submission.createdBy.uid} %}Email: %email% - UID: %uid%{% endtrans %}">{{ submission.name }}</a></p>
+        </div>
+    </div>
+</fieldset>
 
-        {{ form_end(form) }}
+<div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+        {{ form_widget(form.delete) }}
+        {{ form_widget(form.cancel) }}
     </div>
 </div>
-{{ adminFooter() }}
+
+{{ form_end(form) }}

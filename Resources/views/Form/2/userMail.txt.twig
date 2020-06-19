@@ -1,20 +1,20 @@
-{{ __f('Hello %s!', { '%s': userData.uname }) }}
+{% trans with {'%s%': userData.uname} %}Hello %s%!{% endtrans %}
 
-{{ __('Thank you for the comments posted from our website. The sent data is:') }}
+{% trans %}Thank you for the comments posted from our website. The sent data is:{% endtrans %}
 
-{{ __('Your name') }}: {{ userData.name }}
+{% trans %}Your name{% endtrans %}: {{ userData.name }}
 {% if modVars.showCompany and userData.company %}
-{{ __('Company') }}: {{ userData.company }}
+{% trans %}Company{% endtrans %}: {{ userData.company }}
 {% endif %}
-{{ __('Email') }}: {{ userData.emailAddress }}
+{% trans %}Email{% endtrans %}: {{ userData.emailAddress }}
 {% if modVars.showPhone and userData.phone %}
-{{ __('Phone number') }}: {{ userData.phone }}
+{% trans %}Phone number{% endtrans %}: {{ userData.phone }}
 {% endif %}
 {% if modVars.showUrl and userData.url %}
-{{ __('Website') }}: {{ userData.url }}
+{% trans %}Website{% endtrans %}: {{ userData.url }}
 {% endif %}
 {% if modVars.showLocation and userData.location %}
-{{ __('Location') }}: {{ userData.location }}
+{% trans %}Location{% endtrans %}: {{ userData.location }}
 {% endif %}
 
 {% for field in customFields %}
@@ -22,14 +22,14 @@
 {% endfor %}
 {% if modVars.showComment and userData.comment %}
 
-{{ __('Comment') }}:
+{% trans %}Comment{% endtrans %}:
 {{ userData.comment }}
 {% endif %}
 {% if modVars.showFileAttachment and userData.fileUpload %}
 
-{{ __('Attached file') }}: {{ userData.fileUpload }}
+{% trans %}Attached file{% endtrans %}: {{ userData.fileUpload }}
 {% endif %}
 
-{{ __('We will respond to your email address as soon as possible.') }}
+{% trans %}We will respond to your email address as soon as possible.{% endtrans %}
 
-{{ __f('The %s team', { '%s': siteName }) }}
+{% trans with {'%s%': siteName} %}The %s% team{% endtrans %}

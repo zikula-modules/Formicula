@@ -9,39 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Zikula\FormiculaModule\Twig;
+namespace Zikula\FormiculaModule\Twig\Extension;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 use Zikula\FormiculaModule\Helper\CaptchaHelper;
 
-/**
- * Twig extension class.
- */
-class TwigExtension extends \Twig_Extension
+class FormiculaExtension extends AbstractExtension
 {
     /**
      * @var CaptchaHelper
      */
     private $captchaHelper;
 
-    /**
-     * TwigExtension constructor.
-     *
-     * @param CaptchaHelper $captchaHelper CaptchaHelper service instance
-     */
     public function __construct(CaptchaHelper $captchaHelper)
     {
         $this->captchaHelper = $captchaHelper;
     }
 
-    /**
-     * Returns a list of custom Twig functions.
-     *
-     * @return array
-     */
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('zikulaformiculamodule_simpleCaptcha', [$this, 'simpleCaptcha'], ['is_safe' => ['html']])
+            new TwigFunction('zikulaformiculamodule_simpleCaptcha', [$this, 'simpleCaptcha'], ['is_safe' => ['html']])
         ];
     }
 
