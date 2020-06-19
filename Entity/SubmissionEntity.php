@@ -21,7 +21,7 @@ use Zikula\FormiculaModule\Traits\StandardFieldsTrait;
 /**
  * Form submission entity class.
  *
- * @ORM\Entity(repositoryClass="SubmissionRepository")
+ * @ORM\Entity(repositoryClass="Zikula\FormiculaModule\Entity\Repository\SubmissionRepository")
  * @ORM\Table(name="formicula_submission")
  */
 class SubmissionEntity extends EntityAccess
