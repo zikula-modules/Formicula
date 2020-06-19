@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -72,7 +74,7 @@ class FormType extends AbstractContentType
     public function displayView(): string
     {
         $this->data = $this->getData();
-        if (null === $this->data['form'] || intval($this->data['form']) < 0) {
+        if (null === $this->data['form'] || (int) ($this->data['form']) < 0) {
             return '';
         }
 
@@ -96,7 +98,7 @@ class FormType extends AbstractContentType
     public function displayEditing(): string
     {
         $this->data = $this->getData();
-        if (null === $this->data['form'] || intval($this->data['form']) < 0) {
+        if (null === $this->data['form'] || (int) ($this->data['form']) < 0) {
             return $this->translator->trans('No form selected.');
         }
 

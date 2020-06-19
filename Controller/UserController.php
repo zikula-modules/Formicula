@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -22,10 +24,10 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\CoreBundle\Controller\AbstractController;
 use Zikula\Bundle\HookBundle\Dispatcher\HookDispatcherInterface;
 use Zikula\Bundle\HookBundle\Hook\ValidationHook;
 use Zikula\Bundle\HookBundle\Hook\ValidationProviders;
-use Zikula\Bundle\CoreBundle\Controller\AbstractController;
 use Zikula\ExtensionsModule\AbstractExtension;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\FormiculaModule\Entity\ContactEntity;
@@ -43,8 +45,11 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 class UserController extends AbstractController
 {
     private $contactRepository;
+
     private $environmentHelper;
+
     private $mailer;
+
     private $mailLogger;
 
     public function __construct(
@@ -101,7 +106,7 @@ class UserController extends AbstractController
             }
             $contacts[] = $this->contactRepository->find($contactId);
         }
-        if (count($contacts) == 0) {
+        if (0 === count($contacts)) {
             throw new AccessDeniedException();
         }
         foreach ($contacts as $contact) {
@@ -134,17 +139,19 @@ class UserController extends AbstractController
             'adminFormat' => $modVars['defaultAdminFormat'],
             'userFormat' => $modVars['defaultUserFormat'],
             'cid' => $contact->getCid(),
-            'name' => isset($userData['name']) ? $userData['name'] : $userName,
-            'emailAddress' => isset($userData['emailAddress']) ? $userData['emailAddress'] : $emailAddress
+            'name' => $userData['name'] ?? $userName,
+            'emailAddress' => $userData['emailAddress'] ?? $emailAddress
         ];
         foreach (['company', 'phone', 'url', 'location', 'comment'] as $fieldName) {
             if ($modVars['show' . ucfirst($fieldName)]) {
-                $formData[$fieldName] = isset($userData[$fieldName]) ? $userData[$fieldName] : '';
+                $formData[$fieldName] = $userData[$fieldName] ?? '';
             }
         }
 
-        $form = $this->createForm(UserSubmissionType::class,
-            $formData, [
+        $form = $this->createForm(
+            UserSubmissionType::class,
+            $formData,
+            [
                 'modVars' => $modVars,
                 'contactChoices' => $contactChoices,
                 'action' => $this->generateUrl('zikulaformiculamodule_user_index')
@@ -169,9 +176,9 @@ class UserController extends AbstractController
             // very basic input validation against HTTP response splitting
             $formData['emailAddress'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $formData['emailAddress']);
 
-            $formId = intval($formData['form']);
+            $formId = (int) ($formData['form']);
             $contactId = $formData['cid'];
-            if (empty($contactId) || $formId < 0 || !$this->hasPermission('ZikulaFormiculaModule::', "$formId:$contactId:", ACCESS_COMMENT)) {
+            if (empty($contactId) || $formId < 0 || !$this->hasPermission('ZikulaFormiculaModule::', "${formId}:${contactId}:", ACCESS_COMMENT)) {
                 throw new AccessDeniedException();
             }
 
@@ -218,7 +225,7 @@ class UserController extends AbstractController
 
             $customFields = $request->request->get('custom', []);
             foreach ($customFields as $key => $customField) {
-                $isMandatory = isset($customField['mandatory']) && $customField['mandatory'] == 1 ? true : false;
+                $isMandatory = isset($customField['mandatory']) && 1 === $customField['mandatory'] ? true : false;
                 $customFields[$key]['mandatory'] = $isMandatory;
                 if ($isMandatory && !is_array($customField['data']) && empty($customField['data'])) {
                     $this->addFlash('error', $this->trans('Error! No value given for mandatory field "%s%".', ['%s%' => $customField['name']]));
@@ -254,7 +261,7 @@ class UserController extends AbstractController
                 'userData' => $userData,
                 'customFields' => $customFields,
                 'adminFormat' => $formData['adminFormat'],
-                'userFormat' => (isset($formData['userFormat']) ? $formData['userFormat'] : $modVars['defaultUserFormat'])
+                'userFormat' => ($formData['userFormat'] ?? $modVars['defaultUserFormat'])
             ];
 
             if ($hasError) {
@@ -267,7 +274,7 @@ class UserController extends AbstractController
             // send emails
             $sentToAdmin = $this->sendMail($request, $contact, $formId, $userData, $customFields, $formData['adminFormat'], 'admin');
             $sentToUser = true;
-            if ($modVars['sendConfirmationToUser'] && $formData['userFormat'] != 'none') {
+            if ($modVars['sendConfirmationToUser'] && 'none' !== $formData['userFormat']) {
                 $sentToUser = $this->sendMail($request, $contact, $formId, $userData, $customFields, $formData['userFormat'], 'user');
             }
 
@@ -333,7 +340,7 @@ class UserController extends AbstractController
         // Get path to upload directory
         $uploadDirectory = $this->getVar('uploadDirectory', 'userdata');
         // check if it ends with / or we add one
-        if (substr($uploadDirectory, -1) != '/') {
+        if ('/' !== mb_substr($uploadDirectory, -1)) {
             $uploadDirectory .= '/';
         }
 
@@ -377,7 +384,7 @@ class UserController extends AbstractController
         }
 
         $mailData = $userData;
-        if ($format == 'plain' && isset($mailData['comment'])) {
+        if ('plain' === $format && isset($mailData['comment'])) {
             // remove tags from comment to avoid spam
             $mailData['comment'] = strip_tags($mailData['comment']);
         }
@@ -388,10 +395,10 @@ class UserController extends AbstractController
         $ipAddress = $request->getClientIp();
 
         // determine subject
-        if ($mailType == 'admin') {
+        if ('admin' === $mailType) {
             // subject of the emails can be determined from the form
             $subject = isset($userData['adminSubject']) && !empty($userData['adminSubject']) ? $userData['adminSubject'] : $siteName . ' - ' . $contact['name'];
-        } elseif ($mailType == 'user') {
+        } elseif ('user' === $mailType) {
             // check for subject, can be in the form or in the contact
             if (!empty($contact->getSendingSubject()) || !empty($userData['userSubject'])) {
                 $subject = !empty($userData['userSubject']) ? $userData['userSubject'] : $contact->getSendingSubject();
@@ -439,18 +446,18 @@ class UserController extends AbstractController
             ->html($this->renderView($bodyTemplateText, $templateParameters));
 
         // add possible attachment to admin mail
-        if ($mailType == 'contact' && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
+        if ('contact' === $mailType && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
             // add file attachment
             $uploadDirectory = realpath($this->getVar('uploadDirectory', 'userdata'));
             $message->attachFromPath($uploadDirectory . '/' . $userData['fileUpload']);
         }
 
         // set sender and recipient
-        if ($mailType == 'admin') {
+        if ('admin' === $mailType) {
             $fromAddress = true === $modVars['useContactsAsSender'] ? $userData['emailAddress'] : $adminMail;
             $message->from(new Address($fromAddress, $userData['name']));
             $recipients = [];
-            if (false !== strpos($contact->getEmail(), ',')) {
+            if (false !== mb_strpos($contact->getEmail(), ',')) {
                 $emails = explode(',', $contact->getEmail());
                 foreach ($emails as $email) {
                     $message->addTo(new Address($email, $contact->getName()));
@@ -458,7 +465,7 @@ class UserController extends AbstractController
             } else {
                 $message->addTo(new Address($contact->getEmail(), $contact->getName()));
             }
-        } elseif ($mailType == 'user') {
+        } elseif ('user' === $mailType) {
             $fromName = !empty($contact->getSenderName()) ? $contact->getSenderName() : $siteName . ' - ' . $this->trans('Contact form');
             $fromAddress = !empty($contact->getSenderEmail()) ? $contact->getSenderEmail() : $contact->getEmail();
             $fromAddress = true === $modVars['useContactsAsSender'] ? $fromAddress : $adminMail;
@@ -483,7 +490,7 @@ class UserController extends AbstractController
             $mailSent = false;
         }
 
-        if ($mailType == 'admin') {
+        if ('admin' === $mailType) {
             if (true === $modVars['deleteUploadedFiles']) {
                 foreach ($message->getAttachments() as $attachment) {
                     if (file_exists($attachment) && is_file($attachment)) {
@@ -495,7 +502,7 @@ class UserController extends AbstractController
             if (false === $mailSent) {
                 $this->addFlash('error', $this->trans('There was an error sending the email to our contact.'));
             }
-        } elseif ($mailType == 'user') {
+        } elseif ('user' === $mailType) {
             if (false === $mailSent) {
                 $this->addFlash('error', $this->trans('There was an error sending the confirmation email to your email address.'));
             }

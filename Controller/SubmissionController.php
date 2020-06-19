@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -32,6 +34,7 @@ use Zikula\ThemeModule\Engine\Annotation\Theme;
 class SubmissionController extends AbstractController
 {
     private $submissionRepository;
+
     private $environmentHelper;
 
     public function __construct(

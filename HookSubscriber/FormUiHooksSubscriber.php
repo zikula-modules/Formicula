@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -36,7 +38,7 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getOwner(): string
     {
@@ -44,7 +46,7 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getCategory(): string
     {
@@ -52,7 +54,7 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTitle(): string
     {
@@ -60,7 +62,7 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getEvents(): array
     {

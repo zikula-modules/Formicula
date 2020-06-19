@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -20,7 +22,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Zikula\Bundle\CoreBundle\Controller\AbstractController;
 use Zikula\ExtensionsModule\AbstractExtension;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
-use Zikula\FormiculaModule\Entity\Repository\ContactRepository;
 use Zikula\FormiculaModule\Form\Type\ConfigType;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
@@ -73,11 +74,13 @@ class ConfigController extends AbstractController
             $finder2 = new Finder();
             $finder2->files()->in($directory->getRealPath());
             $formNumber = $directory->getFilename();
-            $formChoices[$this->trans('Form #%num% containing %count% templates', [ '%num%' => $formNumber, '%count%' => count($finder2) ])] = $formNumber;
+            $formChoices[$this->trans('Form #%num% containing %count% templates', ['%num%' => $formNumber, '%count%' => count($finder2)])] = $formNumber;
         }
 
-        $form = $this->createForm(ConfigType::class,
-            $modVars, [
+        $form = $this->createForm(
+            ConfigType::class,
+            $modVars,
+            [
                 'formChoices' => $formChoices
             ]
         );

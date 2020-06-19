@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -29,7 +31,7 @@ class ContactEntity extends EntityAccess
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var integer $cid
+     * @var integer
      */
     private $cid;
 
@@ -39,7 +41,7 @@ class ContactEntity extends EntityAccess
      * @Assert\NotBlank()
      * @Assert\Length(max = 100)
      * @ORM\Column(type="string", length=100)
-     * @var string $name
+     * @var string
      */
     private $name;
 
@@ -49,7 +51,7 @@ class ContactEntity extends EntityAccess
      * @Assert\NotBlank()
      * @Assert\Length(max = 200)
      * @ORM\Column(type="string", length=200)
-     * @var string $email
+     * @var string
      */
     private $email;
 
@@ -58,7 +60,7 @@ class ContactEntity extends EntityAccess
      *
      * @ORM\Column(type="boolean")
      * @Assert\Type(type="bool")
-     * @var boolean $public
+     * @var boolean
      */
     private $public;
 
@@ -67,7 +69,7 @@ class ContactEntity extends EntityAccess
      *
      * @Assert\Length(max = 100)
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @var string $senderName
+     * @var string
      */
     private $senderName;
 
@@ -77,7 +79,7 @@ class ContactEntity extends EntityAccess
      * @Assert\Length(max = 100)
      * @Assert\Email()
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @var string $senderEmail
+     * @var string
      */
     private $senderEmail;
 
@@ -86,7 +88,7 @@ class ContactEntity extends EntityAccess
      *
      * @Assert\Length(max = 150)
      * @ORM\Column(type="string", length=150, nullable=true)
-     * @var string $sendingSubject
+     * @var string
      */
     private $sendingSubject;
 

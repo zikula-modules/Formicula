@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -106,16 +108,16 @@ class CaptchaHelper
 
         switch ($operands['z'] . '-' . $operands['w']) {
             case '0-0':
-                $captchaValid = ($op1 + $op2 + $op3 == $captcha);
+                $captchaValid = ($op1 + $op2 + $op3 === $captcha);
                 break;
             case '0-1':
-                $captchaValid = ($op1 + $op2 - $op3 == $captcha);
+                $captchaValid = ($op1 + $op2 - $op3 === $captcha);
                 break;
             case '1-0':
-                $captchaValid = ($op1 - $op2 + $op3 == $captcha);
+                $captchaValid = ($op1 - $op2 + $op3 === $captcha);
                 break;
             case '1-1':
-                $captchaValid = ($op1 - $op2 - $op3 == $captcha);
+                $captchaValid = ($op1 - $op2 - $op3 === $captcha);
                 break;
             default:
                 // $captchaValid is false
@@ -196,7 +198,7 @@ class CaptchaHelper
             // we create a larger picture than needed, this makes it looking better at the end
             $multi = 4;
             // get the textsize in the image
-            $bbox = imagettfbbox ($size * $multi, 0, $fontPath, $exerciseText);
+            $bbox = imagettfbbox($size * $multi, 0, $fontPath, $exerciseText);
             $xcorr = 0 - $bbox[6]; // northwest X
             $ycorr = 0 - $bbox[7]; // northwest Y
             $box['left'] = $bbox[6] + $xcorr;
@@ -205,7 +207,7 @@ class CaptchaHelper
             $box['top'] = abs($bbox[5]);
 
             // create the image
-            $im = imagecreate ($box['width'], $box['height']);
+            $im = imagecreate($box['width'], $box['height']);
 
             $bgcolor = $this->hexToRgb($im, $bgColour);
             $fgcolor = $this->hexToRgb($im, $fgColour);
@@ -216,19 +218,19 @@ class CaptchaHelper
             // resize the image now
             $finalWidth  = round($box['width'] / $multi);
             $finalHeight = round($box['height'] / $multi);
-            $ds = imagecreatetruecolor ($finalWidth, $finalHeight);
+            $ds = imagecreatetruecolor($finalWidth, $finalHeight);
 
             $bgcolor2 = $this->hexToRgb($ds, $bgColour);
-            imageFill($ds, 0, 0, $bgcolor2);
+            imagefill($ds, 0, 0, $bgcolor2);
             imagecopyresampled($ds, $im, 0, $box['left'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
             imagetruecolortopalette($ds, 0, 256);
             imagepalettecopy($ds, $im);
-            ImageColorTransparent($ds, $bgcolor);
+            imagecolortransparent($ds, $bgcolor);
 
             // write the file
             $createImageFunction($ds, $imagePath);
-            ImageDestroy ($im);
-            ImageDestroy ($ds);
+            imagedestroy($im);
+            imagedestroy($ds);
         } else {
             // file already exists, calculate image size
             $imageData = getimagesize($imagePath);
@@ -252,7 +254,7 @@ class CaptchaHelper
         $relativeModulePathParts = [];
         $moduleRootFound = false;
         foreach ($absoluteModulePathParts as $folder) {
-            if ($folder == 'modules') {
+            if ('modules' === $folder) {
                 $moduleRootFound = true;
             }
             if ($moduleRootFound) {
@@ -272,32 +274,32 @@ class CaptchaHelper
     private function determineOperands()
     {
         // x .z. y .w. v
-        srand((double)microtime() * 1000000);
-        $x = rand(1, 10);
-        $y = rand(1, 10);
-        $z = rand(0, 1);  /* 0=+, 1=- */
-        $v = rand(1, 10);
-        $w = rand(0, 1);  /* 0=+, 1=- */
+        mt_srand((float)microtime() * 1000000);
+        $x = mt_rand(1, 10);
+        $y = mt_rand(1, 10);
+        $z = mt_rand(0, 1);  /* 0=+, 1=- */
+        $v = mt_rand(1, 10);
+        $w = mt_rand(0, 1);  /* 0=+, 1=- */
 
         // turn minus into plus when x=y
-        if ($z == 1 && $y == $x) {
+        if (1 === $z && $y === $x) {
             $z = 0;
         }
 
         // turn minus into plus when y=v
-        if ($w == 1 && $v == $y) {
+        if (1 === $w && $v === $y) {
             $w = 0;
         }
 
         // make sure that x>y if z=1 (minus)
-        if ($z == 1 && $y > $x) {
+        if (1 === $z && $y > $x) {
             $tmp = $x;
             $x = $y;
             $y = $tmp;
         }
 
         // turn minus into plus when v>x-y or v>x+y
-        if ($w == 1 && ($z == 1 && $v > ($x - $y)) || ($z == 0 && $v > ($x + $y))) {
+        if (1 === $w && (1 === $z && $v > ($x - $y)) || (0 === $z && $v > ($x + $y))) {
             $w = 0;
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -11,8 +13,8 @@
 
 namespace Zikula\FormiculaModule;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaKernel;
 use Zikula\ExtensionsModule\Installer\AbstractExtensionInstaller;
 use Zikula\FormiculaModule\Entity\ContactEntity;
