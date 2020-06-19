@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -32,7 +34,7 @@ class SubmissionEntity extends EntityAccess
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var integer $sid
+     * @var integer
      */
     private $sid;
 
@@ -40,7 +42,7 @@ class SubmissionEntity extends EntityAccess
      * The form id
      *
      * @ORM\Column(type="integer")
-     * @var integer $form
+     * @var integer
      */
     private $form;
 
@@ -48,7 +50,7 @@ class SubmissionEntity extends EntityAccess
      * The contact id
      *
      * @ORM\Column(type="integer")
-     * @var integer $cid
+     * @var integer
      */
     private $cid;
 
@@ -58,7 +60,7 @@ class SubmissionEntity extends EntityAccess
      * @Assert\NotBlank()
      * @Assert\Ip()
      * @ORM\Column(type="string", length=255)
-     * @var string $ipAddress
+     * @var string
      */
     private $ipAddress;
 
@@ -67,7 +69,7 @@ class SubmissionEntity extends EntityAccess
      *
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
-     * @var string $hostName
+     * @var string
      */
     private $hostName;
 
@@ -76,7 +78,7 @@ class SubmissionEntity extends EntityAccess
      *
      * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255)
-     * @var string $name
+     * @var string
      */
     private $name;
 
@@ -86,7 +88,7 @@ class SubmissionEntity extends EntityAccess
      * @Assert\NotBlank()
      * @Assert\Email()
      * @ORM\Column(type="string", length=255)
-     * @var string $email
+     * @var string
      */
     private $email;
 
@@ -94,7 +96,7 @@ class SubmissionEntity extends EntityAccess
      * The phone number
      *
      * @ORM\Column(type="string", length=255)
-     * @var string $phoneNumber
+     * @var string
      */
     private $phoneNumber;
 
@@ -102,7 +104,7 @@ class SubmissionEntity extends EntityAccess
      * The company
      *
      * @ORM\Column(type="string", length=255)
-     * @var string $company
+     * @var string
      */
     private $company;
 
@@ -111,7 +113,7 @@ class SubmissionEntity extends EntityAccess
      *
      * @Assert\Url()
      * @ORM\Column(type="string", length=255)
-     * @var string $url
+     * @var string
      */
     private $url;
 
@@ -119,7 +121,7 @@ class SubmissionEntity extends EntityAccess
      * The location
      *
      * @ORM\Column(type="string", length=255)
-     * @var string $location
+     * @var string
      */
     private $location;
 
@@ -127,7 +129,7 @@ class SubmissionEntity extends EntityAccess
      * The comment
      *
      * @ORM\Column(type="text")
-     * @var string $comment
+     * @var string
      */
     private $comment;
 
@@ -135,7 +137,7 @@ class SubmissionEntity extends EntityAccess
      * Custom data array
      *
      * @ORM\Column(type="array")
-     * @var array $customData
+     * @var array
      */
     private $customData;
 
@@ -434,7 +436,7 @@ class SubmissionEntity extends EntityAccess
      */
     public function addCustomData($key, $value)
     {
-        if ($key != '') {
+        if ('' !== $key) {
             $this->customData[$key] = $value;
         }
     }

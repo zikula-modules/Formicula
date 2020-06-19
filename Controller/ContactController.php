@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Formicula package.
  *
@@ -34,6 +36,7 @@ use Zikula\ThemeModule\Engine\Annotation\Theme;
 class ContactController extends AbstractController
 {
     private $contactRepository;
+
     private $environmentHelper;
 
     public function __construct(
@@ -56,7 +59,8 @@ class ContactController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Contact/view.html.twig")
      * @Theme("admin")
      */
-    public function viewAction() {
+    public function viewAction()
+    {
         // Security check
         if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
             throw new AccessDeniedException();
@@ -71,13 +75,13 @@ class ContactController extends AbstractController
         $visibleContacts = [];
         foreach ($allContacts as $contact) {
             $contactId = $contact->getCid();
-            if (!$this->hasPermission('ZikulaFormiculaModule::', ":$contactId:", ACCESS_EDIT)) {
+            if (!$this->hasPermission('ZikulaFormiculaModule::', ":${contactId}:", ACCESS_EDIT)) {
                 continue;
             }
 
             $contactArray = $contact->toArray();
             $contactArray['allowEdit'] = true;
-            $contactArray['allowDelete'] = $this->hasPermission('ZikulaFormiculaModule::', ":$contactId:", ACCESS_DELETE);
+            $contactArray['allowDelete'] = $this->hasPermission('ZikulaFormiculaModule::', ":${contactId}:", ACCESS_DELETE);
             $visibleContacts[] = $contactArray;
         }
 
@@ -144,7 +148,7 @@ class ContactController extends AbstractController
 
                     $entityManager->persist($contact);
                     $entityManager->flush();
-                    if ($mode == 'create') {
+                    if ('create' === $mode) {
                         $this->addFlash('status', $this->trans('Done! Contact created.'));
                     } else {
                         $this->addFlash('status', $this->trans('Done! Contact updated.'));
