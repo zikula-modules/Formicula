@@ -14,7 +14,12 @@ declare(strict_types=1);
 namespace Zikula\FormiculaModule;
 
 use Zikula\ExtensionsModule\AbstractExtension;
+use Zikula\FormiculaModule\DependencyInjection\ZikulaFormiculaExtension;
 
 class ZikulaFormiculaModule extends AbstractExtension
 {
+    public function getContainerExtension()
+    {
+        return new ZikulaFormiculaExtension();
+    }
 }

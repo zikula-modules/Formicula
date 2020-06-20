@@ -17,7 +17,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Zikula\FormiculaModule\Helper\CaptchaHelper;
 
-class FormiculaExtension extends AbstractExtension
+class FormiculaCaptchaExtension extends AbstractExtension
 {
     /**
      * @var CaptchaHelper
