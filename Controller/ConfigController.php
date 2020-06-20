@@ -52,7 +52,6 @@ class ConfigController extends AbstractController
      * @Theme("admin")
      */
     public function configAction(
-        VariableApiInterface $variableApi,
         Request $request
     ) {
         // Security check
@@ -120,7 +119,7 @@ class ConfigController extends AbstractController
      * @Route("/clearcache")
      * @Theme("admin")
      */
-    public function clearcacheAction(Request $request)
+    public function clearcacheAction()
     {
         // Security check
         if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
@@ -128,12 +127,8 @@ class ConfigController extends AbstractController
         }
 
         $cacheDirectory = $this->environmentHelper->getCacheDirectory();
-        $finder = new Finder();
-        foreach ($finder->files()->in($cacheDirectory) as $file) {
-            $fileName = $file->getFilename();
-            if (in_array($fileName, ['.htaccess', 'index.htm', 'index.html'])) {
-                continue;
-            }
+        $files = (new Finder())->files()->in($cacheDirectory)->notName(['.htaccess', 'index.htm', 'index.html']);
+        foreach ($files as $file) {
             unlink($file->getRealPath());
         }
 

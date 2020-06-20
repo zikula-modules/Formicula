@@ -44,6 +44,6 @@ class ExtensionMenu extends AbstractExtensionMenu
 
     public function getBundleName(): string
     {
-        return 'ZikulaEZCommentsModule';
+        return 'ZikulaFormiculaModule';
     }
 }

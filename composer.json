@@ -33,11 +33,5 @@
                 "ZikulaFormiculaModule::": "Form ID:Contact ID:"
             }
         }
-    },
-    "config": {
-        "vendor-dir": "vendor",
-        "preferred-install": "dist",
-        "optimize-autoloader": true,
-        "sort-packages": true
     }
 }

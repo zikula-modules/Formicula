@@ -132,7 +132,7 @@ class ContactController extends AbstractController
             if ($form->get('save')->isClicked()) {
                 $contact = $form->getData();
 
-                // email addresses can be a comma seperated string, split and check separately
+                // email addresses can be a comma separated string, split and check separately
                 $mailAddress = $contact->getEmail();
                 $mailAddress = preg_replace('/\s*/m', '', $mailAddress); // remove spaces
                 $addresses = explode(',', $mailAddress);

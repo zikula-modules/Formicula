@@ -9,3 +9,7 @@ services:
     Zikula\FormiculaModule\:
         resource: '../../*'
         exclude: '../../{bootstrap.php,Tests,vendor}'
+
+    Zikula\FormiculaModule\FormiculaModuleInstaller:
+        arguments:
+            $cacheDir: '%kernel.cache_dir%'

@@ -13,9 +13,15 @@ declare(strict_types=1);
 
 namespace Zikula\FormiculaModule;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\CoreBundle\Doctrine\Helper\SchemaHelper;
 use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaKernel;
+use Zikula\ExtensionsModule\AbstractExtension;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\ExtensionsModule\Installer\AbstractExtensionInstaller;
 use Zikula\FormiculaModule\Entity\ContactEntity;
 use Zikula\FormiculaModule\Entity\SubmissionEntity;
@@ -29,6 +35,21 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         ContactEntity::class,
         SubmissionEntity::class
     ];
+
+    private $cacheDir;
+
+    public function __construct(
+        AbstractExtension $extension,
+        ManagerRegistry $managerRegistry,
+        SchemaHelper $schemaTool,
+        RequestStack $requestStack,
+        TranslatorInterface $translator,
+        VariableApiInterface $variableApi,
+        string $cacheDir
+    ) {
+        parent::__construct($extension, $managerRegistry, $schemaTool, $requestStack, $translator, $variableApi);
+        $this->cacheDir = $cacheDir . '/formicula';
+    }
 
     /**
      * Initialise the Formicula module.
@@ -64,7 +85,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
             'showComment' => true,
 
             'showFileAttachment' => false,
-            'uploadDirectory' => 'web/uploads',
+            'uploadDirectory' => 'public/formicula/uploads',
             'deleteUploadedFiles' => true,
 
             'sendConfirmationToUser' => true,
@@ -92,78 +113,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
      */
     public function upgrade($oldVersion): bool
     {
-        if (version_compare($oldVersion, '4.0.0', '<')) {
-            // delete all old data
-            $variableApi = $this->getVariableApi();
-            $variableApi->delAll('formicula');
-            $variableApi->delAll('Formicula');
-
-//            $isLegacy = version_compare(ZikulaKernel::VERSION, '2.0.0') >= 0 ? false : true;
-//            if ($isLegacy) {
-//                \EventUtil::unregisterPersistentModuleHandlers('Formicula');
-
-//                $conn->executeQuery("DELETE FROM $dbName.`hook_area` WHERE `owner` = 'Formicula'");
-//                $conn->executeQuery("DELETE FROM $dbName.`hook_binding` WHERE `sowner` = 'Formicula'");
-//                $conn->executeQuery("DELETE FROM $dbName.`hook_runtime` WHERE `sowner` = 'Formicula'");
-//                $conn->executeQuery("DELETE FROM $dbName.`hook_subscriber` WHERE `owner` = 'Formicula'");
-//            }
-
-            // reinstall
-            $this->install();
-
-            $conn = $this->managerRegistry->getConnection();
-            $hasMigrationData = false;
-
-            // migrate old contacts
-            $stmt = $conn->executeQuery("SELECT * FROM `formcontacts`");
-            while ($row = $stmt->fetch()) {
-                $hasMigrationData = true;
-                $contact = new ContactEntity();
-                $contact->setCid($row['pn_cid']);
-                $contact->setName($row['pn_name']);
-                $contact->setEmail($row['pn_email']);
-                $contact->setPublic((bool)$row['pn_public']);
-                $contact->setSenderName($row['pn_sname']);
-                $contact->setSenderEmail($row['pn_semail']);
-                $contact->setSendingSubject($row['pn_ssubject']);
-                $this->entityManager->persist($contact);
-            }
-
-            // migrate old submissions
-            $stmt = $conn->executeQuery("SELECT * FROM `formsubmits`");
-            while ($row = $stmt->fetch()) {
-                $hasMigrationData = true;
-                $submission = new SubmissionEntity();
-                $submission->setSid($row['pn_sid']);
-                $submission->setForm($row['pn_form']);
-                $submission->setCid($row['pn_cid']);
-                $submission->setIpAddress($row['pn_ip']);
-                $submission->setHostName($row['pn_host']);
-                $submission->setName($row['pn_name']);
-                $submission->setEmail($row['pn_email']);
-                $submission->setPhoneNumber($row['pn_phone']);
-                $submission->setCompany((bool)$row['pn_company']);
-                $submission->setUrl($row['pn_url']);
-                $submission->setLocation($row['pn_location']);
-                $submission->setComment($row['pn_comment']);
-                $customData = @unserialize($row['pn_customdata']);
-                if ($customData) {
-                    $submission->setCustomData($customData);
-                }
-                $this->entityManager->persist($submission);
-            }
-
-            // save migrated data
-            if ($hasMigrationData) {
-                $this->entityManager->flush();
-            }
-
-            $conn->executeQuery("DROP TABLE `formcontacts`");
-            $conn->executeQuery("DROP TABLE `formsubmits`");
-
-            $oldVersion = '4.0.0';
-        }
-
         switch ($oldVersion) {
             case '4.0.0':
             case '4.0.1':
@@ -197,7 +146,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                     return false;
                 }
             case '5.0.1':
-                // future upgrades
+                $this->setVar('uploadDirectory', 'public/formicula/uploads');
         }
 
         // Update successful
@@ -215,11 +164,10 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
 
         $this->delVars();
 
-        $cacheDirectory = $this->getCacheDirectory();
-        if (is_dir($cacheDirectory)) {
+        if (is_dir($this->cacheDir)) {
             $fs = new Filesystem();
             try {
-                $fs->remove($cacheDirectory);
+                $fs->remove($this->cacheDir);
             } catch (IOExceptionInterface $e) {
                 $this->addFlash('error', $this->trans('An error occurred while removing the cache directory at %s%.', ['%s%' => $e->getPath()]));
             }
@@ -229,38 +177,27 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
     }
 
     /**
-     * Returns path to cache directory.
-     *
-     * @return string Path to temporary cache directory
-     */
-    private function getCacheDirectory()
-    {
-        return 'var/cache/formicula';
-    }
-
-    /**
      * Creates the cache directory.
      *
      * @return void
      */
     private function createCacheDirectory()
     {
-        $cacheDirectory = $this->getCacheDirectory();
         $fs = new Filesystem();
         try {
-            if (!$fs->exists($cacheDirectory)) {
-                $fs->mkdir($cacheDirectory);
-                $fs->chmod($cacheDirectory, 0777);
+            if (!$fs->exists($this->cacheDir)) {
+                $fs->mkdir($this->cacheDir);
+                $fs->chmod($this->cacheDir, 0777);
             }
         } catch (IOExceptionInterface $e) {
             $this->addFlash('error', $this->trans('An error occurred while creating the cache directory at %s%.', ['%s%' => $e->getPath()]));
         }
 
         try {
-            if ($fs->exists($cacheDirectory . '/.htaccess')) {
+            if ($fs->exists($this->cacheDir . '/.htaccess')) {
                 return;
             }
-            $fs->dumpFile($cacheDirectory . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+            $fs->dumpFile($this->cacheDir . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
 SetEnvIf Request_URI "\.jpeg$" object_is_jpeg=jpeg
