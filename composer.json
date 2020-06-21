@@ -23,11 +23,15 @@
             "core-compatibility": ">=3.0.0 <4.0.0",
             "displayname": "Formicula",
             "url": "formicula",
-            "icon": "far fa-check-square",
             "oldnames": ["Formicula"],
+            "icon": "far fa-check-square",
             "capabilities": {
-                "admin": {"route": "zikulaformiculamodule_contact_view"},
-                "user": {"route": "zikulaformiculamodule_user_index"}
+                "admin": {
+                    "route": "zikulaformiculamodule_contact_view"
+                },
+                "user": {
+                    "route": "zikulaformiculamodule_user_index"
+                }
             },
             "securityschema": {
                 "ZikulaFormiculaModule::": "Form ID:Contact ID:"

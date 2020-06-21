@@ -53,11 +53,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         $this->cacheDir = $cacheDir . '/formicula';
     }
 
-    /**
-     * Initialise the Formicula module.
-     *
-     * @return boolean True if initialisation successful, false otherwise
-     */
     public function install(): bool
     {
         $this->schemaTool->create($this->entities);
@@ -106,13 +101,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         return true;
     }
 
-    /**
-     * Upgrade the module from an old version.
-     *
-     * @param string $oldVersion version number string to upgrade from
-     *
-     * @return bool|string true on success, last valid version string or false if fails
-     */
     public function upgrade($oldVersion): bool
     {
         switch ($oldVersion) {
@@ -155,11 +143,6 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         return true;
     }
 
-    /**
-     * Delete the Formicula module.
-     *
-     * @return bool true if deletion successful, false otherwise
-     */
     public function uninstall(): bool
     {
         $this->schemaTool->drop($this->entities);
@@ -178,12 +161,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         return true;
     }
 
-    /**
-     * Creates the cache directory.
-     *
-     * @return void
-     */
-    private function createCacheDirectory()
+    private function createCacheDirectory(): void
     {
         $fs = new Filesystem();
         try {
