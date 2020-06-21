@@ -19,21 +19,21 @@ See [releases](https://github.com/zikula-modules/Formicula/releases).
 
 1. Extract the files to your Zikula `extensions` directory.
 2. Initialize and activate Formicula in the extensions administration.
-3. During installation, Formicula tries to create a `formicula_cache` directory containing a `.htaccess` file.
-   If this fails (most probably when safemode is set to 'on' in your PHP environment or the zTemp
-   directory is outside your web root), you will be notified and have to create them on your own:
-   a) Create a directory formicula_cache in your temporary directory (most likely ztemp) and make it 
-      writable for the web server (e.g. chmod 777)
-   b) Create a .htacess in formicula_cache containing the following lines to allow access to the
+3. During installation, Formicula tries to create a `public/formicula/cache` directory containing a `.htaccess` file.
+   If this fails (should happen very rarely), you will be notified and have to create them on your own:
+   a) Create a directory `public/formicula/cache` and make it writable for the web server (e.g. `chmod 777`).
+   b) Create a `.htacess` file within that directory containing the following lines to allow access to the
       images created for the captcha:
-      SetEnvIf Request_URI "\.gif$" object_is_gif=gif
-      SetEnvIf Request_URI "\.png$" object_is_png=png
-      SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
-      Order deny,allow
-      Deny from all
-      Allow from env=object_is_gif
-      Allow from env=object_is_png
-      Allow from env=object_is_jpg
+   ```
+SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+SetEnvIf Request_URI "\.png$" object_is_png=png
+SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
+Order deny,allow
+Deny from all
+Allow from env=object_is_gif
+Allow from env=object_is_png
+Allow from env=object_is_jpg
+   ```
 4. Create some contact names/topics with respective email adresses in the Formicula admin setion.
    Upon installation, Formicula creates a default contact with the admins mail address.
 5. Add a basic permission rule, e.g.
@@ -49,13 +49,10 @@ See [releases](https://github.com/zikula-modules/Formicula/releases).
 
 ## Configuration
 
-Show xxx: quick configuration enable/disable some fields in the userform. These fields may be
-(read: surely will be) removed in future versions.
-Send confirmation email to user: Tick this to send an confirmation mail to the user  	
-directory for uploaded files: Uploaded files get stored here. Make sure this directory is secured with a
-.htaccess file otherwise someone can upload malicious files and execute them!
-Delete file after sending: does what it says when ticked.
-Activate spamcheck: shows a little captcha in the form
+- Show xxx: quick configuration enable/disable some fields in the userform. These fields may be (read: surely will be) removed in future versions.
+- Send confirmation email to user: Tick this to send an confirmation mail to the user directory for uploaded files: Uploaded files get stored here. Make sure this directory is secured with a `.htaccess` file!
+- Delete file after sending: does what it says when ticked.
+- Activate spamcheck: shows a little captcha in the form
 
 ## Contacts
 

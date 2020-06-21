@@ -5,7 +5,7 @@ services:
         public: false
         bind:
             $extension: '@Zikula\FormiculaModule\ZikulaFormiculaModule'
-            $cacheDir: '%kernel.cache_dir%'
+            $cacheDir: '%kernel.project_dir%/public/formicula/cache'
 
     Zikula\FormiculaModule\:
         resource: '../../*'
@@ -14,3 +14,9 @@ services:
     Zikula\FormiculaModule\Helper\:
         resource: '../../Helper/*'
         lazy: true
+
+    _instanceof:
+        Zikula\ExtensionsModule\ModuleInterface\Content\ContentTypeInterface:
+            bind:
+                $twigLoader: '@twig.loader'
+                $permissionHelper: '@?Zikula\ContentModule\Helper\PermissionHelper'

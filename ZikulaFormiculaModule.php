@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Zikula\FormiculaModule;
 
-use Zikula\ExtensionsModule\AbstractExtension;
+use Zikula\ExtensionsModule\AbstractModule;
 
-class ZikulaFormiculaModule extends AbstractExtension
+class ZikulaFormiculaModule extends AbstractModule
 {
 }

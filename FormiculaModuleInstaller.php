@@ -38,7 +38,12 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
     /**
      * @var string
      */
-    private $cacheDir;
+    private $cacheDirectory;
+
+    /**
+     * @var string
+     */
+    private $uploadDirectory;
 
     public function __construct(
         AbstractExtension $extension,
@@ -50,7 +55,8 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         string $cacheDir
     ) {
         parent::__construct($extension, $managerRegistry, $schemaTool, $requestStack, $translator, $variableApi);
-        $this->cacheDir = $cacheDir . '/formicula';
+        $this->cacheDirectory = $cacheDir;
+        $this->uploadDirectory = str_replace('cache', 'uploads', $cacheDir);
     }
 
     public function install(): bool
@@ -70,8 +76,9 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         $this->entityManager->persist($contact);
         $this->entityManager->flush();
 
-        // try to create the cache directory
+        // try to create required directories
         $this->createCacheDirectory();
+        $this->createUploadDirectory();
 
         $this->setVars($this->getDefaultSettings());
 
@@ -114,8 +121,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                     return false;
                 }
             case '5.0.1':
-                $settings = $this->getDefaultSettings();
-                $this->setVar('uploadDirectory', $settings['uploadDirectory']);
+                $this->setVar('uploadDirectory', $this->uploadDirectory);
             case '5.0.2':
                 // nothing yet
         }
@@ -130,14 +136,22 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
 
         $this->delVars();
 
-        if (is_dir($this->cacheDir)) {
+        if (is_dir($this->cacheDirectory)) {
             $fs = new Filesystem();
             try {
-                $fs->remove($this->cacheDir);
-            } catch (IOExceptionInterface $e) {
-                $this->addFlash('error', $this->trans('An error occurred while removing the cache directory at %s%.', ['%s%' => $e->getPath()]));
+                $fs->remove($this->cacheDirectory);
+            } catch (IOExceptionInterface $exception) {
+                $this->addFlash(
+                    'error',
+                    $this->trans(
+                        'An error occurred while removing the cache directory at %s%.',
+                        ['%s%' => $this->cacheDirectory]
+                    )
+                );
             }
         }
+
+        // upload directory is currently not deleted, since the files may still be of interest
 
         return true;
     }
@@ -146,19 +160,25 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
     {
         $fs = new Filesystem();
         try {
-            if (!$fs->exists($this->cacheDir)) {
-                $fs->mkdir($this->cacheDir);
-                $fs->chmod($this->cacheDir, 0777);
+            if (!$fs->exists($this->cacheDirectory)) {
+                $fs->mkdir($this->cacheDirectory);
+                $fs->chmod($this->cacheDirectory, 0777);
             }
-        } catch (IOExceptionInterface $e) {
-            $this->addFlash('error', $this->trans('An error occurred while creating the cache directory at %s%.', ['%s%' => $e->getPath()]));
+        } catch (IOExceptionInterface $exception) {
+            $this->addFlash(
+                'error',
+                $this->trans(
+                    'An error occurred while creating the cache directory at %s%.',
+                    ['%s%' => $this->cacheDirectory]
+                )
+            );
         }
 
         try {
-            if ($fs->exists($this->cacheDir . '/.htaccess')) {
+            if ($fs->exists($this->cacheDirectory . '/.htaccess')) {
                 return;
             }
-            $fs->dumpFile($this->cacheDir . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
+            $fs->dumpFile($this->cacheDirectory . '/.htaccess', 'SetEnvIf Request_URI "\.gif$" object_is_gif=gif
 SetEnvIf Request_URI "\.png$" object_is_png=png
 SetEnvIf Request_URI "\.jpg$" object_is_jpg=jpg
 SetEnvIf Request_URI "\.jpeg$" object_is_jpeg=jpeg
@@ -169,9 +189,37 @@ Allow from env=object_is_png
 Allow from env=object_is_jpg
 Allow from env=object_is_jpeg
 ');
-            $this->addFlash('status', $this->trans('Successfully created the cache directory with a .htaccess file in it.'));
-        } catch (IOExceptionInterface $e) {
-            $this->addFlash('error', $this->trans('Could not create .htaccess file in %s%, please refer to the manual before using the module!', ['%s%' => $e->getPath()]));
+            $this->addFlash(
+                'status',
+                $this->trans('Successfully created the cache directory with a .htaccess file in it.')
+            );
+        } catch (IOExceptionInterface $exception) {
+            $this->addFlash(
+                'error',
+                $this->trans(
+                    'Could not create .htaccess file in %s%, please refer to the manual before using the module!',
+                    ['%s%' => $this->cacheDirectory]
+                )
+            );
+        }
+    }
+
+    private function createUploadDirectory(): void
+    {
+        $fs = new Filesystem();
+        try {
+            if (!$fs->exists($this->uploadDirectory)) {
+                $fs->mkdir($this->uploadDirectory);
+                $fs->chmod($this->uploadDirectory, 0777);
+            }
+        } catch (IOExceptionInterface $exception) {
+            $this->addFlash(
+                'error',
+                $this->trans(
+                    'An error occurred while creating the upload directory at %s%.',
+                    ['%s%' => $this->uploadDirectory]
+                )
+            );
         }
     }
 
@@ -186,7 +234,7 @@ Allow from env=object_is_jpeg
             'showComment' => true,
 
             'showFileAttachment' => false,
-            'uploadDirectory' => 'public/formicula/uploads',
+            'uploadDirectory' => $this->uploadDirectory,
             'deleteUploadedFiles' => true,
 
             'sendConfirmationToUser' => true,

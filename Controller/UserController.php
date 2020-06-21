@@ -36,6 +36,7 @@ use Zikula\FormiculaModule\Entity\SubmissionEntity;
 use Zikula\FormiculaModule\Form\Type\UserSubmissionType;
 use Zikula\FormiculaModule\Helper\CaptchaHelper;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
+use Zikula\PermissionsModule\Annotation\PermissionCheck;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
@@ -44,12 +45,24 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @var ContactRepository
+     */
     private $contactRepository;
 
+    /**
+     * @var EnvironmentHelper
+     */
     private $environmentHelper;
 
+    /**
+     * @var MailerInterface
+     */
     private $mailer;
 
+    /**
+     * @var LoggerInterface
+     */
     private $mailLogger;
 
     public function __construct(
@@ -187,7 +200,7 @@ class UserController extends AbstractController
 
             $contact = $this->contactRepository->find($contactId);
             if (null === $contact) {
-                $this->addFlash('error', $this->trans('Contact could not be found.'));
+                $this->addFlash('error', 'Contact could not be found.');
 
                 return $this->redirect($returnUrl);
             }
@@ -210,7 +223,7 @@ class UserController extends AbstractController
             }
 
             if (!isset($userData['name']) || empty($userData['name'])) {
-                $this->addFlash('error', $this->trans('Error! No or invalid name given.'));
+                $this->addFlash('error', 'Error! No or invalid name given.');
                 $hasError = true;
             }
 
@@ -219,7 +232,7 @@ class UserController extends AbstractController
                 $userData['uname'] = $userName;
             }
             if (!isset($userData['emailAddress']) || false === filter_var($userData['emailAddress'], FILTER_VALIDATE_EMAIL)) {
-                $this->addFlash('error', $this->trans('Error! No or incorrect email address supplied.'));
+                $this->addFlash('error', 'Error! No or incorrect email address supplied.');
                 $hasError = true;
             }
 
@@ -240,7 +253,7 @@ class UserController extends AbstractController
                 if (is_array($operands)) {
                     $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
                     if (false === $captchaValid) {
-                        $this->addFlash('error', $this->trans('The calculation to prevent spam was incorrect. Please try again.'));
+                        $this->addFlash('error', 'The calculation to prevent spam was incorrect. Please try again.');
                         $hasError = true;
                     }
                 }
@@ -251,7 +264,7 @@ class UserController extends AbstractController
             $validationHook = new ValidationHook(new ValidationProviders());
             $validators = $hookDispatcher->dispatch('zikulaformiculamodule.ui_hooks.forms.validate_edit', $validationHook)->getValidators();
             if ($validators->hasErrors()) {
-                $this->addFlash('error', $this->trans('The validation of the hooked security module was incorrect. Please try again.'));
+                $this->addFlash('error', 'The validation of the hooked security module was incorrect. Please try again.');
                 $hasError = true;
             }
 
@@ -309,8 +322,8 @@ class UserController extends AbstractController
                         $entityManager = $this->get('doctrine')->getManager();
                         $entityManager->persist($submission);
                         $entityManager->flush();
-                    } catch (\Exception $e) {
-                        $this->addFlash('error', $this->trans('Error! Could not store your submission into the database.') . ' ' . $e->getMessage());
+                    } catch (\Exception $exception) {
+                        $this->addFlash('error', $this->trans('Error! Could not store your submission into the database.') . ' ' . $exception->getMessage());
                     }
                 }
             }
@@ -338,7 +351,7 @@ class UserController extends AbstractController
     private function handleUpload(UploadedFile $file)
     {
         // Get path to upload directory
-        $uploadDirectory = $this->getVar('uploadDirectory', 'userdata');
+        $uploadDirectory = $this->getVar('uploadDirectory', 'public/formicula/uploads');
         // check if it ends with / or we add one
         if ('/' !== mb_substr($uploadDirectory, -1)) {
             $uploadDirectory .= '/';
@@ -347,8 +360,8 @@ class UserController extends AbstractController
         $fileName = $file->getClientOriginalName();
         try {
             $file->move($uploadDirectory, $fileName);
-        } catch (FileException $e) {
-            $this->addFlash('error', $e->getMessage());
+        } catch (FileException $exception) {
+            $this->addFlash('error', $exception->getMessage());
 
             return '';
         }
@@ -448,7 +461,7 @@ class UserController extends AbstractController
         // add possible attachment to admin mail
         if ('contact' === $mailType && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
             // add file attachment
-            $uploadDirectory = realpath($this->getVar('uploadDirectory', 'userdata'));
+            $uploadDirectory = realpath($this->getVar('uploadDirectory', 'public/formicula/uploads'));
             $message->attachFromPath($uploadDirectory . '/' . $userData['fileUpload']);
         }
 
@@ -500,11 +513,11 @@ class UserController extends AbstractController
             }
 
             if (false === $mailSent) {
-                $this->addFlash('error', $this->trans('There was an error sending the email to our contact.'));
+                $this->addFlash('error', 'There was an error sending the email to our contact.');
             }
         } elseif ('user' === $mailType) {
             if (false === $mailSent) {
-                $this->addFlash('error', $this->trans('There was an error sending the confirmation email to your email address.'));
+                $this->addFlash('error', 'There was an error sending the confirmation email to your email address.');
             }
         }
 

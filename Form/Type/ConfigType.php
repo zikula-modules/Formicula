@@ -26,13 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ConfigType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $translator = $options['translator'];
-
         $builder
             ->add('defaultForm', ChoiceType::class, [
                 'label' => 'Default form',
@@ -149,17 +144,11 @@ class ConfigType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_config';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

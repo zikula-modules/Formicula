@@ -24,17 +24,23 @@ use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\FormiculaModule\Entity\Repository\SubmissionRepository;
 use Zikula\FormiculaModule\Form\Type\DeleteSubmissionType;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
+use Zikula\PermissionsModule\Annotation\PermissionCheck;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 
 /**
- * Class SubmissionController
  * @Route("/submission")
  */
 class SubmissionController extends AbstractController
 {
+    /**
+     * @var SubmissionRepository
+     */
     private $submissionRepository;
 
+    /**
+     * @var EnvironmentHelper
+     */
     private $environmentHelper;
 
     public function __construct(
@@ -54,16 +60,12 @@ class SubmissionController extends AbstractController
      * Shows a list of submissions.
      *
      * @Route("/view")
+     * @PermissionCheck("admin")
      * @Template("@ZikulaFormiculaModule/Submission/view.html.twig")
      * @Theme("admin")
      */
     public function viewAction(Request $request)
     {
-        // Security check
-        if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
-            throw new AccessDeniedException();
-        }
-
         // check necessary environment
         $this->environmentHelper->check();
 
@@ -78,23 +80,19 @@ class SubmissionController extends AbstractController
      * Shows a specific form submission.
      *
      * @Route("/display")
+     * @PermissionCheck("admin")
      * @Template("@ZikulaFormiculaModule/Submission/display.html.twig")
      * @Theme("admin")
      */
     public function displayAction(Request $request)
     {
-        // Security check
-        if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_ADMIN)) {
-            throw new AccessDeniedException();
-        }
-
         // check necessary environment
         $this->environmentHelper->check();
 
         $submissionId = $request->query->getDigits('sid', -1);
         $submission = $this->submissionRepository->find($submissionId);
         if (false === $submission) {
-            $this->addFlash('error', $this->trans('Form submission could not be found.'));
+            $this->addFlash('error', 'Form submission could not be found.');
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
@@ -108,16 +106,12 @@ class SubmissionController extends AbstractController
      * Deletes an existing submit from the database.
      *
      * @Route("/delete")
+     * @PermissionCheck("delete")
      * @Template("@ZikulaFormiculaModule/Submission/delete.html.twig")
      * @Theme("admin")
      */
     public function deleteAction(Request $request)
     {
-        // Security check
-        if (!$this->hasPermission('ZikulaFormiculaModule::', '::', ACCESS_DELETE)) {
-            throw new AccessDeniedException();
-        }
-
         // check necessary environment
         $this->environmentHelper->check();
 
@@ -126,22 +120,21 @@ class SubmissionController extends AbstractController
 
         $submission = $this->submissionRepository->find($submissionId);
         if (false === $submission) {
-            $this->addFlash('error', $this->trans('Form submission could not be found.'));
+            $this->addFlash('error', 'Form submission could not be found.');
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');
         }
 
         $form = $this->createForm(DeleteSubmissionType::class, $submission);
-
-        if ($form->handleRequest($request)->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('delete')->isClicked()) {
                 $submission = $form->getData();
                 $entityManager->remove($submission);
                 $entityManager->flush();
-                $this->addFlash('status', $this->trans('Done! Submission deleted.'));
-            }
-            if ($form->get('cancel')->isClicked()) {
-                $this->addFlash('status', $this->trans('Operation cancelled.'));
+                $this->addFlash('status', 'Done! Submission deleted.');
+            } elseif ($form->get('cancel')->isClicked()) {
+                $this->addFlash('status', 'Operation cancelled.');
             }
 
             return $this->redirectToRoute('zikulaformiculamodule_submission_view');

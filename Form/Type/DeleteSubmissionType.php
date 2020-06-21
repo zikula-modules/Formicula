@@ -23,9 +23,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class DeleteSubmissionType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -47,9 +44,6 @@ class DeleteSubmissionType extends AbstractType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_deletesubmission';

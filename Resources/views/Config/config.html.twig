@@ -36,10 +36,10 @@
     <p class="alert alert-warning">{% trans %}For your information: There are better spam check modules out there. For example the Zikula Captcha module which can be hooked to Formicula. If you want to use this module, then please do not forget to add the required permissions for the Captcha module, too.{% endtrans %}</p>
     {{ form_row(form.enableSpamCheck) }}
     <div id="formiculaSpamCheckDetails">
-        <div class="form-group">
-            <label class="col-sm-3 control-label">{% trans %}Cache directory{% endtrans %}</label>
-            <div class="col-sm-9">
-                <p class="form-control-static">{{ cacheDirectory }}</p>
+        <div class="form-row">
+            <label class="col-md-3 control-label">{% trans %}Cache directory{% endtrans %}</label>
+            <div class="col-md-9">
+                <tt>{{ cacheDirectory }}</tt>
             </div>
         </div>
     </div>

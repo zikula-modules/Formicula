@@ -30,9 +30,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UserSubmissionType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $modVars = $options['modVars'];
@@ -137,17 +134,11 @@ class UserSubmissionType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'zikulaformiculamodule_usersubmission';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

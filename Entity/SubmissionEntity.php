@@ -290,7 +290,7 @@ class SubmissionEntity extends EntityAccess
      */
     public function setPhone(string $phoneNumber): void
     {
-        return $this->setPhoneNumber($phoneNumber);
+        $this->setPhoneNumber($phoneNumber);
     }
 
     /**

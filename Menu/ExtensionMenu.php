@@ -24,7 +24,7 @@ class ExtensionMenu extends AbstractExtensionMenu
         if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
             $menu->addChild('View contacts', [
                 'route' => 'zikulaformiculamodule_contact_view',
-            ])->setAttribute('icon', 'fas fa-group');
+            ])->setAttribute('icon', 'fas fa-users');
             $menu->addChild('Add contact', [
                 'route' => 'zikulaformiculamodule_contact_edit',
             ])->setAttribute('icon', 'fas fa-user-plus');

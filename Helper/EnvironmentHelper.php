@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Zikula\FormiculaModule\Helper;
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -43,7 +44,7 @@ class EnvironmentHelper
     /**
      * @var string
      */
-    private $cacheDir;
+    private $cacheDirectory;
 
     public function __construct(
         KernelInterface $kernel,
@@ -56,13 +57,13 @@ class EnvironmentHelper
         $this->translator = $translator;
         $this->variableApi = $variableApi;
         $this->requestStack = $requestStack;
-        $this->cacheDir = $cacheDir . '/formicula';
+        $this->cacheDirectory = $cacheDir;
     }
 
     /**
      * Checks some environment aspects and sets error messages.
      */
-    public function check()
+    public function check(): void
     {
         $request = $this->requestStack->getCurrentRequest();
         $flashBag = null !== $request ? $request->getSession()->getFlashBag() : null;
@@ -85,12 +86,26 @@ class EnvironmentHelper
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
         }
 
-        if (!file_exists($this->cacheDir) || !is_writable($this->cacheDir)) {
+        if (!file_exists($this->cacheDirectory) || !is_writable($this->cacheDirectory)) {
             $flashBag->add('status', $this->translator->trans('Formicula cache directory does not exist or is not writable - Captchas have been disabled.'));
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
-        } elseif (!file_exists($this->cacheDir . '/.htaccess')) {
+        } elseif (!file_exists($this->cacheDirectory . '/.htaccess')) {
             $flashBag->add('status', $this->translator->trans('Formicula cache directory does not contain the required .htaccess file - Captchas have been disabled.'));
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
+        }
+    }
+
+    public function clearCache(): void
+    {
+        if (!file_exists($this->cacheDirectory) || !is_writable($this->cacheDirectory)) {
+            return;
+        }
+
+        $files = (new Finder())->files()->in($this->cacheDirectory())
+            ->notName(['.htaccess', 'index.htm', 'index.html'])
+        ;
+        foreach ($files as $file) {
+            unlink($file->getRealPath());
         }
     }
 }
