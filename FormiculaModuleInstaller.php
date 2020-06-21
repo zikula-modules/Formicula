@@ -73,29 +73,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         // try to create the cache directory
         $this->createCacheDirectory();
 
-        $this->setVars([
-            'defaultForm' => 0,
-            'showCompany' => true,
-            'showPhone' => true,
-            'showUrl' => true,
-            'showLocation' => true,
-            'showComment' => true,
-
-            'showFileAttachment' => false,
-            'uploadDirectory' => 'public/formicula/uploads',
-            'deleteUploadedFiles' => true,
-
-            'sendConfirmationToUser' => true,
-            'defaultAdminFormat' => 'html',
-            'defaultUserFormat' => 'html',
-            'showUserFormat' => true,
-            'useContactsAsSender' => true,
-
-            'enableSpamCheck' => true,
-            'excludeSpamCheck' => '',
-            'storeSubmissionData' => false,
-            'storeSubmissionDataForms' => ''
-        ]);
+        $this->setVars($this->getDefaultSettings());
 
         // initialisation successful
         return true;
@@ -136,7 +114,10 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                     return false;
                 }
             case '5.0.1':
-                $this->setVar('uploadDirectory', 'public/formicula/uploads');
+                $settings = $this->getDefaultSettings();
+                $this->setVar('uploadDirectory', $settings['uploadDirectory']);
+            case '5.0.2':
+                // nothing yet
         }
 
         // Update successful
@@ -192,5 +173,32 @@ Allow from env=object_is_jpeg
         } catch (IOExceptionInterface $e) {
             $this->addFlash('error', $this->trans('Could not create .htaccess file in %s%, please refer to the manual before using the module!', ['%s%' => $e->getPath()]));
         }
+    }
+
+    private function getDefaultSettings(): array
+    {
+        return [
+            'defaultForm' => 0,
+            'showCompany' => true,
+            'showPhone' => true,
+            'showUrl' => true,
+            'showLocation' => true,
+            'showComment' => true,
+
+            'showFileAttachment' => false,
+            'uploadDirectory' => 'public/formicula/uploads',
+            'deleteUploadedFiles' => true,
+
+            'sendConfirmationToUser' => true,
+            'defaultAdminFormat' => 'html',
+            'defaultUserFormat' => 'html',
+            'showUserFormat' => true,
+            'useContactsAsSender' => true,
+
+            'enableSpamCheck' => true,
+            'excludeSpamCheck' => '',
+            'storeSubmissionData' => false,
+            'storeSubmissionDataForms' => ''
+        ];
     }
 }
