@@ -104,8 +104,8 @@ class ContactController extends AbstractController
         // check necessary environment
         $this->environmentHelper->check();
 
-        $entityManager = $this->get('doctrine')->getManager();
-        $contactId = $request->query->getDigits('cid', 0);
+        $entityManager = $this->getDoctrine()->getManager();
+        $contactId = $request->query->getInt('cid', 0);
 
         if ($contactId < 1) {
             $mode = 'create';
@@ -179,8 +179,8 @@ class ContactController extends AbstractController
         // check necessary environment
         $this->environmentHelper->check();
 
-        $entityManager = $this->get('doctrine')->getManager();
-        $contactId = $request->query->getDigits('cid', 0);
+        $entityManager = $this->getDoctrine()->getManager();
+        $contactId = $request->query->getInt('cid', 0);
 
         $contact = $this->contactRepository->find($contactId);
         if (false === $contact) {

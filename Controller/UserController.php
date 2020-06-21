@@ -92,8 +92,8 @@ class UserController extends AbstractController
         CaptchaHelper $captchaHelper,
         Request $request
     ) {
-        $formId = $request->query->getDigits('form', $this->getVar('defaultForm', 0));
-        $contactId = $request->query->getDigits('cid', 0);
+        $formId = $request->query->getInt('form', $this->getVar('defaultForm', 0));
+        $contactId = $request->query->getInt('cid', 0);
 
         $session = $this->get('session');
         $modVars = $this->getVars();
@@ -182,7 +182,7 @@ class UserController extends AbstractController
             $formData = $form->getData();
             $formId = $formData['form'];
         }
-        if ($form->isValid() && $form->get('submit')->isClicked()) {
+        if ($form->isSubmitted() && $form->isValid() && $form->get('submit')->isClicked()) {
             $formData = $form->getData();
 
             // very basic input validation against HTTP response splitting
@@ -247,7 +247,7 @@ class UserController extends AbstractController
 
             // check captcha
             if ($enableSpamCheck) {
-                $captcha = (int)$request->request->getDigits('captcha', 0);
+                $captcha = (int)$request->request->getInt('captcha', 0);
                 $operands = @unserialize($session->get('formiculaCaptcha'));
                 if (is_array($operands)) {
                     $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
@@ -318,7 +318,7 @@ class UserController extends AbstractController
                     }
 
                     try {
-                        $entityManager = $this->get('doctrine')->getManager();
+                        $entityManager = $this->getDoctrine()->getManager();
                         $entityManager->persist($submission);
                         $entityManager->flush();
                     } catch (\Exception $exception) {

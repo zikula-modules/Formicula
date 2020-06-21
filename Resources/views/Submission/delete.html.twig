@@ -1,5 +1,5 @@
 <h3>
-    <span class="fa fa-trash-o"></span>
+    <span class="fas fa-trash-alt"></span>
     {% trans %}Delete form submission{% endtrans %}
     {{ pageSetVar('title', 'Delete form submission'|trans) }}
 </h3>
@@ -16,33 +16,33 @@
 <fieldset>
     <legend>{% trans %}Submission information{% endtrans %}</legend>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{% trans %}Form #{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 control-label">{% trans %}Form #{% endtrans %}</label>
+        <div class="col-md-9">
             <p class="form-control-static">{{ submission.form }}</p>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{% trans %}Contact ID{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 control-label">{% trans %}Contact ID{% endtrans %}</label>
+        <div class="col-md-9">
             <p class="form-control-static">{{ submission.cid }}</p>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{% trans %}Date{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 control-label">{% trans %}Date{% endtrans %}</label>
+        <div class="col-md-9">
             <p class="form-control-static">{{ submission.createdDate|format_date('short', 'short') }}</p>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{% trans %}Name{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 control-label">{% trans %}Name{% endtrans %}</label>
+        <div class="col-md-9">
             <p class="form-control-static"><a href="#" class="tooltips" title="{% trans with {'%email%': submission.email, '%uid%': submission.createdBy.uid} %}Email: %email% - UID: %uid%{% endtrans %}">{{ submission.name }}</a></p>
         </div>
     </div>
 </fieldset>
 
 <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-md-9 offset-md-3">
         {{ form_widget(form.delete) }}
         {{ form_widget(form.cancel) }}
     </div>

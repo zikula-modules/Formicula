@@ -12,15 +12,15 @@
     {% if modVars.sendConfirmationToUser and not modVars.showUserFormat %}
         {{ form_row(form.userFormat) }}
     {% endif %}
-    <div class="hidden">
+    <div class="d-none">
         {{ form_row(form.cid) }}
     </div>
 
     <h3>{% trans %}Personal data{% endtrans %}</h3>
     {{ form_row(form.name) }}
     <div class="form-group">
-        <label for="dateOfBirth" class="control-label required col-sm-3">{% trans %}Date of birth{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="dateOfBirth" class="control-label required col-md-3">{% trans %}Date of birth{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[dateOfBirth][name]" value="{% trans %}Date of birth{% endtrans %}" />
             <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
             <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
@@ -31,8 +31,8 @@
     {% endif %}
     {% if modVars.showLocation %}
         <div class="form-group">
-            <label for="street" class="control-label required col-sm-3">{% trans %}Street{% endtrans %}</label>
-            <div class="col-sm-9">
+            <label for="street" class="control-label required col-md-3">{% trans %}Street{% endtrans %}</label>
+            <div class="col-md-9">
                 <input type="hidden" name="custom[street][name]" value="{% trans %}Street{% endtrans %}" />
                 <input type="hidden" name="custom[street][mandatory]" value="1" />
                 <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default|e('html_attr') }}" required="required" class="form-control" />
@@ -48,16 +48,16 @@
         {{ form_row(form.url) }}
     {% endif %}
     <div class="form-group">
-        <label for="idCard" class="control-label required col-sm-3">{% trans %}Identification card number{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="idCard" class="control-label required col-md-3">{% trans %}Identification card number{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[idCard][name]" value="{% trans %}Identification card number{% endtrans %}" />
             <input type="hidden" name="custom[idCard][mandatory]" value="1" />
             <input type="text" id="idCard" name="custom[idCard][data]" maxlength="70" value="{{ customFields.idCard.data|default|e('html_attr') }}" required="required" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label required col-sm-3">{% trans %}Gender{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="control-label required col-md-3">{% trans %}Gender{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[gender][name]" value="{% trans %}Gender{% endtrans %}" />
             <input type="hidden" name="custom[gender][mandatory]" value="1" />
             <label class="radio-inline">
@@ -71,8 +71,8 @@
 
     <h3>{% trans %}Rental data{% endtrans %}</h3>
     <div class="form-group">
-        <label for="typeOfVehicle" class="control-label required col-sm-3">{% trans %}Type of vehicle{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="typeOfVehicle" class="control-label required col-md-3">{% trans %}Type of vehicle{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[typeOfVehicle][name]" value="{% trans %}Type of vehicle{% endtrans %}" />
             <input type="hidden" name="custom[typeOfVehicle][mandatory]" value="1" />
             <select id="typeOfVehicle" name="custom[typeOfVehicle][data]" required="required" class="form-control">
@@ -84,24 +84,24 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="amountOfPersons" class="control-label required col-sm-3">{% trans %}Amount of persons{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="amountOfPersons" class="control-label required col-md-3">{% trans %}Amount of persons{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[amountOfPersons][name]" value="{% trans %}Amount of persons{% endtrans %}" />
             <input type="hidden" name="custom[amountOfPersons][mandatory]" value="1" />
             <input type="number" id="amountOfPersons" name="custom[amountOfPersons][data]" maxlength="70" value="{{ customFields.amountOfPersons.data|default|e('html_attr') }}" required="required" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <label for="rentalStart" class="control-label required col-sm-3">{% trans %}Start of rental period{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="rentalStart" class="control-label required col-md-3">{% trans %}Start of rental period{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[rentalStart][name]" value="{% trans %}Start of rental period{% endtrans %}" />
             <input type="hidden" name="custom[rentalStart][mandatory]" value="1" />
             <input type="text" id="rentalStart" name="custom[rentalStart][data]" maxlength="40" value="{{ customFields.rentalStart.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <label for="rentalEnd" class="control-label required col-sm-3">{% trans %}End of rental period{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="rentalEnd" class="control-label required col-md-3">{% trans %}End of rental period{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[rentalEnd][name]" value="{% trans %}End of rental period{% endtrans %}" />
             <input type="hidden" name="custom[rentalEnd][mandatory]" value="1" />
             <input type="text" id="rentalEnd" name="custom[rentalEnd][data]" maxlength="40" value="{{ customFields.rentalEnd.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
@@ -110,7 +110,7 @@
 
     <h3>{% trans %}Included extras{% endtrans %}</h3>
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
+        <div class="col-md-offset-3 col-md-9">
             <label class="checkbox-inline">
                 <input type="hidden" name="custom[extra1][name]" value="{% trans %}Extra 1{% endtrans %}" />
                 <input type="checkbox" id="extra1" name="custom[extra1][data]"{% if customFields.extra1.data|default == 'Yes' %} checked="checked"{% endif %} value="{% trans %}Yes{% endtrans %}" /> {% trans %}Extra 1{% endtrans %}
@@ -137,8 +137,8 @@
         {{ form_row(form.fileUpload) }}
     {% endif %}
     <div class="form-group">
-        <label for="findUs" class="control-label col-sm-3">{% trans %}How did you find us?{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="findUs" class="control-label col-md-3">{% trans %}How did you find us?{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[findUs][name]" value="{% trans %}How did you find us?{% endtrans %}" />
             <input type="hidden" name="custom[findUs][mandatory]" value="0" />
             <select id="findUs" name="custom[findUs][data]" class="form-control">
@@ -151,7 +151,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
+        <div class="col-md-offset-3 col-md-9">
             <input type="hidden" name="custom[termsAndConditions][name]" value="{% trans %}Agree with terms and conditions{% endtrans %}" />
             <input type="hidden" name="custom[termsAndConditions][mandatory]" value="1" />
             <div class="checkbox">
@@ -178,7 +178,7 @@
 {% endfor %}
 
 <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-md-9 offset-md-3">
         {{ form_widget(form.submit) }}
     </div>
 </div>

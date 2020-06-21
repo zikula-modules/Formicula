@@ -1,5 +1,5 @@
 <h3>
-    <span class="fa fa-trash-o"></span>
+    <span class="fas fa-trash-alt"></span>
     {% trans %}Delete contact{% endtrans %}
     {{ pageSetVar('title', 'Delete contact'|trans) }}
 </h3>
@@ -16,21 +16,21 @@
 <fieldset>
     <legend>{% trans %}Contact information{% endtrans %}</legend>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{% trans %}Contact name{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 control-label">{% trans %}Contact name{% endtrans %}</label>
+        <div class="col-md-9">
             <p class="form-control-static">{{ contact.name }}</p>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{% trans %}Email address{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label class="col-md-3 control-label">{% trans %}Email address{% endtrans %}</label>
+        <div class="col-md-9">
             <p class="form-control-static">{{ contact.email }}</p>
         </div>
     </div>
 </fieldset>
 
 <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-md-9 offset-md-3">
         {{ form_widget(form.delete) }}
         {{ form_widget(form.cancel) }}
     </div>

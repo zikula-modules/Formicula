@@ -1,5 +1,5 @@
 <h3>
-    <span class="fa fa-{{ mode == 'create' ? 'user-plus' : 'pencil' }}"></span>
+    <span class="fas fa-{{ mode == 'create' ? 'user-plus' : 'pencil-alt' }}"></span>
     {{ mode == 'create' ? 'Add contact'|trans : 'Edit contact'|trans }}
     {{ pageSetVar('title', mode == 'create' ? 'Add contact'|trans : 'Edit contact'|trans) }}
 </h3>
@@ -32,7 +32,7 @@
 </fieldset>
 
 <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-md-9 offset-md-3">
         {{ form_widget(form.save) }}
         {{ form_widget(form.cancel) }}
     </div>

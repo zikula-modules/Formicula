@@ -1,6 +1,6 @@
 {{ pageAddAsset('javascript', zasset('@ZikulaFormiculaModule:js/ZikulaFormiculaModule.Config.js')) }}
 <h3>
-    <span class="fa fa-wrench"></span>
+    <span class="fas fa-wrench"></span>
     {% trans %}Settings{% endtrans %}
     {{ pageSetVar('title', 'Formicula settings'|trans) }}
 </h3>
@@ -36,7 +36,7 @@
     <p class="alert alert-warning">{% trans %}For your information: There are better spam check modules out there. For example the Zikula Captcha module which can be hooked to Formicula. If you want to use this module, then please do not forget to add the required permissions for the Captcha module, too.{% endtrans %}</p>
     {{ form_row(form.enableSpamCheck) }}
     <div id="formiculaSpamCheckDetails">
-        <div class="form-row">
+        <div class="form-group row">
             <label class="col-md-3 control-label">{% trans %}Cache directory{% endtrans %}</label>
             <div class="col-md-9">
                 <tt>{{ cacheDirectory }}</tt>
@@ -54,7 +54,7 @@
 </fieldset>
 
 <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-md-9 offset-md-3">
         {{ form_widget(form.save) }}
         {{ form_widget(form.cancel) }}
     </div>

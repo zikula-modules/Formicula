@@ -11,12 +11,12 @@
     {% if modVars.sendConfirmationToUser and not modVars.showUserFormat %}
         {{ form_row(form.userFormat) }}
     {% endif %}
-    <div class="hidden">
+    <div class="d-none">
         {{ form_row(form.cid) }}
     </div>
     <div class="form-group">
-        <label for="applyAs" class="control-label required col-sm-3">{% trans %}Apply as{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="applyAs" class="control-label required col-md-3">{% trans %}Apply as{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[applyAs][name]" value="{% trans %}Apply as{% endtrans %}" />
             <input type="hidden" name="custom[applyAs][mandatory]" value="1" />
             <input type="text" id="applyAs" name="custom[applyAs][data]" maxlength="80" value="{{ customFields.applyAs.data|default|e('html_attr') }}" required="required" class="form-control" />
@@ -24,8 +24,8 @@
     </div>
     {{ form_row(form.name) }}
     <div class="form-group">
-        <label for="dateOfBirth" class="control-label required col-sm-3">{% trans %}Date of birth{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="dateOfBirth" class="control-label required col-md-3">{% trans %}Date of birth{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[dateOfBirth][name]" value="{% trans %}Date of birth{% endtrans %}" />
             <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
             <input type="text" id="dateOfBirth" name="custom[dateOfBirth][data]" maxlength="40" value="{{ customFields.dateOfBirth.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-](?:\d{4}|\d{2})" title="{% trans %}Please enter a valid date (mm/dd/yyyy).{% endtrans %}" class="form-control" />
@@ -37,8 +37,8 @@
     {{ form_row(form.emailAddress) }}
     {% if modVars.showLocation %}
         <div class="form-group">
-            <label for="street" class="control-label required col-sm-3">{% trans %}Street{% endtrans %}</label>
-            <div class="col-sm-9">
+            <label for="street" class="control-label required col-md-3">{% trans %}Street{% endtrans %}</label>
+            <div class="col-md-9">
                 <input type="hidden" name="custom[street][name]" value="{% trans %}Street{% endtrans %}" />
                 <input type="hidden" name="custom[street][mandatory]" value="1" />
                 <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default|e('html_attr') }}" required="required" class="form-control" />
@@ -47,16 +47,16 @@
         {{ form_row(form.location, { label: 'Zip City'|trans }) }}
     {% endif %}
     <div class="form-group">
-        <label for="salary" class="control-label required col-sm-3">{% trans %}Desired salary{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="salary" class="control-label required col-md-3">{% trans %}Desired salary{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[salary][name]" value="{% trans %}Desired salary{% endtrans %}" />
             <input type="hidden" name="custom[salary][mandatory]" value="1" />
             <input type="number" id="salary" name="custom[salary][data]" maxlength="40" value="{{ customFields.salary.data|default|e('html_attr') }}" required="required" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <label for="entryDate" class="control-label required col-sm-3">{% trans %}Entry date{% endtrans %}</label>
-        <div class="col-sm-9">
+        <label for="entryDate" class="control-label required col-md-3">{% trans %}Entry date{% endtrans %}</label>
+        <div class="col-md-9">
             <input type="hidden" name="custom[entryDate][name]" value="{% trans %}Entry date{% endtrans %}" />
             <input type="hidden" name="custom[entryDate][mandatory]" value="1" />
             <input type="number" id="entryDate" name="custom[entryDate][data]" maxlength="40" value="{{ customFields.entryDate.data|default|e('html_attr') }}" required="required" pattern="\d{1,2}[/-]\d{1,2}[/-]\d{4}" class="form-control" />
@@ -93,7 +93,7 @@
 {% endfor %}
 
 <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
+    <div class="col-md-9 offset-md-3">
         {{ form_widget(form.submit) }}
     </div>
 </div>

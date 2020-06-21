@@ -101,7 +101,7 @@ class EnvironmentHelper
             return;
         }
 
-        $files = (new Finder())->files()->in($this->cacheDirectory())
+        $files = (new Finder())->files()->in($this->cacheDirectory)
             ->notName(['.htaccess', 'index.htm', 'index.html'])
         ;
         foreach ($files as $file) {

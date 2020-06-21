@@ -1,17 +1,17 @@
 (function($) {
-    $(document).ready(function(){
-        if (!$('#zikulaformiculamodule_config_enablespamcheck').prop('checked')) {
-            $('#formiculaSpamCheckDetails').addClass('hidden');
+    $(document).ready(function() {
+        if (!$('#zikulaformiculamodule_config_enableSpamCheck').prop('checked')) {
+            $('#formiculaSpamCheckDetails').addClass('d-none');
         }
-        $('#zikulaformiculamodule_config_enablespamcheck').change(function() {
-            $('#formiculaSpamCheckDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_enablespamcheck').prop('checked'));
+        $('#zikulaformiculamodule_config_enableSpamCheck').change(function() {
+            $('#formiculaSpamCheckDetails').toggleClass('d-none', !$('#zikulaformiculamodule_config_enableSpamCheck').prop('checked'));
         });
 
-        if (!$('#zikulaformiculamodule_config_storesubmissiondata').prop('checked')) {
-            $('#formiculaDataStorageDetails').addClass('hidden');
+        if (!$('#zikulaformiculamodule_config_storeSubmissionData').prop('checked')) {
+            $('#formiculaDataStorageDetails').addClass('d-none');
         }
-        $('#zikulaformiculamodule_config_storesubmissiondata').change(function(){
-            $('#formiculaDataStorageDetails').toggleClass('hidden', !$('#zikulaformiculamodule_config_storesubmissiondata').prop('checked'));
+        $('#zikulaformiculamodule_config_storeSubmissionData').change(function(){
+            $('#formiculaDataStorageDetails').toggleClass('d-none', !$('#zikulaformiculamodule_config_storeSubmissionData').prop('checked'));
         });
     });
 })(jQuery)

@@ -88,7 +88,7 @@ class SubmissionController extends AbstractController
         // check necessary environment
         $this->environmentHelper->check();
 
-        $submissionId = $request->query->getDigits('sid', -1);
+        $submissionId = $request->query->getInt('sid', -1);
         $submission = $this->submissionRepository->find($submissionId);
         if (false === $submission) {
             $this->addFlash('error', 'Form submission could not be found.');
@@ -114,8 +114,8 @@ class SubmissionController extends AbstractController
         // check necessary environment
         $this->environmentHelper->check();
 
-        $entityManager = $this->get('doctrine')->getManager();
-        $submissionId = $request->query->getDigits('sid', -1);
+        $entityManager = $this->getDoctrine()->getManager();
+        $submissionId = $request->query->getInt('sid', -1);
 
         $submission = $this->submissionRepository->find($submissionId);
         if (false === $submission) {

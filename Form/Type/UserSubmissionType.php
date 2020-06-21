@@ -129,7 +129,7 @@ class UserSubmissionType extends AbstractType
             'label' => 'Send',
             'icon' => 'fa-check',
             'attr' => [
-                'class' => 'btn btn-success'
+                'class' => 'btn-success'
             ]
         ]);
     }
