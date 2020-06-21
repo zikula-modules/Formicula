@@ -51,13 +51,25 @@ class CaptchaHelper
      */
     private $requestStack;
 
+    /**
+     * @var string
+     */
+    private $projectDirectory;
+
+    /**
+     * @var string
+     */
+    private $cacheDirectory;
+
     public function __construct(
         TranslatorInterface $translator,
         VariableApiInterface $variableApi,
         PermissionApiInterface $permissionApi,
         EnvironmentHelper $environmentHelper,
         RouterInterface $router,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        string $projectDir,
+        string $cacheDir
     ) {
         $this->translator = $translator;
         $this->variableApi = $variableApi;
@@ -65,16 +77,14 @@ class CaptchaHelper
         $this->environmentHelper = $environmentHelper;
         $this->router = $router;
         $this->requestStack = $requestStack;
+        $this->projectDirectory = $projectDir;
+        $this->cacheDirectory = $cacheDir;
     }
 
     /**
      * Determines whether the spam check is active for a certain form.
-     *
-     * @param integer $form The form number
-     *
-     * @return boolean Whether the spam check is active or not
      */
-    public function isSpamCheckEnabled($form = 0)
+    public function isSpamCheckEnabled(int $form = 0): bool
     {
         $enableSpamCheck = $this->variableApi->get('ZikulaFormiculaModule', 'enableSpamCheck', true);
         if ($enableSpamCheck) {
@@ -88,14 +98,9 @@ class CaptchaHelper
     }
 
     /**
-     * Determines whether the given captcha code is correct or not.
-     *
-     * @param array   $operands The exercise operands
-     * @param integer $captcha  The captcha code entered by the user
-     *
-     * @return boolean Whether the captcha is correct or not
+     * Determines whether a given captcha code is correct or not.
      */
-    public function isCaptchaValid(array $operands = [], $captcha = 0)
+    public function isCaptchaValid(array $operands = [], int $captcha = 0): bool
     {
         $captchaValid = false;
         if (!is_array($operands)) {
@@ -139,8 +144,12 @@ class CaptchaHelper
      *
      * @return string The image markup
      */
-    public function createCaptcha($font = 'quickhand', $size = 14, $bgColour = 'ffffff', $fgColour = '000000')
-    {
+    public function createCaptcha(
+        string $font = 'quickhand',
+        int $size = 14,
+        string $bgColour = 'ffffff',
+        string $fgColour = '000000'
+    ): string {
         // check which image types are supported
         $freetype = function_exists('imagettfbbox');
         if ($freetype && (imagetypes() && IMG_PNG)) {
@@ -190,8 +199,7 @@ class CaptchaHelper
         // hash the params for cache filename
         $hash = hash('sha256', $font . $size . $bgColour . $fgColour . $exerciseText);
         // create uri of image
-        $cacheDirectory = $this->environmentHelper->getCacheDirectory();
-        $imagePath = $cacheDirectory . '/' . $hash . $imageType;
+        $imagePath = $this->cacheDirectory . '/' . $hash . $imageType;
 
         // create the image if it does not already exist
         if (!file_exists($imagePath)) {
@@ -216,14 +224,14 @@ class CaptchaHelper
             imagettftext($im, $size * $multi, 0, $box['left'], $box['top'], $fgcolor, $fontPath, $exerciseText);
 
             // resize the image now
-            $finalWidth  = round($box['width'] / $multi);
-            $finalHeight = round($box['height'] / $multi);
+            $finalWidth = (int)round($box['width'] / $multi);
+            $finalHeight = (int)round($box['height'] / $multi);
             $ds = imagecreatetruecolor($finalWidth, $finalHeight);
 
             $bgcolor2 = $this->hexToRgb($ds, $bgColour);
             imagefill($ds, 0, 0, $bgcolor2);
-            imagecopyresampled($ds, $im, 0, $box['left'], 0, 0, $box['width'] / $multi, $box['height'] / $multi, $box['width'], $box['height']);
-            imagetruecolortopalette($ds, 0, 256);
+            imagecopyresampled($ds, $im, 0, $box['left'], 0, 0, (int)($box['width'] / $multi), (int)($box['height'] / $multi), $box['width'], $box['height']);
+            imagetruecolortopalette($ds, false, 256);
             imagepalettecopy($ds, $im);
             imagecolortransparent($ds, $bgcolor);
 
@@ -238,7 +246,9 @@ class CaptchaHelper
             $finalHeight = $imageData[1];
         }
 
-        return '<img src="' . $this->router->generate('home') . $imagePath . '" alt="' . $this->translator->trans('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
+        $relativeImagePath = str_replace($this->projectDirectory, '', $imagePath);
+
+        return '<img src="' . $relativeImagePath . '" alt="' . $this->translator->trans('Math') . '" width="' . $finalWidth . '" height="' . $finalHeight . '" />';
     }
 
     /**
@@ -248,20 +258,10 @@ class CaptchaHelper
      *
      * @return string Path to the font file
      */
-    private function getFontPath($font)
+    private function getFontPath(string $font): string
     {
-        $absoluteModulePathParts = explode('/', str_replace('/Helper', '', __DIR__));
-        $relativeModulePathParts = [];
-        $moduleRootFound = false;
-        foreach ($absoluteModulePathParts as $folder) {
-            if ('modules' === $folder) {
-                $moduleRootFound = true;
-            }
-            if ($moduleRootFound) {
-                $relativeModulePathParts[] = $folder;
-            }
-        }
-        $fontPath = implode('/', $relativeModulePathParts) . '/Resources/public/fonts/' . $font . '.ttf';
+        $absolutePath = dirname(__DIR__);
+        $fontPath = $absolutePath . '/Resources/public/fonts/' . $font . '.ttf';
 
         return $fontPath;
     }
@@ -271,10 +271,10 @@ class CaptchaHelper
      *
      * @return array Random math exercise operands
      */
-    private function determineOperands()
+    private function determineOperands(): array
     {
         // x .z. y .w. v
-        mt_srand((float)microtime() * 1000000);
+        mt_srand((int)microtime() * 1000000);
         $x = mt_rand(1, 10);
         $y = mt_rand(1, 10);
         $z = mt_rand(0, 1);  /* 0=+, 1=- */
@@ -320,7 +320,7 @@ class CaptchaHelper
      *
      * @return integer colour id determined by resulting rgb values
      */
-    private function hexToRgb($image, $hexCode)
+    private function hexToRgb($image, string $hexCode): int
     {
         sscanf($hexCode, "%2x%2x%2x", $red, $green, $blue);
 

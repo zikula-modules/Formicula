@@ -188,7 +188,7 @@ class UserController extends AbstractController
             // very basic input validation against HTTP response splitting
             $formData['emailAddress'] = str_replace(['\r', '\n', '%0d', '%0a'], '', $formData['emailAddress']);
 
-            $formId = (int) ($formData['form']);
+            $formId = (int) $formData['form'];
             $contactId = $formData['cid'];
             if (empty($contactId) || $formId < 0 || !$this->hasPermission('ZikulaFormiculaModule::', "${formId}:${contactId}:", ACCESS_COMMENT)) {
                 throw new AccessDeniedException();
@@ -247,7 +247,7 @@ class UserController extends AbstractController
 
             // check captcha
             if ($enableSpamCheck) {
-                $captcha = (int)$request->request->getInt('captcha', 0);
+                $captcha = $request->request->getInt('captcha', 0);
                 $operands = @unserialize($session->get('formiculaCaptcha'));
                 if (is_array($operands)) {
                     $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);

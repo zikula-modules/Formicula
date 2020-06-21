@@ -5,6 +5,7 @@ services:
         public: false
         bind:
             $extension: '@Zikula\FormiculaModule\ZikulaFormiculaModule'
+            $projectDir: '%kernel.project_dir%'
             $cacheDir: '%kernel.project_dir%/public/formicula/cache'
 
     Zikula\FormiculaModule\:
