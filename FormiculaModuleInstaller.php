@@ -35,6 +35,9 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
         SubmissionEntity::class
     ];
 
+    /**
+     * @var string
+     */
     private $cacheDir;
 
     public function __construct(

@@ -40,16 +40,23 @@ class EnvironmentHelper
      */
     private $requestStack;
 
+    /**
+     * @var string
+     */
+    private $cacheDir;
+
     public function __construct(
         KernelInterface $kernel,
         TranslatorInterface $translator,
         VariableApiInterface $variableApi,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        string $cacheDir
     ) {
         $this->kernel = $kernel;
         $this->translator = $translator;
         $this->variableApi = $variableApi;
         $this->requestStack = $requestStack;
+        $this->cacheDir = $cacheDir . '/formicula';
     }
 
     /**
@@ -78,23 +85,12 @@ class EnvironmentHelper
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
         }
 
-        $cacheDirectory = $this->getCacheDirectory();
-        if (!file_exists($cacheDirectory) || !is_writable($cacheDirectory)) {
+        if (!file_exists($this->cacheDir) || !is_writable($this->cacheDir)) {
             $flashBag->add('status', $this->translator->trans('Formicula cache directory does not exist or is not writable - Captchas have been disabled.'));
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
-        } elseif (!file_exists($cacheDirectory . '/.htaccess')) {
+        } elseif (!file_exists($this->cacheDir . '/.htaccess')) {
             $flashBag->add('status', $this->translator->trans('Formicula cache directory does not contain the required .htaccess file - Captchas have been disabled.'));
             $this->variableApi->set('ZikulaFormiculaModule', 'enableSpamCheck', false);
         }
-    }
-
-    /**
-     * Returns path to cache directory.
-     *
-     * @return string Path to temporary cache directory
-     */
-    public function getCacheDirectory()
-    {
-        return 'var/cache/formicula';
     }
 }
