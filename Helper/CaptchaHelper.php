@@ -273,8 +273,6 @@ class CaptchaHelper
      */
     private function determineOperands(): array
     {
-        // x .z. y .w. v
-        mt_srand((int)microtime() * 1000000);
         $x = mt_rand(1, 10);
         $y = mt_rand(1, 10);
         $z = mt_rand(0, 1);  /* 0=+, 1=- */
