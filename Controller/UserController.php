@@ -36,7 +36,6 @@ use Zikula\FormiculaModule\Entity\SubmissionEntity;
 use Zikula\FormiculaModule\Form\Type\UserSubmissionType;
 use Zikula\FormiculaModule\Helper\CaptchaHelper;
 use Zikula\FormiculaModule\Helper\EnvironmentHelper;
-use Zikula\PermissionsModule\Annotation\PermissionCheck;
 use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 

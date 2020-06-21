@@ -18,7 +18,6 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zikula\Bundle\CoreBundle\Controller\AbstractController;
 use Zikula\ExtensionsModule\AbstractExtension;
@@ -56,7 +55,8 @@ class ConfigController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Config/config.html.twig")
      * @Theme("admin")
      */
-    public function configAction(Request $request, string $cacheDir): array {
+    public function configAction(Request $request, string $cacheDir): array
+    {
         // check necessary environment
         $this->environmentHelper->check();
 
