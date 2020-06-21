@@ -15,14 +15,14 @@ namespace Zikula\FormiculaModule\Helper;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaHttpKernelInterface;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 
 class EnvironmentHelper
 {
     /**
-     * @var KernelInterface
+     * @var ZikulaHttpKernelInterface
      */
     private $kernel;
 
@@ -47,7 +47,7 @@ class EnvironmentHelper
     private $cacheDirectory;
 
     public function __construct(
-        KernelInterface $kernel,
+        ZikulaHttpKernelInterface $kernel,
         TranslatorInterface $translator,
         VariableApiInterface $variableApi,
         RequestStack $requestStack,

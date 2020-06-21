@@ -28,6 +28,7 @@ use Zikula\Bundle\CoreBundle\Controller\AbstractController;
 use Zikula\Bundle\HookBundle\Dispatcher\HookDispatcherInterface;
 use Zikula\Bundle\HookBundle\Hook\ValidationHook;
 use Zikula\Bundle\HookBundle\Hook\ValidationProviders;
+use Zikula\Bundle\CoreBundle\HttpKernel\ZikulaHttpKernelInterface;
 use Zikula\ExtensionsModule\AbstractExtension;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
 use Zikula\FormiculaModule\Entity\ContactEntity;
@@ -44,6 +45,11 @@ use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @var ZikulaHttpKernelInterface
+     */
+    private $kernel;
+
     /**
      * @var ContactRepository
      */
@@ -69,12 +75,14 @@ class UserController extends AbstractController
         PermissionApiInterface $permissionApi,
         VariableApiInterface $variableApi,
         TranslatorInterface $translator,
+        ZikulaHttpKernelInterface $kernel,
         ContactRepository $contactRepository,
         EnvironmentHelper $environmentHelper,
         MailerInterface $mailer,
         LoggerInterface $mailLogger
     ) {
         parent::__construct($extension, $permissionApi, $variableApi, $translator);
+        $this->kernel = $kernel;
         $this->contactRepository = $contactRepository;
         $this->environmentHelper = $environmentHelper;
         $this->mailer = $mailer;
@@ -248,7 +256,7 @@ class UserController extends AbstractController
             // check captcha
             if ($enableSpamCheck) {
                 $captcha = $request->request->getInt('captcha', 0);
-                $operands = @unserialize($session->get('formiculaCaptcha'));
+                $operands = @unserialize($session->get('formiculaCaptcha', ''));
                 if (is_array($operands)) {
                     $captchaValid = $captchaHelper->isCaptchaValid($operands, $captcha);
                     if (false === $captchaValid) {
@@ -390,7 +398,7 @@ class UserController extends AbstractController
         $format = 'html',
         $mailType = ''
     ) {
-        if (!$this->get('kernel')->isBundle('ZikulaMailerModule')) {
+        if (!$this->kernel->isBundle('ZikulaMailerModule')) {
             // no mailer module - error!
             return false;
         }
