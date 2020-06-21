@@ -10,3 +10,7 @@ services:
     Zikula\FormiculaModule\:
         resource: '../../*'
         exclude: '../../{bootstrap.php,Tests,vendor}'
+
+    Zikula\FormiculaModule\Helper\:
+        resource: '../../Helper/*'
+        lazy: true
