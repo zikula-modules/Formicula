@@ -50,6 +50,7 @@ class ContactEntity extends EntityAccess
      *
      * @Assert\NotBlank()
      * @Assert\Length(max = 200)
+     * @Assert\Email()
      * @ORM\Column(type="string", length=200)
      * @var string
      */
@@ -107,80 +108,64 @@ class ContactEntity extends EntityAccess
 
     /**
      * Gets the id of the contact.
-     *
-     * @return integer the contact's id
      */
-    public function getCid()
+    public function getCid(): ?int
     {
         return $this->cid;
     }
 
     /**
      * Sets the id for the contact.
-     *
-     * @param integer $cid the contact's id
      */
-    public function setCid($cid)
+    public function setCid(int $cid): void
     {
         $this->cid = $cid;
     }
 
     /**
      * Gets the name of the contact.
-     *
-     * @return string the contact's name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Sets the name for the contact.
-     *
-     * @param string $name the contact's name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
      * Gets the email address of the contact.
-     *
-     * @return string the contact's email address
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * Sets the email address for the contact.
-     *
-     * @param string $email the contact's email address
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
     /**
      * Gets the public flag of the contact.
-     *
-     * @return boolean the contact's public flag
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return $this->public;
     }
 
     /**
      * Sets the public flag for the contact.
-     *
-     * @param boolean $public the contact's public flag
      */
-    public function setPublic($public)
+    public function setPublic(bool $public): void
     {
         if (is_bool($public)) {
             $this->public = $public;
@@ -189,60 +174,48 @@ class ContactEntity extends EntityAccess
 
     /**
      * Gets the sender name of the contact.
-     *
-     * @return string the contact's sender name
      */
-    public function getSenderName()
+    public function getSenderName(): string
     {
         return $this->senderName;
     }
 
     /**
      * Sets the sender name for the contact.
-     *
-     * @param string $senderName the contact's sender name
      */
-    public function setSenderName($senderName)
+    public function setSenderName(string $senderName): void
     {
         $this->senderName = $senderName;
     }
 
     /**
      * Gets the sender email address of the contact.
-     *
-     * @return string the contact's sender email address
      */
-    public function getSenderEmail()
+    public function getSenderEmail(): string
     {
         return $this->senderEmail;
     }
 
     /**
      * Sets the sender email address for the contact.
-     *
-     * @param string $senderEmail the contact's sender email address
      */
-    public function setSenderEmail($senderEmail)
+    public function setSenderEmail(string $senderEmail): void
     {
         $this->senderEmail = $senderEmail;
     }
 
     /**
      * Gets the sending subject of the contact.
-     *
-     * @return string the contact's sending subject
      */
-    public function getSendingSubject()
+    public function getSendingSubject(): string
     {
         return $this->sendingSubject;
     }
 
     /**
      * Sets the sending subject for the contact.
-     *
-     * @param string $subject the contact's sending subject
      */
-    public function setSendingSubject($subject)
+    public function setSendingSubject(string $subject): void
     {
         $this->sendingSubject = $subject;
     }

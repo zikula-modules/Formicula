@@ -141,9 +141,6 @@ class SubmissionEntity extends EntityAccess
      */
     private $customData;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->form = 0;
@@ -162,230 +159,184 @@ class SubmissionEntity extends EntityAccess
 
     /**
      * Gets the id of the submission.
-     *
-     * @return integer the submission's id
      */
-    public function getSid()
+    public function getSid(): ?int
     {
         return $this->sid;
     }
 
     /**
      * Sets the id for the submission.
-     *
-     * @param integer $sid the submission's id
      */
-    public function setSid($sid)
+    public function setSid(int $sid): void
     {
         $this->sid = $sid;
     }
 
     /**
      * Gets the id of the form.
-     *
-     * @return integer the submission's form id
      */
-    public function getForm()
+    public function getForm(): int
     {
         return $this->form;
     }
 
     /**
      * Sets the form id for the submission.
-     *
-     * @param integer $form the submission's form id
      */
-    public function setForm($form)
+    public function setForm(int $form): void
     {
         $this->form = $form;
     }
 
     /**
      * Gets the contact id of the submission.
-     *
-     * @return integer the submission's contact id
      */
-    public function getCid()
+    public function getCid(): int
     {
         return $this->cid;
     }
 
     /**
      * Sets the contact id for the submission.
-     *
-     * @param integer $sid the submission's contact id
      */
-    public function setCid($cid)
+    public function setCid(int $cid): void
     {
         $this->cid = $cid;
     }
 
     /**
      * Gets the ip address of the submission.
-     *
-     * @return string the submission's ip address
      */
-    public function getIpAddress()
+    public function getIpAddress(): string
     {
         return $this->ipAddress;
     }
 
     /**
      * Sets the ip address for the submission.
-     *
-     * @param string $ipAddress the submission's ip address
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress(string $ipAddress): void
     {
         $this->ipAddress = $ipAddress;
     }
 
     /**
      * Gets the host name of the submission.
-     *
-     * @return string the submission's host name
      */
-    public function getHostName()
+    public function getHostName(): string
     {
         return $this->hostName;
     }
 
     /**
      * Sets the host name for the submission.
-     *
-     * @param string $hostName the submission's host name
      */
-    public function setHostName($hostName)
+    public function setHostName(string $hostName): void
     {
         $this->hostName = $hostName;
     }
 
     /**
      * Gets the name of the submission.
-     *
-     * @return string the submission's name
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Sets the name for the submission.
-     *
-     * @param string $name the submission's name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
      * Gets the email address of the submission.
-     *
-     * @return string the submission's email address
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
      * Sets the email address for the submission.
-     *
-     * @param string $email the submission's email address
      */
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
     /**
      * Gets the phone number of the submission.
-     *
-     * @return string the submission's phone number
      */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): string
     {
         return $this->phoneNumber;
     }
 
     /**
      * Sets the phone number for the submission.
-     *
-     * @param string $phoneNumber the submission's phone number
      */
-    public function setPhoneNumber($phoneNumber)
+    public function setPhoneNumber(string $phoneNumber): void
     {
         $this->phoneNumber = $phoneNumber;
     }
 
     /**
      * Alias for easier form handling.
-     *
-     * @param string $phoneNumber the submission's phone number
      */
-    public function setPhone($phoneNumber)
+    public function setPhone(string $phoneNumber): void
     {
         return $this->setPhoneNumber($phoneNumber);
     }
 
     /**
      * Gets the company of the submission.
-     *
-     * @return string the submission's company
      */
-    public function getCompany()
+    public function getCompany(): string
     {
         return $this->company;
     }
 
     /**
      * Sets the company for the submission.
-     *
-     * @param string $company the submission's company
      */
-    public function setCompany($company)
+    public function setCompany(string $company): void
     {
         $this->company = $company;
     }
 
     /**
      * Gets the url of the submission.
-     *
-     * @return string the submission's url
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
     /**
      * Sets the url for the submission.
-     *
-     * @param string $url the submission's url
      */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
     /**
      * Gets the location of the submission.
-     *
-     * @return string the submission's location
      */
-    public function getLocation()
+    public function getLocation(): string
     {
         return $this->location;
     }
 
     /**
      * Sets the location for the submission.
-     *
-     * @param string $location the submission's location
      */
-    public function setLocation($location)
+    public function setLocation(string $location): void
     {
         $this->location = $location;
     }
@@ -402,10 +353,8 @@ class SubmissionEntity extends EntityAccess
 
     /**
      * Sets the comment for the submission.
-     *
-     * @param string $comment the submission's comment
      */
-    public function setComment($comment)
+    public function setComment($comment): string
     {
         $this->comment = $comment;
     }
@@ -413,28 +362,23 @@ class SubmissionEntity extends EntityAccess
     /**
      * Gets the custom data of the submission.
      */
-    public function getCustomData()
+    public function getCustomData(): array
     {
         return $this->customData;
     }
 
     /**
      * Sets the custom data for the submission.
-     *
-     * @param string $customData the submission's custom data
      */
-    public function setCustomData($customData)
+    public function setCustomData(array $customData = []): void
     {
         $this->customData = $customData;
     }
 
     /**
      * Adds a value to the submission's custom data.
-     *
-     * @param string $key   name of the custom property
-     * @param string $value the property value
      */
-    public function addCustomData($key, $value)
+    public function addCustomData(string $key = '', string $value = ''): void
     {
         if ('' !== $key) {
             $this->customData[$key] = $value;

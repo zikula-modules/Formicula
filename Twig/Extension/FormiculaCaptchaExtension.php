@@ -49,7 +49,7 @@ class FormiculaCaptchaExtension extends AbstractExtension
      *
      * @return string The image markup
      */
-    public function simpleCaptcha($font = 'quickhand', $size = 14, $bgColour = 'ffffff', $fgColour = '000000')
+    public function simpleCaptcha($font = 'quickhand', $size = 14, $bgColour = 'ffffff', $fgColour = '000000'): string
     {
         return $this->captchaHelper->createCaptcha($font, $size, $bgColour, $fgColour);
     }
