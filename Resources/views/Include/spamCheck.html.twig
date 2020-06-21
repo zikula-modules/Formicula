@@ -1,8 +1,8 @@
 {% if enableSpamCheck %}
-    <div class="form-group">
-        <label for="formiculaMath" class="control-label required col-md-3">{% trans %}Please solve this calculation{% endtrans %}</label>
+    <div class="form-group row">
+        <label for="formiculaMath" class="col-form-label col-md-3 required">{% trans %}Please solve this calculation{% endtrans %}</label>
         <div class="col-md-9">
-{#            {{ zikulaformiculamodule_simpleCaptcha() }}#}
+            {{ zikulaformiculamodule_simpleCaptcha() }}
             {# example for custom arguments:
                 zikulaformiculamodule_simpleCaptcha(font='arial', size=20, bgColour='ffffff', fgColour='0000ff')
             #}

@@ -14,8 +14,8 @@
     <div class="d-none">
         {{ form_row(form.cid) }}
     </div>
-    <div class="form-group">
-        <label for="applyAs" class="control-label required col-md-3">{% trans %}Apply as{% endtrans %}</label>
+    <div class="form-group row">
+        <label for="applyAs" class="col-form-label col-md-3 required">{% trans %}Apply as{% endtrans %}</label>
         <div class="col-md-9">
             <input type="hidden" name="custom[applyAs][name]" value="{% trans %}Apply as{% endtrans %}" />
             <input type="hidden" name="custom[applyAs][mandatory]" value="1" />
@@ -23,8 +23,8 @@
         </div>
     </div>
     {{ form_row(form.name) }}
-    <div class="form-group">
-        <label for="dateOfBirth" class="control-label required col-md-3">{% trans %}Date of birth{% endtrans %}</label>
+    <div class="form-group row">
+        <label for="dateOfBirth" class="col-form-label col-md-3 required">{% trans %}Date of birth{% endtrans %}</label>
         <div class="col-md-9">
             <input type="hidden" name="custom[dateOfBirth][name]" value="{% trans %}Date of birth{% endtrans %}" />
             <input type="hidden" name="custom[dateOfBirth][mandatory]" value="1" />
@@ -36,26 +36,26 @@
     {% endif %}
     {{ form_row(form.emailAddress) }}
     {% if modVars.showLocation %}
-        <div class="form-group">
-            <label for="street" class="control-label required col-md-3">{% trans %}Street{% endtrans %}</label>
+        <div class="form-group row">
+            <label for="street" class="col-form-label col-md-3 required">{% trans %}Street{% endtrans %}</label>
             <div class="col-md-9">
                 <input type="hidden" name="custom[street][name]" value="{% trans %}Street{% endtrans %}" />
                 <input type="hidden" name="custom[street][mandatory]" value="1" />
                 <input type="text" id="street" name="custom[street][data]" maxlength="40" value="{{ customFields.street.data|default|e('html_attr') }}" required="required" class="form-control" />
             </div>
         </div>
-        {{ form_row(form.location, { label: 'Zip City'|trans }) }}
+        {{ form_row(form.location, {label: 'Zip City'|trans}) }}
     {% endif %}
-    <div class="form-group">
-        <label for="salary" class="control-label required col-md-3">{% trans %}Desired salary{% endtrans %}</label>
+    <div class="form-group row">
+        <label for="salary" class="col-form-label col-md-3 required">{% trans %}Desired salary{% endtrans %}</label>
         <div class="col-md-9">
             <input type="hidden" name="custom[salary][name]" value="{% trans %}Desired salary{% endtrans %}" />
             <input type="hidden" name="custom[salary][mandatory]" value="1" />
             <input type="number" id="salary" name="custom[salary][data]" maxlength="40" value="{{ customFields.salary.data|default|e('html_attr') }}" required="required" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="entryDate" class="control-label required col-md-3">{% trans %}Entry date{% endtrans %}</label>
+    <div class="form-group row">
+        <label for="entryDate" class="col-form-label col-md-3 required">{% trans %}Entry date{% endtrans %}</label>
         <div class="col-md-9">
             <input type="hidden" name="custom[entryDate][name]" value="{% trans %}Entry date{% endtrans %}" />
             <input type="hidden" name="custom[entryDate][mandatory]" value="1" />
@@ -84,13 +84,11 @@
 </fieldset>
 
 {% set hooks = notifyDisplayHooks(eventName='zikulaformiculamodule.ui_hooks.forms.form_edit') %}
-{% for providerArea, hook in hooks|filter(hook => hook|default) %}
-    <fieldset>
-        <div class="help-block">
-            {{ hook }}
-        </div>
-    </fieldset>
-{% endfor %}
+{% if hooks is iterable and hooks|length > 0 %}
+    {% for area, hook in hooks %}
+        <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+    {% endfor %}
+{% endif %}
 
 <div class="form-group">
     <div class="col-md-9 offset-md-3">
