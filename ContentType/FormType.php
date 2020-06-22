@@ -78,14 +78,15 @@ class FormType extends AbstractContentType
             return '';
         }
 
-        $path = [
-            '_controller' => 'ZikulaFormiculaModule:User:index'
+        $attributes = [
+            '_controller' => 'Zikula\FormiculaModule\Controller\UserController::indexAction',
+            '_route' => 'zikulaformiculamodule_user_index'
         ];
 
         $subRequest = $this->requestStack->getCurrentRequest()->duplicate([
             'form' => (int)$this->data['form'],
             'cid' => $this->data['contact']
-        ], null, $path);
+        ], null, $attributes);
 
         $response = $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST);
 
