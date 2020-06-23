@@ -499,7 +499,7 @@ class UserController extends AbstractController
         try {
             $this->mailer->send($message);
             if ($logging) {
-                $this->mailLogger->info(sprintf('Email sent to %s', $message->getTo()), [
+                $this->mailLogger->info(sprintf('Email sent to %s', $message->getTo()->getAddress()), [
                     'in' => __METHOD__,
                 ]);
             }
