@@ -354,7 +354,7 @@ class SubmissionEntity extends EntityAccess
     /**
      * Sets the comment for the submission.
      */
-    public function setComment($comment): string
+    public function setComment(string $comment): void
     {
         $this->comment = $comment;
     }
