@@ -462,8 +462,8 @@ class UserController extends AbstractController
 
         $message = (new Email())
             ->subject($subject)
-            ->text($this->renderView($bodyTemplateHtml, $templateParameters))
-            ->html($this->renderView($bodyTemplateText, $templateParameters));
+            ->text($this->renderView($bodyTemplateText, $templateParameters))
+            ->html($this->renderView($bodyTemplateHtml, $templateParameters));
 
         // add possible attachment to admin mail
         if ('contact' === $mailType && $modVars['showFileAttachment'] && isset($userData['fileUpload'])) {
