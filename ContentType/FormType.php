@@ -79,7 +79,7 @@ class FormType extends AbstractContentType
         }
 
         $attributes = [
-            '_controller' => 'Zikula\FormiculaModule\Controller\UserController::indexAction',
+            '_controller' => 'Zikula\FormiculaModule\Controller\UserController::index',
             '_route' => 'zikulaformiculamodule_user_index'
         ];
 
