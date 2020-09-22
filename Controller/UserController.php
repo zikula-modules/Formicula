@@ -94,7 +94,7 @@ class UserController extends AbstractController
      *
      * @Route("/")
      */
-    public function indexAction(
+    public function index(
         CurrentUserApiInterface $currentUserApi,
         HookDispatcherInterface $hookDispatcher,
         CaptchaHelper $captchaHelper,

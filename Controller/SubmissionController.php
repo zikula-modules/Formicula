@@ -63,7 +63,7 @@ class SubmissionController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Submission/view.html.twig")
      * @Theme("admin")
      */
-    public function viewAction(Request $request)
+    public function view(Request $request)
     {
         // check necessary environment
         $this->environmentHelper->check();
@@ -83,7 +83,7 @@ class SubmissionController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Submission/display.html.twig")
      * @Theme("admin")
      */
-    public function displayAction(Request $request)
+    public function display(Request $request)
     {
         // check necessary environment
         $this->environmentHelper->check();
@@ -109,7 +109,7 @@ class SubmissionController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Submission/delete.html.twig")
      * @Theme("admin")
      */
-    public function deleteAction(Request $request)
+    public function delete(Request $request)
     {
         // check necessary environment
         $this->environmentHelper->check();

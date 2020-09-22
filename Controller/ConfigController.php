@@ -55,7 +55,7 @@ class ConfigController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Config/config.html.twig")
      * @Theme("admin")
      */
-    public function configAction(Request $request, string $cacheDir): array
+    public function config(Request $request, string $cacheDir): array
     {
         // check necessary environment
         $this->environmentHelper->check();
@@ -123,7 +123,7 @@ class ConfigController extends AbstractController
      * @Route("/clearcache")
      * @Theme("admin")
      */
-    public function clearcacheAction(): RedirectResponse
+    public function clearCache(): RedirectResponse
     {
         $this->environmentHelper->clearCache();
         $this->addFlash('status', 'The captcha image cache has been cleared.');

@@ -65,7 +65,7 @@ class ContactController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Contact/view.html.twig")
      * @Theme("admin")
      */
-    public function viewAction(): array
+    public function view(): array
     {
         // check necessary environment
         $this->environmentHelper->check();
@@ -99,7 +99,7 @@ class ContactController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Contact/edit.html.twig")
      * @Theme("admin")
      */
-    public function editAction(Request $request)
+    public function edit(Request $request)
     {
         // check necessary environment
         $this->environmentHelper->check();
@@ -174,7 +174,7 @@ class ContactController extends AbstractController
      * @Template("@ZikulaFormiculaModule/Contact/delete.html.twig")
      * @Theme("admin")
      */
-    public function deleteAction(Request $request)
+    public function delete(Request $request)
     {
         // check necessary environment
         $this->environmentHelper->check();
