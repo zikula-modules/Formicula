@@ -109,6 +109,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                 ';
                 $stmt = $connection->prepare($sql);
                 $stmt->execute();
+                // no break
             case '5.0.0':
                 // added forgotten company field
                 try {
@@ -122,6 +123,7 @@ class FormiculaModuleInstaller extends AbstractExtensionInstaller
                 }
             case '5.0.1':
                 $this->setVar('uploadDirectory', $this->uploadDirectory);
+                // no break
             case '5.0.2':
                 // nothing yet
         }

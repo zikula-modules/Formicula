@@ -84,7 +84,7 @@ class FormType extends AbstractContentType
         ];
 
         $subRequest = $this->requestStack->getCurrentRequest()->duplicate([
-            'form' => (int)$this->data['form'],
+            'form' => (int) $this->data['form'],
             'cid' => $this->data['contact']
         ], null, $attributes);
 
