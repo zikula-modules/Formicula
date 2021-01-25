@@ -6,9 +6,9 @@ You can create any kind of contact form with any number contact fields by changi
 Forms can be controlled by permissions.
 It also supports multiple, permission controlled recipients, configurable notification emails, a simple captcha for spam protection, hooks to the Captcha module, javascript form validation and file uploads.
 
-## Master branch
+## Main branch
 
-The 6.0.x versions in the `master` branch target Zikula 3.0+.
+The 6.0.x versions in the `main` branch target Zikula 3.0+.
 
 ## Older versions
 
