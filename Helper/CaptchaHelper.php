@@ -107,9 +107,9 @@ class CaptchaHelper
             return $captchaValid;
         }
 
-        $op1 = (int)$operands['x'];
-        $op2 = (int)$operands['y'];
-        $op3 = (int)$operands['v'];
+        $op1 = (int) $operands['x'];
+        $op2 = (int) $operands['y'];
+        $op3 = (int) $operands['v'];
 
         switch ($operands['z'] . '-' . $operands['w']) {
             case '0-0':
@@ -224,13 +224,13 @@ class CaptchaHelper
             imagettftext($im, $size * $multi, 0, $box['left'], $box['top'], $fgcolor, $fontPath, $exerciseText);
 
             // resize the image now
-            $finalWidth = (int)round($box['width'] / $multi);
-            $finalHeight = (int)round($box['height'] / $multi);
+            $finalWidth = (int) round($box['width'] / $multi);
+            $finalHeight = (int) round($box['height'] / $multi);
             $ds = imagecreatetruecolor($finalWidth, $finalHeight);
 
             $bgcolor2 = $this->hexToRgb($ds, $bgColour);
             imagefill($ds, 0, 0, $bgcolor2);
-            imagecopyresampled($ds, $im, 0, $box['left'], 0, 0, (int)($box['width'] / $multi), (int)($box['height'] / $multi), $box['width'], $box['height']);
+            imagecopyresampled($ds, $im, 0, $box['left'], 0, 0, (int) ($box['width'] / $multi), (int) ($box['height'] / $multi), $box['width'], $box['height']);
             imagetruecolortopalette($ds, false, 256);
             imagepalettecopy($ds, $im);
             imagecolortransparent($ds, $bgcolor);

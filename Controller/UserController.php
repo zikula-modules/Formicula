@@ -100,7 +100,7 @@ class UserController extends AbstractController
         CaptchaHelper $captchaHelper,
         Request $request
     ) {
-        $formId = $request->query->getInt('form', (int)$this->getVar('defaultForm', 0));
+        $formId = $request->query->getInt('form', (int) $this->getVar('defaultForm', 0));
         $contactId = $request->query->getInt('cid', 0);
 
         $session = $this->get('session');

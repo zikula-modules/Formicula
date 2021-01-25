@@ -29,8 +29,6 @@ class FormUiHooksSubscriber implements HookSubscriberInterface
 
     /**
      * FormUiHooksSubscriber constructor.
-     *
-     * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
